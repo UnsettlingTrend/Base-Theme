@@ -4,8 +4,6 @@ phases:
   install:
     commands:
       - echo Entered the install phase...
-      - apt-get update -y
-      - apt-get install -y php-common
   pre_build:
     commands:
       - echo Entered the pre_build phase...
