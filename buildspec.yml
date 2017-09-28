@@ -4,11 +4,11 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Compiling the Go code...
-      - echo This is where I'd do stuff. But nah...
   post_build:
     commands:
+      - echo Packaging up the code
+      - touch test.md
       - echo Build completed on `date`
 artifacts:
   files:
-    - hello
+    - test.md
