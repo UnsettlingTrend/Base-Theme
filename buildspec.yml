@@ -5,6 +5,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the Go code...
+      - sudo apt-get install go
       - go build hello.go
   post_build:
     commands:
