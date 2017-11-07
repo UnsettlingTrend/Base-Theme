@@ -1,7 +1,4 @@
 name: cf
-
 recipe: drupal8
-
 config:
-  
   webroot: web
