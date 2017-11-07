@@ -1,4 +1,7 @@
-name: drupal-8
+name: cf
+
 recipe: drupal8
+
 config:
+  
   webroot: web
