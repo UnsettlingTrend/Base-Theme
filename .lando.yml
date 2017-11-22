@@ -2,3 +2,6 @@ name: cf
 recipe: drupal8
 config:
   webroot: web
+  drush: 9.0.0-beta9
+  php: 7.1
+  xdebug: true
