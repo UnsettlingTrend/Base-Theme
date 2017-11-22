@@ -8,6 +8,7 @@ phases:
     commands:
       - echo Packaging up the code
       - pwd
+      - ls -la
       - touch test.md
       - echo Executed at `date`... >> test.md
       - echo Build completed on `date`
