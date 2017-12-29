@@ -1,0 +1,2 @@
+# The build server will take care of compiling these, so we ignore the distribution directory
+dist/

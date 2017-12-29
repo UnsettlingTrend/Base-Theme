@@ -1,7 +1,8 @@
 name: cf
 recipe: drupal8
 config:
+  php: '7.1'
+  via: apache
   webroot: web
-  drush: 9.0.0-beta9
-  php: 7.1
+  drush: stable
   xdebug: true

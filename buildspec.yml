@@ -1,18 +1,21 @@
 version: 0.2
 
 phases:
-  build:
+  install:
     commands:
       - echo Build started on `date`
+      - echo Installing gulp...
+      - npm install --global gulp-cli
+  build:
+    commands:
+      - echo Running composer...
+      - composer update
+      - echo Running gulp...
+      - gulp
   post_build:
     commands:
-      - echo Packaging up the code
-      - pwd
-      - ls -la
-      - touch test.md
-      - echo Executed at `date`... >> test.md
+      - echo Packaging up the code...
       - echo Build completed on `date`
 artifacts:
   files:
-    - test.md
     - appspec.yml
