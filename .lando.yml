@@ -1,8 +1,29 @@
 name: cf
 recipe: drupal8
+
 config:
-  php: '7.1'
+  php: 7.1
   via: apache
   webroot: web
   drush: stable
-  xdebug: true
+  xdebug: false
+  conf:
+    dev/php: php.ini
+    dev/mysql: my.cnf
+
+services:
+  database:
+    type: mariadb
+    portforward: 3305
+  appserver:
+    composer:
+      phpunit/phpunit: '*'
+      behat/behat: 3.3.1
+
+tooling:
+  phpunit:
+    service: appserver
+    description: run PHPUnit- use lando phpunit
+  behat:
+    service: appserver
+    description: run behat- use lando behat

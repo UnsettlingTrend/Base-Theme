@@ -1,0 +1,12 @@
+unsettling_trend.config:
+  route_name: unsettling_trend.config
+  title: 'Unsettling Trend'
+  parent: system.admin_config
+  description: 'Configure blocks and configuration for Unsettling Trend modules.'
+  weight: -5
+
+unsettling_blocks.config:
+  title: 'Unsettling Blocks'
+  parent: unsettling_trend.config
+  description: 'Configure Unsettling Trend blocks.'
+  route_name: unsettling_blocks.config

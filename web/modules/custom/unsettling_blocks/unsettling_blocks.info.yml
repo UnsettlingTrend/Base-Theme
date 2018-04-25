@@ -1,0 +1,5 @@
+name: Unsettling Blocks
+type: module
+description: Custom blocks created by Unsettling Trend
+core: 8.x
+package: Other
