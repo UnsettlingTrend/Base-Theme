@@ -2,10 +2,9 @@ name: cf
 recipe: drupal8
 
 config:
-  php: 7.1
+  php: 7.2
   via: apache
   webroot: web
-  drush: stable
   xdebug: false
   conf:
     dev/php: php.ini
@@ -13,12 +12,22 @@ config:
 
 services:
   database:
-    type: mariadb
+    type: mysql:5.7
     portforward: 3305
+  pma:
+    type: phpmyadmin
+    hosts:
+      - database
   appserver:
     composer:
       phpunit/phpunit: '*'
       behat/behat: 3.3.1
+  node:
+    type: node:6.10
+    globals:
+      gulp-cli: latest
+    build:
+      - "cd $LANDO_MOUNT && npm install"
 
 tooling:
   phpunit:
@@ -27,3 +36,9 @@ tooling:
   behat:
     service: appserver
     description: run behat- use lando behat
+  node:
+    service: node
+  npm:
+    service: node
+  gulp:
+    service: node

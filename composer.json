@@ -47,7 +47,7 @@
         "drupal/smart_trim": "^1.0",
         "drupal/token": "^1.1",
         "drupal/video_embed_field": "^1.5",
-        "drush/drush": "~8.0|^9.0.0-beta8",
+        "drush/drush": "^9.2",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },
