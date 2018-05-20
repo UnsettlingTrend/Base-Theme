@@ -13,7 +13,7 @@ config:
 services:
   database:
     type: mysql:5.7
-    portforward: 3305
+    portforward: 3325
   pma:
     type: phpmyadmin
     hosts:

@@ -13,6 +13,19 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "4.3.0",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/enyo/dropzone",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -33,6 +46,8 @@
         "drupal/devel": "^1.2",
         "drupal/devel_debug_log": "^1.0@beta",
         "drupal/google_analytics": "^2.2",
+        "drupal/graphql": "^3.0@beta",
+        "drupal/jsonapi": "^1.17",
         "drupal/media": "1.x-dev",
         "drupal/module_filter": "^3.1",
         "drupal/page_manager": "^4.0@beta",
@@ -42,12 +57,14 @@
         "drupal/recaptcha": "^2.2",
         "drupal/redirect": "^1.0@beta",
         "drupal/rules": "^3.0@alpha",
+        "drupal/search_api": "^1.8",
         "drupal/slick": "^1.0",
         "drupal/slick_views": "^1.0@RC",
         "drupal/smart_trim": "^1.0",
         "drupal/token": "^1.1",
         "drupal/video_embed_field": "^1.5",
         "drush/drush": "^9.2",
+        "enyo/dropzone": "~4.3",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },
