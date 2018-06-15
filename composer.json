@@ -26,6 +26,45 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "kenwheeler/slick",
+                "version": "1.9.0",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/kenwheeler/slick",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jackmoore/colorbox",
+                "version": "1.6.4",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/jackmoore/colorbox",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "fengyuanchen/cropper",
+                "version": "4.0.0",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/fengyuanchen/cropper",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -42,13 +81,16 @@
         "drupal/components": "^1.0",
         "drupal/console": "^1.0.2",
         "drupal/core": "~8.4",
+        "drupal/crop": "^1.5",
         "drupal/ctools": "^3.0",
         "drupal/devel": "^1.2",
         "drupal/devel_debug_log": "^1.0@beta",
+        "drupal/disable_html5_validation": "^1.0",
+        "drupal/exif_orientation": "^1.0",
         "drupal/google_analytics": "^2.2",
         "drupal/graphql": "^3.0@beta",
+        "drupal/image_widget_crop": "^2.1",
         "drupal/jsonapi": "^1.17",
-        "drupal/media": "1.x-dev",
         "drupal/module_filter": "^3.1",
         "drupal/page_manager": "^4.0@beta",
         "drupal/panels": "^4.2",
@@ -62,9 +104,12 @@
         "drupal/slick_views": "^1.0@RC",
         "drupal/smart_trim": "^1.0",
         "drupal/token": "^1.1",
-        "drupal/video_embed_field": "^1.5",
+        "drupal/video_embed_field": "~2.0",
         "drush/drush": "^9.2",
         "enyo/dropzone": "~4.3",
+        "fengyuanchen/cropper": "^4.0",
+        "jackmoore/colorbox": "~1",
+        "kenwheeler/slick": "~1.9.0",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },
