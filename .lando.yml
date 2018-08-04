@@ -13,7 +13,6 @@ config:
 services:
   database:
     type: mysql:5.7
-    portforward: 3325
   pma:
     type: phpmyadmin
     hosts:
@@ -22,6 +21,14 @@ services:
     composer:
       phpunit/phpunit: '*'
       behat/behat: 3.3.1
+    run:
+      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
+    run_as_root:
+      - "apt-get update -y"
+      - "apt-get install build-essential chrpath libssl-dev libxft-dev libfreetype6-dev libfreetype6 libfontconfig1-dev libfontconfig1 -y"
+      - "wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"
+      - "tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/"
+      - "ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/"
   node:
     type: node:6.10
     globals:
@@ -30,9 +37,18 @@ services:
       - "cd $LANDO_MOUNT && npm install"
 
 tooling:
+  drush:
+    service: appserver
+    description: Run drush from Drupal root directory
+    cmd:
+      - "drush"
+      - "--root=/app/web"
   phpunit:
     service: appserver
     description: run PHPUnit- use lando phpunit
+  phantomjs:
+    service: appserver
+    description: "Run phantomjs commands"
   behat:
     service: appserver
     description: run behat- use lando behat
