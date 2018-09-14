@@ -1,0 +1,14 @@
+uuid: 7e361977-92c4-4a3b-b364-4db6f2e2c518
+name: ChrisFeragotti.com
+mail: chris@chrisferagotti.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

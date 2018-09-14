@@ -1,0 +1,27 @@
+uuid: bdb8bf05-8431-4d56-8ac4-70d808809ba1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.contact_profile.body
+    - node.type.contact_profile
+  module:
+    - text
+    - user
+id: node.contact_profile.default
+targetEntityType: node
+bundle: contact_profile
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  langcode: true

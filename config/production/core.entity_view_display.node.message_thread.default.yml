@@ -1,0 +1,40 @@
+uuid: f8c1dde7-14e6-4654-854b-aec4f0bb3fa3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.message_thread.field_groups_current
+    - field.field.node.message_thread.field_messages
+    - field.field.node.message_thread.field_users_current
+    - node.type.message_thread
+  module:
+    - user
+id: node.message_thread.default
+targetEntityType: node
+bundle: message_thread
+mode: default
+content:
+  field_groups_current:
+    weight: 2
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_users_current:
+    weight: 1
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_messages: true
+  langcode: true

@@ -1,0 +1,11 @@
+uuid: 9e8fecb3-dacc-4f74-846f-5bf08621b135
+langcode: en
+status: true
+dependencies: {  }
+id: friends
+label: Friends
+description: ''
+creator_membership: true
+creator_wizard: true
+creator_roles:
+  - friends-admin

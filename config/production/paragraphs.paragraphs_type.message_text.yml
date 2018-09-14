@@ -1,0 +1,11 @@
+uuid: a7bb8f80-cd4d-4098-97db-98208c799be9
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'file:file:e02a6eff-29a5-4080-b78e-3efea4a01859'
+id: message_text
+label: 'Message - Text'
+icon_uuid: e02a6eff-29a5-4080-b78e-3efea4a01859
+description: ''
+behavior_plugins: {  }

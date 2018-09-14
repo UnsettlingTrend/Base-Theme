@@ -1,0 +1,19 @@
+uuid: 99f24805-6e80-4b4a-ad44-1ce42b7ca231
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.friends
+    - node.type.page
+  module:
+    - gnode
+    - node
+id: friends-group_node-page
+label: 'Friends: Group node (Basic page)'
+description: 'Adds <em class="placeholder">Basic page</em> content to groups both publicly and privately.'
+group_type: friends
+content_plugin: 'group_node:page'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

@@ -1,0 +1,20 @@
+uuid: c7a4540f-ded5-455e-bfa9-477de5c12037
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+    - paragraphs
+id: paragraph.field_groups
+field_name: field_groups
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: group
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

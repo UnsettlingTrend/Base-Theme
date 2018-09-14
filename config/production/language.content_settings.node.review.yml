@@ -1,0 +1,18 @@
+uuid: 477693af-562f-45cb-8170-a6eb1459385d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.review
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.review
+target_entity_type_id: node
+target_bundle: review
+default_langcode: site_default
+language_alterable: true

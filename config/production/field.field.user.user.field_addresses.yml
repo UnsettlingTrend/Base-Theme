@@ -1,0 +1,46 @@
+uuid: 8915893c-e7dd-4143-9186-1235ce43506a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_addresses
+    - paragraphs.paragraphs_type.address
+  module:
+    - entity_reference_revisions
+    - user
+id: user.user.field_addresses
+field_name: field_addresses
+entity_type: user
+bundle: user
+label: Addresses
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      address: address
+    target_bundles_drag_drop:
+      address:
+        enabled: true
+        weight: 7
+      from_library:
+        weight: 8
+        enabled: false
+      hero_image:
+        weight: 9
+        enabled: false
+      phone_number:
+        weight: 10
+        enabled: false
+      rating:
+        weight: 11
+        enabled: false
+      text:
+        weight: 12
+        enabled: false
+field_type: entity_reference_revisions

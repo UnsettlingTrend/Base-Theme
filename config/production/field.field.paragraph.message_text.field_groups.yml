@@ -1,0 +1,28 @@
+uuid: 7385ff6a-20a0-4cfe-9f81-4532b41c5f75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_groups
+    - group.type.friends
+    - paragraphs.paragraphs_type.message_text
+id: paragraph.message_text.field_groups
+field_name: field_groups
+entity_type: paragraph
+bundle: message_text
+label: Groups
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles:
+      friends: friends
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

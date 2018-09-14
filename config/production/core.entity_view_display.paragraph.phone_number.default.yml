@@ -1,0 +1,20 @@
+uuid: 5e161c04-484f-461f-9805-77487bbbf000
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.phone_number.field_telephone_number
+    - paragraphs.paragraphs_type.phone_number
+id: paragraph.phone_number.default
+targetEntityType: paragraph
+bundle: phone_number
+mode: default
+content:
+  field_telephone_number:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+hidden: {  }

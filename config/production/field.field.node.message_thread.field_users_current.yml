@@ -1,0 +1,28 @@
+uuid: ccdfea43-b312-430b-ba74-858b4e48e718
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_users_current
+    - node.type.message_thread
+id: node.message_thread.field_users_current
+field_name: field_users_current
+entity_type: node
+bundle: message_thread
+label: 'Current users'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

@@ -1,0 +1,17 @@
+uuid: 3033cb68-4731-4f84-a1bb-89c933f8e306
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.friends
+  enforced:
+    config:
+      - user.role.administrator
+id: friends-a416e6833
+label: Administrator
+weight: 2
+internal: true
+audience: outsider
+group_type: friends
+permissions_ui: false
+permissions: {  }

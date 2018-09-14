@@ -1,0 +1,18 @@
+uuid: 4951c453-3a40-44c5-aa48-3f2eb589585e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.message_thread
+id: node.message_thread.title
+field_name: title
+entity_type: node
+bundle: message_thread
+label: UUID
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

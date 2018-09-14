@@ -1,0 +1,53 @@
+uuid: 1ad8befa-2748-4a74-a1aa-bf134970ee0c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.rating.field_category
+    - field.field.paragraph.rating.field_score
+    - paragraphs.paragraphs_type.rating
+  module:
+    - field_group
+    - starrating
+third_party_settings:
+  field_group:
+    group_rating:
+      children:
+        - field_category
+        - field_score
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      format_settings:
+        id: ''
+        classes: ''
+        element: span
+        show_label: false
+        label_element: h3
+        required_fields: false
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Rating
+id: paragraph.rating.default
+targetEntityType: paragraph
+bundle: rating
+mode: default
+content:
+  field_category:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_score:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: starrating
+    region: content
+hidden:
+  created: true
+  moderation_state: true
+  status: true
+  uid: true

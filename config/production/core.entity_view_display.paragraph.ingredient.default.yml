@@ -1,0 +1,39 @@
+uuid: 2300c13a-ba33-4888-9416-643a8aecb349
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ingredient.field_ingredient
+    - field.field.paragraph.ingredient.field_ingredient_volume
+    - field.field.paragraph.ingredient.field_ingredient_weight
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - physical
+id: paragraph.ingredient.default
+targetEntityType: paragraph
+bundle: ingredient
+mode: default
+content:
+  field_ingredient:
+    weight: 0
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_ingredient_volume:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: physical_measurement_default
+    region: content
+  field_ingredient_weight:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: physical_measurement_default
+    region: content
+hidden: {  }

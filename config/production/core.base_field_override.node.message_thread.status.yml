@@ -1,0 +1,22 @@
+uuid: dd8f520e-f38c-4b6d-ae5b-145d69316368
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.message_thread
+id: node.message_thread.status
+field_name: status
+entity_type: node
+bundle: message_thread
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,28 @@
+uuid: c20596e0-3ae4-42d9-983a-79555ffe9b06
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_groups_current
+    - group.type.friends
+    - node.type.message_thread
+id: node.message_thread.field_groups_current
+field_name: field_groups_current
+entity_type: node
+bundle: message_thread
+label: 'Current groups'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:group'
+  handler_settings:
+    target_bundles:
+      friends: friends
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

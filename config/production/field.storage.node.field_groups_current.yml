@@ -1,0 +1,20 @@
+uuid: 4dc73585-a8f1-4aed-8612-bdf2b50e772d
+langcode: en
+status: true
+dependencies:
+  module:
+    - group
+    - node
+id: node.field_groups_current
+field_name: field_groups_current
+entity_type: node
+type: entity_reference
+settings:
+  target_type: group
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

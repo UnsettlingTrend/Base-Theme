@@ -1,0 +1,35 @@
+uuid: 258be6b0-6352-473e-852c-7788a743dd22
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.message_text.field_groups
+    - field.field.paragraph.message_text.field_text
+    - field.field.paragraph.message_text.field_user
+    - field.field.paragraph.message_text.field_users
+    - paragraphs.paragraphs_type.message_text
+  module:
+    - text
+id: paragraph.message_text.default
+targetEntityType: paragraph
+bundle: message_text
+mode: default
+content:
+  field_text:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_user:
+    weight: 0
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden:
+  field_groups: true
+  field_users: true

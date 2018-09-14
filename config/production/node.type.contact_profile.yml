@@ -1,0 +1,18 @@
+uuid: b14650d5-0e93-4743-8f14-92501b8e4924
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Contact Profile'
+type: contact_profile
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

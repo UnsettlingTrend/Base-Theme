@@ -1,0 +1,49 @@
+uuid: c39c01ed-e2a3-48d3-94f3-eab643c37437
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ingredient_list
+    - node.type.recipe
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - entity_reference_revisions
+id: node.recipe.field_ingredient_list
+field_name: field_ingredient_list
+entity_type: node
+bundle: recipe
+label: 'Ingredient List'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      ingredient: ingredient
+    target_bundles_drag_drop:
+      address:
+        weight: 8
+        enabled: false
+      from_library:
+        weight: 9
+        enabled: false
+      hero_image:
+        weight: 10
+        enabled: false
+      ingredient:
+        enabled: true
+        weight: 11
+      phone_number:
+        weight: 12
+        enabled: false
+      rating:
+        weight: 13
+        enabled: false
+      text:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

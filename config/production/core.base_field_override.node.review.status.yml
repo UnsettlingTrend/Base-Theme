@@ -1,0 +1,22 @@
+uuid: 492c3de7-550a-442e-b7be-9f0f64d8950b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.review
+id: node.review.status
+field_name: status
+entity_type: node
+bundle: review
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

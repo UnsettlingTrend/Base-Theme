@@ -1,0 +1,22 @@
+uuid: 38e87bea-343a-45f4-a109-9ce62a4be56e
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - chris
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: chris_help
+theme: chris
+region: content
+weight: -7
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }
