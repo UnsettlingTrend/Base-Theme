@@ -24,34 +24,29 @@ services:
     run:
       - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
     run_as_root:
-      - "apt-get update -y"
-      - "apt-get install build-essential chrpath libssl-dev libxft-dev libfreetype6-dev libfreetype6 libfontconfig1-dev libfontconfig1 -y"
-      - "wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"
-      - "tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/"
-      - "ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/"
+      - "bash /app/lando/scripts/build.sh"
   node:
     type: node:6.10
     globals:
       gulp-cli: latest
     build:
       - "cd $LANDO_MOUNT && npm install"
+#  Leaving this here for now, as an example of how to use other docker images
+#  compass:
+#    type: compose
+#    services:
+#      image: antonienko/compass-watch
+#      command: watch --poll /src/compass
+#    description: run compass- use lando compass
 
 tooling:
-  drush:
-    service: appserver
-    description: Run drush from Drupal root directory
-    cmd:
-      - "drush"
-      - "--root=/app/web"
   phpunit:
     service: appserver
     description: run PHPUnit- use lando phpunit
-  phantomjs:
-    service: appserver
-    description: "Run phantomjs commands"
   behat:
     service: appserver
     description: run behat- use lando behat
+    cmd: cd /app ; behat  # Run behat from the /app  directory
   node:
     service: node
   npm:
