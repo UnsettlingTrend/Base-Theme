@@ -1,0 +1,43 @@
+.block-unsettling-blocks {
+  text-align: center;
+  height: 200px;
+  width: 200px;
+  padding: 10px;
+  border: 2px solid grey;
+  background: lightgray;
+  margin: 5px;
+  display: inline-block;
+}
+.block-unsettling-blocks h2 {
+  font-size: x-large;
+  margin-top: 0;
+}
+
+.block-unsettling-blocks .content {
+  position: relative;
+  top: 20px;
+}
+
+.block-cryptocurrency-block {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge*/
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+.block-cryptocurrency-block .price-integers {
+  font-size: 400%;
+}
+
+.block-cryptocurrency-block .price-decimals {
+  font-size: 150%;
+  position: relative;
+  top: -20px;
+}
