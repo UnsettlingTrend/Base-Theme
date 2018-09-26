@@ -1,3 +1,8 @@
+# TODO Fix PHPUnit testing of only custom themes/modules
+# TODO Mailhog setup
+# TODO Look into Portainer
+# TODO Look into traefik
+
 name: cf
 recipe: drupal8
 
@@ -31,6 +36,12 @@ services:
       gulp-cli: latest
     build:
       - "cd $LANDO_MOUNT && npm install"
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+    portforward: 1026
+
 #  Leaving this here for now, as an example of how to use other docker images
 #  compass:
 #    type: compose
@@ -47,9 +58,17 @@ tooling:
     service: appserver
     description: run behat- use lando behat
     cmd: cd /app ; behat  # Run behat from the /app  directory
+  mailhog:
+    service: mailhog
   node:
     service: node
   npm:
     service: node
   gulp:
     service: node
+  sendmail:
+    service: appserver
+    cmd: /usr/local/bin/mhsendmail
+  alert:
+    service: appserver
+    cmd: php /app/mail.php
