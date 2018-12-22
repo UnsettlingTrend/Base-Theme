@@ -3,7 +3,7 @@
 # TODO Look into Portainer
 # TODO Look into traefik
 
-name: cf
+name: newcf
 recipe: drupal8
 
 config:
@@ -11,17 +11,21 @@ config:
   via: apache
   webroot: web
   xdebug: false
+  drush: false
   conf:
-    dev/php: php.ini
-    dev/mysql: my.cnf
+    lando/config/php: php.ini
+    lando/config/mysql: my.cnf
 
 services:
   database:
+    type: mysql:5.7
+  database2:
     type: mysql:5.7
   pma:
     type: phpmyadmin
     hosts:
       - database
+      - database2
   appserver:
     composer:
       phpunit/phpunit: '*'
@@ -36,11 +40,11 @@ services:
       gulp-cli: latest
     build:
       - "cd $LANDO_MOUNT && npm install"
-  mailhog:
-    type: mailhog
-    hogfrom:
-      - appserver
-    portforward: 1026
+#  mailhog:
+#    type: mailhog
+#    hogfrom:
+#      - appserver
+#    portforward: 1026
 
 #  Leaving this here for now, as an example of how to use other docker images
 #  compass:
@@ -51,6 +55,10 @@ services:
 #    description: run compass- use lando compass
 
 tooling:
+  drush:
+    service: appserver
+    description: run drush commands
+    cmd: /app/vendor/drush/drush/drush
   phpunit:
     service: appserver
     description: run PHPUnit- use lando phpunit
@@ -58,17 +66,17 @@ tooling:
     service: appserver
     description: run behat- use lando behat
     cmd: cd /app ; behat  # Run behat from the /app  directory
-  mailhog:
-    service: mailhog
+#  mailhog:
+#    service: mailhog
   node:
     service: node
   npm:
     service: node
   gulp:
     service: node
-  sendmail:
-    service: appserver
-    cmd: /usr/local/bin/mhsendmail
-  alert:
-    service: appserver
-    cmd: php /app/mail.php
+#  sendmail:
+#    service: appserver
+#    cmd: /usr/local/bin/mhsendmail
+#  alert:
+#    service: appserver
+#    cmd: php /app/mail.php
