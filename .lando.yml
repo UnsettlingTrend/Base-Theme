@@ -3,7 +3,7 @@
 # TODO Look into Portainer
 # TODO Look into traefik
 
-name: newcf
+name: cf
 recipe: drupal8
 
 config:
@@ -13,19 +13,17 @@ config:
   xdebug: false
   drush: false
   conf:
-    lando/config/php: php.ini
-    lando/config/mysql: my.cnf
+    php: ./lando/config/php.ini
+    mysql: ./lando/config/my.cnf
 
 services:
   database:
     type: mysql:5.7
-  database2:
-    type: mysql:5.7
+    portforward: 3310
   pma:
     type: phpmyadmin
     hosts:
       - database
-      - database2
   appserver:
     composer:
       phpunit/phpunit: '*'
