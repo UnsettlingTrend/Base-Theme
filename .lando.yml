@@ -13,8 +13,8 @@ config:
   xdebug: false
   drush: false
   conf:
-    php: ./lando/config/php.ini
-    mysql: ./lando/config/my.cnf
+    php: lando/config/php.ini
+    mysql: lando/config/my.cnf
 
 services:
   database:
@@ -33,7 +33,7 @@ services:
     run_as_root:
       - "bash /app/lando/scripts/build.sh"
   node:
-    type: node:6.10
+    type: node:10
     globals:
       gulp-cli: latest
     build:

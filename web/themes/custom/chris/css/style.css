@@ -1,0 +1,299 @@
+@font-face {
+  font-family: "Passero One";
+  src: url(../fonts/PasseroOne-Regular.ttf);
+}
+
+/*General*/
+[role="main"] p {
+  font-size: 1.2em;
+}
+[role="main"] ul,
+[role="main"] ol {
+  font-size: 1.1em;
+}
+[role="main"] h2 {
+  font-weight: bolder;
+}
+.clearfix {
+  clear: both;
+}
+.region-content > h1 {
+  margin-bottom: 5px;
+}
+body {
+  color: #333333;
+}
+/*END General*/
+
+/*Header*/
+.region-header {
+  margin-bottom: 5px;
+}
+.region-header > a {
+  padding-top: 0;
+}
+/*END Header*/
+
+/*NavBar*/
+header.navbar .navbar-nav > .active > a {
+  color: #368ead; 
+  font-weight: bolder;
+}
+header.navbar {
+  margin-bottom: 0px;
+}
+.logo.navbar-btn.pull-left,
+.name.navbar-brand {
+  float: none !important;
+  display:block;
+}
+.region.region-header {
+  text-align: center;
+}
+.navbar-header {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.name.navbar-brand {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor: pointer;
+  border: none;
+  font: normal 45px/normal "Passero One", Helvetica, sans-serif;
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  color: rgba(100,152,206,1);
+}
+/*END NavBar*/
+.region-content > ol.breadcrumb {
+  margin: 0px;
+}
+/*Breadcrumb*/
+
+/*END Breadcrumb*/
+
+/*Titles and Submission Info*/
+.subtitle {
+  font-style: italic;
+  color: darkgrey;
+  text-align: center;
+}
+div.main-container {
+  margin-top: 15px;
+}
+.submission-info {
+  text-align: center;
+  color: gray;
+  margin-bottom: 5px;
+}
+article[about="/access-denied"] .submission-info {
+  display: none;
+}
+h1.page-header {
+  padding-bottom: 0px;
+  border-bottom: none;
+  text-align: center;
+}
+/*END Titles and Submission Info*/
+
+/*Take-aways*/
+.field--name-field-take-aways {
+  margin: 5px 15px 5px 15px;
+}
+.field--name-field-take-aways > .field--label {
+  font-weight: lighter;
+  font-style: italic;
+}
+.field--name-field-take-aways > .field__items > .field--item {
+  font-weight: bold;
+}
+.field--name-field-take-aways > .field__items > .field--item::before {
+  content: "\2022  ";
+}
+/*END Take-aways*/
+
+/*Styles applied to all link buttons*/
+a {
+  color: #368ead;
+}
+a:hover,
+a:focus,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus {
+  color: #a21616;
+}
+a.btn-link {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 0 solid transparent;
+    transition: all 0.2s ease-out;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+    color: #fff;
+    background-color: #231f20;
+}
+
+/*Styles applied to override colors*/
+a.btn-link-gray {
+    color: #231f20;
+    background-color: #ccc;
+}
+/*END Styles applied to override colors*/
+
+/*Style Quotes*/
+.quote.wysiwyg {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: #222222;
+  display: flex;
+  justify-content: center;
+}
+.quote.wysiwyg:before {
+  display: block;
+  content: "\201C";
+  font-size: 80px;
+  position: relative;
+  left: -20px;
+  top: -20px;
+  color: #7a7a7a;
+  height: 50px;
+}
+.quote.wysiwyg .field--name-field-source {
+  color: #999999;
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+} 
+.quote.wysiwyg .field--name-field-source:before {
+  content: "\2014 \2009";
+}
+/*END Style Quotes*/
+
+/*Secondary*/
+.main-container > .row > aside {
+  margin-top: 15px;
+}
+.main-container > .row > aside h1, .main-container > .row > aside .h1,
+.main-container > .row > aside h2, .main-container > .row > aside .h2,
+.main-container > .row > aside h3, .main-container > .row > aside .h3 {
+  margin-top: 5px;
+  margin-bottom: 4px;
+}
+/*END Secondary*/
+
+/*Footer*/
+footer.footer.container {
+  padding-top: 10px;
+  margin-top: 10px;
+}
+/*END Footer*/
+
+/*Book*/
+nav.book-navigation .traversal-links,
+nav.book-navigation .traversal-links > ul {
+  text-align: center;
+}
+nav.book-navigation .traversal-links > ul > li {
+  display: inline;
+}
+nav.book-navigation .traversal-links > ul > * + *::before {
+  content: " - ";
+}
+nav.book-navigation .traversal-links ol,
+nav.book-navigation .traversal-links ul {
+  padding: 0 1.5em;
+}
+section.block-book-navigation nav > ul {
+    list-style: none;
+}
+section.block-book-navigation nav > ul {
+  padding-left: 15px;
+  margin-bottom: 5px;
+}
+section.block-book-navigation  nav li a {
+  display: block;
+  padding: 3px;
+}
+section.block-book-navigation  nav li a:hover,
+section.block-book-navigation  nav li a:focus {
+    text-decoration: none;
+    background-color: #dddddd;
+}
+section.block-book-navigation  nav li {
+  font-size: 1.1em;
+}
+section.block-book-navigation  nav li li{
+  font-size: .9em;
+}
+section.block-book-navigation  nav li li li{
+  font-size: .7em;
+}
+/*END Book*/
+
+/*Tags (field_tags)*/
+.field--name-field-tags {
+  margin-top: 10px;
+}
+.field--name-field-tags > .field__items * + *:before {
+  content: "| ";
+}
+.field--name-field-tags > .field__items > .field--item {
+  display: inline-block;
+}
+/*END Tags*/
+
+/*Projects*/
+#block-projects-block .view-content {
+  text-align: center;
+}
+article.project.full .field--name-field-image img,
+#block-projects-block .views-row .views-field-field-image {
+  margin: 15px auto;
+  box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+article.project.full .field--name-field-link {
+  text-align: center;
+}
+#block-projects-block .views-row {
+  display: inline-block;
+  text-align: center;
+  margin: 20px;
+}
+/*END Projects*/
+
+/* Recent Dev Blog Posts */
+.post-squares .view-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+.post-squares  .view-content > div {
+    flex:  1;
+    margin: 10px;
+    min-width: 160px;
+}
+.post-squares  .view-content > div > * {
+    margin: 5px;
+}
+/* END Recent Dev Blog Posts */
+
+/*Random*/
+h2.unpublished:after {
+  content: "(Unpublished)";
+  margin: 5px;
+  font-size: 60%;
+  color: red;
+}
+/*END Random*/

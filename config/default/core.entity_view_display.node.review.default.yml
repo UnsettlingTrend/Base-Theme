@@ -1,0 +1,29 @@
+uuid: 25bff513-26bc-47ae-85bc-0ba343f180cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.review.body
+    - node.type.review
+  module:
+    - text
+    - user
+id: node.review.default
+targetEntityType: node
+bundle: review
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

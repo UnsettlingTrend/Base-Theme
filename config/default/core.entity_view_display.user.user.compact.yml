@@ -1,0 +1,69 @@
+uuid: b3098212-ef1f-4c87-abd1-e1c75040f1cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - field_layout
+    - layout_builder
+    - layout_discovery
+    - svg_image
+    - user
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
+  layout_builder:
+    enabled: true
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings: {  }
+        components:
+          9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0:
+            uuid: 9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:user:user:user_picture'
+              formatter:
+                type: image
+                settings:
+                  image_style: thumbnail
+                  image_link: content
+                  svg_attributes:
+                    width: ''
+                    height: ''
+                  svg_render_as_image: true
+                third_party_settings: {  }
+                label: hidden
+            additional: {  }
+            weight: 0
+_core:
+  default_config_hash: '-cLsS3M3JycipXQt9rEb81_HxKneReoGuRh8ijcOPXs'
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  user_picture:
+    type: image
+    weight: 0
+    region: content
+    settings:
+      image_style: thumbnail
+      image_link: content
+      svg_attributes:
+        width: ''
+        height: ''
+      svg_render_as_image: true
+    third_party_settings: {  }
+    label: hidden
+hidden:
+  langcode: true
+  member_for: true

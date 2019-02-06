@@ -1,0 +1,23 @@
+uuid: fd307188-5abb-404b-882f-7fa260de4d68
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search_content
+  module:
+    - views
+  theme:
+    - chris
+id: exposedformsearch_contentpage_1
+theme: chris
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:search_content-page_1'
+settings:
+  id: 'views_exposed_filter_block:search_content-page_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility: {  }

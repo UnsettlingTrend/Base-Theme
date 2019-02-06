@@ -1,0 +1,20 @@
+uuid: 79b38451-c47f-4aef-8183-8516887f16be
+langcode: en
+status: true
+dependencies:
+  theme:
+    - chris
+_core:
+  default_config_hash: 1TQP4b3ZnlzvIH9bj6cpCz_SyUHdJjLQkZnHpikjjhw
+id: chris_page_title
+theme: chris
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

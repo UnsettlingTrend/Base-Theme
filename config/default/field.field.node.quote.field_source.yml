@@ -1,0 +1,21 @@
+uuid: 3233e81e-cc8d-46b6-84a1-b714b8ab2f07
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_source
+    - node.type.quote
+  module:
+    - text
+id: node.quote.field_source
+field_name: field_source
+entity_type: node
+bundle: quote
+label: Source
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text
