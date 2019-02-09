@@ -1,0 +1,14 @@
+uuid: 5a5d4c07-eff1-4dfd-80f1-446dc4427d96
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.restricted_content
+id: restricted_content-member
+label: Member
+weight: -100
+internal: true
+audience: member
+group_type: restricted_content
+permissions_ui: true
+permissions: {  }

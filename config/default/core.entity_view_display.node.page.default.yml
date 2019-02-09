@@ -4,6 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.node.page.body
+    - field.field.node.page.field_show_date
+    - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
     - node.type.page
   module:
     - field_layout
@@ -47,6 +50,55 @@ third_party_settings:
               id: 'extra_field_block:node:page:links'
             additional: {  }
             weight: 1
+          e7d25dce-dd72-4794-bafd-a97c1c4645f0:
+            uuid: e7d25dce-dd72-4794-bafd-a97c1c4645f0
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_tags'
+              formatter:
+                label: above
+                settings:
+                  link: true
+                third_party_settings: {  }
+                type: entity_reference_label
+            additional: {  }
+            weight: 2
+          0e76e9f5-3e06-480b-aa6a-eb2c3d4f7be1:
+            uuid: 0e76e9f5-3e06-480b-aa6a-eb2c3d4f7be1
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_subtitle'
+              formatter:
+                label: above
+                settings: {  }
+                third_party_settings: {  }
+                type: text_default
+            additional: {  }
+            weight: 3
+          6e6e3e76-fe6b-4530-8165-05c8697990a1:
+            uuid: 6e6e3e76-fe6b-4530-8165-05c8697990a1
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_show_date'
+              formatter:
+                label: above
+                settings:
+                  format: default
+                  format_custom_false: ''
+                  format_custom_true: ''
+                third_party_settings: {  }
+                type: boolean
+            additional: {  }
+            weight: 4
 _core:
   default_config_hash: g1S3_GLaxq4l3I9RIca5Mlz02MxI2KmOquZpHw59akM
 id: node.page.default
@@ -61,6 +113,31 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_show_date:
+    weight: 104
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_subtitle:
+    weight: 103
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_tags:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   links:
     weight: 101
     region: content

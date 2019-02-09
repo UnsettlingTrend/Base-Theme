@@ -1,0 +1,11 @@
+uuid: af823df7-6039-44e4-a4fd-328ac34c27ff
+langcode: en
+status: true
+dependencies: {  }
+id: restricted_content
+label: 'Restricted Content'
+description: ''
+creator_membership: true
+creator_wizard: true
+creator_roles:
+  - restricted_content-admin
