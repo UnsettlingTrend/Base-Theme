@@ -1,0 +1,30 @@
+uuid: 92d30295-a8a7-4123-8f6d-a75880b8e847
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.media.field_media
+    - paragraphs.paragraphs_type.media
+  module:
+    - field_layout
+    - layout_discovery
+    - media_library
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
+id: paragraph.media.default
+targetEntityType: paragraph
+bundle: media
+mode: default
+content:
+  field_media:
+    type: media_library_widget
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

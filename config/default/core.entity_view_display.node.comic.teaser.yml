@@ -1,0 +1,31 @@
+uuid: a8d48ea3-cecc-4185-8cbb-e6841ab59d8f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.comic.body
+    - node.type.comic
+  module:
+    - text
+    - user
+id: node.comic.teaser
+targetEntityType: node
+bundle: comic
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

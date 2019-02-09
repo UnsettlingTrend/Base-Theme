@@ -1,0 +1,22 @@
+uuid: d18fe147-02cf-4c41-bb05-622e9e9c0da1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.comic
+  module:
+    - text
+id: node.comic.body
+field_name: body
+entity_type: node
+bundle: comic
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary
