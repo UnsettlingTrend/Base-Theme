@@ -8,9 +8,13 @@ dependencies:
     - field.field.node.comic.field_tags
     - node.type.comic
   module:
+    - layout_builder
     - svg_image
     - text
     - user
+third_party_settings:
+  layout_builder:
+    sections: {  }
 id: node.comic.default
 targetEntityType: node
 bundle: comic
@@ -19,13 +23,13 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 101
+    weight: 3
     settings: {  }
     third_party_settings: {  }
     region: content
   field_image:
-    weight: 102
-    label: above
+    weight: 1
+    label: hidden
     settings:
       svg_attributes:
         width: ''
@@ -37,17 +41,17 @@ content:
     type: image
     region: content
   field_tags:
-    weight: 103
-    label: above
+    weight: 2
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
   links:
-    weight: 100
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true
