@@ -4,13 +4,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_result
-    - field.field.node.page.body
+    - field.field.node.page.comment
+    - field.field.node.page.field_paragraph
+    - field.field.node.page.field_show_date
+    - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
+    - field.field.node.page.field_take_aways
     - node.type.page
   module:
     - field_layout
     - layout_builder
     - layout_discovery
-    - text
     - user
 third_party_settings:
   field_layout:
@@ -23,22 +27,6 @@ third_party_settings:
         layout_id: layout_onecol
         layout_settings: {  }
         components:
-          10780017-a8c9-43b0-9b21-551515bdb722:
-            uuid: 10780017-a8c9-43b0-9b21-551515bdb722
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:page:body'
-              formatter:
-                type: text_summary_or_trimmed
-                settings:
-                  trim_length: 300
-                third_party_settings: {  }
-                label: hidden
-            additional: {  }
-            weight: 0
           4480793d-bf1b-4b4e-8bf9-1628e5839b1f:
             uuid: 4480793d-bf1b-4b4e-8bf9-1628e5839b1f
             region: content
@@ -56,18 +44,16 @@ targetEntityType: node
 bundle: page
 mode: search_result
 content:
-  body:
-    type: text_summary_or_trimmed
-    weight: 100
-    settings:
-      trim_length: 300
-    third_party_settings: {  }
-    label: hidden
-    region: content
   links:
     weight: 101
     settings: {  }
     third_party_settings: {  }
     region: content
 hidden:
+  comment: true
+  field_paragraph: true
+  field_show_date: true
+  field_subtitle: true
+  field_tags: true
+  field_take_aways: true
   langcode: true

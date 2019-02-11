@@ -1,42 +1,81 @@
-uuid: 9b8eb50a-edb5-46fa-9d5d-0c2b97286417
+uuid: 955fec2b-9ecb-4ec8-93ab-014221a3adae
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.book.body
-    - node.type.book
+    - field.field.node.project.body
+    - field.field.node.project.field_company
+    - field.field.node.project.field_image
+    - field.field.node.project.field_link
+    - field.field.node.project.field_status
+    - image.style.thumbnail
+    - node.type.project
   module:
     - content_moderation
     - field_layout
     - layout_discovery
+    - link
     - path
+    - svg_image
     - text
 third_party_settings:
   field_layout:
     id: layout_onecol
     settings: {  }
-_core:
-  default_config_hash: H1OKi53WidZbjVbzIreUknr_87Ln_lveBQ1RojZKUQA
-id: node.book.default
+id: node.project.default
 targetEntityType: node
-bundle: book
+bundle: project
 mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 26
-    region: content
+    weight: 121
     settings:
       rows: 9
       summary_rows: 3
       placeholder: ''
     third_party_settings: {  }
+    region: content
   created:
     type: datetime_timestamp
     weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_company:
+    weight: 125
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_image:
+    weight: 122
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_link:
+    weight: 123
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_status:
+    weight: 124
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   langcode:
     type: language_select
     weight: 2
@@ -88,11 +127,11 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 5
-    region: content
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 50

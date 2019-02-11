@@ -1,18 +1,16 @@
-uuid: 3efa3664-4a8f-4a94-8e1e-34f9e06bdaa9
+uuid: 089fe121-c447-4164-93b9-cb0e5b207b86
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.body
-    - node.type.book
+    - node.type.project
   module:
     - text
-_core:
-  default_config_hash: AiTQTXl5A774TltS4-nZcpLmnMuEEtRq5lxnLYVtG6U
-id: node.book.body
+id: node.project.body
 field_name: body
 entity_type: node
-bundle: book
+bundle: project
 label: Body
 description: ''
 required: false

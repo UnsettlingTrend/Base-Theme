@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.review.body
+    - field.field.node.review.field_date_time
     - node.type.review
   module:
+    - datetime
     - text
     - user
 id: node.review.default
@@ -19,6 +21,15 @@ content:
     weight: 101
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_date_time:
+    weight: 102
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   links:
     weight: 100

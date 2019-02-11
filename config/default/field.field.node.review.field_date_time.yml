@@ -1,0 +1,24 @@
+uuid: 70e880eb-ae3b-4ed8-88de-51ee27cd6f07
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_time
+    - node.type.review
+  module:
+    - datetime
+id: node.review.field_date_time
+field_name: field_date_time
+entity_type: node
+bundle: review
+label: 'Date and Time'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

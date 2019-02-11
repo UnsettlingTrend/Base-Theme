@@ -6,7 +6,11 @@ dependencies:
     - field.field.paragraph.text.field_text
     - paragraphs.paragraphs_type.text
   module:
+    - layout_builder
     - text
+third_party_settings:
+  layout_builder:
+    sections: {  }
 id: paragraph.text.default
 targetEntityType: paragraph
 bundle: text
@@ -14,7 +18,7 @@ mode: default
 content:
   field_text:
     weight: 0
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
