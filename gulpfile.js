@@ -12,6 +12,7 @@ var cleanCss = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
+var clean = require('gulp-clean');
 
 var theme_location = 'web/themes/custom/chris/';
 
@@ -23,38 +24,41 @@ gulp.task('test', function() {
 
 // SASS
 gulp.task('sass', function () {
-    return gulp.src(theme_location + 'scss/*.scss')
+    gulp.src(theme_location + 'dist/css', {read: false})
+        .pipe(clean());
+    return gulp.src(theme_location + 'src/scss/layout.scss')
         .pipe(sass())
+        .pipe(concat('styles.css'))
         .pipe(gulp.dest(theme_location + 'dist/css'))
 });
 
 // SASS Watch
-gulp.task('sass:watch', function () {
-    gulp.watch(theme_location + 'scss/*.scss', ['sass'])
-});
+// gulp.task('sass:watch', function () {
+//     gulp.watch(theme_location + 'scss/*.scss', ['sass'])
+// });
 
 // CSS Minify
-gulp.task('cssmin', function(){
-    return gulp.src(theme_location + 'dist/css/style.css')
-        .pipe(cleanCss())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(theme_location + 'dist/css'))
-});
+// gulp.task('cssmin', function(){
+//     return gulp.src(theme_location + 'dist/css/style.css')
+//         .pipe(cleanCss())
+//         .pipe(rename({suffix: '.min'}))
+//         .pipe(gulp.dest(theme_location + 'dist/css'))
+// });
 
 // JS Concat
-gulp.task('jscon', function(){
-    return gulp.src(theme_location + 'js/*.js')
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest(theme_location + 'dist/js'))
-});
+// gulp.task('jscon', function(){
+//     return gulp.src(theme_location + 'js/*.js')
+//         .pipe(concat('all.js'))
+//         .pipe(gulp.dest(theme_location + 'dist/js'))
+// });
 
 // JS Minify
-gulp.task('jsmin', function(){
-    return gulp.src(theme_location + 'dist/js/all.js')
-        .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(theme_location + 'dist/js'))
-});
+// gulp.task('jsmin', function(){
+//     return gulp.src(theme_location + 'dist/js/all.js')
+//         .pipe(uglify())
+//         .pipe(rename({suffix: '.min'}))
+//         .pipe(gulp.dest(theme_location + 'dist/js'))
+// });
 
 // ----Multi Tasks----
 // SASS + CSS Minify

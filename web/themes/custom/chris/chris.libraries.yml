@@ -1,6 +1,6 @@
 global-styling:
   css:
     theme:
-      css/style.css: {}
-      css/style.images.css: {}
-      css/style.media.css: {}
+      dist/css/styles.css: {}
+  js:
+    dist/js/scripts.js: {}
