@@ -1,0 +1,16 @@
+/**
+ * Styles for the Recent Blog Posts blocks
+ */
+
+.post-squares .view-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.post-squares  .view-content > div {
+  flex:  1;
+  margin: 10px;
+  min-width: 160px;
+}
+.post-squares  .view-content > div > * {
+  margin: 5px;
+}

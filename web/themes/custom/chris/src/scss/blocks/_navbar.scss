@@ -1,0 +1,35 @@
+/**
+ * Styles for sitewide navbar
+ */
+
+header.navbar .navbar-nav > .active > a {
+  color: #368ead;
+  font-weight: bolder;
+}
+header.navbar {
+  margin-bottom: 0px;
+}
+.logo.navbar-btn.pull-left,
+.name.navbar-brand {
+  float: none !important;
+  display:block;
+}
+.region.region-header {
+  text-align: center;
+}
+.navbar-header {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.name.navbar-brand {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor: pointer;
+  border: none;
+  font: normal 45px/normal "Passero One", Helvetica, sans-serif;
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  color: rgba(100,152,206,1);
+}

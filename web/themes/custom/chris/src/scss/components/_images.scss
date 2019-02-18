@@ -1,3 +1,7 @@
+/**
+ * Styles for images and their captions
+ */
+
 figure.embedded-entity {
   margin: 15px auto;
 }
@@ -18,8 +22,6 @@ figure.align-center img {
 figure.align-center figcaption {
   text-align: center;
 }
-
-/*Image Captions*/
 article.media-image.view-mode-in-content {
   position: relative;
 }
@@ -36,4 +38,3 @@ article.media-image.view-mode-in-content .field--name-field-text {
   font-size: larger;
   font-style: italic;
 }
-/*END Image Captions*/

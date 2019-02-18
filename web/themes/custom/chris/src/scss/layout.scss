@@ -5,18 +5,32 @@
 
 /**** General ****/
 @import 'general/vars';
+@import 'general/links';
 
 /**** Components ****/
+@import 'components/buttons';
+@import 'components/fonts';
+@import 'components/images';
+@import 'components/random';
 
+/**** Fields ****/
+@import 'fields/media';
+@import 'fields/tags';
+@import 'fields/take-aways';
 
 /**** Blocks ****/
+@import 'blocks/book';
+@import 'blocks/breadcrumbs';
+@import 'blocks/navbar';
+@import 'blocks/projects';
+@import 'blocks/quotes';
+@import 'blocks/recent-posts';
+@import 'blocks/title';
 
+/**** Regions ****/
+@import 'regions/footer';
+@import 'regions/header';
+@import 'regions/secondary';
 
 /**** Pages ****/
 
-
-
-/**** Temporary Files ****/
-@import 'temp.images';
-@import 'temp.media';
-@import 'temp.style';
