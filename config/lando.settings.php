@@ -130,13 +130,15 @@ $settings['rebuild_access'] = TRUE;
  */
 $settings['skip_permissions_hardening'] = TRUE;
 
+$config_directories['local'] = '../config/local';
 
-$databases['default']['default'] = array(
-  'driver' => 'mysql',
-  'host' => 'database',
+$databases['default']['default'] = array (
   'database' => 'drupal8',
   'username' => 'drupal8',
   'password' => 'drupal8',
-  'port' => '3306',
   'prefix' => '',
+  'host' => 'database',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
 );

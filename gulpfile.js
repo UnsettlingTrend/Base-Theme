@@ -1,3 +1,6 @@
+// Theme Locations!!!! All paths are based on this.
+var theme_location = 'web/themes/custom/chris/';
+
 // ----Include gulp----
 var gulp = require('gulp');
 
@@ -13,8 +16,6 @@ var concat = require('gulp-concat');
 var sourceMaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var clean = require('gulp-clean');
-
-var theme_location = 'web/themes/custom/chris/';
 
 // ----Tasks----
 // Test and Identify Path
@@ -60,14 +61,19 @@ gulp.task('jsmin', function(){
         .pipe(gulp.dest(theme_location + 'dist/js'))
 });
 
-
-// SASS
+// IMG minimize
 gulp.task('img', function () {
     gulp.src(theme_location + 'dist/images', {read: false})
         .pipe(clean());
     return gulp.src(theme_location + 'src/images/*')
         .pipe(imagemin())
         .pipe(gulp.dest(theme_location + 'dist/images'))
+});
+
+// FONTS move
+gulp.task('fonts', function() {
+    gulp.src(theme_location + 'src/fonts/**.ttf')
+        .pipe(gulp.dest(theme_location + 'dist/fonts'));
 });
 
 // ----Multi Tasks----
@@ -78,5 +84,5 @@ gulp.task('jsconmin', sequence('jscon', 'jsmin'))
 // Imaages
 gulp.task('images', sequence('img'))
 
-// Default - SASS + CSS Minify + JS Concat + JS Uglify
-gulp.task('default', sequence('sass', 'cssmin', 'jscon', 'jsmin', 'img'))
+// Default - SASS + CSS Minify + JS Concat + JS Uglify + Images
+gulp.task('default', sequence('sass', 'cssmin', 'jscon', 'jsmin', 'img', 'fonts'))
