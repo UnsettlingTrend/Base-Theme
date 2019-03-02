@@ -27,9 +27,21 @@ header.navbar {
   box-sizing: content-box;
   cursor: pointer;
   border: none;
-  font: normal 45px/normal "Passero One", Helvetica, sans-serif;
+  font: normal 35px/normal "Passero One", Helvetica, sans-serif;
   text-align: center;
   -o-text-overflow: clip;
   text-overflow: clip;
   color: rgba(100,152,206,1);
+}
+
+ul.menu.menu--main.nav.navbar-nav > * {
+  display: inline-block;
+}
+
+@media only screen and (min-width:500px)
+{
+  .name.navbar-brand {
+    font-size: 45px;
+  }
+
 }
