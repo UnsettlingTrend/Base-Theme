@@ -1,0 +1,18 @@
+/**
+ * Styles for the Take-aways field
+ */
+
+.field--name-field-take-aways {
+  margin: 5px 15px 5px 15px;
+}
+.field--name-field-take-aways > .field--label {
+  font-weight: lighter;
+  font-style: italic;
+}
+.field--name-field-take-aways > .field__items > .field--item {
+  font-weight: bold;
+}
+.field--name-field-take-aways > .field__items > .field--item::before {
+  content: "\2022  ";
+}
+/*END Take-aways*/

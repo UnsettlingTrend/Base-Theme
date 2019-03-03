@@ -1,0 +1,18 @@
+uuid: 3549a44d-37e8-4e4d-b9f2-e50353d0c332
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Quote
+type: quote
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

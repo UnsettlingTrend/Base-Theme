@@ -1,0 +1,17 @@
+uuid: 5970d726-a076-4870-99ff-e92576591db8
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.restricted_content
+  enforced:
+    config:
+      - user.role.administrator
+id: restricted_content-a416e6833
+label: Administrator
+weight: 2
+internal: true
+audience: outsider
+group_type: restricted_content
+permissions_ui: false
+permissions: {  }

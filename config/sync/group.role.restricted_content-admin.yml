@@ -1,0 +1,24 @@
+uuid: 13997fd5-0ecb-4b91-b3e5-4e0b3be8b0c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.restricted_content
+id: restricted_content-admin
+label: Admin
+weight: 100
+internal: false
+audience: member
+group_type: restricted_content
+permissions_ui: true
+permissions:
+  - 'access content overview'
+  - 'administer group'
+  - 'delete group'
+  - 'edit group'
+  - 'view group'
+  - 'administer members'
+  - 'update own group_membership content'
+  - 'leave group'
+  - 'view group_membership content'
+  - 'access group_node overview'

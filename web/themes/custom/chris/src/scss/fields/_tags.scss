@@ -1,0 +1,13 @@
+/**
+ * Styles for tag-related fields
+ */
+
+.field--name-field-tags {
+  margin-top: 10px;
+}
+.field--name-field-tags > .field__items * + *:before {
+  content: "| ";
+}
+.field--name-field-tags > .field__items > .field--item {
+  display: inline-block;
+}

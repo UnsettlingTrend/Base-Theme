@@ -1,8 +1,6 @@
 global-styling:
   css:
     theme:
-      css/style.css: {}
-
-bootstrap-scripts:
+      dist/css/style.css: {}
   js:
-    bootstrap/dist/js/bootstrap.js: {}
+    dist/js/scripts.js: {}

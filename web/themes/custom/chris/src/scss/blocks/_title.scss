@@ -1,0 +1,25 @@
+/**
+ * Styles for Titles and Submission Info
+ */
+
+.subtitle {
+  font-style: italic;
+  color: darkgrey;
+  text-align: center;
+}
+div.main-container {
+  margin-top: 15px;
+}
+.submission-info {
+  text-align: center;
+  color: gray;
+  margin-bottom: 5px;
+}
+article[about="/access-denied"] .submission-info {
+  display: none;
+}
+h1.page-header {
+  padding-bottom: 0px;
+  border-bottom: none;
+  text-align: center;
+}

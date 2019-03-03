@@ -1,0 +1,57 @@
+uuid: fd73d66f-da92-42f3-a19f-b3ed47bbeeec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.comic.body
+    - field.field.node.comic.field_image
+    - field.field.node.comic.field_tags
+    - node.type.comic
+  module:
+    - layout_builder
+    - svg_image
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    sections: {  }
+id: node.comic.default
+targetEntityType: node
+bundle: comic
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_image:
+    weight: 1
+    label: hidden
+    settings:
+      svg_attributes:
+        width: ''
+        height: ''
+      svg_render_as_image: true
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_tags:
+    weight: 2
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
