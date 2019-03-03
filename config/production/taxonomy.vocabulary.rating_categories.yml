@@ -1,9 +1,0 @@
-uuid: d8b8db1f-08fa-4274-b253-effcf82d0e95
-langcode: en
-status: true
-dependencies: {  }
-name: 'Rating Categories'
-vid: rating_categories
-description: ''
-hierarchy: 1
-weight: 0

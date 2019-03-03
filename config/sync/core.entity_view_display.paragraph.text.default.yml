@@ -1,0 +1,26 @@
+uuid: cb34864c-091d-461c-afcf-c21ab2dcfffc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.text.field_text
+    - paragraphs.paragraphs_type.text
+  module:
+    - layout_builder
+    - text
+third_party_settings:
+  layout_builder:
+    sections: {  }
+id: paragraph.text.default
+targetEntityType: paragraph
+bundle: text
+mode: default
+content:
+  field_text:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

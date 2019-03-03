@@ -1,9 +1,0 @@
-uuid: c7b7edcc-1209-4949-9928-accf73b88758
-langcode: en
-status: true
-dependencies: {  }
-id: phone_number
-label: 'Phone number'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

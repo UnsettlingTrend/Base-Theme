@@ -1,0 +1,22 @@
+uuid: 4e5e416e-b4b6-43e2-9618-ce7a0fed4477
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - chris
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: chris_messages
+theme: chris
+region: highlighted
+weight: -6
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

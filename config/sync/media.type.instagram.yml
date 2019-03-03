@@ -1,0 +1,20 @@
+uuid: e5b57ce7-a768-4b21-818e-af2b8933d054
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+    - media_entity_instagram
+third_party_settings:
+  crop:
+    image_field: null
+id: instagram
+label: 'Instagram post'
+description: ''
+source: instagram
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_instagram
+field_map:
+  caption: field_caption

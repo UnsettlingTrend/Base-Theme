@@ -1,9 +1,0 @@
-uuid: 580ca0e5-11a1-456d-aafb-b2a60421ee3e
-langcode: en
-status: true
-dependencies: {  }
-name: Ingredients
-vid: ingredients
-description: ''
-hierarchy: 1
-weight: 0

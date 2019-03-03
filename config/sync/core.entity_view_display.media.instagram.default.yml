@@ -1,0 +1,66 @@
+uuid: a73bd723-b436-47bd-8359-d26e17c36a2d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.instagram.field_caption
+    - field.field.media.instagram.field_media_instagram
+    - image.style.thumbnail
+    - media.type.instagram
+  module:
+    - svg_image
+    - text
+    - user
+id: media.instagram.default
+targetEntityType: media
+bundle: instagram
+mode: default
+content:
+  created:
+    label: hidden
+    type: timestamp
+    weight: 0
+    region: content
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+  field_caption:
+    weight: 7
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_media_instagram:
+    weight: 6
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  thumbnail:
+    type: image
+    weight: 5
+    label: hidden
+    settings:
+      image_style: thumbnail
+      svg_attributes:
+        width: ''
+        height: ''
+      svg_render_as_image: true
+      image_link: ''
+    region: content
+    third_party_settings: {  }
+  uid:
+    label: hidden
+    type: author
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  name: true

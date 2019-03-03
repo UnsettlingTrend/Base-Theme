@@ -1,0 +1,9 @@
+uuid: 0613ccc5-8af9-4a51-b153-b6e0eed89e7f
+langcode: en
+status: true
+dependencies: {  }
+name: Statuses
+vid: statuses
+description: 'List of Statuses'
+hierarchy: 0
+weight: 0
