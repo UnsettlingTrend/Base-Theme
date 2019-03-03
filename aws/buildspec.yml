@@ -1,0 +1,23 @@
+version: 0.0.1
+
+phases:
+  pre_build:
+    commands:
+      - echo Pre-Build started on `date`
+      - echo Pre-Building...
+      - echo Pre-Build finished on `date`
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building...
+      - tar cvf aws/build.tar --files-from /dev/null
+      - echo Build finished on `date`
+  post_build:
+    commands:
+      - echo Post-Build started on `date`
+      - echo Post-Building...
+      - echo Post-Build finished on `date`
+artifacts:
+  files:
+    - aws/build.tar
+    - aws/appspec.yml
