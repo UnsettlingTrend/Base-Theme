@@ -20,3 +20,4 @@ phases:
 artifacts:
   files:
     - aws/build.tar
+    - aws/appspec.yml
