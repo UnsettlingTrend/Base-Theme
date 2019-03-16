@@ -3,7 +3,7 @@ version: 0.1
 phases:
   pre_build:
     commands:
-      - echo Pre-Build
+      - echo Pre-Build started
       - echo Installing gulp...
       - npm install --global gulp-cli
       - echo Pre-Build finished
@@ -21,4 +21,5 @@ phases:
       - echo Post-Build finished
 artifacts:
   files:
+    - index.html
     - appspec.yml
