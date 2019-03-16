@@ -78,23 +78,9 @@
                     "reference": "origin/master"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "ckeditor-plugins/codesnippet",
-                "version": "4.11.2",
-                "type": "drupal-library",
-                "source": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/tree/master/plugins/codesnippet",
-                    "type": "svn",
-                    "reference": ""
-                }
-            }
         }
     ],
     "require": {
-        "ckeditor-plugins/codesnippet": "^4.11",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "dinbror/blazy": "^1.8",
@@ -110,6 +96,7 @@
         "drupal/captcha": "^1.0@beta",
         "drupal/cas": "^1.0@RC",
         "drupal/codesnippet": "^1.6",
+        "drupal/coffee": "^1.0@beta",
         "drupal/colorbox": "^1.4",
         "drupal/components": "^1.0",
         "drupal/config_split": "^1.4",

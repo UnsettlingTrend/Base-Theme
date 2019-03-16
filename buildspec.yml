@@ -1,21 +1,24 @@
-version: 0.2
+version: 0.1
 
 phases:
-  install:
+  pre_build:
     commands:
-      - echo Build started on `date`
+      - echo Pre-Build
       - echo Installing gulp...
       - npm install --global gulp-cli
+      - echo Pre-Build finished
   build:
     commands:
-      - echo Running composer...
-      - composer update
+      - echo Build started
+      - echo Running composer install to add contrib modules and ...
+      - composer install
       - echo Running gulp...
       - gulp
+      - echo Build finished
   post_build:
     commands:
-      - echo Packaging up the code...
-      - echo Build completed on `date`
+      - echo Post-Build started
+      - echo Post-Build finished
 artifacts:
   files:
     - appspec.yml
