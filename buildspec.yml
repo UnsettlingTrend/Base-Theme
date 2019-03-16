@@ -4,6 +4,7 @@ phases:
   install:
     commands:
       - php -v
+      - lsb_release -a
       - echo Install started
       - echo `pwd`
       - cd ..
