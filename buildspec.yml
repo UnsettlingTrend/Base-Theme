@@ -13,7 +13,7 @@ phases:
       - sudo apt-get update
       # Add missing php extensions...
       - sudo apt-get install -y libpng-dev
-      - sudo apt-get install -y php7.1-gd php7.1-mbstring
+      - sudo apt-get install -y --force-yes php7.1-gd php7.1-mbstring
 #      - npm install bower -g
 #      - npm install grunt -g
       - echo Installing nodejs and npm...
