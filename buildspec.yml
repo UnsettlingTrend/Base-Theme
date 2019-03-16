@@ -10,7 +10,8 @@ phases:
 #      - npm install bower -g
 #      - npm install grunt -g
       - echo Installing nodejs and npm...
-      - sudo apt install nodejs npm
+      - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      - sudo apt-get install -y nodejs npm
       - echo Installing gulp and downloading node_modules...
 #      - npm install gulp -g
 #      - npm install gulp-cli -g
