@@ -9,12 +9,12 @@ phases:
       - echo `pwd`
       - cd ..
       - echo `pwd`
-      - sudo add-apt-repository ppa:ondrej/php
+      # Add any necessary repositories
+      - sudo add-apt-repository ppa:ondrej/php  # Needed for php7.1 extensions
       - sudo apt-get update
       # Add missing php extensions...
-      - sudo apt-get install -y libpng-dev
       - sudo apt-get install -y --force-yes php7.1-gd php7.1-mbstring
-      - sudo service apache2 restart
+      - sudo service httpd restart  # Restart Apache server for extensions to take affect
 #      - npm install bower -g
 #      - npm install grunt -g
       - echo Installing nodejs and npm...
