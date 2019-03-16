@@ -9,6 +9,8 @@ phases:
       - echo `pwd`
 #      - npm install bower -g
 #      - npm install grunt -g
+      - echo Installing nodejs and npm...
+      - sudo apt install nodejs npm
       - echo Installing gulp and downloading node_modules...
 #      - npm install gulp -g
 #      - npm install gulp-cli -g
