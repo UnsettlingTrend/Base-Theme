@@ -10,8 +10,8 @@ phases:
 #      - npm install bower -g
 #      - npm install grunt -g
       - echo Installing gulp and downloading node_modules...
-      - npm install gulp -g
-      - npm install gulp-cli -g
+#      - npm install gulp -g
+#      - npm install gulp-cli -g
       - npm install
 #      - bower install --allow-root
       - echo Running composer install to add contrib modules and libraries...
