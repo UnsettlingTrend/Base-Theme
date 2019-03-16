@@ -8,6 +8,8 @@ phases:
       - cd ..
       - echo `pwd`
       - sudo apt-get update
+      # The base image is missing the gd extension, so add it here
+      - sudo apt-get install php7.1-gd
 #      - npm install bower -g
 #      - npm install grunt -g
       - echo Installing nodejs and npm...
