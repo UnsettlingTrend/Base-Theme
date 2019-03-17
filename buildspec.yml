@@ -23,6 +23,7 @@ phases:
       - npm -v
       - echo Installing gulp and downloading node_modules...
       - npm install
+      - php -m
       - echo Running composer install to add contrib modules and libraries...
       - composer install
       - echo Install finished
