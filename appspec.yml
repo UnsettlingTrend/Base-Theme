@@ -6,7 +6,7 @@ files:
 
 hooks:
   BeforeInstall:
-    - location: scripts/aws/01_configure_instance.sh
+    - location: ~/scripts/aws/01_configure_instance.sh
     - location: scripts/aws/02_install_codebase.sh
     - location: scripts/aws/03_mount_files.sh
       timeout: 300
