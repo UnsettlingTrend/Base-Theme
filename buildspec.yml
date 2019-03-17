@@ -3,6 +3,8 @@ version: 0.1
 phases:
   install:
     commands:
+      - echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+      - sudo apt-get install -y -q
       - php -v
       - lsb_release -a
       - echo Install started
@@ -36,7 +38,7 @@ phases:
     commands:
       - echo Post-Build started
       - echo Post-Build finished
-artifacts:
+artifacts:s
   files:
     - index.html
     - appspec.yml
