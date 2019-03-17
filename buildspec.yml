@@ -24,7 +24,6 @@ phases:
       - echo Installing gulp and downloading node_modules...
       - npm install
       - php -m
-      - /etc/init.d/apache2 restart
       - /etc/init.d/httpd restart
       - echo Running composer install to add contrib modules and libraries...
       - composer install
