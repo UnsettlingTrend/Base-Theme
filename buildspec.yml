@@ -36,7 +36,7 @@ phases:
         php composer-setup.php ;
         php -r "unlink('composer-setup.php');" ;
         mv composer.phar /usr/local/bin/composer
-        npm install -g gulp
+        npm install - gulp
 
       # Start Mysql
       - |
@@ -48,7 +48,9 @@ phases:
       - echo Build started on `date`
       - echo Installing composer deps
       - composer install --no-progress --no-suggest
-
+      - npm -v
+      - echo Installing nodejs deps
+      - npm install
   post_build:
     commands:
       - echo Build completed on `date`
@@ -57,3 +59,7 @@ phases:
       # - /usr/bin/mysql  -u root -e "GRANT ALL ON *.* TO 'test'@'localhost' IDENTIFIED BY '' WITH GRANT OPTION"
       # - mysqladmin -u test create test
       - ./vendor/bin/phpunit
+artifacts:
+  files:
+    - index.html
+    - appspec.yml
