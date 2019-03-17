@@ -19,7 +19,6 @@ phases:
                  php7.3-zip \
                  php7.3-mysql \
                  php7.3-mbstring \
-                 php7.3-mcrypt \
                  php7.3-gd \
                  php7.3-readline \
                  php7.3-opcache \
