@@ -3,10 +3,12 @@ version: 0.1
 phases:
   install:
     commands:
+      # Stop the reporting of messsages because of non-interactive commands
       - echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+      - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
       - sudo apt-get install -y -q
-      - php -v
-      - lsb_release -a
+#      - php -v
+#      - lsb_release -a
       - echo Install started
       - echo `pwd`
       # Add any necessary repositories
