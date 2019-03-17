@@ -63,5 +63,5 @@ phases:
 artifacts:
   files:
     - build.tar
-    - scripts/aws/install_codebase.sh
+    - scripts/aws/*
     - appspec.yml
