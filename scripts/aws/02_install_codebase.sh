@@ -1,3 +1,4 @@
+sudo mkdir -p /var/www
 cd /var/www
 
 # Delete all directories and files (except for build.tar)
