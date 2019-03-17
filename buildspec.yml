@@ -32,6 +32,8 @@ phases:
         #Enable xdebug - phpunit uses this for code coverage
         phpenmod xdebug
 
+        php -v
+
         #Install composer
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php ;
@@ -39,7 +41,7 @@ phases:
         mv composer.phar /usr/local/bin/composer
 
         #Various handy node based dev tools - do you need these during your build? Comment if not.
-        #npm install -g gulp
+        npm install -g gulp
         #npm install -g grunt
         #npm install -g webpack
 
