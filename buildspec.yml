@@ -15,7 +15,7 @@ phases:
       - sudo add-apt-repository ppa:ondrej/php  # Needed for php7.1 extensions
       - sudo apt-get update
       # Add missing php extensions...
-      - sudo apt-get install -y --force-yes php7.1-gd
+      - sudo apt-get install -y --force-yes php-gd
       # - sudo service httpd restart  # Restart Apache server for extensions to take affect
       - echo Installing nodejs and npm...
       - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
@@ -24,7 +24,6 @@ phases:
       - echo Installing gulp and downloading node_modules...
       - npm install
       - php -m
-      - /etc/init.d/httpd restart
       - echo Running composer install to add contrib modules and libraries...
       - composer install
       - echo Install finished
