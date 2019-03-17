@@ -38,7 +38,7 @@ phases:
     commands:
       - echo Post-Build started
       - echo Post-Build finished
-artifacts:s
+artifacts:
   files:
     - index.html
     - appspec.yml
