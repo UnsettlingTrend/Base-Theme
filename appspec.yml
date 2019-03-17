@@ -2,11 +2,11 @@ version: 0.0
 os: linux
 files:
   - source: build.tar
-    destination: /var/www/
+    destination: ~/
 
 hooks:
   BeforeInstall:
-    - location: ~/scripts/aws/01_configure_instance.sh
+    - location: scripts/aws/01_configure_instance.sh
     - location: scripts/aws/02_install_codebase.sh
     - location: scripts/aws/03_mount_files.sh
       timeout: 300

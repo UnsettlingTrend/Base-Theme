@@ -6,7 +6,7 @@ sudo ls | grep -v build.tar | xargs rm
 sudo rm -rf ./*/
 
 # Untar the build file
-sudo tar -xf build.tar
+sudo tar -xf ~/build.tar
 sudo mv /var/www/web /var/www/html
 
 
