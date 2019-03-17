@@ -7,3 +7,4 @@ rm -rf ./*/
 # Untar the build file
 sudo tar -xf build.tar
 mv /var/www/web /var/www/html
+

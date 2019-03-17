@@ -3,11 +3,13 @@ os: linux
 files:
   - source: build.tar
     destination: /var/www/
+  - source: install_codebase.sh
+    destination: ~/
 
 hooks:
   BeforeInstall:
-    - location: scripts/aws/setup_codebase.sh
-    - location: scripts/aws/mount_files.sh
+    - location: ~/install_codebase.sh
+    - location: /var/www/scripts/aws/mount_files.sh
       timeout: 300
       runas: root
 #  AfterInstall:
