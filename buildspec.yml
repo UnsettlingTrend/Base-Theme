@@ -36,7 +36,7 @@ phases:
         php composer-setup.php ;
         php -r "unlink('composer-setup.php');" ;
         mv composer.phar /usr/local/bin/composer
-        npm install - gulp
+        npm install -g gulp
 
       # Start Mysql
       - |
