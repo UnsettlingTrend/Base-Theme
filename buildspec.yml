@@ -2,9 +2,11 @@ version: 0.2
 phases:
   install:
     commands:
-      - export DEBIAN_FRONTEND=noninteractive
-      #Install php7.1
-      - apt-get update
+      - |
+        export DEBIAN_FRONTEND=noninteractive
+
+        #Install php7.1
+        apt-get update
         apt-get install -y  software-properties-common
         LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
         apt-get update
@@ -26,11 +28,11 @@ phases:
                  php7.3-curl \
                  unzip
 
-      #Enable xdebug - phpunit uses this for code coverage
-      - phpenmod xdebug
+        #Enable xdebug - phpunit uses this for code coverage
+        phpenmod xdebug
 
-      #Install composer
-      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        #Install composer
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php ;
         php -r "unlink('composer-setup.php');" ;
         mv composer.phar /usr/local/bin/composer
@@ -39,10 +41,15 @@ phases:
         npm install -g gulp
         #npm install -g grunt
         #npm install -g webpack
+      - php -v
+      #- sudo a2enmod php7.3
+      #- sudo a2dismod php7.1
+      #- sudo update-alternatives --set php /usr/bin/php7.1
+      #- sudo systemctl restart apache2
 
-      # Install mysql
-      - apt-get install -y mysql-server
-      - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
+      # Start Mysql if you need it
+      # - apt-get install -y mysql-server
+      # - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
       - php -v
