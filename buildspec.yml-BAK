@@ -1,0 +1,49 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      # Stop the reporting of messsages because of non-interactive commands
+      - echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+      - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+      - sudo apt-get install -y -q
+#      - php -v
+#      - lsb_release -a
+      - echo Install started
+      - echo `pwd`
+      # Add any necessary repositories
+      - sudo add-apt-repository ppa:ondrej/php  # Needed for php7.1 extensions
+      - sudo apt-get update
+      # Add missing php extensions...
+      - sudo apt-get install -y --force-yes php-gd
+      # - sudo service httpd restart  # Restart Apache server for extensions to take affect
+      - echo Installing nodejs and npm...
+      - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+      - sudo apt-get install -y --force-yes nodejs
+      - npm -v
+      - echo Installing gulp and downloading node_modules...
+      - npm install
+      - sudo apt-get install apache2 -y
+      - sudo service apache2 start
+      - ls /etc/init.d
+      - echo Running composer install to add contrib modules and libraries...
+      - composer install
+      - echo Install finished
+  pre_build:
+    commands:
+      - echo Pre-Build started
+      - echo Pre-Build finished
+  build:
+    commands:
+      - echo Build started
+      - echo Running gulp...
+      - gulp
+      - echo Build finished
+  post_build:
+    commands:
+      - echo Post-Build started
+      - echo Post-Build finished
+artifacts:
+  files:
+    - index.html
+    - appspec.yml
