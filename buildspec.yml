@@ -59,7 +59,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - tar -czf build.tar private web config
+      - tar -czf build.tar web config scripts
 artifacts:
   files:
     - build.tar
