@@ -23,6 +23,8 @@ phases:
       - npm -v
       - echo Installing gulp and downloading node_modules...
       - npm install
+      - sudo apt-get install apache2
+      - sudo service apache2 start
       - ls /etc/init.d
       - echo Running composer install to add contrib modules and libraries...
       - composer install
