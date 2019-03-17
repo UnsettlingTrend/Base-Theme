@@ -32,8 +32,6 @@ phases:
         #Enable xdebug - phpunit uses this for code coverage
         phpenmod xdebug
 
-        php -v
-
         #Install composer
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php ;
@@ -50,6 +48,7 @@ phases:
       # - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
+      - php -v
       - echo Build started on `date`
       - echo Installing composer deps
       - composer install --no-progress --no-suggest
