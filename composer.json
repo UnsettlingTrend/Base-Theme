@@ -161,6 +161,7 @@
         "drupal/tokenuuid": "^1.2",
         "drupal/video_embed_field": "~2.0",
         "drupal/views_infinite_scroll": "^1.5",
+        "drupal/workbench": "^1.1",
         "drush/drush": "^9.4",
         "enyo/dropzone": "~4.3",
         "fengyuanchen/cropper": "^4.0",
