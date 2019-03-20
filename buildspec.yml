@@ -1,21 +1,67 @@
-version: 0.2
-
+version: 0.2    # This is important! Don't change from 0.2
 phases:
   install:
     commands:
-      - echo Build started on `date`
-      - echo Installing gulp...
-      - npm install --global gulp-cli
+      - export DEBIAN_FRONTEND=noninteractive   # Avoid warnings/errors due to no interactive CLI
+
+      #Install php7.1
+      - |
+        apt-get update
+        apt-get install -y  software-properties-common
+        LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+        apt-get update
+
+        apt-get install -y php7.3\
+                 php7.3-ldap \
+                 php7.3-xml \
+                 php7.3-xmlrpc \
+                 php7.3-zip \
+                 php7.3-mysql \
+                 php7.3-mbstring \
+                 php7.3-gd \
+                 php7.3-readline \
+                 php7.3-opcache \
+                 php7.3-xdebug \
+                 php7.3-dom \
+                 php-xdebug \
+                 php7.3-curl \
+                 unzip
+
+      #Enable xdebug - phpunit uses this for code coverage
+      - phpenmod xdebug
+
+      #Install composer and gulp
+      - |
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php ;
+        php -r "unlink('composer-setup.php');" ;
+        mv composer.phar /usr/local/bin/composer
+        npm install -g gulp
+
+      # Start Mysql
+      - |
+        apt-get install -y mysql-server
+        su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
-      - echo Running composer...
-      - composer update
-      - echo Running gulp...
-      - gulp
+      - php -v
+      - echo Build started on `date`
+      - echo Installing composer deps
+      - composer install --no-progress --no-suggest
+      - npm -v
+      - echo Installing nodejs deps
+      - npm install
+      # Do you need to do this? In many cases phpunit will use sqllite or similar to avoid the need for a real DB.
+      # If you don't need it delete it
+      # - /usr/bin/mysql  -u root -e "GRANT ALL ON *.* TO 'test'@'localhost' IDENTIFIED BY '' WITH GRANT OPTION"
+      # - mysqladmin -u test create test
+      - ./vendor/bin/phpunit
   post_build:
     commands:
-      - echo Packaging up the code...
       - echo Build completed on `date`
+      - tar -czf build.tar web config
 artifacts:
   files:
+    - build.tar
+    - scripts/aws/*
     - appspec.yml
