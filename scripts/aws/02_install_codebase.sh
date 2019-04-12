@@ -1,8 +1,7 @@
+# Delete the /var/www directory, recreate it, and go to it
+sudo rm -rf /var/www
 sudo mkdir -p /var/www
 cd /var/www
-
-# Delete all directories and files
-rm -rf  ./
 
 # Untar the build file
 sudo tar -xf /tmp/build.tar
