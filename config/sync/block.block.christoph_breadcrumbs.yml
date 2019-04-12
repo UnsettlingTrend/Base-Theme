@@ -1,0 +1,22 @@
+uuid: 7233b7b4-92e8-4f6c-81b9-fde34007c713
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - christoph
+_core:
+  default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
+id: christoph_breadcrumbs
+theme: christoph
+region: content
+weight: -5
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

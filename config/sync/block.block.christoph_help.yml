@@ -1,0 +1,22 @@
+uuid: e70d10c2-5cad-4e7e-bc7b-0f80ef208c5f
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - christoph
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: christoph_help
+theme: christoph
+region: help
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

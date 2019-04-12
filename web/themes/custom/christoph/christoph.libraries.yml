@@ -1,0 +1,11 @@
+global:
+  version: VERSION
+  css:
+    base:
+      css/christoph.css: {}
+  js:
+    js/christoph.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/modernizr
