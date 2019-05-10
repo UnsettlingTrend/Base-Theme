@@ -5,5 +5,4 @@ dependencies: {  }
 name: Statuses
 vid: statuses
 description: 'List of Statuses'
-hierarchy: 0
 weight: 0

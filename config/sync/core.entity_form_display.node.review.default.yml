@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.review.field_date_time
     - node.type.review
   module:
-    - content_moderation
     - datetime
     - field_layout
     - layout_discovery
@@ -49,12 +48,6 @@ content:
     region: content
     settings:
       include_locked: true
-    third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 10
-    settings: {  }
-    region: content
     third_party_settings: {  }
   path:
     type: path

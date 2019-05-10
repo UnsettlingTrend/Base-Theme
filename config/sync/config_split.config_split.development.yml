@@ -1,0 +1,15 @@
+uuid: a001d2d6-7f32-449a-8419-462b37541b01
+langcode: en
+status: true
+dependencies: {  }
+id: development
+label: Development
+description: 'Configuration settings for development server.'
+folder: ../config/dev
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

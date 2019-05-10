@@ -6,8 +6,8 @@ dependencies:
     - image.style.media_entity_browser_thumbnail
   module:
     - entity_browser
-    - image
     - media
+    - svg_image
     - user
 _core:
   default_config_hash: _ouvvjB-2mzyW_my2WhKPWGHdsWUYdHSagahvxOcYHk

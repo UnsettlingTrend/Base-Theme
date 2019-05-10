@@ -5,5 +5,4 @@ dependencies: {  }
 name: Companies
 vid: companies
 description: 'List of relevant Companies'
-hierarchy: 0
 weight: 0

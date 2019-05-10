@@ -1,0 +1,15 @@
+uuid: ecae6ba4-bf18-4b81-8905-9873257e4006
+langcode: en
+status: true
+dependencies: {  }
+id: test
+label: Test
+description: 'Configuration settings for testing server.'
+folder: ../config/test
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

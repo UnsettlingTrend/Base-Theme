@@ -1,35 +1,41 @@
-uuid: d704ff21-1bd9-489f-a4b6-06df6da0dde0
+uuid: 51fcde78-e0dd-49a4-a256-7ddaf306eedc
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.wysiwyg
     - field.field.node.quote.body
     - field.field.node.quote.field_source
     - field.field.node.quote.field_tags
     - node.type.quote
   module:
+    - layout_builder
     - text
     - user
-id: node.quote.teaser
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+id: node.quote.wysiwyg
 targetEntityType: node
 bundle: quote
-mode: teaser
+mode: wysiwyg
 content:
   body:
     label: hidden
-    type: text_summary_or_trimmed
-    weight: 101
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    region: content
-  links:
-    weight: 100
+    type: text_default
+    weight: 0
     settings: {  }
     third_party_settings: {  }
     region: content
+  field_source:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
 hidden:
-  field_source: true
   field_tags: true
   langcode: true
+  links: true

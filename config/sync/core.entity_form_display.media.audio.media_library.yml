@@ -5,9 +5,9 @@ dependencies:
   config:
     - core.entity_form_mode.media.media_library
     - field.field.media.audio.field_media_audio_file
+    - field.field.media.audio.field_media_image
     - media.type.audio
   module:
-    - content_moderation
     - field_layout
     - layout_discovery
 third_party_settings:
@@ -28,12 +28,6 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 100
-    settings: {  }
-    region: content
-    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 0
@@ -45,6 +39,7 @@ content:
 hidden:
   created: true
   field_media_audio_file: true
+  field_media_image: true
   path: true
   status: true
   uid: true
