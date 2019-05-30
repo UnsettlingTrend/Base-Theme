@@ -1,0 +1,10 @@
+div#drupal-modal--dialog {
+  margin-top: 0;
+  overflow: scroll;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 300px !important;
+  }
+}

@@ -1,5 +1,5 @@
 // Theme Locations!!!! All paths are based on this.
-var theme_location = 'web/themes/custom/chris/';
+var theme_location = 'web/themes/custom/christoph/';
 
 // ----Include gulp----
 var gulp = require('gulp');

@@ -1,46 +1,23 @@
-name: ZURB Foundation Sub-theme Christoph
-description: "Custom sub-theme, inherits from the Foundation base theme read <a href=\"http://foundation.zurb.com/docs/index.php\">framework documentation</a>"
 core: 8.x
 type: theme
-base theme: zurb_foundation
+base theme: classy
 
-# Image appears on admin/appearance
-# screenshot: images/screenshot.jpg
-
-# Uncomment these lines and change "STARTER" to your theme name if you
-# need to add custom CSS or JS
-libraries:
- - christoph/global
-
-# Regions are output in the page.html.twig
+name: 'Christoph'
+description: 'Uses the jsDelivr CDN for all CSS and JavaScript. No source files or compiling is necessary and is recommended for simple sites or beginners.'
+package: 'Bootstrap'
 
 regions:
-  meta_header: 'Meta Header'
-  header: Header
-  help: Help
-  page_top: 'Page top'
-  page_bottom: 'Page bottom'
-  highlighted: Highlighted
-  content: Content
-  sidebar_first: 'Left Sidebar'
-  sidebar_second: 'Right Sidebar'
-  footer_first: 'Footer first column'
-  footer_middle: 'Footer middle column'
-  footer_last: 'Footer last column'
-  left_off_canvas: 'Left off canvas'
-  right_off_canvas: 'Right off canvas'
-regions_hidden:
-  page_top: 'Page Top'
-  page_bottom: 'Page bottom'
+  header: 'Header'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Primary'
+  sidebar_second: 'Secondary'
+  footer: 'Footer'
 
-# Hidden regions
-# regions_hidden[]: Page top
-# regions_hidden[]: Page bottom
+libraries:
+  - christoph/global-styling
 
-features:
-  - logo
-  - name
-  - slogan
-  - favicon
-  - comment_user_picture
-  - node_user_picture
+ckeditor_stylesheets:
+  - css/style.css

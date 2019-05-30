@@ -1,44 +1,18 @@
 <?php
-
-// Add your custom theme override functions here.
-
 /**
- * Implements hook_preprocess_block()
- */
-function christoph_preprocess_block(&$variables) {
-}
-
-/**
- * Implements template_preprocess_field().
- */
-function christoph_preprocess_field(&$variables) {
-}
-
-/**
- * Implements template_preprocess_html().
+ * @file
+ * Bootstrap sub-theme.
  *
- * Adds additional classes
+ * Place your custom PHP code in this file.
  */
-function christoph_preprocess_html(&$variables) {
-}
 
-/**
- * Implements template_preprocess_node
- *
- * Add template suggestions and classes
- */
-function christoph_preprocess_node(&$variables) {
-}
+//christoph_preprocess_node($variables) {
+//  ddl($variables, 'vars');
+//}
 
-/**
- * Implements template_preprocess_page
- *
- * Add convenience variables and template suggestions
- */
-function christoph_preprocess_page(&$variables) {
-}
-
-/**
- * Implements template_preprocess_views_view().
- */
-function christoph_preprocess_views_view(&$variables) {}
+//function christoph_preprocess(&$variables, $hook, $info) {
+  //Bootstrap::preprocess($variables, $hook, $info);
+//  ddl($variables, 'vars');
+//  ddl($hook, 'hook');
+//  ddl($info, 'info');
+//}
