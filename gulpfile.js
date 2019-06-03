@@ -6,6 +6,7 @@ var gulp = require('gulp');
 
 // ----Include Plugins----
 var sass = require('gulp-sass');
+var plumber = require('gulp-plumber');
 var imagemin = require('gulp-imagemin');
 var del = require('del');
 var cache = require('gulp-cache');
@@ -28,7 +29,8 @@ gulp.task('sass', function () {
     gulp.src(theme_location + 'dist/css', {read: false})
         .pipe(clean());
     return gulp.src(theme_location + 'src/scss/layout.scss')
-        .pipe(sass())                        // Compile SASS
+        .pipe(plumber())                // Don't let errors crash gulp watch
+        .pipe(sass())                   // Compile SASS
         .pipe(concat('style.css'))
         .pipe(gulp.dest(theme_location + 'dist/css'))
 });
@@ -49,7 +51,7 @@ gulp.task('cssmin', function() {
 // JS Concat
 gulp.task('jscon', function(){
     return gulp.src(theme_location + 'src/js/*.js')
-        .pipe(concat('all.js'))
+        .pipe(concat('scripts.js'))
         .pipe(gulp.dest(theme_location + 'dist/js'))
 });
 
@@ -78,11 +80,16 @@ gulp.task('fonts', function() {
 
 // ----Multi Tasks----
 // SASS + CSS Minify
-gulp.task('sassmin', sequence('sass', 'cssmin'))
+gulp.task('sassmin', sequence('sass', 'cssmin'));
 // JS Concat + JS Uglify
-gulp.task('jsconmin', sequence('jscon', 'jsmin'))
+gulp.task('jsconmin', sequence('jscon', 'jsmin'));
 // Imaages
-gulp.task('images', sequence('img'))
+gulp.task('images', sequence('img'));
 
 // Default - SASS + CSS Minify + JS Concat + JS Uglify + Images
-gulp.task('default', sequence('sass', 'cssmin', 'jscon', 'jsmin', 'img', 'fonts'))
+gulp.task('default', sequence('sass', 'cssmin', 'jscon', 'jsmin', 'img', 'fonts'));
+
+
+gulp.task('watch', function(){
+    return gulp.watch(theme_location + 'src/scss/**/*.scss', ['sass']);
+});
