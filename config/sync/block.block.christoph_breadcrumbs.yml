@@ -1,4 +1,4 @@
-uuid: 7233b7b4-92e8-4f6c-81b9-fde34007c713
+uuid: c5d4e52a-9ed6-432d-9c0d-90b6d1c25a70
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   theme:
     - christoph
 _core:
-  default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
+  default_config_hash: 8by5KRsb7ZpmjHj0ms1d7xAG_xH54AWsOX6spDLJ59U
 id: christoph_breadcrumbs
 theme: christoph
-region: content
-weight: -5
+region: breadcrumb
+weight: 0
 provider: null
 plugin: system_breadcrumb_block
 settings:

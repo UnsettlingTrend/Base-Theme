@@ -1,4 +1,4 @@
-uuid: c6833957-f318-4751-95a0-ef6ec2773afc
+uuid: 836fd258-c469-4705-94ee-f8bda5158900
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   theme:
     - christoph
 _core:
-  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+  default_config_hash: YqKTtloWJ8FjLtfVNfrHaK6kVgxT67lC1cJ3j6i6WLo
 id: christoph_messages
 theme: christoph
 region: highlighted
-weight: -6
+weight: 0
 provider: null
 plugin: system_messages_block
 settings:

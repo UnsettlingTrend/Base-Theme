@@ -44,6 +44,7 @@ third_party_settings:
                 label: hidden
             additional: {  }
             weight: 0
+        third_party_settings: {  }
 _core:
   default_config_hash: '-cLsS3M3JycipXQt9rEb81_HxKneReoGuRh8ijcOPXs'
 id: user.user.compact

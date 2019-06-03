@@ -1,15 +1,15 @@
-uuid: 4a7b6fda-e6cc-4379-b10d-4b58f19de3f5
+uuid: 70f9e38e-69de-405f-915c-ef0c05e82730
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - christoph
 _core:
-  default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
-id: bootstrap_content
-theme: bootstrap
+  default_config_hash: 80N66GdzEvwqi1m-_GZ-ulkk8AJG9beoXcZ4-pMVKjI
+id: christoph_content
+theme: christoph
 region: content
 weight: 0
 provider: null

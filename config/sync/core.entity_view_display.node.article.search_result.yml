@@ -75,6 +75,7 @@ third_party_settings:
               id: 'extra_field_block:node:article:links'
             additional: {  }
             weight: 2
+        third_party_settings: {  }
 _core:
   default_config_hash: uFyekWl4pl40ClJFmjk9tcyPJ-WFSXYsItJHB_XbQqs
 id: node.article.search_result

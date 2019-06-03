@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_display.comment.comment.default
     - field.field.node.page.comment
     - field.field.node.page.field_paragraph
+    - field.field.node.page.field_preview_image
     - field.field.node.page.field_show_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_tags
@@ -136,6 +137,24 @@ third_party_settings:
                 type: comment_default
             additional: {  }
             weight: 0
+          7ad5a610-f673-452b-af58-5f102d7f43fd:
+            uuid: 7ad5a610-f673-452b-af58-5f102d7f43fd
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_preview_image'
+              formatter:
+                type: entity_reference_entity_view
+                label: above
+                settings:
+                  view_mode: default
+                  link: false
+                third_party_settings: {  }
+            additional: {  }
+            weight: 5
+        third_party_settings: {  }
     allow_custom: true
 _core:
   default_config_hash: g1S3_GLaxq4l3I9RIca5Mlz02MxI2KmOquZpHw59akM
@@ -162,6 +181,15 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
+  field_preview_image:
+    type: entity_reference_entity_view
+    weight: 6
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    region: second
   field_subtitle:
     weight: 1
     label: hidden

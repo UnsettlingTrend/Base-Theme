@@ -1,0 +1,28 @@
+uuid: 86474238-f849-4c16-b306-360d043007a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_preview_image
+    - media.type.image
+    - node.type.page
+id: node.page.field_preview_image
+field_name: field_preview_image
+entity_type: node
+bundle: page
+label: 'Preview image'
+description: 'An image to be displayed with this content in teaser forms.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

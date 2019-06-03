@@ -42,6 +42,7 @@ third_party_settings:
                 type: image
             additional: {  }
             weight: 0
+        third_party_settings: {  }
 _core:
   default_config_hash: jOwnt_yq6AKAfqU6f0xKnxEkFQ2eTPJWxrk3WMLbL68
 id: media.image.default

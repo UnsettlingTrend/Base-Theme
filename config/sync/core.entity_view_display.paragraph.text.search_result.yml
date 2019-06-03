@@ -1,16 +1,22 @@
-uuid: cb34864c-091d-461c-afcf-c21ab2dcfffc
+uuid: 4c4ad045-4cc0-456b-8b6e-48f6dc06cc70
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.search_result
     - field.field.paragraph.text.field_text
     - paragraphs.paragraphs_type.text
   module:
+    - layout_builder
     - text
-id: paragraph.text.default
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+id: paragraph.text.search_result
 targetEntityType: paragraph
 bundle: text
-mode: default
+mode: search_result
 content:
   field_text:
     weight: 0

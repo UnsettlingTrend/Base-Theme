@@ -1,4 +1,4 @@
-uuid: ff82d280-f788-4bc1-938c-114ce9eae96a
+uuid: 36a10032-b1e7-4b92-b859-a1b0ab571bb5
 langcode: en
 status: true
 dependencies:
@@ -8,12 +8,10 @@ dependencies:
     - system
   theme:
     - christoph
-_core:
-  default_config_hash: GT_zYl7I9VAILH8OxMRe-VDvFadCDHxRcnmBc5xEmf0
-id: christoph_main_menu
+id: mainnavigation
 theme: christoph
-region: header
-weight: -2
+region: navigation
+weight: -6
 provider: null
 plugin: 'system_menu_block:main'
 settings:
@@ -22,6 +20,6 @@ settings:
   provider: system
   label_display: '0'
   level: 1
-  depth: 2
+  depth: 0
   expand_all_items: false
 visibility: {  }

@@ -1,15 +1,13 @@
-uuid: 5338674b-7cad-4f17-b25c-3d40f18d6a4e
+uuid: 24d1543a-4f59-4b5d-bfe3-d676010289b3
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - chris
-_core:
-  default_config_hash: Cy3vkpYrD1O5JG-BeEnokF0bByHYDEa8CBfWivB4_SQ
-id: chris_branding
-theme: chris
+    - christoph
+id: sitebranding
+theme: christoph
 region: header
 weight: -7
 provider: null

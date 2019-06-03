@@ -1,15 +1,15 @@
-uuid: e7d215ed-d141-4cd0-b9c7-8a23e826b0cb
+uuid: a0f36736-be9d-4b89-b5c1-60efbb35a052
 langcode: en
 status: true
 dependencies:
   theme:
     - christoph
 _core:
-  default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
+  default_config_hash: ik4PTMlBD0MWansnSMpSXq5SUlWRJ1IVVt6C7AIbQmc
 id: christoph_local_actions
 theme: christoph
 region: content
-weight: -3
+weight: -1
 provider: null
 plugin: local_actions_block
 settings:
