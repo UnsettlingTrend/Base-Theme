@@ -2,7 +2,25 @@
  * Styles that don't currently fit anywhere else, but should be elsewhere
  */
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+nav[role="navigation"].tabs {
+  max-width: 1280px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /**** Main area and body ****/
+/*
 [role="main"] p {
   font-size: 1.2em;
 }
@@ -22,11 +40,15 @@
 body {
   color: #333333;
 }
+*/
+
 
 /**** Unpublished styling ****/
+/*
 h2.unpublished:after {
   content: "(Unpublished)";
   margin: 5px;
   font-size: 60%;
   color: red;
 }
+*/

@@ -6,13 +6,13 @@
 
 html {
   background-color: $primary_3;
+  font-family: $font_primary;
 }
 
 body {
-  background-color: $primary_2;
+  background-color: $secondary_3;
+  color: $gray_5;
 }
-
-
 
 .layout.layout--threecol-25-50-25 {
   > * {

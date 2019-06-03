@@ -8,5 +8,12 @@ body > .dialog-off-canvas-main-canvas > .layout-container > {
     background-color: $primary_3;
     padding-top: 10px;
     margin-top: 10px;
+
+    div.region-footer {
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
+
 }

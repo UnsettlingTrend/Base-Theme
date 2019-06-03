@@ -3,8 +3,23 @@
  */
 
 .region-header {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 .region-header > a {
   padding-top: 0;
+}
+
+div.site-name {
+  font-family: $font_logo;
+  font-size: 2.3em;
+  text-align:center;
+
+  a {
+    text-decoration: none;
+    color: $primary_3;
+  }
+
+  @media screen and (min-width: 400px) {
+    font-size: 3em;
+  }
 }
