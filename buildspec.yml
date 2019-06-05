@@ -11,13 +11,22 @@ phases:
       - export DEBIAN_FRONTEND=noninteractive
 
       #Install php7.3
-      - apt-get update
-      #- apt-get install -y  software-properties-common
-      #- LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-      #- apt-get update
-      - php --version
-      - apt-get install -y php-ldap php-xml php-xmlrpc php-zip php-mysql php-mbstring php-gd php-readline php-opcache php-xdebug php-dom php-xdebug php-curl unzip
-      #- php --version
+      - apt-get update -y
+      - apt-get install -y  software-properties-common
+      - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+      - apt-get update -y
+      - apt-get install -y php7.3-ldap php7.3-xml php7.3-xmlrpc php7.3-zip php7.3-mysql php7.3-mbstring php7.3-gd php7.3-readline php7.3-opcache php7.3-xdebug php7.3-dom php7.3-xdebug php7.3-curl unzip
+      - php -m
+      - ls /usr/lib/php/20180731
+#      - ls /usr/lib/php/20180731
+#      - touch /usr/local/etc/php/conf.d/extra_config.ini
+#      - "echo extension_dir=\"/usr/lib/php/20180731/\" >> /usr/local/etc/php/conf.d/extra_config.ini"
+#      - "echo extension=gd.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+#      - "echo zend_extension=xdebug.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+#      - cat /usr/local/etc/php/conf.d/extra_config.ini
+#      - php -m
+
+
 
       #Enable xdebug - phpunit uses this for code coverage
       - phpenmod xdebug
