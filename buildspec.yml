@@ -1,6 +1,8 @@
 version: 0.2    # This is important! Don't change from 0.2
 phases:
   install:
+    runtime-versions:
+      php: 7.3
     commands:
       # Print the version of Linux
       - lsb_release -a
