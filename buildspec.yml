@@ -34,6 +34,7 @@ phases:
       - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
+      - composer -vvv about
       - php -v
       - echo Build started on `date`
       - echo Installing composer deps
