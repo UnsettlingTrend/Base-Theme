@@ -16,6 +16,7 @@ phases:
       - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
       - apt-get update -y
       - apt-get install -y php7.3-ldap php7.3-xml php7.3-xmlrpc php7.3-zip php7.3-mysql php7.3-mbstring php7.3-gd php7.3-readline php7.3-opcache php7.3-xdebug php7.3-dom php7.3-xdebug php7.3-curl unzip
+      - sudo systemctl restart apache2
       - php -m
       - ls /usr/lib/php/20180731
 #      - ls /usr/lib/php/20180731
