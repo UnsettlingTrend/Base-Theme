@@ -35,6 +35,7 @@ phases:
   build:
     commands:
       - composer -vvv about
+      - ls /etc/php/
       - php -v
       - echo Build started on `date`
       - echo Installing composer deps
