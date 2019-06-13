@@ -9,6 +9,7 @@ sudo rm -rf /var/www/html/sites/default/files
 
 # Mount the s3 bucket
 sudo /usr/local/bin/s3fs com-chrisferagotti-unsettlingtrend -o use_cache=/tmp -o allow_other -o uid=1001 -o mp_umask=002 -o multireq_max=5 /var/www/s3
+#sudo /usr/local/bin/s3fs com-chrisferagotti-unsettlingtrend -o use_cache=/tmp -o allow_other -o mp_umask=002 -o multireq_max=5 /var/www/s3
 
 # Create symlinks for the private and public file directories
 ln -s /var/www/s3/dev/private /var/www/private

@@ -1,4 +1,7 @@
 # Delete the /var/www directory, recreate it, and go to it
+sudo su
+sudo fusermount -u /var/www/s3/
+exit
 sudo rm -rf /var/www
 sudo mkdir -p /var/www
 cd /var/www
