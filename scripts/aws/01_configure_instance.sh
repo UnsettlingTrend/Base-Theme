@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Starting from a clean amazon linux instance? Run this
 
 # Install nginx

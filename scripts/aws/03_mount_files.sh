@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Mount an S3 bucket for public and private file systems
 # Public files location:  /var/www/html/sites/default/files/
 # Private files location: /var/www/private

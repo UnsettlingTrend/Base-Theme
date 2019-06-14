@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # These are commands that will need to be run on brand new instances before codedeploy can work
 
 # Install codedeploy agent

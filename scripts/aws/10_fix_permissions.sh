@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Make sure all permissions are correct
 
 # Set nginx as owner for directories
