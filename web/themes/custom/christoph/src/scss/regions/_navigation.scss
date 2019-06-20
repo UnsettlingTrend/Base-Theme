@@ -7,7 +7,8 @@ div.region-navigation {
   background: $gray_2;
   justify-content: center;
 
-  a, a:hover, a:visited{
+  a, a:hover, a:visited {
+    display: inline-block;
     color: $gray_white;
     text-decoration: none;
     font-family: $font_secondary;
