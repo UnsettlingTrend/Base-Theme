@@ -1,0 +1,46 @@
+uuid: e3aaae8a-e2b3-4c40-8331-072df246c332
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.tile
+    - field.field.media.image.field_media_image
+    - image.style.tile_large
+    - media.type.image
+  module:
+    - field_layout
+    - layout_builder
+    - svg_image
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
+  layout_builder:
+    enabled: false
+    allow_custom: false
+_core:
+  default_config_hash: jOwnt_yq6AKAfqU6f0xKnxEkFQ2eTPJWxrk3WMLbL68
+id: media.image.tile
+targetEntityType: media
+bundle: image
+mode: tile
+content:
+  field_media_image:
+    label: visually_hidden
+    settings:
+      image_style: tile_large
+      image_link: file
+      svg_render_as_image: '1'
+      svg_attributes:
+        width: ''
+        height: ''
+    third_party_settings: {  }
+    type: image
+    weight: 1
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

@@ -8,11 +8,10 @@ dependencies:
     - paragraphs
     - search_api
   config:
-    - field.storage.node.field_paragraph
     - field.storage.node.field_tags
+    - field.storage.node.field_paragraph
     - field.storage.paragraph.field_text
     - search_api.server.default_server
-    - core.entity_view_mode.node.search_index
 _core:
   default_config_hash: GLmLegZGHtMF6annRqgjizJAoiAip-IT-XOsDMCZfog
 id: default_index
@@ -46,14 +45,6 @@ field_settings:
     dependencies:
       module:
         - node
-  field_paragraph:
-    label: Paragraph
-    datasource_id: 'entity:node'
-    property_path: field_paragraph
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_paragraph
   field_tags:
     label: Tags
     datasource_id: 'entity:node'
@@ -62,14 +53,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_tags
-  field_text:
-    label: Text
-    datasource_id: 'entity:paragraph'
-    property_path: field_text
-    type: text
-    dependencies:
-      config:
-        - field.storage.paragraph.field_text
   node_grants:
     label: 'Node access information'
     property_path: search_api_node_grants
@@ -77,47 +60,38 @@ field_settings:
     indexed_locked: true
     type_locked: true
     hidden: true
-  parent_id:
-    label: 'Parent ID'
-    datasource_id: 'entity:paragraph'
-    property_path: parent_id
-    type: string
+  processed:
+    label: 'Paragraph » Paragraph » Text » Processed text'
+    datasource_id: 'entity:node'
+    property_path: 'field_paragraph:entity:field_text:processed'
+    type: text
+    boost: !!float 3
     dependencies:
+      config:
+        - field.storage.node.field_paragraph
+        - field.storage.paragraph.field_text
       module:
         - paragraphs
   rendered_item:
-    label: 'Rendered item'
-    property_path: rendered_item
-    type: text
-    configuration:
-      roles:
-        anonymous: anonymous
-      view_mode:
-        'entity:node':
-          article: search_index
-          page: search_index
-  rendered_item_1:
     label: 'Rendered HTML output'
     property_path: rendered_item
     type: text
     configuration:
       roles:
         administrator: administrator
-        anonymous: anonymous
-        authenticated: authenticated
       view_mode:
         'entity:node':
           article: default
           comic: default
-          forum: default
-          note: default
+          forum: ''
+          note: ''
           page: default
-          project: default
+          project: ''
           quote: default
-          review: default
+          review: ''
         'entity:paragraph':
-          from_library: default
-          media: default
+          from_library: ''
+          media: ''
           text: default
   status:
     label: 'Publishing status'
@@ -167,15 +141,18 @@ field_settings:
 datasource_settings:
   'entity:node':
     bundles:
-      default: true
-      selected: {  }
+      default: false
+      selected:
+        - article
+        - page
     languages:
       default: true
       selected: {  }
   'entity:paragraph':
     bundles:
       default: true
-      selected: {  }
+      selected:
+        - text
     languages:
       default: true
       selected: {  }
@@ -205,8 +182,7 @@ processor_settings:
       postprocess_query: 0
   html_filter:
     all_fields: false
-    fields:
-      - rendered_item
+    fields: {  }
     title: true
     alt: true
     tags:
@@ -222,10 +198,8 @@ processor_settings:
     all_fields: true
     fields:
       - author
-      - field_text
-      - parent_id
+      - processed
       - rendered_item
-      - rendered_item_1
       - title
       - type
     weights:
@@ -239,9 +213,8 @@ processor_settings:
   stemmer:
     all_fields: true
     fields:
-      - field_text
+      - processed
       - rendered_item
-      - rendered_item_1
       - title
     exceptions:
       mexican: mexic
@@ -252,9 +225,8 @@ processor_settings:
   stopwords:
     all_fields: true
     fields:
-      - field_text
+      - processed
       - rendered_item
-      - rendered_item_1
       - title
     stopwords:
       - a
@@ -298,9 +270,8 @@ processor_settings:
   tokenizer:
     all_fields: true
     fields:
-      - field_text
+      - processed
       - rendered_item
-      - rendered_item_1
       - title
     spaces: ''
     overlap_cjk: 1
@@ -311,7 +282,6 @@ processor_settings:
   transliteration:
     all_fields: false
     fields:
-      - rendered_item
       - title
     weights:
       preprocess_index: -47
