@@ -3,11 +3,32 @@
  */
 
 .field--name-field-tags {
-  margin-top: 10px;
-}
-.field--name-field-tags > .field__items * + *:before {
-  content: "| ";
-}
-.field--name-field-tags > .field__items > .field--item {
-  display: inline-block;
+  margin: 15px 5px;
+
+  > * + *:before {
+    margin-left: 10px;
+  }
+
+  > .field__item {
+    display: inline-block;
+
+    a {
+      background-color: red;
+      box-shadow: 2px 3px 8px 0px grey;
+      color: white;
+      padding: .2em 1.5em;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: #ce0606;
+        cursor: pointer;
+      }
+
+      &:active {
+        box-shadow: none;
+        top: 5px;
+      }
+    }
+  }
 }

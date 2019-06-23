@@ -17,8 +17,8 @@
 
 /**** Fields ****/
 //@import 'fields/media';
-//@import 'fields/tags';
-//@import 'fields/take-aways';
+@import 'fields/tags';
+@import 'fields/take-aways';
 
 /**** Blocks ****/
 //@import 'blocks/book';
@@ -30,6 +30,9 @@
 @import 'blocks/title';
 //@import 'blocks/search';
 
+/**** Nodes ****/
+@import 'nodes/tiles';
+
 /**** Regions ****/
 @import 'regions/footer';
 @import 'regions/header';
@@ -39,6 +42,7 @@
 
 /**** Views ****/
 @import 'views/search';
+@import 'views/tiles';
 
 /**** Pages ****/
 

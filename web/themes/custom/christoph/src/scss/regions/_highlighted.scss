@@ -3,11 +3,12 @@
  */
 
 div.region-highlighted {
- margin-top: 25px;
+  margin: 0 auto;
 
   div[data-drupal-messages] {
     max-width: 1280px;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
+    margin-top: 15px;
   }
 }

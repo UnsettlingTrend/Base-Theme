@@ -82,15 +82,11 @@
 %}
 {{ attach_library('classy/node') }}
 <article{{ attributes.addClass(classes) }}>
-
-  {{ title_prefix }}
-  <div{{ content_attributes.addClass('node__content') }}>
-    <h2{{ title_attributes }}>
-      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  <a class="tile-content" href="{{ url }}" rel="bookmark">
+    <h2>
+      {{ label }}
     </h2>
     {{ content.field_preview_image }}
-    {{ content.field_subtitle }}
-  </div>
-  {{ title_suffix }}
-
+    {# content.field_subtitle #}
+  </a>
 </article>
