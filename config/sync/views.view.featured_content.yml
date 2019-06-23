@@ -197,6 +197,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
+      css_class: tiles
     cache_metadata:
       max-age: -1
       contexts:

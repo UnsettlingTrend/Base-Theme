@@ -11,7 +11,7 @@ id: node.page.field_take_aways
 field_name: field_take_aways
 entity_type: node
 bundle: page
-label: 'Take aways'
+label: 'The take-aways'
 description: 'Bullet points to summarize the page.'
 required: false
 translatable: false

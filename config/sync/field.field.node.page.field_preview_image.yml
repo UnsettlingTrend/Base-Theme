@@ -6,6 +6,8 @@ dependencies:
     - field.storage.node.field_preview_image
     - media.type.image
     - node.type.page
+  content:
+    - 'media:image:f65c1c8f-2b41-48cc-903a-9ff6785a44ea'
 id: node.page.field_preview_image
 field_name: field_preview_image
 entity_type: node
@@ -14,7 +16,11 @@ label: 'Preview image'
 description: 'An image to be displayed with this content in teaser forms.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    preview: {  }
+    weight: '0'
+    target_uuid: f65c1c8f-2b41-48cc-903a-9ff6785a44ea
 default_value_callback: ''
 settings:
   handler: 'default:media'
