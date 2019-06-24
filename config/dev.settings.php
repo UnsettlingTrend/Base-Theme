@@ -11,11 +11,11 @@ $settings['trusted_host_patterns'][] = [
 ];
 
 $databases['default']['default'] = [
-  'database' => '',
-  'username' => '',
-  'password' => '',
+  'database' => 'drupal',
+  'username' => 'drupal',
+  'password' => 'FK9DzauSMtxm9ywY',
   'prefix' => '',
-  'host' => 'database',
+  'host' => 'dev-com-chrisferagotti-unsettlingtrend-db.c1bni6hcamtp.us-east-1.rds.amazonaws.com',
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
