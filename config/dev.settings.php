@@ -8,6 +8,7 @@ $config_directories['local'] = '../config/dev';
 
 $settings['trusted_host_patterns'][] = [
   '^dev\.chrisferagotti\.com$',
+  '54.174.234.165'
 ];
 
 $databases['default']['default'] = [
