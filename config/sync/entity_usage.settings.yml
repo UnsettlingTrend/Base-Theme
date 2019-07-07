@@ -1,5 +1,6 @@
 track_enabled_base_fields: false
 local_task_enabled_entity_types:
+  - media
   - paragraphs_library_item
 _core:
   default_config_hash: D0RcOA_aIiwSPXOZSHQOTm5FXzziEsJHdfXGaF4nhIQ
@@ -7,3 +8,49 @@ edit_warning_message_entity_types:
   - paragraphs_library_item
 delete_warning_message_entity_types:
   - paragraphs_library_item
+track_enabled_source_entity_types:
+  - block_content
+  - comment
+  - contact_message
+  - content_moderation_state
+  - crop
+  - entity_embed_fake_entity
+  - group
+  - group_content
+  - media
+  - node
+  - paragraphs_library_item
+  - redirect
+  - search_api_task
+  - shortcut
+  - taxonomy_term
+  - menu_link_content
+  - paragraph
+track_enabled_target_entity_types:
+  - block_content
+  - comment
+  - contact_message
+  - content_moderation_state
+  - crop
+  - entity_embed_fake_entity
+  - group
+  - group_content
+  - media
+  - node
+  - paragraphs_library_item
+  - redirect
+  - search_api_task
+  - shortcut
+  - taxonomy_term
+  - menu_link_content
+  - paragraph
+track_enabled_plugins:
+  - dynamic_entity_reference
+  - link
+  - linkit
+  - entity_reference
+  - entity_embed
+  - html_link
+  - block_field
+site_domains: {  }
+usage_controller_items_per_page: 25

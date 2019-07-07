@@ -84,24 +84,6 @@ third_party_settings:
                 type: comment_default
             additional: {  }
             weight: 0
-          5b34eb54-0e89-4f54-bbef-0eaf41aed36a:
-            uuid: 5b34eb54-0e89-4f54-bbef-0eaf41aed36a
-            region: second
-            configuration:
-              id: 'field_block:node:page:field_tags'
-              label: Tags
-              provider: layout_builder
-              label_display: '0'
-              formatter:
-                label: hidden
-                type: entity_reference_label
-                settings:
-                  link: true
-                third_party_settings: {  }
-              context_mapping:
-                entity: layout_builder.entity
-            additional: {  }
-            weight: 3
           6f092340-1a37-4318-b9f2-99f1d5d3a12a:
             uuid: 6f092340-1a37-4318-b9f2-99f1d5d3a12a
             region: second
@@ -127,6 +109,24 @@ third_party_settings:
               id: 'extra_field_block:node:page:links'
             additional: {  }
             weight: 2
+          5b34eb54-0e89-4f54-bbef-0eaf41aed36a:
+            uuid: 5b34eb54-0e89-4f54-bbef-0eaf41aed36a
+            region: second
+            configuration:
+              id: 'field_block:node:page:field_tags'
+              label: Tags
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_label
+                settings:
+                  link: true
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 6
         third_party_settings: {  }
     allow_custom: true
 _core:

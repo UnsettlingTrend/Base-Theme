@@ -57,6 +57,7 @@ settings:
           name: Media
           items:
             - Blockquote
+            - media
             - media_entity_embed
             - node
         -
