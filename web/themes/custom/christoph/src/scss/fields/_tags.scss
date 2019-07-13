@@ -13,7 +13,7 @@
     display: inline-block;
 
     a {
-      background-color: red;
+      background-color: $secondary-1;
       box-shadow: 2px 3px 8px 0px grey;
       color: white;
       padding: .2em 1.5em;
@@ -21,7 +21,7 @@
       text-transform: uppercase;
 
       &:hover {
-        background-color: #ce0606;
+        background-color: $secondary-1;
         cursor: pointer;
       }
 
