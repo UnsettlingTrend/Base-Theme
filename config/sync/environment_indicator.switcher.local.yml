@@ -1,0 +1,10 @@
+uuid: ecc472c1-2131-42e6-803d-9b79b1ca4a45
+langcode: en
+status: true
+dependencies: {  }
+machine: local
+description: null
+name: local
+url: 'http://cf.lndo.site'
+fg_color: '#0d3cd8'
+bg_color: '#d9ede6'

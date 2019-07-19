@@ -49,7 +49,7 @@ third_party_settings:
               context_mapping:
                 entity: layout_builder.entity
             additional: {  }
-            weight: 5
+            weight: 6
           61f4ccaa-e838-4590-b11f-c093e77c8378:
             uuid: 61f4ccaa-e838-4590-b11f-c093e77c8378
             region: second
@@ -66,7 +66,7 @@ third_party_settings:
               context_mapping:
                 entity: layout_builder.entity
             additional: {  }
-            weight: 4
+            weight: 5
           4a1a9ace-b07b-455b-abc4-0af3d8b3d3ee:
             uuid: 4a1a9ace-b07b-455b-abc4-0af3d8b3d3ee
             region: bottom
@@ -98,7 +98,7 @@ third_party_settings:
                 third_party_settings: {  }
                 type: text_default
             additional: {  }
-            weight: 1
+            weight: 3
           dad623d8-0299-420a-99b8-2a808029d92f:
             uuid: dad623d8-0299-420a-99b8-2a808029d92f
             region: second
@@ -108,7 +108,7 @@ third_party_settings:
                 entity: layout_builder.entity
               id: 'extra_field_block:node:page:links'
             additional: {  }
-            weight: 2
+            weight: 4
           5b34eb54-0e89-4f54-bbef-0eaf41aed36a:
             uuid: 5b34eb54-0e89-4f54-bbef-0eaf41aed36a
             region: second
@@ -126,7 +126,25 @@ third_party_settings:
               context_mapping:
                 entity: layout_builder.entity
             additional: {  }
-            weight: 6
+            weight: 7
+          93c3a543-f12e-437f-85d0-08ecbe441d67:
+            uuid: 93c3a543-f12e-437f-85d0-08ecbe441d67
+            region: second
+            configuration:
+              id: 'field_block:node:page:uid'
+              label: 'Authored by'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_label
+                settings:
+                  link: true
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 1
         third_party_settings: {  }
     allow_custom: true
 _core:
@@ -194,3 +212,4 @@ hidden:
   field_show_date: true
   langcode: true
   layout_builder__layout: true
+  search_api_excerpt: true
