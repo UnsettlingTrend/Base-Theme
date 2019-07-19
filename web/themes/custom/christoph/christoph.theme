@@ -1,7 +1,6 @@
 <?php
 /**
  * @file
- * Bootstrap sub-theme.
  *
  * Place your custom PHP code in this file.
  */
@@ -16,3 +15,18 @@
 //  ddl($hook, 'hook');
 //  ddl($info, 'info');
 //}
+
+function christoph_preprocess_field(&$variables, $hook) {
+  $element = $variables['element'];
+  if (isset($element['#field_name'])) {
+    if ($element['#field_name'] == 'uid') {
+
+      $variables['user_name'] = 'name!';
+      $variables['user_photo'] = 'photo!';
+
+     // dpm(array_keys($element['#items']));
+    }
+  }
+
+
+}
