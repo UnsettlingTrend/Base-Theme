@@ -78,9 +78,35 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor/codesnippet",
+                "version": "4.11.4",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/codesnippet/releases/codesnippet_4.11.4.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor/codesnippet",
+                "version": "4.11.4",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/codesnippet/releases/codesnippet_4.11.4.zip",
+                    "type": "zip"
+                }
+            }
         }
+
     ],
     "require": {
+        "ckeditor/codesnippet": "^4.11",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "dinbror/blazy": "^1.8",
@@ -96,6 +122,7 @@
         "drupal/bootstrap": "^3.7",
         "drupal/captcha": "^1.0@beta",
         "drupal/cas": "^1.0@RC",
+        "drupal/ckeditor_codemirror": "^2.2",
         "drupal/codesnippet": "^1.6",
         "drupal/coffee": "^1.0@beta",
         "drupal/colorbox": "^1.4",
@@ -176,7 +203,8 @@
         "phpunit/phpunit": "6.5",
         "squizlabs/php_codesniffer": "^3.3",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3"
+        "webmozart/path-util": "^2.3",
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "require-dev": {
         "behat/mink": "~1.7",
@@ -223,6 +251,11 @@
             "web/profiles/contrib/{$name}": ["type:drupal-profile"],
             "web/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/contrib/{$name}": ["type:drupal-drush"]
+        },
+        "merge-plugin": {
+            "include": [
+                "web/modules/contrib/ckeditor_codemirror/composer.libraries.json"
+            ]
         }
     }
 }
