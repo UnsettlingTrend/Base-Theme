@@ -17,7 +17,12 @@ module:
   book: 0
   breakpoint: 0
   captcha: 0
+  charts: 0
+  charts_api_example: 0
+  charts_google: 0
   ckeditor: 0
+  ckeditor_codemirror: 0
+  codesnippet: 0
   coffee: 0
   color: 0
   colorbox: 0
@@ -90,6 +95,7 @@ module:
   migrate: 0
   migrate_plus: 0
   migrate_tools: 0
+  moderation_sidebar: 0
   module_filter: 0
   node: 0
   options: 0

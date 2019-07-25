@@ -5,6 +5,6 @@ dependencies: {  }
 machine: stg
 description: null
 name: stg
-url: 'http://stage.chrisferagotti.com'
+url: 'http://stg.chrisferagotti.com'
 fg_color: '#b4aa42'
 bg_color: '#d9ede6'
