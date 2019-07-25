@@ -122,6 +122,7 @@
         "drupal/bootstrap": "^3.7",
         "drupal/captcha": "^1.0@beta",
         "drupal/cas": "^1.0@RC",
+        "drupal/charts": "^3.0@beta",
         "drupal/ckeditor_codemirror": "^2.2",
         "drupal/codesnippet": "^1.6",
         "drupal/coffee": "^1.0@beta",
