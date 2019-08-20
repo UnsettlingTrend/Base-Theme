@@ -1,20 +1,19 @@
-uuid: 0ef1046c-f767-47c9-a9c6-56d86b384fea
+uuid: f4e692e7-a1ab-4548-8c3f-34a06a4f27c8
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_paragraph
-    - node.type.page
+    - field.storage.paragraph.field_paragraph
     - paragraphs.paragraphs_type.media
     - paragraphs.paragraphs_type.section
     - paragraphs.paragraphs_type.text
   module:
     - entity_reference_revisions
-id: node.page.field_paragraph
+id: paragraph.section.field_paragraph
 field_name: field_paragraph
-entity_type: node
-bundle: page
-label: Paragraph
+entity_type: paragraph
+bundle: section
+label: Paragraphs
 description: ''
 required: false
 translatable: false
@@ -27,18 +26,17 @@ settings:
     target_bundles:
       media: media
       text: text
-      section: section
     target_bundles_drag_drop:
       from_library:
-        weight: 4
+        weight: 5
         enabled: false
       media:
         enabled: true
-        weight: 5
-      text:
-        enabled: true
         weight: 6
       section:
-        enabled: true
         weight: 7
+        enabled: false
+      text:
+        enabled: true
+        weight: 8
 field_type: entity_reference_revisions
