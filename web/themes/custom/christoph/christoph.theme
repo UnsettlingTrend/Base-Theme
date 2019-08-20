@@ -24,7 +24,6 @@ function christoph_preprocess_field(&$variables, $hook) {
       $variables['user_name'] = 'name!';
       $variables['user_photo'] = 'photo!';
 
-     // dpm(array_keys($element['#items']));
     }
   }
 
