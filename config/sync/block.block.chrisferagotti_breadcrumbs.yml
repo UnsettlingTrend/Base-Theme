@@ -1,0 +1,22 @@
+uuid: a2c251a4-2788-4417-b2db-8e40f72f0934
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - chrisferagotti
+_core:
+  default_config_hash: 8by5KRsb7ZpmjHj0ms1d7xAG_xH54AWsOX6spDLJ59U
+id: chrisferagotti_breadcrumbs
+theme: chrisferagotti
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

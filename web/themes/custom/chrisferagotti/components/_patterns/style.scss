@@ -5,6 +5,10 @@
 @import "breakpoint-sass/stylesheets/breakpoint";
 // End libs
 
+// Start fonts
+@import url('https://fonts.googleapis.com/css?family=Baloo+Chettan|Bangers|Fredoka+One|Anton|Hepta+Slab|Luckiest+Guy&display=swap');
+// End fonts
+
 @import "00-base/**/*.scss";
 @import "01-atoms/**/*.scss";
 @import "02-molecules/**/*.scss";

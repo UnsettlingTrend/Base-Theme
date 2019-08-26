@@ -1,0 +1,20 @@
+uuid: b8e1db0e-b805-4663-9375-26ab1aa8648d
+langcode: en
+status: true
+dependencies:
+  theme:
+    - chrisferagotti
+_core:
+  default_config_hash: Z3nlZUh2mSJP3apMrJWt-duS-aLyP79rcfu_0wpPmDs
+id: chrisferagotti_page_title
+theme: chrisferagotti
+region: content
+weight: -4
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

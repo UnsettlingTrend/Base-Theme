@@ -22,9 +22,19 @@ body {
 
 .blockquote {
   font-style: italic;
-  border-left: solid 3px $color-border;
+  //border-left: solid 3px $color-border;
   margin-left: 1em;
   padding-left: 1em;
+
+  &::before {
+    content: "\201C";
+    font-size: 80px;
+    position: relative;
+    left: -15px;
+    top: 30px;
+    color: $gray-dark;
+    height: 50px;
+  }
 }
 
 .hr {

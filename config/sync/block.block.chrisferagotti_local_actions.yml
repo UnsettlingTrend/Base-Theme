@@ -1,0 +1,20 @@
+uuid: 34e9995e-760b-4cc0-b7dc-f1ad77984473
+langcode: en
+status: true
+dependencies:
+  theme:
+    - chrisferagotti
+_core:
+  default_config_hash: ik4PTMlBD0MWansnSMpSXq5SUlWRJ1IVVt6C7AIbQmc
+id: chrisferagotti_local_actions
+theme: chrisferagotti
+region: content
+weight: -1
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }
