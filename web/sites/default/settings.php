@@ -770,6 +770,10 @@ $settings['trusted_host_patterns'] = [];
 
 $config_directories['sync'] = '../config/sync';
 
+// Set private file directory
+
+$settings['file_private_path'] = '../private';
+
 /**
  * Check for all the possible config settings files
  */
