@@ -1,0 +1,19 @@
+tile_modifiers:
+  1:
+    bg
+
+# Title
+tile_title:
+  'This is a tile-bg title'
+
+# Subtitle
+tile_subtitle:
+
+# Link
+tile_link_url:
+
+# Button
+tile_button_url:
+  '#'
+tile_button_content:
+  'Read more'

@@ -1,0 +1,44 @@
+# Image
+tile_img_modifiers:
+tile_img_blockname:
+tile_img_src:
+  "https://placeimg.com/1280/720/nature"
+tile_img_alt:
+  "This is the tile image's alt text"
+tile_image_output_image_tag: TRUE
+
+# Title
+tile_label:
+  "This is a tile Label"
+tile_title:
+  "This is a tile title"
+tile_title_link:
+tile_title_modifiers:
+  1:
+    no-space
+tile_title_blockname:
+
+# Subtitle
+tile_subtitle:
+  "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus."
+tile_subtitle_link:
+tile_subtitle_modifiers:
+  1:
+    no-space
+tile_subtitle_blockname:
+
+# Body
+tile_body:
+  "Pellentesque in ipsum id orci porta dapibus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a."
+tile_body_modifiers:
+tile_body_blockname:
+
+# Link
+tile_link_url:
+  "#"
+tile_link_text:
+  'Read more about this tile'
+tile_link_modifiers:
+  1:
+    more-link
+tile_link_blockname:

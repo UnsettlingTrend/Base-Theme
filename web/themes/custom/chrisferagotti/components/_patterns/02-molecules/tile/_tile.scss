@@ -1,0 +1,33 @@
+.tile__title {
+  @include heading-large($font-size: 1.3rem);
+  @include no-bottom;
+
+  &-link {
+    @include link;
+  }
+}
+
+.tile__subtitle {
+  @include heading-medium($font-size: 1rem);
+  @include no-bottom;
+
+  color: $gray;
+}
+
+.tile__body {
+  margin: 0.7em 0 1em;
+}
+
+.tile__link {
+  @include link;
+}
+
+.tile__button {
+  @include button;
+}
+
+// Variations
+.tile--bg {
+  background-color: $gray-lightest;
+  padding: 1em;
+}
