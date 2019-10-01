@@ -1,49 +1,50 @@
 version: 0.2    # This is important! Don't change from 0.2
 phases:
   install:
+    runtime-versions:
+      php: 7.3
     commands:
-      - export DEBIAN_FRONTEND=noninteractive   # Avoid warnings/errors due to no interactive CLI
+      # Print the version of Linux
+      - lsb_release -a
 
-      #Install php7.1
-      - |
-        apt-get update
-        apt-get install -y  software-properties-common
-        LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-        apt-get update
+      # Avoid warnings/errors due to no interactive CLI
+      - export DEBIAN_FRONTEND=noninteractive
 
-        apt-get install -y php7.3\
-                 php7.3-ldap \
-                 php7.3-xml \
-                 php7.3-xmlrpc \
-                 php7.3-zip \
-                 php7.3-mysql \
-                 php7.3-mbstring \
-                 php7.3-gd \
-                 php7.3-readline \
-                 php7.3-opcache \
-                 php7.3-xdebug \
-                 php7.3-dom \
-                 php-xdebug \
-                 php7.3-curl \
-                 unzip
+      #Install php7.3
+      - apt-get update -y
+      - apt-get install -y  software-properties-common
+      - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+      - apt-get update -y
+      - apt-get install -y php7.3-ldap php7.3-xml php7.3-xmlrpc php7.3-zip php7.3-mysql php7.3-mbstring php7.3-gd php7.3-readline php7.3-opcache php7.3-xdebug php7.3-dom php7.3-xdebug php7.3-curl unzip
+      #- systemctl restart apache2
+      - php -m
+      - ls /usr/lib/php/20180731
+      - touch /usr/local/etc/php/conf.d/extra_config.ini
+      - "echo extension_dir=\"/usr/lib/php/20180731/\" >> /usr/local/etc/php/conf.d/extra_config.ini"
+      - "echo extension=gd.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+      - "echo zend_extension=xdebug.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+      - cat /usr/local/etc/php/conf.d/extra_config.ini
+      - php -m
+
+
 
       #Enable xdebug - phpunit uses this for code coverage
       - phpenmod xdebug
 
       #Install composer and gulp
-      - |
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php ;
-        php -r "unlink('composer-setup.php');" ;
-        mv composer.phar /usr/local/bin/composer
-        npm install -g gulp
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php composer-setup.php ;
+      - php -r "unlink('composer-setup.php');" ;
+      - mv composer.phar /usr/local/bin/composer
+      - npm install -g gulp
 
       # Start Mysql
-      - |
-        apt-get install -y mysql-server
-        su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
+      - apt-get install -y mysql-server
+      - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
+      - composer -vvv about
+      - ls /etc/php/
       - php -v
       - echo Build started on `date`
       - echo Installing composer deps

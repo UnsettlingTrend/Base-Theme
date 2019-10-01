@@ -1,0 +1,37 @@
+/**
+ * Styles for the Tile view mode for nodes
+ */
+
+.node--view-mode-tile {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  background-color: $gray_white;
+  box-shadow: 2px 3px 8px 0 gray;
+
+  a, a:hover, a:visited {
+    text-decoration: none;
+    color: $gray-white;
+  }
+
+  .tile-content {
+    width: 300px;
+    height: 300px;
+
+    h2 {
+      font-size: 1.2em;
+      padding: 10px;
+      max-height: 250px;
+      display: inline-block;
+      margin: 0;
+      position: absolute;
+      z-index: 1;
+      background-color: rgba($gray-black, .7);
+      color: $gray-white;
+      bottom: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+}

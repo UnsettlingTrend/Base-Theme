@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.review.body
+    - field.field.node.review.field_date_time
     - node.type.review
   module:
     - text
@@ -28,4 +29,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_date_time: true
   langcode: true

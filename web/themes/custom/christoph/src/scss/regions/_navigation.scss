@@ -1,0 +1,46 @@
+/**
+ * Styles for the navigation region
+ */
+
+div.region-navigation {
+  display: flex;
+  background: $gray_2;
+  justify-content: center;
+
+  a, a:hover, a:visited {
+    display: inline-block;
+    color: $gray_white;
+    text-decoration: none;
+    font-family: $font_secondary;
+    padding: 10px;
+  }
+
+  ul.menu {
+    margin: 0 15px;
+    list-style: none;
+
+    li.menu-item {
+      display: inline-block;
+      padding: 0;
+    }
+  }
+
+  nav.menu--main {
+    flex: 6 0 0;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 960px;
+  }
+
+  nav.menu--account {
+    flex: 2 0 0;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 320px;
+  }
+
+  div.block-views-exposed-filter-blocksearch-content-page-search {
+    flex: 1 0 0;
+  }
+}
+

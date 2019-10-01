@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   module:
-    - content_moderation
     - node
     - user
 _core:
@@ -504,10 +503,11 @@ display:
           entity_type: node
           plugin_id: entity_operations
       filters:
-        latest_revision:
-          id: latest_revision
+        latest_translation_affected_revision:
+          id: latest_translation_affected_revision
+          field: latest_translation_affected_revision
+          plugin_id: latest_translation_affected_revision
           table: node_revision
-          field: latest_revision
           relationship: none
           group_type: group
           admin_label: ''
@@ -540,7 +540,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           entity_type: node
-          plugin_id: latest_revision
         title:
           id: title
           table: node_field_revision
@@ -798,8 +797,7 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }
   moderated_content:
     display_plugin: page
     id: moderated_content
@@ -818,5 +816,4 @@ display:
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags:
-        - 'config:workflow_list'
+      tags: {  }

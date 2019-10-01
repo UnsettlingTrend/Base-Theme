@@ -7,6 +7,7 @@ module:
   adminimal_admin_toolbar: 0
   auto_entitylabel: 0
   automated_cron: 0
+  basic_auth: 0
   better_exposed_filters: 0
   big_pipe: 0
   blazy: 0
@@ -16,7 +17,13 @@ module:
   book: 0
   breakpoint: 0
   captcha: 0
+  charts: 0
+  charts_api_example: 0
+  charts_google: 0
   ckeditor: 0
+  ckeditor_codemirror: 0
+  codesnippet: 0
+  coffee: 0
   color: 0
   colorbox: 0
   comment: 0
@@ -34,9 +41,6 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
-  devel: 0
-  devel_debug_log: 0
-  devel_generate: 0
   disable_html5_validation: 0
   draggableviews: 0
   dropzonejs: 0
@@ -47,6 +51,8 @@ module:
   entity_embed: 0
   entity_reference_revisions: 0
   entity_usage: 0
+  environment_indicator: 0
+  environment_indicator_ui: 0
   exif_orientation: 0
   field: 0
   field_group: 0
@@ -57,9 +63,7 @@ module:
   geocoder: 0
   geocoder_address: 0
   geocoder_field: 0
-  geocoder_geofield: 0
   geofield: 0
-  geolocation: 0
   gnode: 0
   graphql: 0
   graphql_core: 0
@@ -72,14 +76,12 @@ module:
   image_widget_crop: 0
   inline_form_errors: 0
   jsonapi: 0
+  jsonapi_defaults: 0
+  jsonapi_extras: 0
   kint: 0
   language: 0
   layout_builder: 0
   layout_discovery: 0
-  leaflet: 0
-  leaflet_demo: 0
-  leaflet_more_maps: 0
-  leaflet_views: 0
   link: 0
   media: 0
   media_entity_browser: 0
@@ -90,6 +92,7 @@ module:
   migrate: 0
   migrate_plus: 0
   migrate_tools: 0
+  moderation_sidebar: 0
   module_filter: 0
   node: 0
   options: 0
@@ -97,7 +100,6 @@ module:
   paragraphs_library: 0
   paragraphs_type_permissions: 0
   path: 0
-  pdf_reader: 0
   physical: 0
   quickedit: 0
   rdf: 0
@@ -105,8 +107,6 @@ module:
   redirect: 0
   redirect_404: 0
   responsive_image: 0
-  rest: 0
-  restui: 0
   rules: 0
   search_api: 0
   search_api_db: 0
@@ -129,10 +129,13 @@ module:
   toolbar: 0
   tour: 0
   typed_data: 0
+  unified_twig_ext: 0
   update: 0
   user: 0
+  views_bulk_operations: 0
   views_infinite_scroll: 0
   views_ui: 0
+  workbench: 0
   workflows: 0
   forum: 1
   menu_link_content: 1
@@ -145,9 +148,9 @@ theme:
   stable: 0
   classy: 0
   seven: 0
-  bootstrap: 0
   adminimal_theme: 0
-  chris: 0
+  christoph: 0
+  chrisferagotti: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

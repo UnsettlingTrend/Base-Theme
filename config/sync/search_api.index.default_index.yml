@@ -2,12 +2,16 @@ uuid: d1c4fd51-70a5-4a34-8420-e15e6cf1235a
 langcode: en
 status: true
 dependencies:
-  config:
-    - search_api.server.default_server
-    - core.entity_view_mode.node.search_index
   module:
-    - search_api
     - node
+    - user
+    - paragraphs
+    - search_api
+  config:
+    - field.storage.node.field_tags
+    - field.storage.node.field_paragraph
+    - field.storage.paragraph.field_text
+    - search_api.server.default_server
 _core:
   default_config_hash: GLmLegZGHtMF6annRqgjizJAoiAip-IT-XOsDMCZfog
 id: default_index
@@ -17,74 +21,141 @@ read_only: false
 field_settings:
   author:
     label: 'Author name'
-    type: string
     datasource_id: 'entity:node'
     property_path: 'uid:entity:name'
+    type: string
+    dependencies:
+      module:
+        - node
+        - user
+        - user
   changed:
     label: Changed
-    type: date
     datasource_id: 'entity:node'
     property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
   created:
     label: 'Authored on'
-    type: date
     datasource_id: 'entity:node'
     property_path: created
+    type: date
+    dependencies:
+      module:
+        - node
   field_tags:
     label: Tags
-    type: integer
     datasource_id: 'entity:node'
     property_path: field_tags
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_tags
   node_grants:
     label: 'Node access information'
-    type: string
     property_path: search_api_node_grants
+    type: string
     indexed_locked: true
     type_locked: true
     hidden: true
-  rendered_item:
-    label: 'Rendered item'
+  processed:
+    label: 'Paragraph » Paragraph » Text » Processed text'
+    datasource_id: 'entity:node'
+    property_path: 'field_paragraph:entity:field_text:processed'
     type: text
+    boost: !!float 3
+    dependencies:
+      config:
+        - field.storage.node.field_paragraph
+        - field.storage.paragraph.field_text
+      module:
+        - paragraphs
+  rendered_item:
+    label: 'Rendered HTML output'
     property_path: rendered_item
+    type: text
     configuration:
       roles:
-        anonymous: anonymous
+        administrator: administrator
       view_mode:
         'entity:node':
-          article: search_index
-          page: search_index
+          article: default
+          comic: default
+          forum: ''
+          note: ''
+          page: default
+          project: ''
+          quote: default
+          review: ''
+        'entity:paragraph':
+          from_library: ''
+          media: ''
+          text: default
   status:
     label: 'Publishing status'
-    type: boolean
     datasource_id: 'entity:node'
     property_path: status
+    type: boolean
     indexed_locked: true
     type_locked: true
+    dependencies:
+      module:
+        - node
   sticky:
     label: 'Sticky at top of lists'
-    type: boolean
     datasource_id: 'entity:node'
     property_path: sticky
+    type: boolean
+    dependencies:
+      module:
+        - node
   title:
     label: Title
-    type: text
     datasource_id: 'entity:node'
     property_path: title
-    boost: 8
+    type: text
+    boost: !!float 13
+    dependencies:
+      module:
+        - node
   type:
     label: 'Content type'
-    type: string
     datasource_id: 'entity:node'
     property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
   uid:
     label: 'Author ID'
-    type: integer
     datasource_id: 'entity:node'
     property_path: uid
+    type: integer
     indexed_locked: true
     type_locked: true
+    dependencies:
+      module:
+        - node
 datasource_settings:
-  'entity:node': {  }
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - article
+        - page
+    languages:
+      default: true
+      selected: {  }
+  'entity:paragraph':
+    bundles:
+      default: true
+      selected:
+        - text
+    languages:
+      default: true
+      selected: {  }
 processor_settings:
   add_url:
     weights:
@@ -99,36 +170,62 @@ processor_settings:
   entity_status:
     weights:
       preprocess_index: -10
-  html_filter:
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
     weights:
-      preprocess_index: -3
-      preprocess_query: -6
-    fields:
-      - rendered_item
+      postprocess_query: 0
+  html_filter:
+    all_fields: false
+    fields: {  }
     title: true
     alt: true
     tags:
+      b: 2
       h1: 5
       h2: 3
       h3: 2
       string: 2
-      b: 2
-  ignorecase:
     weights:
-      preprocess_index: -5
-      preprocess_query: -8
+      preprocess_index: -48
+      preprocess_query: -6
+  ignorecase:
+    all_fields: true
     fields:
+      - author
+      - processed
       - rendered_item
       - title
+      - type
+    weights:
+      preprocess_index: -46
+      preprocess_query: -8
   rendered_item:
     weights:
       add_properties: 0
       pre_index_save: -10
-  stopwords:
-    weights:
-      preprocess_query: -10
-      postprocess_query: -10
+  reverse_entity_references: {  }
+  stemmer:
+    all_fields: true
     fields:
+      - processed
+      - rendered_item
+      - title
+    exceptions:
+      mexican: mexic
+      texan: texa
+    weights:
+      preprocess_index: -43
+      preprocess_query: 0
+  stopwords:
+    all_fields: true
+    fields:
+      - processed
       - rendered_item
       - title
     stopwords:
@@ -167,26 +264,32 @@ processor_settings:
       - was
       - will
       - with
-  tokenizer:
     weights:
-      preprocess_index: -2
-      preprocess_query: -5
+      preprocess_index: -45
+      preprocess_query: -10
+  tokenizer:
+    all_fields: true
     fields:
+      - processed
       - rendered_item
       - title
     spaces: ''
     overlap_cjk: 1
     minimum_word_size: '3'
-  transliteration:
     weights:
-      preprocess_index: -4
-      preprocess_query: -7
+      preprocess_index: -44
+      preprocess_query: -5
+  transliteration:
+    all_fields: false
     fields:
-      - rendered_item
       - title
+    weights:
+      preprocess_index: -47
+      preprocess_query: -7
 tracker_settings:
-  default: {  }
+  default:
+    indexing_order: fifo
 options:
-  cron_limit: 50
   index_directly: true
+  cron_limit: 50
 server: default_server

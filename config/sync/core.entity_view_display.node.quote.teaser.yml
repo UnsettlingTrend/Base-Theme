@@ -5,6 +5,8 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.quote.body
+    - field.field.node.quote.field_source
+    - field.field.node.quote.field_tags
     - node.type.quote
   module:
     - text
@@ -28,4 +30,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_source: true
+  field_tags: true
   langcode: true

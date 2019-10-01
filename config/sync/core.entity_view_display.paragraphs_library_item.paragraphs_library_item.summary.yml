@@ -52,6 +52,7 @@ third_party_settings:
                 third_party_settings: {  }
             additional: {  }
             weight: 1
+        third_party_settings: {  }
 _core:
   default_config_hash: 298FcPciNgWk7pojyH1AA-0apcAkJulU6N3PO89ZXIk
 id: paragraphs_library_item.paragraphs_library_item.summary

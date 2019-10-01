@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_paragraph
     - node.type.page
     - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.section
     - paragraphs.paragraphs_type.text
   module:
     - entity_reference_revisions
@@ -26,6 +27,7 @@ settings:
     target_bundles:
       media: media
       text: text
+      section: section
     target_bundles_drag_drop:
       from_library:
         weight: 4
@@ -36,4 +38,7 @@ settings:
       text:
         enabled: true
         weight: 6
+      section:
+        enabled: true
+        weight: 7
 field_type: entity_reference_revisions

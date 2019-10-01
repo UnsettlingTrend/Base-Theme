@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - blazy
     - editor
     - entity_embed
 _core:
@@ -15,32 +16,74 @@ filters:
     id: filter_html
     provider: filter
     status: true
-    weight: -10
+    weight: -50
     settings:
-      allowed_html: '<a href hreflang class="btn btn-gray"> <em> <strong> <cite> <blockquote cite> <code class=""> <pre class=""> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <br> <span style> <img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix"> <p class="clearfix"> <drupal-entity class="" data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <table class="table table-responsive table-striped"> <td> <th scope> <tr scope> <details> <summary>'
+      allowed_html: '<a href hreflang class="btn btn-gray"> <em> <strong> <cite> <blockquote cite> <code class=""> <pre class=""> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <br> <span style> <img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix"> <p class="clearfix"> <drupal-entity alt title class="" data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <table class="table table-responsive table-striped"> <td> <th scope> <tr scope> <details> <summary>'
       filter_html_help: false
       filter_html_nofollow: false
   filter_align:
     id: filter_align
     provider: filter
     status: true
-    weight: 7
+    weight: -49
     settings: {  }
   filter_caption:
     id: filter_caption
     provider: filter
     status: true
-    weight: 8
+    weight: -48
     settings: {  }
   editor_file_reference:
     id: editor_file_reference
     provider: editor
     status: true
-    weight: 11
+    weight: -46
     settings: {  }
   entity_embed:
     id: entity_embed
     provider: entity_embed
     status: true
-    weight: 0
+    weight: -47
+    settings: {  }
+  blazy_filter:
+    id: blazy_filter
+    provider: blazy
+    status: false
+    weight: -42
+    settings:
+      filter_tags:
+        img: img
+        iframe: iframe
+      media_switch: ''
+      use_data_uri: '0'
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: false
+    weight: -41
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: false
+    weight: -43
+    settings:
+      filter_url_length: 72
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: false
+    weight: -44
+    settings: {  }
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: false
+    weight: -40
+    settings: {  }
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
+    status: false
+    weight: -45
     settings: {  }

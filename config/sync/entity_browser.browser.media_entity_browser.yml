@@ -15,7 +15,7 @@ display_configuration:
   width: '1070'
   height: '840'
   link_text: 'Select entities'
-  auto_open: false
+  auto_open: true
 selection_display: no_display
 selection_display_configuration: {  }
 widget_selector: tabs
@@ -29,5 +29,16 @@ widgets:
       auto_select: false
     uuid: 6586703a-6976-4124-8a49-cbb07ceaa3b1
     weight: 1
-    label: view
+    label: 'View Library'
     id: view
+  78693f51-f418-48ce-9495-94749475aadc:
+    settings:
+      extensions: 'jpg jpeg png gif webp'
+      media_type: image
+      upload_location: 'private://media/images/'
+      multiple: '1'
+      submit_text: 'Select files'
+    uuid: 78693f51-f418-48ce-9495-94749475aadc
+    weight: 2
+    label: 'Upload New Image'
+    id: media_image_upload

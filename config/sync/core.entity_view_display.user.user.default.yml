@@ -53,6 +53,7 @@ third_party_settings:
               id: 'extra_field_block:user:user:member_for'
             additional: {  }
             weight: 1
+        third_party_settings: {  }
 _core:
   default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
 id: user.user.default

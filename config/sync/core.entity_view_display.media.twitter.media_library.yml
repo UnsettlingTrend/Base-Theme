@@ -1,0 +1,35 @@
+uuid: 33e5918f-65ad-4829-8688-dff6daee52ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.twitter.field_media_twitter
+    - image.style.medium
+    - media.type.twitter
+  module:
+    - svg_image
+id: media.twitter.media_library
+targetEntityType: media
+bundle: twitter
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+      svg_attributes:
+        width: ''
+        height: ''
+      svg_render_as_image: true
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_twitter: true
+  langcode: true
+  name: true
+  uid: true

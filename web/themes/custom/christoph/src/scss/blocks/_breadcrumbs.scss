@@ -1,0 +1,18 @@
+/**
+ * Styles for the sitewide breadcrumbs
+ */
+
+div.region-breadcrumb {
+
+  a, a:hover, a:visited {
+    color: $primary_3;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .breadcrumb {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8px;
+  }
+}

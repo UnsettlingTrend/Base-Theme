@@ -63,6 +63,7 @@ third_party_settings:
                 type: image
             additional: {  }
             weight: 1
+        third_party_settings: {  }
 _core:
   default_config_hash: SWf3MLdbEKvlx4Vs6iPwDHu5pr1aKT0SJmgp8no73-k
 id: media.audio.default

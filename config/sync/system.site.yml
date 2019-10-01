@@ -3,9 +3,9 @@ name: ChrisFeragotti.com
 mail: automaton@chrisferagotti.com
 slogan: ''
 page:
-  403: ''
+  403: /node/149
   404: ''
-  front: /node/80
+  front: /homepage-content
 admin_compact_mode: false
 weight_select_max: 100
 langcode: en

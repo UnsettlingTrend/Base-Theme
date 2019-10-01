@@ -37,6 +37,7 @@ third_party_settings:
                 type: entity_reference_entity_view
             additional: {  }
             weight: 0
+        third_party_settings: {  }
 _core:
   default_config_hash: cwuIPYXF5vCbzfY8wjj_shzx513Cwc122DIqGh2Uqho
 id: paragraph.from_library.default

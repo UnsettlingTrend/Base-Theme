@@ -1,0 +1,15 @@
+uuid: a2716595-f224-41c2-b450-15ae570128bb
+langcode: en
+status: true
+dependencies: {  }
+id: production
+label: Production
+description: 'Configuration settings for production server.'
+folder: ../config/prod
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

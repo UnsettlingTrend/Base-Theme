@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.note.body
+    - field.field.node.note.field_tags
     - node.type.note
   module:
     - text
@@ -28,4 +29,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_tags: true
   langcode: true
