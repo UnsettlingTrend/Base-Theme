@@ -1,0 +1,58 @@
+/**
+ * Styles for the quote-related blocks
+ */
+
+.quote.wysiwyg {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+  margin: 0.25em 0;
+  padding: 0.25em 40px;
+  line-height: 1.45;
+  position: relative;
+  color: $gray_black;
+  display: flex;
+  justify-content: center;
+
+
+  p {
+    margin: .5em 0 0 0;
+  }
+
+  &:before {
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: relative;
+    left: -20px;
+    top: -20px;
+    color: $gray_4;
+    height: 50px;
+  }
+
+  .field--name-field-source {
+    color: $gray_4;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+
+    &:before {
+      content: "\2014 \2009";
+    }
+  }
+}
+
+body > .dialog-off-canvas-main-canvas > .layout-container > footer{
+  .quote.wysiwyg {
+    color: $gray_1;
+
+    &:before {
+      color: $gray_black;
+    }
+
+    .field--name-field-source {
+      color: $gray_black;
+    }
+  }
+
+}

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.media_library
+    - field.field.media.video.field_media_image
     - field.field.media.video.field_media_video_file
     - image.style.thumbnail
     - media.type.video
@@ -27,6 +28,7 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_media_image: true
   field_media_video_file: true
   langcode: true
   name: true

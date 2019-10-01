@@ -1,0 +1,10 @@
+uuid: 8f2dde80-c457-4be4-b83b-c6f27a549b2c
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.tile
+label: Tile
+targetEntityType: media
+cache: true

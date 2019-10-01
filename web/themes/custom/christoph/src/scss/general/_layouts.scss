@@ -1,0 +1,40 @@
+
+// Let the middle column grow when only two columns out of 3
+.layout--threecol-25-50-25 .layout__region--second {
+  flex-grow: 1;
+}
+
+html {
+  background-color: $primary_3;
+  font-family: $font_primary;
+}
+
+body {
+  background-color: $secondary_3;
+  color: $gray_5;
+}
+
+.layout.layout--threecol-25-50-25 {
+  > * {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+
+  @media (min-width: 640px) {
+    margin-right:auto;
+    margin-left:auto;
+  }
+
+  @media (min-width: 1280px) {
+    width: 1280px;
+  }
+}
+
+// Make <pre> tags wrap instead of stretching on into infinity
+pre {
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}

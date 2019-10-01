@@ -46,6 +46,7 @@ third_party_settings:
               id: 'extra_field_block:comment:comment:links'
             additional: {  }
             weight: 1
+        third_party_settings: {  }
 _core:
   default_config_hash: 77Ye1kR-P6AaiGfEO8mnXNSr7nqtnP3PiiVBwJeGGMI
 id: comment.comment.default

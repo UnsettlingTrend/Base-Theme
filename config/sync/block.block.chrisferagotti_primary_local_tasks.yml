@@ -1,0 +1,22 @@
+uuid: 4a78eeae-a85c-4b4c-a656-015559db095e
+langcode: en
+status: false
+dependencies:
+  theme:
+    - chrisferagotti
+_core:
+  default_config_hash: CyX_aDKAka2_eihevNLscCHDYrzDgIqwWzFVEFRKIww
+id: chrisferagotti_primary_local_tasks
+theme: chrisferagotti
+region: content
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: false
+visibility: {  }

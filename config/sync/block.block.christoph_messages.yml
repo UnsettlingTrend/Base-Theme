@@ -1,0 +1,22 @@
+uuid: 836fd258-c469-4705-94ee-f8bda5158900
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - christoph
+_core:
+  default_config_hash: YqKTtloWJ8FjLtfVNfrHaK6kVgxT67lC1cJ3j6i6WLo
+id: christoph_messages
+theme: christoph
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

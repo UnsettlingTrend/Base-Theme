@@ -1,0 +1,53 @@
+/**
+ * This file should list all of the .scss files that need to be compiled and placed
+ * in the distribution (dist/css) folder.
+ */
+
+/**** General ****/
+@import 'general/vars';
+//@import 'general/links';
+@import 'general/layouts';
+@import 'general/fonts';
+@import 'general/codesnippet';
+@import 'general/text';
+
+/**** Components ****/
+//@import 'components/buttons';
+//@import 'components/images';
+@import 'components/random';
+//@import 'components/settings-tray';
+@import 'components/tables';
+@import 'components/paragraphs';
+
+/**** Fields ****/
+//@import 'fields/media';
+@import 'fields/tags';
+@import 'fields/take-aways';
+
+/**** Blocks ****/
+//@import 'blocks/book';
+@import 'blocks/breadcrumbs';
+//@import 'blocks/navbar';
+//@import 'blocks/projects';
+@import 'blocks/quotes';
+//@import 'blocks/recent-posts';
+@import 'blocks/title';
+//@import 'blocks/search';
+
+/**** Nodes ****/
+@import 'nodes/tiles';
+
+/**** Regions ****/
+@import 'regions/footer';
+@import 'regions/header';
+//@import 'regions/secondary';
+@import 'regions/navigation';
+@import 'regions/highlighted';
+
+/**** Views ****/
+@import 'views/search';
+@import 'views/tiles';
+
+/**** Pages ****/
+
+

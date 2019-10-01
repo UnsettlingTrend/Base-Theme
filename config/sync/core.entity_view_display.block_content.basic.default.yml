@@ -36,6 +36,7 @@ third_party_settings:
                 third_party_settings: {  }
             additional: {  }
             weight: 0
+        third_party_settings: {  }
 _core:
   default_config_hash: orJpHUlAc_wiQLMUjIgEJXGeiqylGHMPcmNRjGtct-M
 id: block_content.basic.default

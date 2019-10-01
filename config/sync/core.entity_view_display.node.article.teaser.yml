@@ -91,6 +91,7 @@ third_party_settings:
               id: 'extra_field_block:node:article:links'
             additional: {  }
             weight: 3
+        third_party_settings: {  }
 _core:
   default_config_hash: 4NcL2hSQZBpJbYtNuh5jC6kyQTcAc1m5bQpTegEWEso
 id: node.article.teaser

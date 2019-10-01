@@ -134,6 +134,7 @@ $config_directories['local'] = '../config/local';
 
 $settings['trusted_host_patterns'] = array(
   '^cf\.lndo\.site$',
+  '^localhost$',
 );
 
 $databases['default']['default'] = array (

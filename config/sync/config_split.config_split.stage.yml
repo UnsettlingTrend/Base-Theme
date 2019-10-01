@@ -1,0 +1,15 @@
+uuid: 066382cd-4365-4f56-b468-ed4abe7822a1
+langcode: en
+status: true
+dependencies: {  }
+id: stage
+label: Stage
+description: 'Configuration settings for staging server.'
+folder: ../config/stage
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

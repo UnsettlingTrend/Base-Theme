@@ -76,6 +76,7 @@ third_party_settings:
                 label: hidden
             additional: {  }
             weight: 2
+        third_party_settings: {  }
 _core:
   default_config_hash: UyS6h90lp_2z8y-boEip0WxzO-BGPHubSfeQYnjwg_4
 id: node.article.search_index

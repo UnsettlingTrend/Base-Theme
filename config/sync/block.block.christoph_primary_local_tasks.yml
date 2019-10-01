@@ -1,0 +1,22 @@
+uuid: a9c567c3-bc03-4202-ad45-6c9ead8828fc
+langcode: en
+status: false
+dependencies:
+  theme:
+    - christoph
+_core:
+  default_config_hash: CyX_aDKAka2_eihevNLscCHDYrzDgIqwWzFVEFRKIww
+id: christoph_primary_local_tasks
+theme: christoph
+region: content
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: false
+visibility: {  }

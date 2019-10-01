@@ -1,0 +1,10 @@
+uuid: 87ba2eb0-7b05-4aae-85ae-6f45b6bba811
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.wysiwyg
+label: WYSIWYG
+targetEntityType: node
+cache: true

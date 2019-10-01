@@ -66,6 +66,7 @@ third_party_settings:
                 type: image
             additional: {  }
             weight: 1
+        third_party_settings: {  }
 _core:
   default_config_hash: dQR0mYK5NNg27OigHrxZrHSsnwewnNZcPJKjKIO0cpA
 id: media.video.default

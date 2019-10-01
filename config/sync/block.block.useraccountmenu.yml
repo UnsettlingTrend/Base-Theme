@@ -1,0 +1,25 @@
+uuid: 56448436-e841-41b9-a475-64557fac58a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - christoph
+id: useraccountmenu
+theme: christoph
+region: navigation
+weight: -5
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: true
+visibility: {  }

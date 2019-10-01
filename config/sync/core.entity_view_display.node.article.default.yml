@@ -108,6 +108,7 @@ third_party_settings:
                 third_party_settings: {  }
             additional: {  }
             weight: 4
+        third_party_settings: {  }
 _core:
   default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
 id: node.article.default

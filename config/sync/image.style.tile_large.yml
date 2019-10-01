@@ -1,0 +1,15 @@
+uuid: 4906a102-16ff-4816-bbe5-67529c8e5473
+langcode: en
+status: true
+dependencies: {  }
+name: tile_large
+label: 'Tile - Large (300x300)'
+effects:
+  0355f241-6b3b-4d48-b1c1-87df485f4047:
+    uuid: 0355f241-6b3b-4d48-b1c1-87df485f4047
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 300
+      height: 300
+      anchor: center-center

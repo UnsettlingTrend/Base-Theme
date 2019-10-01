@@ -1,0 +1,59 @@
+uuid: 602b94bd-924e-4a68-887b-ffd57288ffe1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.tile
+    - field.field.node.page.comment
+    - field.field.node.page.field_paragraph
+    - field.field.node.page.field_preview_image
+    - field.field.node.page.field_show_date
+    - field.field.node.page.field_subtitle
+    - field.field.node.page.field_tags
+    - field.field.node.page.field_take_aways
+    - field.field.node.page.layout_builder__layout
+    - node.type.page
+  module:
+    - field_layout
+    - layout_builder
+    - text
+    - user
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
+  layout_builder:
+    enabled: false
+    allow_custom: false
+_core:
+  default_config_hash: g1S3_GLaxq4l3I9RIca5Mlz02MxI2KmOquZpHw59akM
+id: node.page.tile
+targetEntityType: node
+bundle: page
+mode: tile
+content:
+  field_preview_image:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: tile
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_subtitle:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  comment: true
+  field_paragraph: true
+  field_show_date: true
+  field_tags: true
+  field_take_aways: true
+  langcode: true
+  layout_builder__layout: true
+  links: true

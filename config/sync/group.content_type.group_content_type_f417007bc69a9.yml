@@ -1,0 +1,19 @@
+uuid: fd1e33f8-7538-4dce-b91e-e027de8eba99
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.restricted_content
+    - node.type.page
+  module:
+    - gnode
+    - node
+id: group_content_type_f417007bc69a9
+label: 'Restricted Content: Group node (Basic page)'
+description: 'Adds <em class="placeholder">Basic page</em> content to groups both publicly and privately.'
+group_type: restricted_content
+content_plugin: 'group_node:page'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

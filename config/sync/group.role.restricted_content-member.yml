@@ -11,4 +11,16 @@ internal: true
 audience: member
 group_type: restricted_content
 permissions_ui: true
-permissions: {  }
+permissions:
+  - 'create group_node:page content'
+  - 'create group_node:page entity'
+  - 'delete own group_node:page content'
+  - 'delete own group_node:page entity'
+  - 'leave group'
+  - 'update own group_membership content'
+  - 'update own group_node:page content'
+  - 'update own group_node:page entity'
+  - 'view group'
+  - 'view group_membership content'
+  - 'view group_node:page content'
+  - 'view group_node:page entity'
