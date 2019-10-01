@@ -4,14 +4,11 @@ grid_blockname:
   tile
 grid_modifiers:
   1:
-    divider
-  2:
     columns-3
 tiles:
   1:
     tile_modifiers:
       1: "grid-item"
-      2: "divider-3"
     tile_img:
       "https://placeimg.com/480/300/nature"
     tile_title:
@@ -25,7 +22,6 @@ tiles:
   2:
     tile_modifiers:
       1: "grid-item"
-      2: "divider-3"
     tile_img:
       "https://placeimg.com/480/300/nature"
     tile_title:
@@ -37,7 +33,6 @@ tiles:
   3:
     tile_modifiers:
       1: "grid-item"
-      2: "divider-3"
     tile_img:
       "https://placeimg.com/480/300/nature"
     tile_title:

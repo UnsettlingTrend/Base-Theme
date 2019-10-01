@@ -68,6 +68,40 @@
       }
     } %}
 
+    {% include "@organisms/tile-grid/tile-grid.twig" with {
+      "grid_blockname": "tile",
+      "grid_modifiers": ["divider", "columns-3"],
+      "tiles": {
+        1: {
+          "tile_modifiers": ["grid-item", "divider-3"],
+          "tile_img_src": "https://placeimg.com/480/480/people",
+          "tile_image_output_image_tag": TRUE,
+          "tile_title": "This is the first featured item",
+          "tile_link_url": "#",
+          "tile_subtitle": "About this thing",
+          "tile_body": "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Nulla quis lorem ut libero malesuada feugiat. Nulla quis lorem ut libero malesuada feugiat.",
+        },
+        2: {
+          "tile_modifiers": ["grid-item","divider-3"],
+          "tile_img_src": "https://placeimg.com/480/480/people",
+          "tile_image_output_image_tag": TRUE,
+          "tile_title": "This is the second",
+          "tile_link_url": "#",
+          "tile_subtitle": "About this other thing",
+          "tile_body": "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Nulla quis lorem ut libero malesuada feugiat. Nulla quis lorem ut libero malesuada feugiat.",
+        },
+        3: {
+          "tile_modifiers": ["grid-item","divider-3"],
+          "tile_img_src": "https://placeimg.com/480/480/people",
+          "tile_image_output_image_tag": TRUE,
+          "tile_title": "The Final",
+          "tile_link_url": "#",
+          "tile_subtitle": "Is the most interesting",
+          "tile_body": "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Sed porttitor lectus nibh. Nulla quis lorem ut libero malesuada feugiat. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Nulla quis lorem ut libero malesuada feugiat. Nulla quis lorem ut libero malesuada feugiat.",
+        },
+      }
+    } %}
+
   {% endblock %}
 
 {% endembed %}
