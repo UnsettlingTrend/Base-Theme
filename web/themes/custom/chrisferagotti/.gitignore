@@ -4,7 +4,7 @@ vendor
 build
 
 # Pattern Lab (ignored initially)
-#pattern-lab
+pattern-lab
 
 # Twig helper functions
 **/add_attributes.function.php
