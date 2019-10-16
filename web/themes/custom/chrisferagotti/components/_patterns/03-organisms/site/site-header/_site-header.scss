@@ -1,1 +1,17 @@
-//  Empty
+
+div#block-chrisferagotti-sitebranding {
+  text-align: center;
+  font-family: $font-heading;
+  font-size: 4em;
+  line-height: 1.0em;
+  color: $primary_1;
+
+  > * {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  > img {
+    height:150px;
+  }
+}
