@@ -1,17 +1,44 @@
 
-div#block-chrisferagotti-sitebranding {
-  text-align: center;
-  font-family: $font-heading;
-  font-size: 4em;
-  line-height: 1.0em;
-  color: $primary_1;
+header.header {
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 2em;
+  background-color: $gray-lighter;
+  padding:0;
 
-  > * {
-    margin-right: auto;
-    margin-left: auto;
+  div#block-chrisferagotti-sitebranding {
+    text-align: center;
+    font-family: $font-heading;
+    font-size: 2em;
+    line-height: 1.0em;
+    color: $primary_3;
+
+    @include small {
+      font-size: 3em;
+    }
+
+    @include medium {
+      font-size: 4em;
+    }
+
+    > * {
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    > img {
+      height:150px;
+    }
   }
 
-  > img {
-    height:150px;
+  nav[role="navigation"][id$="-mainnavigation"] {
+    background-color: $primary_3;
+  }
+
+  div[id$="-breadcrumbs"] {
+    background-color: $white;
   }
 }
+
+

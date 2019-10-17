@@ -2,8 +2,9 @@ pre code.hljs {
 
   background-color: black;
   color: #bfbdbd;
-  padding: 1em;
+  padding: .5em;
   white-space: pre-wrap;
+  word-break: break-word;
 
   .hljs-preprocessor {
 
