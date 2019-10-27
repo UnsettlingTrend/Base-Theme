@@ -3,15 +3,15 @@ header.header {
   max-width: 100%;
   margin-right: 0;
   margin-left: 0;
-  margin-bottom: 2em;
+  margin-bottom: 0.5em;
   background-color: $gray-lighter;
-  padding:0;
+  padding: 0;
 
   div#block-chrisferagotti-sitebranding {
     text-align: center;
     font-family: $font-heading;
     font-size: 2em;
-    line-height: 1.0em;
+    line-height: 1em;
     color: $primary_3;
 
     @include small {
@@ -28,7 +28,7 @@ header.header {
     }
 
     > img {
-      height:150px;
+      height: 150px;
     }
   }
 
@@ -38,7 +38,6 @@ header.header {
 
   div[id$="-breadcrumbs"] {
     background-color: $white;
+    padding: 0.3em 0;
   }
 }
-
-

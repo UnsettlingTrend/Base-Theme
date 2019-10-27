@@ -15,7 +15,7 @@
  *   Calling other methods, such as node.delete(), will result in an exception.
  *   See \Drupal\node\Entity\Node for a full list of public properties and
  *   methods for the node object.
- * - label: (optional) The title of the node.
+ * - label: The title of the node.
  * - content: All node items. Use {{ content }} to print them all,
  *   or print a subset such as {{ content.field_example }}. Use
  *   {{ content|without('field_example') }} to temporarily suppress the printing
@@ -23,8 +23,8 @@
  * - author_picture: The node author user entity, rendered using the "compact"
  *   view mode.
  * - metadata: Metadata for this node.
- * - date: (optional) Themed creation date field.
- * - author_name: (optional) Themed author name field.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
  * - url: Direct URL of the current node.
  * - display_submitted: Whether submission information should be displayed.
  * - attributes: HTML attributes for the containing element.
@@ -70,23 +70,25 @@
  *   in different view modes.
  */
 #}
-{%
-  set classes = [
-    'node',
-    'node--type-' ~ node.bundle|clean_class,
-    node.isPromoted() ? 'node--promoted',
-    node.isSticky() ? 'node--sticky',
-    not node.isPublished() ? 'node--unpublished',
-    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
-  ]
-%}
-{{ attach_library('classy/node') }}
-<article{{ attributes.addClass(classes) }}>
+<article {{ bem("node") }}>
+
+  {{ title_prefix }}
+  {% if not page %}
+    {% include "@atoms/02-text/00-headings/_heading.twig" with {
+      "heading_level": 2,
+      "heading": label,
+      "heading_url": url,
+      "heading_link_attributes": {
+        'rel': 'bookmark'
+      },
+    } %}
+  {% endif %}
+  {{ title_suffix }}
+
   <a class="tile-content" href="{{ url }}" rel="bookmark">
-    <h2>
-      {{ label }}
-    </h2>
-    {{ content.field_preview_image }}
-    {# content.field_subtitle #}
+    <div{{ content_attributes }}>
+      {{ content.field_preview_image }}
+    </div>
   </a>
+
 </article>
