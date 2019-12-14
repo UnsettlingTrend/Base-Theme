@@ -28,12 +28,6 @@
       color: $gray-lighter;
     }
 
-    &::after {
-      color: $white;
-      display: inline-block;
-      content: ">";
-    }
-
     &--sub::after {
       display: none;
     }

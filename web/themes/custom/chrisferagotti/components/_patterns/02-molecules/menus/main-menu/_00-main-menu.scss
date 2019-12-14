@@ -32,6 +32,7 @@ $main-menu-medium: 43em;
   border-bottom: 1px solid;
   position: relative;
   z-index: 10;
+  text-align: center;
 
   @include breakpoint($main-menu-medium) {
     border-bottom: none;
