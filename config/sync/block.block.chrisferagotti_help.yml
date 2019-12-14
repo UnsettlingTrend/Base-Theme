@@ -11,7 +11,7 @@ _core:
 id: chrisferagotti_help
 theme: chrisferagotti
 region: header
-weight: 0
+weight: -1
 provider: null
 plugin: help_block
 settings:

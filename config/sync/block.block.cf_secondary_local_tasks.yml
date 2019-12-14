@@ -1,0 +1,22 @@
+uuid: 415258e6-c225-405d-9081-b855da75f02a
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cf
+_core:
+  default_config_hash: DJ7Om1C2xWr2GI8CjZaZtyWpP-0S3hRR3oROZl1oesc
+id: cf_secondary_local_tasks
+theme: cf
+region: content
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  provider: core
+  label_display: '0'
+  primary: false
+  secondary: true
+visibility: {  }

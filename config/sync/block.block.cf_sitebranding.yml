@@ -1,0 +1,23 @@
+uuid: 6e817f31-1c12-4b4c-ace7-67bd6694b7f9
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - cf
+id: cf_sitebranding
+theme: cf
+region: header
+weight: -5
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: false
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 45441e9d-d2cd-4eac-a617-d4dbd18210ec
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - cf
+_core:
+  default_config_hash: 80N66GdzEvwqi1m-_GZ-ulkk8AJG9beoXcZ4-pMVKjI
+id: cf_content
+theme: cf
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

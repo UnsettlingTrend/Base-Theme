@@ -3,13 +3,13 @@ langcode: en
 status: true
 dependencies: {  }
 name: tile_large
-label: 'Tile - Large (300x300)'
+label: 'Tile - Large (602x300)'
 effects:
   0355f241-6b3b-4d48-b1c1-87df485f4047:
     uuid: 0355f241-6b3b-4d48-b1c1-87df485f4047
     id: image_scale_and_crop
     weight: 2
     data:
-      width: 300
+      width: 602
       height: 300
       anchor: center-center

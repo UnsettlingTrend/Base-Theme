@@ -11,7 +11,7 @@ dependencies:
 id: chrisferagotti_mainnavigation
 theme: chrisferagotti
 region: header
-weight: -6
+weight: -4
 provider: null
 plugin: 'system_menu_block:main'
 settings:

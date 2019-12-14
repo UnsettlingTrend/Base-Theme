@@ -1,0 +1,22 @@
+uuid: 8e0e2954-3689-4922-82c0-80e130ec6ddd
+langcode: en
+status: false
+dependencies:
+  theme:
+    - cf
+_core:
+  default_config_hash: CyX_aDKAka2_eihevNLscCHDYrzDgIqwWzFVEFRKIww
+id: cf_primary_local_tasks
+theme: cf
+region: content
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: false
+visibility: {  }

@@ -1,0 +1,20 @@
+uuid: 90202f18-59c6-47f4-9db8-ca878ed52d3f
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cf
+_core:
+  default_config_hash: ik4PTMlBD0MWansnSMpSXq5SUlWRJ1IVVt6C7AIbQmc
+id: cf_local_actions
+theme: cf
+region: content
+weight: -1
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }
