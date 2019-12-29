@@ -1,7 +1,7 @@
 framework:
   css:
     theme:
-      css/style.css: {}
+      dist/css/style.css: {}
 
 # Uncomment for LESS source JavaScript files.
 #  js:
