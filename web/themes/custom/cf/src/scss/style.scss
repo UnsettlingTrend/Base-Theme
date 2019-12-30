@@ -6,6 +6,7 @@
 /**** General ****/
 @import 'general/vars';
 @import 'general/links';
+@import 'general/layouts';
 
 /**** Components ****/
 //@import 'components/fonts';
@@ -17,7 +18,7 @@
 //@import 'blocks/book';
 
 /**** Regions ****/
-//@import 'regions/header';
+@import 'regions/header';
 
 /**** Pages ****/
 

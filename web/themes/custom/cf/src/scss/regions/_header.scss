@@ -1,0 +1,20 @@
+.region.region-header {
+  text-align:center;
+
+  .name,
+  .logo {
+    display:block;
+  }
+  .navbar-brand {
+    float:none;
+    font-family: $font-logo;
+    font-size: 2.2em;
+    color: $gray-white;
+
+    &:link,
+    &:hover {
+      color: $gray-white;
+    }
+
+  }
+}
