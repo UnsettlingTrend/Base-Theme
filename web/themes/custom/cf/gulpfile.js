@@ -32,7 +32,7 @@ gulp.task('sass', function () {
 
 // SASS Watch
 gulp.task('sass:watch', function () {
-    gulp.watch('src/scss/*/*.scss', ['css'])
+    gulp.watch('src/scss/**/*.scss', ['css'])
 });
 
 // CSS Minify
