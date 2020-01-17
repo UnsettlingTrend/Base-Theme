@@ -77,16 +77,6 @@
 %}
 <article{{ attributes.addClass(classes) }}>
 
-  {% if display_submitted %}
-    <footer>
-      <div{{ author_attributes.addClass('author submission-info') }}>
-          {% set createdDate = node.getCreatedTime|format_date('short_date') %}
-          <div class="author date">~ {{ createdDate }} ~</div>
-        {{ metadata }}
-      </div>
-    </footer>
-  {% endif %}
-
   <div{{ content_attributes.addClass('content') }}>
     {{ content }}
   </div>
