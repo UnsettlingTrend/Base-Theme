@@ -9,7 +9,7 @@ dependencies:
 id: cf_sitebranding
 theme: cf
 region: header
-weight: -5
+weight: -6
 provider: null
 plugin: system_branding_block
 settings:

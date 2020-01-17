@@ -10,8 +10,8 @@ _core:
   default_config_hash: YqKTtloWJ8FjLtfVNfrHaK6kVgxT67lC1cJ3j6i6WLo
 id: cf_messages
 theme: cf
-region: header
-weight: -3
+region: highlighted
+weight: -5
 provider: null
 plugin: system_messages_block
 settings:

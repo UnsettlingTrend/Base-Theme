@@ -10,8 +10,8 @@ _core:
   default_config_hash: 8by5KRsb7ZpmjHj0ms1d7xAG_xH54AWsOX6spDLJ59U
 id: cf_breadcrumbs
 theme: cf
-region: header
-weight: -2
+region: content
+weight: -5
 provider: null
 plugin: system_breadcrumb_block
 settings:

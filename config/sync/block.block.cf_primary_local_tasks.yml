@@ -9,7 +9,7 @@ _core:
 id: cf_primary_local_tasks
 theme: cf
 region: content
-weight: -3
+weight: 0
 provider: null
 plugin: local_tasks_block
 settings:

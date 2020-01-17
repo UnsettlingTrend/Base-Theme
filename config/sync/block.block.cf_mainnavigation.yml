@@ -10,8 +10,8 @@ dependencies:
     - cf
 id: cf_mainnavigation
 theme: cf
-region: header
-weight: -4
+region: navigation
+weight: -6
 provider: null
 plugin: 'system_menu_block:main'
 settings:
