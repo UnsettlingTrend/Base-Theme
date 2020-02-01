@@ -102,8 +102,20 @@
                     "type": "zip"
                 }
             }
-        }
-
+        },
+        {
+            "type": "package",
+                "package": {
+                    "name": "simeydotme/jquery-ui-slider-pips",
+                    "version": "1.11.4",
+                    "type": "drupal-library",
+                    "source": {
+                        "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips",
+                        "type": "git",
+                        "reference": "origin/master"
+                    }
+                }
+            }
     ],
     "require": {
         "ckeditor/codesnippet": "^4.11",
@@ -147,6 +159,7 @@
         "drupal/entity_usage": "^2.0@alpha",
         "drupal/environment_indicator": "^3.6",
         "drupal/exif_orientation": "^1.0",
+        "drupal/facets": "^1.4",
         "drupal/field_group": "~3.0",
         "drupal/flag": "^4.0@alpha",
         "drupal/gdoc_field": "^1.1",
@@ -180,7 +193,7 @@
         "drupal/restui": "^1.16",
         "drupal/rules": "^3.0@alpha",
         "drupal/s3fs": "^3.0@alpha",
-        "drupal/search_api": "^1.9",
+        "drupal/search_api": "^1.15",
         "drupal/slick": "^2.0",
         "drupal/slick_media": "^2.0",
         "drupal/slick_paragraphs": "^2.0",
@@ -206,6 +219,7 @@
         "m7sk/composer-svn-export-plugin": "^1.0",
         "php-http/httplug": "^2.0",
         "phpunit/phpunit": "6.5",
+        "simeydotme/jquery-ui-slider-pips": "^1.11",
         "squizlabs/php_codesniffer": "^3.3",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
