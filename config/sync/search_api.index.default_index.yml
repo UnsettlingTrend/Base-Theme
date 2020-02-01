@@ -8,9 +8,10 @@ dependencies:
     - paragraphs
     - search_api
   config:
-    - field.storage.node.field_tags
+    - field.storage.node.body
     - field.storage.node.field_paragraph
     - field.storage.paragraph.field_text
+    - field.storage.node.field_tags
     - search_api.server.default_server
 _core:
   default_config_hash: GLmLegZGHtMF6annRqgjizJAoiAip-IT-XOsDMCZfog
@@ -29,6 +30,14 @@ field_settings:
         - node
         - user
         - user
+  body:
+    label: Body
+    datasource_id: 'entity:node'
+    property_path: body
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.body
   changed:
     label: Changed
     datasource_id: 'entity:node'
@@ -53,6 +62,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_tags
+  field_text:
+    label: 'Paragraph » Paragraph » Text'
+    datasource_id: 'entity:node'
+    property_path: 'field_paragraph:entity:field_text'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_paragraph
+        - field.storage.paragraph.field_text
+      module:
+        - paragraphs
   node_grants:
     label: 'Node access information'
     property_path: search_api_node_grants
@@ -60,18 +80,6 @@ field_settings:
     indexed_locked: true
     type_locked: true
     hidden: true
-  processed:
-    label: 'Paragraph » Paragraph » Text » Processed text'
-    datasource_id: 'entity:node'
-    property_path: 'field_paragraph:entity:field_text:processed'
-    type: text
-    boost: !!float 3
-    dependencies:
-      config:
-        - field.storage.node.field_paragraph
-        - field.storage.paragraph.field_text
-      module:
-        - paragraphs
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -148,14 +156,6 @@ datasource_settings:
     languages:
       default: true
       selected: {  }
-  'entity:paragraph':
-    bundles:
-      default: true
-      selected:
-        - text
-    languages:
-      default: true
-      selected: {  }
 processor_settings:
   add_url:
     weights:
@@ -198,13 +198,15 @@ processor_settings:
     all_fields: true
     fields:
       - author
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
       - type
     weights:
       preprocess_index: -46
       preprocess_query: -8
+  language_with_fallback: {  }
   rendered_item:
     weights:
       add_properties: 0
@@ -213,7 +215,8 @@ processor_settings:
   stemmer:
     all_fields: true
     fields:
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
     exceptions:
@@ -225,7 +228,8 @@ processor_settings:
   stopwords:
     all_fields: true
     fields:
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
     stopwords:
@@ -270,7 +274,8 @@ processor_settings:
   tokenizer:
     all_fields: true
     fields:
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
     spaces: ''
