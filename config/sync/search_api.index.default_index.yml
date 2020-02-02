@@ -6,6 +6,7 @@ dependencies:
     - node
     - user
     - paragraphs
+    - taxonomy
     - search_api
   config:
     - field.storage.node.body
@@ -119,6 +120,17 @@ field_settings:
     dependencies:
       module:
         - node
+  tid:
+    label: 'Tags » Taxonomy term » Term ID'
+    datasource_id: 'entity:node'
+    property_path: 'field_tags:entity:tid'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_tags
+      module:
+        - taxonomy
+        - taxonomy
   title:
     label: Title
     datasource_id: 'entity:node'
