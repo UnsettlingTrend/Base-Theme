@@ -1,17 +1,18 @@
 uuid: bdbb38d6-919c-4416-a433-f41becd7a638
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - views.view.search_content
   module:
+    - system
     - views
   theme:
     - cf
 id: cf_exposedformsearch_contentpage_search
 theme: cf
-region: header
-weight: -5
+region: navigation_collapsible
+weight: -7
 provider: null
 plugin: 'views_exposed_filter_block:search_content-page_search'
 settings:
@@ -20,4 +21,9 @@ settings:
   provider: views
   label_display: '0'
   views_label: ''
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: true
+    context_mapping: {  }
