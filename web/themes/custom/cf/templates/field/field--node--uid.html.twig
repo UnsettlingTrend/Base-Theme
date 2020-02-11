@@ -16,24 +16,19 @@
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
  *
- * Added through
- *
  * @see field.html.twig
  */
 #}
 {%
   set classes = [
-    'field',
-    'field--name-' ~ field_name|clean_class,
-    'field--type-' ~ field_type|clean_class,
-    'field--label-' ~ label_display,
-  ]
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
+]
 %}
 <span{{ attributes.addClass(classes) }}>
   {%- for item in items -%}
     {{ item.content }}
-
-    {{ user_name }}
-    {{ user_photo }}
   {%- endfor -%}
 </span>
