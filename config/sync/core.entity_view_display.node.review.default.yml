@@ -3,38 +3,163 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.review.body
+    - field.field.node.review.field_address
     - field.field.node.review.field_date_time
+    - field.field.node.review.field_paragraph
+    - field.field.node.review.field_ratings
     - node.type.review
   module:
+    - address
     - datetime
-    - text
+    - entity_reference_revisions
+    - layout_builder
     - user
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: true
+    sections:
+      -
+        layout_id: layout_twocol_section
+        layout_settings:
+          label: ''
+          column_widths: 75-25
+        components:
+          00b51cfa-c2f9-4cac-8b26-c3d002a4bbd9:
+            uuid: 00b51cfa-c2f9-4cac-8b26-c3d002a4bbd9
+            region: first
+            configuration:
+              id: 'field_block:node:review:field_paragraph'
+              label: Paragraphs
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_revisions_entity_view
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 1
+          5f0a451b-2e2e-4f22-bccc-b6b4cfb2c5e0:
+            uuid: 5f0a451b-2e2e-4f22-bccc-b6b4cfb2c5e0
+            region: second
+            configuration:
+              id: 'field_block:node:review:field_ratings'
+              label: Ratings
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_revisions_entity_view
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 4
+          7ce3203f-0728-49c9-8e76-19460f606aef:
+            uuid: 7ce3203f-0728-49c9-8e76-19460f606aef
+            region: second
+            configuration:
+              id: 'extra_field_block:node:review:links'
+              label: Links
+              provider: layout_builder
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 0
+          83bd023b-3634-4eef-9657-627aa0d22e83:
+            uuid: 83bd023b-3634-4eef-9657-627aa0d22e83
+            region: second
+            configuration:
+              id: 'field_block:node:review:uid'
+              label: 'Authored by'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_entity_view
+                settings:
+                  view_mode: compact
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 1
+          35a2a335-454b-4ce3-b631-36f599ee9a64:
+            uuid: 35a2a335-454b-4ce3-b631-36f599ee9a64
+            region: second
+            configuration:
+              id: 'field_block:node:review:field_date_time'
+              label: 'Date and Time'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: datetime_time_ago
+                settings:
+                  future_format: '@interval hence'
+                  past_format: '@interval ago'
+                  granularity: 2
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 3
+        third_party_settings: {  }
 id: node.review.default
 targetEntityType: node
 bundle: review
 mode: default
 content:
-  body:
+  field_address:
+    weight: 103
     label: hidden
-    type: text_default
-    weight: 101
     settings: {  }
     third_party_settings: {  }
+    type: address_default
     region: content
   field_date_time:
     weight: 102
-    label: above
+    label: hidden
     settings:
       format_type: medium
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
     region: content
-  links:
-    weight: 100
-    settings: {  }
+  field_paragraph:
+    weight: 104
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_ratings:
+    type: entity_reference_revisions_entity_view
+    weight: 105
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
     region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   langcode: true
+  search_api_excerpt: true

@@ -1,5 +1,8 @@
 {
   "patches": {
+    "drupal/core": {
+      "Fix layout builder save issue 3045171": "https://www.drupal.org/files/issues/2020-02-04/layout-builder-save-issue-3045171-140.patch"
+    },
     "drupal/group": {
       "Fix issue 3068918": "https://www.drupal.org/files/issues/2019-10-30/3068918-8.patch"
     }

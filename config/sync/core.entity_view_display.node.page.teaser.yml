@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.page.comment
     - field.field.node.page.field_paragraph
+    - field.field.node.page.field_preview_image
     - field.field.node.page.field_show_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_tags
@@ -26,7 +27,8 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
         components:
           048d0a0d-35b4-4062-ac77-e3cffff1665c:
             uuid: 048d0a0d-35b4-4062-ac77-e3cffff1665c
@@ -54,9 +56,11 @@ content:
 hidden:
   comment: true
   field_paragraph: true
+  field_preview_image: true
   field_show_date: true
   field_subtitle: true
   field_tags: true
   field_take_aways: true
   langcode: true
   layout_builder__layout: true
+  search_api_excerpt: true

@@ -21,29 +21,52 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
         components:
           9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0:
             uuid: 9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0
             region: content
             configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
               id: 'field_block:user:user:user_picture'
+              label: Picture
+              provider: layout_builder
+              label_display: '0'
               formatter:
+                label: hidden
                 type: image
                 settings:
-                  image_style: thumbnail
+                  image_style: user
                   image_link: content
+                  svg_render_as_image: 1
                   svg_attributes:
                     width: ''
                     height: ''
-                  svg_render_as_image: true
                 third_party_settings: {  }
-                label: hidden
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
             additional: {  }
-            weight: 0
+            weight: 1
+          6ca1b0af-8900-46cb-aa99-e79ac60b5811:
+            uuid: 6ca1b0af-8900-46cb-aa99-e79ac60b5811
+            region: content
+            configuration:
+              id: 'field_block:user:user:name'
+              label: Name
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: string
+                settings:
+                  link_to_entity: true
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 2
         third_party_settings: {  }
 _core:
   default_config_hash: '-cLsS3M3JycipXQt9rEb81_HxKneReoGuRh8ijcOPXs'
@@ -68,3 +91,4 @@ content:
 hidden:
   langcode: true
   member_for: true
+  search_api_excerpt: true

@@ -3,15 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.review.body
+    - field.field.node.review.field_address
     - field.field.node.review.field_date_time
+    - field.field.node.review.field_paragraph
+    - field.field.node.review.field_ratings
     - node.type.review
   module:
+    - address
     - datetime
     - field_layout
     - layout_discovery
+    - paragraphs
     - path
-    - text
 third_party_settings:
   field_layout:
     id: layout_onecol
@@ -22,27 +25,47 @@ targetEntityType: node
 bundle: review
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 2
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-      show_summary: false
-    third_party_settings: {  }
-    region: content
   created:
     type: datetime_timestamp
     weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_address:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: address_default
+    region: content
   field_date_time:
     weight: 1
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_paragraph:
+    weight: 27
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
+    region: content
+  field_ratings:
+    type: entity_reference_paragraphs
+    weight: 28
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
     region: content
   langcode:
     type: language_select

@@ -58,11 +58,11 @@ module:
   facets_range_widget: 0
   facets_summary: 0
   field: 0
-  field_group: 0
   field_layout: 0
   field_ui: 0
   file: 0
   filter: 0
+  fivestar: 0
   geocoder: 0
   geocoder_address: 0
   geocoder_field: 0
@@ -138,6 +138,7 @@ module:
   views_bulk_operations: 0
   views_infinite_scroll: 0
   views_ui: 0
+  votingapi: 0
   workbench: 0
   workflows: 0
   forum: 1
