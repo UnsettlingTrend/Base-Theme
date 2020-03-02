@@ -19,7 +19,8 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
         components:
           b70f3d40-5e85-43c3-96f0-eb419ad32a73:
             uuid: b70f3d40-5e85-43c3-96f0-eb419ad32a73
@@ -33,7 +34,7 @@ third_party_settings:
                 label: hidden
                 type: image
                 settings:
-                  image_style: ''
+                  image_style: max_1300x1300
                   image_link: file
                   svg_render_as_image: 1
                   svg_attributes:
@@ -42,6 +43,7 @@ third_party_settings:
                 third_party_settings: {  }
               context_mapping:
                 entity: layout_builder.entity
+                view_mode: view_mode
             additional: {  }
             weight: 0
         third_party_settings: {  }

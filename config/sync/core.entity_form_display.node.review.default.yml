@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.review.field_address
     - field.field.node.review.field_date_time
+    - field.field.node.review.field_geolocation
     - field.field.node.review.field_paragraph
     - field.field.node.review.field_ratings
     - node.type.review
@@ -12,6 +13,7 @@ dependencies:
     - address
     - datetime
     - field_layout
+    - geolocation
     - layout_discovery
     - paragraphs
     - path
@@ -42,6 +44,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_geolocation:
+    weight: 29
+    settings: {  }
+    third_party_settings: {  }
+    type: geolocation_latlng
     region: content
   field_paragraph:
     weight: 27

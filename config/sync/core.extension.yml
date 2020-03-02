@@ -63,10 +63,11 @@ module:
   file: 0
   filter: 0
   fivestar: 0
-  geocoder: 0
-  geocoder_address: 0
-  geocoder_field: 0
   geofield: 0
+  geolocation: 0
+  geolocation_address: 0
+  geolocation_google_maps: 0
+  geolocation_leaflet: 0
   gnode: 0
   graphql: 0
   graphql_core: 0
@@ -84,6 +85,10 @@ module:
   language: 0
   layout_builder: 0
   layout_discovery: 0
+  leaflet: 0
+  leaflet_markercluster: 0
+  leaflet_more_maps: 0
+  leaflet_views: 0
   link: 0
   media: 0
   media_entity_browser: 0
