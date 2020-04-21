@@ -3,6 +3,7 @@ module:
   address: 0
   admin_toolbar: 0
   admin_toolbar_links_access_filter: 0
+  admin_toolbar_search: 0
   admin_toolbar_tools: 0
   adminimal_admin_toolbar: 0
   auto_entitylabel: 0
@@ -41,6 +42,7 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
+  diff: 0
   disable_html5_validation: 0
   draggableviews: 0
   dropzonejs: 0
@@ -126,6 +128,8 @@ module:
   slick_paragraphs: 0
   slick_ui: 0
   slick_views: 0
+  smart_date: 0
+  smart_date_recur: 0
   smart_trim: 0
   svg_image: 0
   system: 0

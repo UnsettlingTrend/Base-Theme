@@ -21,7 +21,7 @@ default_value:
     target: null
 default_value_callback: ''
 settings:
-  stars: '7'
+  stars: '5'
   allow_clear: 0
   allow_revote: 1
   allow_ownvote: 1
