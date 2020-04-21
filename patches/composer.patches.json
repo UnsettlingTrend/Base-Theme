@@ -5,6 +5,9 @@
     },
     "drupal/group": {
       "Fix issue 3068918": "https://www.drupal.org/files/issues/2019-10-30/3068918-8.patch"
+    },
+    "drupal/votingapi": {
+      "Fix votingapi issue with PHP 7.3": "https://www.drupal.org/files/issues/2019-05-02/votingapi-timecallback-3048085-1-4.patch"
     }
   }
 }
