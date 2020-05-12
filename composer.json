@@ -211,6 +211,7 @@
         "drupal/views_bulk_operations": "^3.0",
         "drupal/views_infinite_scroll": "^1.5",
         "drupal/votingapi": "^3.0@beta",
+        "drupal/webform": "^5.11",
         "drupal/workbench": "^1.1",
         "drupal/zurb_foundation": "^5.0@beta",
         "drush/drush": "^9.4",
