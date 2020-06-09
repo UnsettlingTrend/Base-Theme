@@ -16,7 +16,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: bZEk64pIqAPKR5XDlwebNABi9hHDAPp20TDdtHnh3PE
 id: media.video.default
@@ -80,6 +81,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     region: content
     third_party_settings: {  }
 hidden: {  }

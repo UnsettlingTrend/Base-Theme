@@ -130,6 +130,7 @@ $settings['rebuild_access'] = TRUE;
  */
 $settings['skip_permissions_hardening'] = TRUE;
 
+$config_directories['local'] = '../config/dev';
 $config_directories['local'] = '../config/local';
 
 $settings['trusted_host_patterns'] = array(

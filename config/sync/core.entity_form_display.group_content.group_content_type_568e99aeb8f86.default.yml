@@ -12,7 +12,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 id: group_content.group_content_type_568e99aeb8f86.default
 targetEntityType: group_content
 bundle: group_content_type_568e99aeb8f86
@@ -25,6 +26,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     region: content
     third_party_settings: {  }
   group_roles:

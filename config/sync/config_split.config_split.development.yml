@@ -6,7 +6,11 @@ id: development
 label: Development
 description: 'Configuration settings for development server.'
 folder: ../config/dev
-module: {  }
+module:
+  devel: 0
+  devel_debug_log: 0
+  devel_generate: 0
+  kint: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }

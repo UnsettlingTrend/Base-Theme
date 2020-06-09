@@ -19,27 +19,31 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
         components:
           b70f3d40-5e85-43c3-96f0-eb419ad32a73:
             uuid: b70f3d40-5e85-43c3-96f0-eb419ad32a73
             region: content
             configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
               id: 'field_block:media:image:field_media_image'
+              label: Image
+              provider: layout_builder
+              label_display: '0'
               formatter:
-                label: visually_hidden
+                label: hidden
+                type: image
                 settings:
-                  image_style: ''
+                  image_style: max_1300x1300
                   image_link: file
+                  svg_render_as_image: 1
                   svg_attributes:
                     width: ''
                     height: ''
-                  svg_render_as_image: true
                 third_party_settings: {  }
-                type: image
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
             additional: {  }
             weight: 0
         third_party_settings: {  }
@@ -68,5 +72,6 @@ hidden:
   created: true
   langcode: true
   name: true
+  search_api_excerpt: true
   thumbnail: true
   uid: true

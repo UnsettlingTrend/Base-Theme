@@ -1,0 +1,16 @@
+/**
+ * Styles for the Take-aways field
+ */
+
+.field--name-field-take-aways {
+  margin: 5px 15px 5px 15px;
+
+  > .field--item {
+    font-weight: bold;
+
+    &:before {
+      content: "\2022  ";
+    }
+  }
+
+}

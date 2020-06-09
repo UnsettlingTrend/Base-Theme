@@ -7,14 +7,15 @@ dependencies:
     - image.style.thumbnail
   module:
     - field_layout
+    - image_widget_crop
     - layout_discovery
     - path
-    - svg_image
     - user
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: K-1rBM8mTIkFp9RqOC2tMRUukOQ1xbRCfSKK8dEddnA
 id: user.user.default
@@ -49,10 +50,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   user_picture:
-    type: image_image
+    type: image_widget_crop
     settings:
+      show_default_crop: true
+      warn_multiple_usages: true
       preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - square
+      crop_types_required:
+        - square
       progress_indicator: throbber
+      show_crop_area: false
     third_party_settings: {  }
     weight: -1
     region: content

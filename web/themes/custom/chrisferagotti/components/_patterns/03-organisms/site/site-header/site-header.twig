@@ -7,6 +7,12 @@
       image_figure_base_class: 'logo',
       image_link_blockname: 'logo',
     } %}
+
+    {% include "@atoms/02-text/00-headings/_heading.twig" with {
+      heading: "ChrisFeragotti.com",
+      heading_url: "#",
+    } %}
+
     {% include "@molecules/menus/main-menu/main-menu.twig" %}
   {% endblock %}
 </header>

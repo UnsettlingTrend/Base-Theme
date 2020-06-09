@@ -775,22 +775,19 @@ $config_directories['sync'] = '../config/sync';
 $settings['file_private_path'] = '../private';
 
 /**
- * Check for all the possible config settings files
+ * Import any existing settings files
  */
 
-if (file_exists($app_root . '/' . $site_path . '/local.settings.php')) {
-  include $app_root . '/' . $site_path . '/local.settings.php';
-}
-if (file_exists($app_root . '/' . $site_path . '/dev.settings.php')) {
-  include $app_root . '/' . $site_path . '/dev.settings.php';
-}
-if (file_exists($app_root . '/' . $site_path . '/test.settings.php')) {
-  include $app_root . '/' . $site_path . '/test.settings.php';
-}
-if (file_exists($app_root . '/' . $site_path . '/stage.settings.php')) {
-  include $app_root . '/' . $site_path . '/stage.settings.php';
-}
-if (file_exists($app_root . '/' . $site_path . '/prod.settings.php')) {
-  include $app_root . '/' . $site_path . '/prod.settings.php';
-}
+$settings_files = [
+  'local.settings.php',
+  'dev.settings.php',
+  'test.settings.php',
+  'stage.settings.php',
+  'prod.settings.php'
+];
 
+foreach($settings_files as $f) {
+  if (file_exists($app_root . '/' . $site_path . '/' . $f)) {
+    include $app_root . '/' . $site_path . '/' . $f;
+  }
+}

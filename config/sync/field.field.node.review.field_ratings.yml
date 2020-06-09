@@ -1,0 +1,43 @@
+uuid: c47d1248-fb9e-46ee-8d66-a4eda0fad338
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ratings
+    - node.type.review
+    - paragraphs.paragraphs_type.rating
+  module:
+    - entity_reference_revisions
+id: node.review.field_ratings
+field_name: field_ratings
+entity_type: node
+bundle: review
+label: Ratings
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      rating: rating
+    target_bundles_drag_drop:
+      from_library:
+        weight: 6
+        enabled: false
+      media:
+        weight: 7
+        enabled: false
+      rating:
+        enabled: true
+        weight: 8
+      section:
+        weight: 9
+        enabled: false
+      text:
+        weight: 10
+        enabled: false
+field_type: entity_reference_revisions

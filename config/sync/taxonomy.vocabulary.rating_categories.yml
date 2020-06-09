@@ -1,0 +1,8 @@
+uuid: 95599c50-55fd-4274-b9ee-d30aab02c8d6
+langcode: en
+status: true
+dependencies: {  }
+name: 'Rating Categories'
+vid: rating_categories
+description: ''
+weight: 0

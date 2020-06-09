@@ -15,7 +15,6 @@ description: 'Views featuring varying types of content for various purposes.'
 tag: ''
 base_table: node_field_data
 base_field: nid
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -51,10 +50,10 @@ display:
       pager:
         type: infinite_scroll
         options:
-          items_per_page: 10
+          items_per_page: 20
           offset: 0
           id: 0
-          total_pages: null
+          total_pages: 5
           tags:
             previous: '‹ Previous'
             next: 'Next ›'
@@ -135,6 +134,8 @@ display:
           id: status
           expose:
             operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
           group: 1
         promote:
           id: promote
@@ -159,6 +160,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
