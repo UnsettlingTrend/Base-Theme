@@ -81,6 +81,10 @@ module:
   image_captcha: 0
   image_widget_crop: 0
   inline_form_errors: 0
+  jquery_ui: 0
+  jquery_ui_datepicker: 0
+  jquery_ui_tabs: 0
+  jquery_ui_tooltip: 0
   jsonapi: 0
   jsonapi_defaults: 0
   jsonapi_extras: 0
@@ -124,7 +128,6 @@ module:
   settings_tray: 0
   shortcut: 0
   slick: 0
-  slick_media: 0
   slick_paragraphs: 0
   slick_ui: 0
   slick_views: 0
@@ -180,7 +183,6 @@ theme:
   seven: 0
   adminimal_theme: 0
   christoph: 0
-  chrisferagotti: 0
   bootstrap: 0
   cf: 0
 profile: standard
