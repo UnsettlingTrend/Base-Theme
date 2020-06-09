@@ -12,7 +12,6 @@ config:
   via: apache
   webroot: web
   xdebug: false
-  drush: false
   conf:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
