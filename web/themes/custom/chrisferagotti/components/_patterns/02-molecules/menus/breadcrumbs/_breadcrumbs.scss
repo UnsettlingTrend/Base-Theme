@@ -2,6 +2,13 @@ $breadcrumb-active: #bbb;
 
 .breadcrumb {
   @include list-reset;
+
+  max-width: 1224px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: $white;
 }
 
 .breadcrumb__item,

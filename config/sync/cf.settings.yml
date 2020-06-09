@@ -1,0 +1,26 @@
+schemas:
+  bootstrap: 8000
+  cf: 8000
+favicon:
+  mimetype: image/vnd.microsoft.icon
+  path: ''
+  url: 'https://cf.lndo.site/themes/custom/cf/favicon.ico'
+  use_default: true
+table_responsive: '-1'
+cdn_theme: superhero
+cdn_cache_ttl_versions: '604800'
+cdn_cache_ttl_themes: '604800'
+cdn_cache_ttl_assets: '0'
+cdn_cache_ttl_library: '0'
+reset_http_request_cache: ''
+table: ''
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: ''
+  url: ''
+  use_default: true
+modal_enabled: 0

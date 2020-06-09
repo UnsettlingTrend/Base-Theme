@@ -1,0 +1,20 @@
+uuid: 1c5b9ca9-ba1b-44ca-87bb-48333c0f6692
+langcode: en
+status: true
+dependencies:
+  module:
+    - fivestar
+    - paragraphs
+id: paragraph.field_rating_value
+field_name: field_rating_value
+entity_type: paragraph
+type: fivestar
+settings:
+  vote_type: vote
+module: fivestar
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

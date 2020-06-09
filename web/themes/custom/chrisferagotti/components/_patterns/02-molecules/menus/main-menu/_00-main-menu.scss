@@ -26,9 +26,13 @@ $main-menu-medium: 43em;
 .main-menu {
   @include list-reset;
 
+  max-width: 1224px;
+  margin-right: auto;
+  margin-left: auto;
   border-bottom: 1px solid;
   position: relative;
   z-index: 10;
+  text-align: center;
 
   @include breakpoint($main-menu-medium) {
     border-bottom: none;
@@ -48,7 +52,7 @@ $main-menu-medium: 43em;
   width: 100%;
 
   @include breakpoint($main-menu-medium) {
-    background-color: $gray-lightest;
+    background-color: $primary_3;
     display: none;
     height: auto;
     left: 0;

@@ -1,0 +1,22 @@
+uuid: 52b90a4b-16fa-4233-ba8a-fb3b2fb4f01c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: reviews
+label: Reviews
+type: 'canonical_entities:node'
+pattern: 'reviews/[node:title]'
+selection_criteria:
+  e0060229-4cab-4f4e-9a18-ddc4fff9acca:
+    id: node_type
+    bundles:
+      review: review
+    negate: false
+    context_mapping:
+      node: node
+    uuid: e0060229-4cab-4f4e-9a18-ddc4fff9acca
+selection_logic: and
+weight: -5
+relationships: {  }

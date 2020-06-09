@@ -17,7 +17,6 @@ description: 'A search page preconfigured to search through the content of your 
 tag: ''
 base_table: search_api_index_default_index
 base_field: search_api_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -41,25 +40,31 @@ display:
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
+          expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
           input_required: false
           text_input_required: 'Please enter some keywords to search.'
           bef:
             general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_hide: true
+              input_required: false
+              text_input_required: 'Please enter some keywords to search.'
+              text_input_required_format: basic_html
               allow_secondary: false
               secondary_label: 'Advanced options'
-              autosubmit: false
-              autosubmit_exclude_textfield: false
-              autosubmit_hide: false
-            search_api_fulltext:
-              bef_format: default
-              more_options:
-                is_secondary: false
-                placeholder_text: Search
-                rewrite:
-                  filter_rewrite_values: ''
+            filter:
+              search_api_fulltext:
+                plugin_id: default
+                advanced:
+                  collapsible: false
+                  is_secondary: false
+                  placeholder_text: 'Keywords search'
+                  rewrite:
+                    filter_rewrite_values: ''
+                  sort_options: false
           text_input_required_format: basic_html
       pager:
         type: infinite_scroll
@@ -85,12 +90,16 @@ display:
       style:
         type: default
       row:
-        type: fields
+        type: search_api
         options:
-          default_field_elements: true
-          inline: {  }
-          separator: ''
-          hide_empty: false
+          view_modes:
+            'entity:node':
+              article: search_result
+              page: search_result
+            'entity:paragraph':
+              from_library: search_result
+              media: search_result
+              section: search_result
       filters:
         search_api_fulltext:
           id: search_api_fulltext
@@ -109,8 +118,10 @@ display:
             description: ''
             use_operator: false
             operator: search_op
+            operator_limit_selection: false
+            operator_list: {  }
             identifier: keys
-            required: true
+            required: false
             remember: false
             multiple: false
             remember_roles:
@@ -311,6 +322,10 @@ display:
       display_extenders: {  }
       path: search/content
       exposed_block: true
+      cache:
+        type: none
+      defaults:
+        cache: false
     cache_metadata:
       contexts:
         - 'languages:language_content'

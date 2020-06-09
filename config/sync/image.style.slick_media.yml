@@ -4,7 +4,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - slick_media
+      - slick
 _core:
   default_config_hash: w4Xi-st47pzP5iOkUEZiAhieM1hBxTI5RWqWrJmz_FI
 name: slick_media

@@ -20,27 +20,31 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
         components:
           8ea4231a-926a-4584-ba67-86119c5e438a:
             uuid: 8ea4231a-926a-4584-ba67-86119c5e438a
             region: content
             configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
               id: 'field_block:user:user:user_picture'
+              label: Picture
+              provider: layout_builder
+              label_display: '0'
               formatter:
+                label: hidden
                 type: image
                 settings:
-                  image_style: thumbnail
+                  image_style: user
                   image_link: content
+                  svg_render_as_image: 1
                   svg_attributes:
                     width: ''
                     height: ''
-                  svg_render_as_image: true
                 third_party_settings: {  }
-                label: hidden
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
             additional: {  }
             weight: 0
           42c9fd69-c3f3-4730-8880-65ab6dde785a:
@@ -81,3 +85,4 @@ content:
     label: hidden
 hidden:
   langcode: true
+  search_api_excerpt: true

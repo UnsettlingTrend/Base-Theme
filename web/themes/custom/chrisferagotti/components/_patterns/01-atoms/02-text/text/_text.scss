@@ -22,18 +22,18 @@ body {
 
 .blockquote {
   font-style: italic;
-  //border-left: solid 3px $color-border;
   margin-left: 1em;
   padding-left: 1em;
+  line-height: 1.6em;
+  margin-top: 0;
 
   &::before {
     content: "\201C";
-    font-size: 80px;
+    font-size: 6.0em;
     position: relative;
-    left: -15px;
-    top: 30px;
+    left: -0.5em;
+    top: 0.5em;
     color: $gray-dark;
-    height: 50px;
   }
 }
 

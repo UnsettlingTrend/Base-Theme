@@ -1,0 +1,20 @@
+uuid: ea5d38d9-bec9-4587-9c1b-41cae71fffc2
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cf
+_core:
+  default_config_hash: Z3nlZUh2mSJP3apMrJWt-duS-aLyP79rcfu_0wpPmDs
+id: cf_page_title
+theme: cf
+region: content
+weight: -4
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

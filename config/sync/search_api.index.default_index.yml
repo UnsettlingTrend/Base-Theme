@@ -6,8 +6,10 @@ dependencies:
     - node
     - user
     - paragraphs
+    - taxonomy
     - search_api
   config:
+    - field.storage.node.body
     - field.storage.node.field_tags
     - field.storage.node.field_paragraph
     - field.storage.paragraph.field_text
@@ -28,7 +30,14 @@ field_settings:
       module:
         - node
         - user
-        - user
+  body:
+    label: Body
+    datasource_id: 'entity:node'
+    property_path: body
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.body
   changed:
     label: Changed
     datasource_id: 'entity:node'
@@ -53,6 +62,17 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_tags
+  field_text:
+    label: 'Paragraph » Paragraph » Text'
+    datasource_id: 'entity:node'
+    property_path: 'field_paragraph:entity:field_text'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_paragraph
+        - field.storage.paragraph.field_text
+      module:
+        - paragraphs
   node_grants:
     label: 'Node access information'
     property_path: search_api_node_grants
@@ -60,18 +80,6 @@ field_settings:
     indexed_locked: true
     type_locked: true
     hidden: true
-  processed:
-    label: 'Paragraph » Paragraph » Text » Processed text'
-    datasource_id: 'entity:node'
-    property_path: 'field_paragraph:entity:field_text:processed'
-    type: text
-    boost: !!float 3
-    dependencies:
-      config:
-        - field.storage.node.field_paragraph
-        - field.storage.paragraph.field_text
-      module:
-        - paragraphs
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -111,6 +119,16 @@ field_settings:
     dependencies:
       module:
         - node
+  tid:
+    label: 'Tags » Taxonomy term » Term ID'
+    datasource_id: 'entity:node'
+    property_path: 'field_tags:entity:tid'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_tags
+      module:
+        - taxonomy
   title:
     label: Title
     datasource_id: 'entity:node'
@@ -148,28 +166,31 @@ datasource_settings:
     languages:
       default: true
       selected: {  }
-  'entity:paragraph':
-    bundles:
-      default: true
-      selected:
-        - text
-    languages:
-      default: true
-      selected: {  }
 processor_settings:
+  stemmer:
+    all_fields: true
+    fields:
+      - body
+      - field_text
+      - rendered_item
+      - title
+    exceptions:
+      mexican: mexic
+      texan: texa
+    weights:
+      preprocess_index: -43
+      preprocess_query: 0
+  rendered_item:
+    weights:
+      add_properties: 0
+      pre_index_save: -10
   add_url:
     weights:
       preprocess_index: -30
   aggregated_field:
     weights:
       add_properties: 20
-  content_access:
-    weights:
-      preprocess_index: -6
-      preprocess_query: -4
-  entity_status:
-    weights:
-      preprocess_index: -10
+  reverse_entity_references: {  }
   highlight:
     highlight: always
     highlight_partial: true
@@ -180,52 +201,27 @@ processor_settings:
     suffix: '</strong>'
     weights:
       postprocess_query: 0
-  html_filter:
-    all_fields: false
-    fields: {  }
-    title: true
-    alt: true
-    tags:
-      b: 2
-      h1: 5
-      h2: 3
-      h3: 2
-      string: 2
+  entity_status:
     weights:
-      preprocess_index: -48
-      preprocess_query: -6
-  ignorecase:
+      preprocess_index: -10
+  tokenizer:
     all_fields: true
     fields:
-      - author
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
-      - type
+    spaces: ''
+    overlap_cjk: 1
+    minimum_word_size: '3'
     weights:
-      preprocess_index: -46
-      preprocess_query: -8
-  rendered_item:
-    weights:
-      add_properties: 0
-      pre_index_save: -10
-  reverse_entity_references: {  }
-  stemmer:
-    all_fields: true
-    fields:
-      - processed
-      - rendered_item
-      - title
-    exceptions:
-      mexican: mexic
-      texan: texa
-    weights:
-      preprocess_index: -43
-      preprocess_query: 0
+      preprocess_index: -44
+      preprocess_query: -5
   stopwords:
     all_fields: true
     fields:
-      - processed
+      - body
+      - field_text
       - rendered_item
       - title
     stopwords:
@@ -267,18 +263,18 @@ processor_settings:
     weights:
       preprocess_index: -45
       preprocess_query: -10
-  tokenizer:
+  ignorecase:
     all_fields: true
     fields:
-      - processed
+      - author
+      - body
+      - field_text
       - rendered_item
       - title
-    spaces: ''
-    overlap_cjk: 1
-    minimum_word_size: '3'
+      - type
     weights:
-      preprocess_index: -44
-      preprocess_query: -5
+      preprocess_index: -46
+      preprocess_query: -8
   transliteration:
     all_fields: false
     fields:
@@ -286,6 +282,25 @@ processor_settings:
     weights:
       preprocess_index: -47
       preprocess_query: -7
+  language_with_fallback: {  }
+  content_access:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -4
+  html_filter:
+    all_fields: false
+    fields: {  }
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      string: 2
+    weights:
+      preprocess_index: -48
+      preprocess_query: -6
 tracker_settings:
   default:
     indexing_order: fifo

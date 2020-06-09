@@ -1,0 +1,11 @@
+.view.tiles {
+  .views-infinite-scroll-content-wrapper {
+    display:flex;
+    justify-content:center;
+    flex-wrap: wrap;
+
+    .views-row {
+      margin: 7px;
+    }
+  }
+}

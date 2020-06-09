@@ -12,7 +12,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: FbD0Vvben3VEPcKqe88Y_ABUUW3RKq0AGFLwtZtYaVY
 id: comment.comment_forum.default
@@ -23,6 +24,8 @@ content:
   author:
     weight: -2
     region: content
+    settings: {  }
+    third_party_settings: {  }
   comment_body:
     type: text_textarea
     weight: 11
