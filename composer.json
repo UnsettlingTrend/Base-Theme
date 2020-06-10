@@ -150,6 +150,7 @@
         "drupal/custom_add_another": "^1.0@beta",
         "drupal/devel": "^2.1",
         "drupal/devel_debug_log": "^1.0@beta",
+        "drupal/devel_entity_updates": "^3.0",
         "drupal/diff": "^1.0",
         "drupal/disable_html5_validation": "^1.0",
         "drupal/draggableviews": "^1.2",
@@ -278,7 +279,8 @@
         },
         "merge-plugin": {
             "include": [
-                "web/modules/contrib/ckeditor_codemirror/composer.libraries.json"
+                "web/modules/contrib/ckeditor_codemirror/composer.libraries.json",
+                "web/modules/contrib/webform/composer.libraries.json"
             ]
         }
     }
