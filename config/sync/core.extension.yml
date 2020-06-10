@@ -155,7 +155,6 @@ module:
   webform: 0
   webform_access: 0
   webform_attachment: 0
-  webform_devel: 0
   webform_group: 0
   webform_icheck: 0
   webform_image_select: 0
