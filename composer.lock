@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d893942a8636da680bb9c3f5c3d763c",
+    "content-hash": "b799472db6c595adbd8afdf74b58e495",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -10124,65 +10124,6 @@
             }
         },
         {
-            "name": "drupal/zurb_foundation",
-            "version": "5.0.0-beta3",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/zurb-foundation.git",
-                "reference": "8.x-5.0-beta3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/zurb_foundation-8.x-5.0-beta3.zip",
-                "reference": "8.x-5.0-beta3",
-                "shasum": "af7452eae8e66b4224a32344a3c91175044d7225"
-            },
-            "require": {
-                "drupal/core": "~8.0"
-            },
-            "type": "drupal-theme",
-            "extra": {
-                "branch-alias": {
-                    "dev-5.x": "5.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-5.0-beta3",
-                    "datestamp": "1487487784",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Bcwald",
-                    "homepage": "https://www.drupal.org/user/215794"
-                },
-                {
-                    "name": "FlorisMoriceau",
-                    "homepage": "https://www.drupal.org/user/2627019"
-                },
-                {
-                    "name": "HongPong",
-                    "homepage": "https://www.drupal.org/user/60005"
-                },
-                {
-                    "name": "kevinquillen",
-                    "homepage": "https://www.drupal.org/user/317279"
-                }
-            ],
-            "description": "The most advanced responsive front-end framework in the world, now in Drupal! Based on Zurb Foundation version 5.x.",
-            "homepage": "https://www.drupal.org/project/zurb_foundation",
-            "support": {
-                "source": "https://git.drupalcode.org/project/zurb_foundation"
-            }
-        },
-        {
             "name": "drush/drush",
             "version": "9.7.2",
             "source": {
@@ -17403,8 +17344,7 @@
         "drupal/s3fs": 15,
         "drupal/starrating": 15,
         "drupal/title": 20,
-        "drupal/votingapi": 10,
-        "drupal/zurb_foundation": 10
+        "drupal/votingapi": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
