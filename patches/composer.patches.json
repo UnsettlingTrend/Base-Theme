@@ -1,13 +1,7 @@
 {
   "patches": {
-    "drupal/group": {
-      "Fix issue 3068918": "https://www.drupal.org/files/issues/2019-10-30/3068918-8.patch"
-    },
     "drupal/leaflet_more_maps": {
       "Fix issue 2847024": "https://www.drupal.org/files/issues/2019-03-19/lmm_2847024-15.patch"
-    },
-    "drupal/fivestar": {
-      "Fix issue 2900863": "https://www.drupal.org/files/issues/2020-05-02/2900863-14-target.patch"
     }
   }
 }

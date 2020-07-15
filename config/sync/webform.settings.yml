@@ -1,6 +1,6 @@
 settings:
   default_status: open
-  default_page_base_path: form
+  default_page_base_path: /form
   default_ajax: false
   default_ajax_effect: fade
   default_ajax_speed: 500
@@ -16,6 +16,7 @@ settings:
   default_form_disable_back: false
   default_form_submit_back: false
   default_form_unsaved: false
+  default_form_disable_remote_addr: false
   default_form_novalidate: false
   default_form_disable_inline_errors: false
   default_form_required: false
@@ -28,6 +29,8 @@ settings:
   default_wizard_next_button_label: 'Next Page >'
   default_wizard_start_label: Start
   default_wizard_confirmation_label: Complete
+  default_wizard_toggle_show_label: 'Show all'
+  default_wizard_toggle_hide_label: 'Hide all'
   default_preview_next_button_label: Preview
   default_preview_prev_button_label: '< Previous'
   default_preview_label: Preview
