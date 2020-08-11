@@ -8,10 +8,10 @@ env_file:
   - lando/lando.env
 
 config:
-  php: 7.3
+  php: 7.4
   via: apache
   webroot: web
-  xdebug: false
+  xdebug: true
   conf:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
