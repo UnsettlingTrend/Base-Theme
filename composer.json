@@ -176,7 +176,7 @@
         "drupal/jira_rest": "^3.0",
         "drupal/jquery_ui_checkboxradio": "^1.2",
         "drupal/jsonapi_extras": "^3.4",
-        "drupal/leaflet": "^1.0@beta",
+        "drupal/leaflet": "^2.0.0",
         "drupal/leaflet_more_maps": "^1.0@alpha",
         "drupal/media_entity_browser": "^2.0",
         "drupal/media_entity_instagram": "^2.0",
