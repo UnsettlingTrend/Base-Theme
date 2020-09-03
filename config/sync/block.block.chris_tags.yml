@@ -1,0 +1,29 @@
+uuid: 0b7a6c62-f16a-42fb-bbd2-07dd3bf40c4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.tags
+  module:
+    - facets
+    - system
+  theme:
+    - chris
+id: chris_tags
+theme: chris
+region: header
+weight: -4
+provider: null
+plugin: 'facet_block:tags'
+settings:
+  id: 'facet_block:tags'
+  label: Tags
+  provider: facets
+  label_display: '0'
+  block_id: tags
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: false
+    context_mapping: {  }

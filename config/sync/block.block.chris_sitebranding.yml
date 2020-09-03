@@ -1,0 +1,23 @@
+uuid: 83150b90-116f-4351-8654-cf9cad543cc6
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - chris
+id: chris_sitebranding
+theme: chris
+region: header
+weight: -7
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: false
+  use_site_name: true
+  use_site_slogan: false
+visibility: {  }

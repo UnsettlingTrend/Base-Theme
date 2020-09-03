@@ -1,0 +1,28 @@
+uuid: 9b7c3fbb-efcc-4370-9c99-12a28de920d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets_summary.facets_summary.facet_summary
+  module:
+    - facets_summary
+    - system
+  theme:
+    - chris
+id: chris_facetsummary
+theme: chris
+region: header
+weight: -6
+provider: null
+plugin: 'facets_summary_block:facet_summary'
+settings:
+  id: 'facets_summary_block:facet_summary'
+  label: 'Facet Summary'
+  provider: facets_summary
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: false
+    context_mapping: {  }

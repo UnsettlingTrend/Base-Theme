@@ -1,0 +1,22 @@
+uuid: abefbaf2-16c7-4c83-8bb6-c98afb5f08d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - chris
+_core:
+  default_config_hash: 80N66GdzEvwqi1m-_GZ-ulkk8AJG9beoXcZ4-pMVKjI
+id: chris_content
+theme: chris
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

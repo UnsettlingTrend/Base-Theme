@@ -72,6 +72,7 @@ module:
   geolocation_address: 0
   geolocation_google_maps: 0
   geolocation_leaflet: 0
+  gesso_helper: 0
   gnode: 0
   graphql: 0
   graphql_core: 0
@@ -109,6 +110,7 @@ module:
   moderation_sidebar: 0
   module_filter: 0
   node: 0
+  oauth_login_oauth2: 0
   options: 0
   page_cache: 0
   paragraphs_library: 0
@@ -144,6 +146,8 @@ module:
   tokenuuid: 0
   toolbar: 0
   tour: 0
+  twig_field_value: 0
+  twig_tweak: 0
   typed_data: 0
   update: 0
   user: 0
@@ -183,6 +187,7 @@ theme:
   bootstrap: 0
   cf: 0
   claro: 0
+  chris: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
