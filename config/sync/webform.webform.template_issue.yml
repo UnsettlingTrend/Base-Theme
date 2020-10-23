@@ -1,3 +1,4 @@
+uuid: 312d0f7b-3ff4-47a1-ad66-2998efa0e0d6
 langcode: en
 status: closed
 dependencies:
@@ -88,6 +89,7 @@ settings:
   wizard_progress_states: false
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -143,6 +145,7 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -192,6 +195,5 @@ access:
     permissions: {  }
 handlers: {  }
 variants: {  }
-uuid: 312d0f7b-3ff4-47a1-ad66-2998efa0e0d6
 _core:
   default_config_hash: _MtOhMQLOuU7buUpwebQ4LNWiY0h9U7m3IPeAXW86cA

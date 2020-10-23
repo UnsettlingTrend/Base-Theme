@@ -1,3 +1,4 @@
+uuid: f9ee58e9-f43e-4f29-8a01-8b74b694ee89
 langcode: en
 status: closed
 dependencies:
@@ -88,6 +89,7 @@ settings:
   wizard_progress_states: false
   wizard_auto_forward: true
   wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -143,6 +145,7 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -194,6 +197,7 @@ handlers:
   email_confirmation:
     id: email
     label: 'Email confirmation'
+    notes: ''
     handler_id: email_confirmation
     status: true
     conditions: {  }
@@ -220,16 +224,17 @@ handlers:
       html: true
       attachments: false
       twig: false
-      theme_name: ''
-      parameters: {  }
       debug: false
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
+      theme_name: ''
+      parameters: {  }
   email_notification:
     id: email
     label: 'Email notification'
+    notes: ''
     handler_id: email_notification
     status: true
     conditions: {  }
@@ -271,14 +276,13 @@ handlers:
       html: true
       attachments: false
       twig: false
-      theme_name: ''
-      parameters: {  }
       debug: false
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
+      theme_name: ''
+      parameters: {  }
 variants: {  }
-uuid: f9ee58e9-f43e-4f29-8a01-8b74b694ee89
 _core:
   default_config_hash: I2ShpHEBAAXFJsS0DOL9Mi7J2hdnIwUgKYEJBYUBJ-E
