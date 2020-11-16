@@ -12,7 +12,7 @@ config:
   via: apache
   webroot: web
   xdebug: true
-  conf:
+  config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
 
