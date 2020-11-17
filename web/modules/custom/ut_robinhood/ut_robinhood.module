@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains ut_robinhood.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ut_robinhood_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ut_robinhood module.
+    case 'help.page.ut_robinhood':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module for RobinHood to RasbPi') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ut_robinhood_theme() {
+  return [
+    'ut_robinhood' => [
+      'render element' => 'children',
+    ],
+  ];
+}
