@@ -1,0 +1,19 @@
+uuid: bd625c4b-69f9-4fd9-a77a-7d4eb9172402
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_company
+    - taxonomy.vocabulary.stock_symbols
+id: taxonomy_term.stock_symbols.field_company
+field_name: field_company
+entity_type: taxonomy_term
+bundle: stock_symbols
+label: Company
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

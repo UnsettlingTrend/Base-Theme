@@ -139,6 +139,7 @@
         "drupal/ckeditor_codemirror": "^2.2",
         "drupal/codesnippet": "^1.6",
         "drupal/coffee": "^1.0@beta",
+        "drupal/color_field": "^2.4",
         "drupal/colorbox": "^1.4",
         "drupal/components": "^2.0",
         "drupal/config_filter": "^2.0",

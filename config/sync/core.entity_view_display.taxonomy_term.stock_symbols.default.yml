@@ -1,0 +1,43 @@
+uuid: f99c48c3-319e-4fc4-80e8-8e3644fa85c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.stock_symbols.field_color
+    - field.field.taxonomy_term.stock_symbols.field_company
+    - taxonomy.vocabulary.stock_symbols
+  module:
+    - color_field
+    - text
+id: taxonomy_term.stock_symbols.default
+targetEntityType: taxonomy_term
+bundle: stock_symbols
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_color:
+    weight: 1
+    label: above
+    settings:
+      format: hex
+      opacity: true
+    third_party_settings: {  }
+    type: color_field_formatter_text
+    region: content
+  field_company:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

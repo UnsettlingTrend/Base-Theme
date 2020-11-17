@@ -26,6 +26,7 @@ module:
   codesnippet: 0
   coffee: 0
   color: 0
+  color_field: 0
   colorbox: 0
   comment: 0
   components: 0
@@ -124,6 +125,7 @@ module:
   redirect: 0
   redirect_404: 0
   responsive_image: 0
+  rest: 0
   rules: 0
   search_api: 0
   search_api_db: 0
