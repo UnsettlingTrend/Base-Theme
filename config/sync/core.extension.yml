@@ -153,6 +153,7 @@ module:
   typed_data: 0
   update: 0
   user: 0
+  ut_robinhood: 0
   variationcache: 0
   views_bulk_operations: 0
   views_infinite_scroll: 0

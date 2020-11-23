@@ -113,9 +113,27 @@
                         "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips",
                         "type": "git",
                         "reference": "origin/master"
-                    }
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "google/charts",
+                "version": "45",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "google_charts"
+                },
+                "dist": {
+                    "url": "https://www.gstatic.com/charts/loader.js",
+                    "type": "file"
+                },
+                "require": {
+                    "composer/installers": "~1.0"
+                }
+            }
+        }
     ],
     "require": {
         "ext-json": "*",
@@ -123,7 +141,6 @@
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "dinbror/blazy": "^1.8",
-        "drupal-composer/drupal-scaffold": "^2.2",
         "drupal/address": "^1.4",
         "drupal/admin_toolbar": "^2.0",
         "drupal/adminimal_admin_toolbar": "^1.5",
@@ -144,8 +161,8 @@
         "drupal/components": "^2.0",
         "drupal/config_filter": "^2.0",
         "drupal/config_split": "^1.5",
-        "drupal/console": "^1.0.2",
-        "drupal/core": "^8.7",
+        "drupal/core": "^8.9",
+        "drupal/core-composer-scaffold": "~8.9.0",
         "drupal/crop": "^2.0",
         "drupal/cshs": "^1.0@beta",
         "drupal/ctools": "^3.0",
@@ -224,17 +241,16 @@
         "drush/drush": "^9.4",
         "enyo/dropzone": "~4.3",
         "fengyuanchen/cropper": "^4.0",
+        "google/charts": "45",
         "jackmoore/colorbox": "~1",
         "kenwheeler/slick": "~1.9.0",
-        "m7sk/composer-svn-export-plugin": "^1.0",
         "michaeldrennen/robinhood": "^1.1",
         "php-http/httplug": "^2.0",
         "phpunit/phpunit": "6.5",
         "simeydotme/jquery-ui-slider-pips": "^1.11",
         "squizlabs/php_codesniffer": "^3.3",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "webmozart/path-util": "^2.3"
     },
     "require-dev": {
         "drupal/devel_entity_updates": "^3.0",
@@ -259,7 +275,6 @@
         ]
     },
     "scripts": {
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "pre-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
