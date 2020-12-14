@@ -9,6 +9,7 @@ env_file:
 
 config:
   php: 7.4
+  composer_version: "2.0.7"
   via: apache
   webroot: web
   xdebug: true
