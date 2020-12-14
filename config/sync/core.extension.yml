@@ -85,9 +85,9 @@ module:
   image_widget_crop: 0
   inline_form_errors: 0
   jquery_ui: 0
+  jquery_ui_checkboxradio: 0
   jquery_ui_datepicker: 0
-  jquery_ui_tabs: 0
-  jquery_ui_tooltip: 0
+  jquery_ui_slider: 0
   jsonapi: 0
   jsonapi_defaults: 0
   jsonapi_extras: 0
