@@ -1,0 +1,30 @@
+uuid: 56a6a3f7-a239-4577-820c-2f2a11ac304f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.recipe.body
+    - node.type.recipe
+  module:
+    - text
+    - user
+id: node.recipe.default
+targetEntityType: node
+bundle: recipe
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

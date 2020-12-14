@@ -5,14 +5,22 @@
     "license": "GPL-2.0+",
     "authors": [
         {
-            "name": "",
-            "role": ""
+            "name": "Chris Feragotti",
+            "role": "Developer"
         }
     ],
     "repositories": [
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://bitbucket.org/bixal/acquia-ci.git"
         },
         {
             "type": "package",
@@ -136,12 +144,16 @@
         }
     ],
     "require": {
+        "ext-dom": "20031129",
         "ext-json": "*",
+        "ext-zip": "^1.15",
         "ckeditor/codesnippet": "^4.11",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "dinbror/blazy": "^1.8",
+        "dompdf/dompdf": "^0.8.6",
         "drupal/address": "^1.4",
+        "drupal/admin_menu_search": "^1.1",
         "drupal/admin_toolbar": "^2.0",
         "drupal/adminimal_admin_toolbar": "^1.5",
         "drupal/advagg": "^4.0",
@@ -153,6 +165,7 @@
         "drupal/captcha": "^1.0@beta",
         "drupal/cas": "^1.0@RC",
         "drupal/charts": "^3.0@beta",
+        "drupal/chosen": "^3.0",
         "drupal/ckeditor_codemirror": "^2.2",
         "drupal/codesnippet": "^1.6",
         "drupal/coffee": "^1.0@beta",
@@ -160,14 +173,18 @@
         "drupal/colorbox": "^1.4",
         "drupal/components": "^2.0",
         "drupal/config_filter": "^2.0",
+        "drupal/config_ignore": "^2.2",
         "drupal/config_split": "^1.5",
+        "drupal/console": "^1.9",
         "drupal/core": "^8.9",
         "drupal/core-composer-scaffold": "~8.9.0",
         "drupal/crop": "^2.0",
         "drupal/cshs": "^1.0@beta",
         "drupal/ctools": "^3.0",
         "drupal/custom_add_another": "^1.0@beta",
-        "drupal/devel": "^4.0",
+        "drupal/devel": "^2.0",
+        "drupal/devel_debug_log": "^1.0",
+        "drupal/devel_entity_updates": "^3.0",
         "drupal/diff": "^1.0",
         "drupal/disable_html5_validation": "^1.0",
         "drupal/draggableviews": "^2.0",
@@ -195,6 +212,7 @@
         "drupal/jira_rest": "^3.0",
         "drupal/jquery_ui_checkboxradio": "^1.2",
         "drupal/jsonapi_extras": "^3.4",
+        "drupal/kint": "^2.1",
         "drupal/leaflet": "^2.0.0",
         "drupal/leaflet_more_maps": "^1.0@alpha",
         "drupal/media_entity_browser": "^2.0",
@@ -218,6 +236,8 @@
         "drupal/rules": "^3.0@alpha",
         "drupal/s3fs": "^3.0@alpha",
         "drupal/search_api": "^1.15",
+        "drupal/search_api_autocomplete": "^1.4",
+        "drupal/search_api_sorts": "^1.0",
         "drupal/slick": "^2.0",
         "drupal/slick_media": "^3.0",
         "drupal/slick_paragraphs": "^2.0",
@@ -236,6 +256,7 @@
         "drupal/views_bulk_operations": "^3.0",
         "drupal/views_infinite_scroll": "^1.5",
         "drupal/votingapi": "^3.0@beta",
+        "drupal/warmer": "^2.0",
         "drupal/webform": "^6.0",
         "drupal/workbench": "^1.1",
         "drush/drush": "^9.4",
@@ -253,13 +274,15 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/devel_entity_updates": "^3.0",
         "behat/mink-goutte-driver": "~1.2",
         "jcalderonzumba/gastonjs": "~1.0.2",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
         "mikey179/vfsstream": "~1.2",
         "symfony/css-selector": "~2.8|~3.0",
-        "symfony/phpunit-bridge": "^4.1"
+        "bex/behat-screenshot": "^2.1",
+        "drupal/core-dev": "^8.9",
+        "drupal/upgrade_status": "^2.9",
+        "phpstan/extension-installer": "^1.0"
     },
     "conflict": {
         "drupal/drupal": "*"
