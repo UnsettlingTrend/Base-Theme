@@ -1,7 +1,4 @@
 {
   "patches": {
-    "drupal/leaflet_more_maps": {
-      "Fix issue 2847024": "https://www.drupal.org/files/issues/2019-03-19/lmm_2847024-15.patch"
-    }
   }
 }
