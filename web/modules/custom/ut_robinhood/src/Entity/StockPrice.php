@@ -15,6 +15,10 @@ use Drupal\Core\Entity\ContentEntityInterface;
  * @ContentEntityType(
  *   id = "stock_price",
  *   label = @Translation("Stock Price"),
+ *   handlers = {
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *     "views_data" = "Drupal\views\EntityViewsData",
+ *   },
  *   base_table = "stock_price",
  *   entity_keys = {
  *     "id" = "id",
@@ -40,9 +44,9 @@ class StockPrice extends ContentEntityBase implements ContentEntityInterface {
       ->setReadOnly(TRUE);
 
     // Field to point to the taxonomy term of the stock symbol.
-      $fields['sid'] = BaseFieldDefinition::create('decimal')
+      $fields['sid'] = BaseFieldDefinition::create('integer')
         ->setLabel(t('Symbol ID'))
-        ->setDescription(t('The Symbol ID of the StockPrice entity.'))
+        ->setDescription(t('The unique taxonomy term ID for the Symbol of the StockPrice entity.'))
         ->setReadOnly(TRUE);
 
     return $fields;
