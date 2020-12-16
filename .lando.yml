@@ -5,11 +5,11 @@ name: cf
 recipe: drupal8
 
 env_file:
-  - lando/lando.env
+ - lando/lando.env
 
 config:
-  php: 7.4
-  composer_version: "2.0.7"
+  php: '7.4'
+  composer_version: 2
   via: apache
   webroot: web
   xdebug: true
@@ -35,8 +35,8 @@ services:
     composer:
       phpunit/phpunit: '*'
       behat/behat: 3.3.1
-    run:
-      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
+#    run:
+#      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
     run_as_root:
       - "bash /app/lando/scripts/build.sh"
     overrides:
@@ -55,6 +55,10 @@ services:
     portforward: true
 
 tooling:
+  composer:
+    service: appserver
+    description: run composer commands
+    cmd: /usr/local/bin/composer
   drush:
     service: appserver
     description: run drush commands

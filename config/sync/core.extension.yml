@@ -3,7 +3,6 @@ module:
   address: 0
   admin_toolbar: 0
   admin_toolbar_links_access_filter: 0
-  admin_toolbar_search: 0
   admin_toolbar_tools: 0
   adminimal_admin_toolbar: 0
   allowed_formats: 0
@@ -31,7 +30,6 @@ module:
   comment: 0
   components: 0
   config: 0
-  config_filter: 0
   config_split: 0
   contact: 0
   content_moderation: 0
@@ -43,7 +41,6 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
-  devel: 0
   diff: 0
   disable_html5_validation: 0
   draggableviews: 0
@@ -75,8 +72,6 @@ module:
   geolocation_leaflet: 0
   gesso_helper: 0
   gnode: 0
-  graphql: 0
-  graphql_core: 0
   group: 0
   help: 0
   history: 0
@@ -111,7 +106,6 @@ module:
   moderation_sidebar: 0
   module_filter: 0
   node: 0
-  oauth_login_oauth2: 0
   options: 0
   page_cache: 0
   paragraphs_library: 0
