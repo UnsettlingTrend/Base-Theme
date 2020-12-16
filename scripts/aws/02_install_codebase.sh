@@ -14,3 +14,5 @@ cd /var/www
 # Untar the build file
 sudo tar -xf /tmp/build.tar
 sudo mv /var/www/web /var/www/html
+# Add the appropriate settings file for the environment
+sudo cp /var/www/config/dev.settings.php /var/www/html/sites/default/
