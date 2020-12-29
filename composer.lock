@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7bd73a3848f7e6cdc4b85d96a43facb9",
+    "content-hash": "61ced281dcdb490c3c652ee5f90a823a",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -5451,27 +5451,37 @@
         },
         {
             "name": "drupal/devel",
-            "version": "2.1.0",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/devel.git",
-                "reference": "8.x-2.1"
+                "reference": "4.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/devel-8.x-2.1.zip",
-                "reference": "8.x-2.1",
-                "shasum": "8f735892922aa5f228e681e645e5f02b1c008f14"
+                "url": "https://ftp.drupal.org/files/projects/devel-4.1.0.zip",
+                "reference": "4.1.0",
+                "shasum": "c8c21841e03ec92a1dba102116be239554f8f20d"
             },
             "require": {
-                "drupal/core": "~8.0",
-                "symfony/var-dumper": "~2.7|^3|^4"
+                "doctrine/common": "^2.7",
+                "drupal/core": "^8.8 || ^9",
+                "symfony/var-dumper": "^4 || ^5"
+            },
+            "conflict": {
+                "kint-php/kint": "<3"
+            },
+            "require-dev": {
+                "drush/drush": "^10"
+            },
+            "suggest": {
+                "kint-php/kint": "Kint provides an informative display of arrays/objects. Useful for debugging and developing."
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1556799496",
+                    "version": "4.1.0",
+                    "datestamp": "1609263666",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5479,71 +5489,53 @@
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9"
+                        "drush.services.yml": "^9 || ^10"
                     }
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "Moshe Weitzman",
-                    "homepage": "https://github.com/weitzman",
-                    "email": "weitzman@tejasa.com",
-                    "role": "Maintainer"
+                    "name": "drupalspoons",
+                    "homepage": "https://www.drupal.org/user/3647684"
                 },
                 {
-                    "name": "Hans Salvisberg",
-                    "homepage": "https://www.drupal.org/u/salvis",
-                    "email": "drupal@salvisberg.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Luca Lusso",
-                    "homepage": "https://www.drupal.org/u/lussoluca",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Marco (willzyx)",
-                    "homepage": "https://www.drupal.org/u/willzyx",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "See contributors",
-                    "homepage": "https://www.drupal.org/node/3236/committers"
+                    "name": "moshe weitzman",
+                    "homepage": "https://www.drupal.org/user/23"
                 }
             ],
             "description": "Various blocks, pages, and functions for developers.",
-            "homepage": "http://drupal.org/project/devel",
+            "homepage": "https://www.drupal.org/project/devel",
             "support": {
-                "source": "http://cgit.drupalcode.org/devel",
-                "issues": "http://drupal.org/project/devel",
-                "irc": "irc://irc.freenode.org/drupal-contribute"
+                "source": "https://gitlab.com/drupalspoons/devel",
+                "issues": "https://gitlab.com/drupalspoons/devel/-/issues",
+                "slack": "https://drupal.slack.com/archives/C012WAW1MH6"
             }
         },
         {
             "name": "drupal/devel_debug_log",
-            "version": "1.0.0-beta2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/devel_debug_log.git",
-                "reference": "8.x-1.0-beta2"
+                "reference": "8.x-1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/devel_debug_log-8.x-1.0-beta2.zip",
-                "reference": "8.x-1.0-beta2",
-                "shasum": "bc644fbf4973a84011e34abcaa02b7a8ed023479"
+                "url": "https://ftp.drupal.org/files/projects/devel_debug_log-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "458e6a7af14b83a794be65dc7afc45f192dc96b0"
             },
             "require": {
                 "drupal/core": "^8 || ^9",
-                "drupal/devel": "*",
-                "drupal/kint": "*"
+                "drupal/devel": "^4.0.0"
             },
             "require-dev": {
-                "drupal/devel": "^2.0"
+                "drupal/devel": "^4.0",
+                "kint-php/kint": "^3.3"
             },
             "suggest": {
                 "drupal/devel": "Some modules will be able to pretty-print PHP with this module."
@@ -5551,11 +5543,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-beta2",
-                    "datestamp": "1571968688",
+                    "version": "8.x-1.0",
+                    "datestamp": "1603346300",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -7840,44 +7832,6 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/key",
                 "issues": "http://drupal.org/project/key"
-            }
-        },
-        {
-            "name": "drupal/kint",
-            "version": "2.1.0",
-            "require": {
-                "drupal/core": "~8.0",
-                "drupal/devel": "^2"
-            },
-            "type": "metapackage",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1556799496",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "drupalspoons",
-                    "homepage": "https://www.drupal.org/user/3647684"
-                },
-                {
-                    "name": "moshe weitzman",
-                    "homepage": "https://www.drupal.org/user/23"
-                }
-            ],
-            "description": "Wrapper for Kint debugging tool.",
-            "homepage": "https://www.drupal.org/project/devel",
-            "support": {
-                "source": "https://git.drupalcode.org/project/devel"
             }
         },
         {
