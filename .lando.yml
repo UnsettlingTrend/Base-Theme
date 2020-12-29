@@ -18,12 +18,20 @@ config:
     mysql: lando/config/my.cnf
 
 proxy:
+  search:
+    - search.cf.lndo.site
   pma:
-    - db-cf.lndo.site
+    - db.cf.lndo.site
   mailhog:
-    - mail-cf.lndo.site
+    - mail.cf.lndo.site
 
 services:
+  search:
+    type: solr:8.4
+    portforward: true
+    core: collection1
+    config:
+      dir: config/solr-conf
   database:
     type: mysql:5.7
   #    portforward: 3310
@@ -33,7 +41,6 @@ services:
       - database
   appserver:
     composer:
-      phpunit/phpunit: '*'
       behat/behat: 3.3.1
 #    run:
 #      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
