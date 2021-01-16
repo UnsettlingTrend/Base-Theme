@@ -71,3 +71,12 @@ component-libraries:
   macros:
     paths:
       - source/_macros
+
+
+component:
+  namespaces:
+    base: source/_patterns/02-base
+    layouts: source/_patterns/03-layouts
+    components: source/_patterns/04-components
+    templates: source/_patterns/05-templates
+    macros: source/_macros
