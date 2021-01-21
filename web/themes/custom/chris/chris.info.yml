@@ -72,7 +72,6 @@ component-libraries:
     paths:
       - source/_macros
 
-
 component:
   namespaces:
     base: source/_patterns/02-base
