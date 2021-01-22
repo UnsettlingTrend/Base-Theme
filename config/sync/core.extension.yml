@@ -146,7 +146,6 @@ module:
   twig_tweak: 0
   typed_data: 0
   update: 0
-  upgrade_status: 0
   user: 0
   ut_robinhood: 0
   variationcache: 0
@@ -180,8 +179,6 @@ module:
   paragraphs: 11
   standard: 1000
 theme:
-  stable: 0
-  classy: 0
   bootstrap: 0
   cf: 0
   claro: 0

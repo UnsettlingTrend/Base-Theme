@@ -768,7 +768,7 @@ $settings['entity_update_batch_size'] = 50;
 // Host patterns are defined in the individual .settings.php files in /config
 $settings['trusted_host_patterns'] = [];
 
-$config_directories['sync'] = '../config/sync';
+$settings['config_sync_directory']  = '../config/sync';
 
 // Set private file directory
 
