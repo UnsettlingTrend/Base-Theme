@@ -1,3 +1,0 @@
----
-title: Thumbnail Image
----
