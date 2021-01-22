@@ -6,7 +6,6 @@ dependencies:
     - taxonomy.vocabulary.stock_symbols
   module:
     - charts
-    - charts_google
     - taxonomy
     - user
 id: stocks_terms
@@ -266,50 +265,61 @@ display:
         type: chart
         options:
           grouping: {  }
-          allow_advanced_rendering: 1
-          library: google
-          type: line
-          label_field: name
-          fields:
-            table: ''
-          data_fields:
-            name: 0
-            changed: changed
-            tid: tid
-          field_colors:
-            name: '#2f7ed8'
-            changed: '#0d233a'
-            tid: '#8bbc21'
-          title: Chart
-          title_position: out
-          tooltips: ''
-          data_labels: ''
-          data_markers: 'FALSE'
-          legend_position: right
-          background: ''
-          three_dimensional: 1
-          polar: 0
-          width: ''
-          width_units: '%'
-          height: ''
-          height_units: px
-          max: '100'
-          min: '0'
-          green_from: '85'
-          green_to: '100'
-          yellow_from: '50'
-          yellow_to: '85'
-          red_from: '0'
-          red_to: '50'
-          xaxis_title: ''
-          xaxis_labels_rotation: '0'
-          yaxis_title: ''
-          yaxis_min: ''
-          yaxis_max: ''
-          yaxis_prefix: ''
-          yaxis_suffix: ''
-          yaxis_decimal_count: ''
-          yaxis_labels_rotation: '0'
+          chart_settings:
+            fields:
+              stacking: false
+              allow_advanced_rendering: 1
+              label: name
+              data_providers:
+                name:
+                  enabled: false
+                  weight: 0
+                  color: '#2f7ed8'
+                changed:
+                  enabled: true
+                  weight: 1
+                  color: '#0d233a'
+                tid:
+                  enabled: true
+                  weight: 2
+                  color: '#8bbc21'
+            library: google
+            type: line
+            display:
+              title: Chart
+              title_position: out
+              tooltips: ''
+              data_labels: ''
+              data_markers: false
+              legend_position: right
+              background: ''
+              three_dimensional: 1
+              polar: 0
+              dimensions:
+                width: ''
+                width_units: '%'
+                height: ''
+                height_units: px
+              gauge:
+                max: '100'
+                min: '0'
+                green_from: '85'
+                green_to: '100'
+                yellow_from: '50'
+                yellow_to: '85'
+                red_from: '0'
+                red_to: '50'
+            xaxis:
+              title: ''
+              labels_rotation: '0'
+            yaxis:
+              title: ''
+              min: ''
+              max: ''
+              prefix: ''
+              suffix: ''
+              decimal_count: ''
+              labels_rotation: '0'
     cache_metadata:
       max-age: -1
       contexts:

@@ -41,7 +41,6 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
-  devel: 0
   devel_entity_updates: 0
   devel_php: 0
   diff: 0
@@ -107,7 +106,6 @@ module:
   migrate_plus: 0
   migrate_tools: 0
   moderation_sidebar: 0
-  module_filter: 0
   node: 0
   options: 0
   page_cache: 0
@@ -130,7 +128,6 @@ module:
   settings_tray: 0
   shortcut: 0
   slick: 0
-  slick_paragraphs: 0
   slick_ui: 0
   slick_views: 0
   smart_date: 0
@@ -149,6 +146,7 @@ module:
   twig_tweak: 0
   typed_data: 0
   update: 0
+  upgrade_status: 0
   user: 0
   ut_robinhood: 0
   variationcache: 0
@@ -187,7 +185,6 @@ theme:
   bootstrap: 0
   cf: 0
   claro: 0
-  chris: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
