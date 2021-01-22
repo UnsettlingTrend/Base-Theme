@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bf5ed8f3003226f78f28655a22cb338",
+    "content-hash": "5b819efa73576ad03c5f1fb171f2c405",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -6014,63 +6014,6 @@
             }
         },
         {
-            "name": "drupal/fivestar",
-            "version": "1.0.0-alpha2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/fivestar.git",
-                "reference": "8.x-1.0-alpha2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/fivestar-8.x-1.0-alpha2.zip",
-                "reference": "8.x-1.0-alpha2",
-                "shasum": "b079a85a9168faebe6af9db7d72ba26887ee0a71"
-            },
-            "require": {
-                "drupal/core": "^8.7.7 || ^9",
-                "drupal/votingapi": "^3.0.0-beta2"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.0-alpha2",
-                    "datestamp": "1593667994",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "TR",
-                    "homepage": "https://www.drupal.org/user/202830"
-                },
-                {
-                    "name": "dbt102",
-                    "homepage": "https://www.drupal.org/user/338300"
-                },
-                {
-                    "name": "ericduran",
-                    "homepage": "https://www.drupal.org/user/244460"
-                },
-                {
-                    "name": "init90",
-                    "homepage": "https://www.drupal.org/user/1322186"
-                }
-            ],
-            "description": "Enables fivestar ratings on content, users, etc.",
-            "homepage": "https://www.drupal.org/project/fivestar",
-            "support": {
-                "source": "https://git.drupalcode.org/project/fivestar"
-            }
-        },
-        {
             "name": "drupal/geofield",
             "version": "1.18.0",
             "source": {
@@ -8794,21 +8737,23 @@
         },
         {
             "name": "drupal/twig_tweak",
-            "version": "2.9.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/twig_tweak.git",
-                "reference": "8.x-2.9"
+                "reference": "3.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/twig_tweak-8.x-2.9.zip",
-                "reference": "8.x-2.9",
-                "shasum": "c45ba1a41e323a432d1ff36d0a72344b88595a39"
+                "url": "https://ftp.drupal.org/files/projects/twig_tweak-3.0.0.zip",
+                "reference": "3.0.0",
+                "shasum": "c8596addb06cbc67ad7914533c7e96e97ecbd54a"
             },
             "require": {
-                "drupal/core": "^8.7 || ^9.0",
-                "twig/twig": "^1.41 || ^2.12"
+                "drupal/core": "^9.0",
+                "ext-json": "*",
+                "php": ">=7.3",
+                "twig/twig": "^2.12"
             },
             "suggest": {
                 "symfony/var-dumper": "Better dump() function for debugging Twig variables"
@@ -8816,8 +8761,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.9",
-                    "datestamp": "1608093728",
+                    "version": "3.0.0",
+                    "datestamp": "1608096096",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8826,7 +8771,7 @@
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
@@ -19473,7 +19418,6 @@
         "drupal/dropzonejs": 15,
         "drupal/entity_embed": 10,
         "drupal/entity_usage": 15,
-        "drupal/fivestar": 15,
         "drupal/group": 5,
         "drupal/inline_entity_form": 5,
         "drupal/jira_rest": 20,

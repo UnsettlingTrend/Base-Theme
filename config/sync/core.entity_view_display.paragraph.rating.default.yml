@@ -4,10 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.rating.field_rating_category
-    - field.field.paragraph.rating.field_rating_value
     - paragraphs.paragraphs_type.rating
-  module:
-    - fivestar
 id: paragraph.rating.default
 targetEntityType: paragraph
 bundle: rating
@@ -20,16 +17,6 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_label
-    region: content
-  field_rating_value:
-    weight: 1
-    label: hidden
-    settings:
-      fivestar_widget: basic
-      display_format: average
-      text_format: none
-    third_party_settings: {  }
-    type: fivestar_stars
     region: content
 hidden:
   search_api_excerpt: true

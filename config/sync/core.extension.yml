@@ -66,7 +66,6 @@ module:
   field_ui: 0
   file: 0
   filter: 0
-  fivestar: 0
   geofield: 0
   geolocation: 0
   geolocation_address: 0
