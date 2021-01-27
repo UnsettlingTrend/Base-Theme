@@ -4,11 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.node.recipe.body
+    - field.field.node.recipe.field_ingredients
     - node.type.recipe
   module:
     - content_moderation
     - field_layout
     - layout_discovery
+    - paragraphs
     - path
     - text
 third_party_settings:
@@ -37,6 +39,18 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_ingredients:
+    type: entity_reference_paragraphs
+    weight: 122
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
   langcode:
     type: language_select
     weight: 2

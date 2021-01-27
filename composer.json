@@ -214,7 +214,7 @@
         "drupal/moderation_sidebar": "^1.2",
         "drupal/paragraphs": "^1.2",
         "drupal/pathauto": "^1.0",
-        "drupal/physical": "^1.0@RC",
+        "drupal/physical": "^1.1",
         "drupal/profile": "^1.0@RC",
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.0@beta",

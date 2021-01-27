@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.recipe.body
+    - field.field.node.recipe.field_ingredients
     - node.type.recipe
   module:
     - text
@@ -28,5 +29,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_ingredients: true
   langcode: true
   search_api_excerpt: true

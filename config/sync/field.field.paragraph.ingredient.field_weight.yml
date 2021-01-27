@@ -1,0 +1,21 @@
+uuid: a1904369-b75a-4155-85e5-c18d467baff1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_weight
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - physical
+id: paragraph.ingredient.field_weight
+field_name: field_weight
+entity_type: paragraph
+bundle: ingredient
+label: Weight
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: physical_measurement
