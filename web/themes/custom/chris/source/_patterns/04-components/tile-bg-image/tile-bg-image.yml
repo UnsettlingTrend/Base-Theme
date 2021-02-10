@@ -1,9 +1,0 @@
----
-modifier_classes: false
-has_overlay: true
-tile_image: 'https://picsum.photos/1600/800?image=11'
-tile_image_alt: 'alt text'
-tile_title: 'Tile Title'
-tile_summary: '<p>Tile summary text.</p>'
-tile_button_text: 'Tile Button'
-tile_button_url: '#'
