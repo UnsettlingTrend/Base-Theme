@@ -2,7 +2,7 @@
 # TODO Look into Portainer
 
 name: cf
-recipe: drupal8
+recipe: drupal9
 
 env_file:
  - lando/lando.env
@@ -45,6 +45,8 @@ services:
 #    run:
 #      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
     run_as_root:
+#      - "apt-get install python3-pip"
+#      - "pip3 install robin_stocks"
       - "bash /app/lando/scripts/build.sh"
     overrides:
       environment:

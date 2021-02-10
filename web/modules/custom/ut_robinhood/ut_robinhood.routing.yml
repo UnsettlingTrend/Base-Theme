@@ -1,0 +1,7 @@
+ut_robinhood.test_page:
+  path: '/test-page'
+  defaults:
+    _controller: '\Drupal\ut_robinhood\Controller\TestPageController::testPage'
+    _title: 'Test Page'
+  requirements:
+    _permission: 'access content'

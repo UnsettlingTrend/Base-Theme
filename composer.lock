@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a7336a0e6517f69bf7569cb0aec3c8b",
+    "content-hash": "35182e3335c4a3b85d8ab8ff518156c5",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -132,16 +132,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.172.1",
+            "version": "3.172.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "28a0929598be6e9e0b652091712068d37acd9d0a"
+                "reference": "506e60798bb7d13bdafadce9727ab9cc9ac987b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/28a0929598be6e9e0b652091712068d37acd9d0a",
-                "reference": "28a0929598be6e9e0b652091712068d37acd9d0a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/506e60798bb7d13bdafadce9727ab9cc9ac987b0",
+                "reference": "506e60798bb7d13bdafadce9727ab9cc9ac987b0",
                 "shasum": ""
             },
             "require": {
@@ -216,9 +216,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.172.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.172.4"
             },
-            "time": "2021-01-26T19:11:49+00:00"
+            "time": "2021-01-29T19:17:51+00:00"
         },
         {
             "name": "caxy/php-htmldiff",
@@ -3047,6 +3047,74 @@
             }
         },
         {
+            "name": "drupal/bg_image_formatter",
+            "version": "1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/bg_image_formatter.git",
+                "reference": "8.x-1.14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/bg_image_formatter-8.x-1.14.zip",
+                "reference": "8.x-1.14",
+                "shasum": "74da652fd07c9d9fb613571bcbc697567f497ec6"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "require-dev": {
+                "drupol/drupal-conventions": "^1"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.14",
+                    "datestamp": "1588018377",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "grumphp": {
+                    "config-default-path": "vendor/drupol/drupal-conventions/config/drupal8/grumphp.yml"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "scripts": {
+                "grumphp": [
+                    "./vendor/bin/grumphp run"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Pol Dellaiera (@drupol)",
+                    "homepage": "https://www.drupal.org/u/pol",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Pol",
+                    "homepage": "https://www.drupal.org/user/47194"
+                },
+                {
+                    "name": "bburg",
+                    "homepage": "https://www.drupal.org/user/1867900"
+                },
+                {
+                    "name": "garethhallnz",
+                    "homepage": "https://www.drupal.org/user/772766"
+                }
+            ],
+            "description": "This module provides an image formatter that allows you to set an image in background of a container.",
+            "homepage": "https://drupal.org/project/bg_image_formatter",
+            "support": {
+                "source": "https://git.drupalcode.org/project/bg_image_formatter"
+            }
+        },
+        {
             "name": "drupal/blazy",
             "version": "2.1.0",
             "source": {
@@ -3774,17 +3842,17 @@
         },
         {
             "name": "drupal/components",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/components.git",
-                "reference": "8.x-2.1"
+                "reference": "8.x-2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/components-8.x-2.1.zip",
-                "reference": "8.x-2.1",
-                "shasum": "2bd4634ee293d7f0a2f967408e20aa4bded9858d"
+                "url": "https://ftp.drupal.org/files/projects/components-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "02a57b2274348c7b9c14800c1bc5f5954d64df88"
             },
             "require": {
                 "drupal/core": "^8.7.7 || ^9"
@@ -3792,8 +3860,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1610761106",
+                    "version": "8.x-2.2",
+                    "datestamp": "1611799702",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7021,17 +7089,17 @@
         },
         {
             "name": "drupal/leaflet",
-            "version": "2.1.9",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/leaflet.git",
-                "reference": "2.1.9"
+                "reference": "2.1.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/leaflet-2.1.9.zip",
-                "reference": "2.1.9",
-                "shasum": "de1fde07225b5139665ab748c953f0396d5e3813"
+                "url": "https://ftp.drupal.org/files/projects/leaflet-2.1.10.zip",
+                "reference": "2.1.10",
+                "shasum": "0cd2bc979988e564d8eb8549d938c3d31c8b5d92"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9",
@@ -7040,8 +7108,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.9",
-                    "datestamp": "1611096358",
+                    "version": "2.1.10",
+                    "datestamp": "1611948911",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8400,21 +8468,21 @@
         },
         {
             "name": "drupal/smart_date",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/smart_date.git",
-                "reference": "3.1.0"
+                "reference": "3.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/smart_date-3.1.0.zip",
-                "reference": "3.1.0",
-                "shasum": "1174954dbac358628e697a6d1eb531e1e7c5835b"
+                "url": "https://ftp.drupal.org/files/projects/smart_date-3.1.1.zip",
+                "reference": "3.1.1",
+                "shasum": "6dac5a750c7ae56142352eeb384565204118ed18"
             },
             "require": {
                 "drupal/core": "^8 || ^9",
-                "php": "^7.1",
+                "php": ">=7.1",
                 "simshaun/recurr": "^4"
             },
             "suggest": {
@@ -8423,8 +8491,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.0",
-                    "datestamp": "1605540528",
+                    "version": "3.1.1",
+                    "datestamp": "1612026830",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11374,16 +11442,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.43.0",
+            "version": "2.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d32c57d8389113742f4a88725a170236470012e2"
+                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d32c57d8389113742f4a88725a170236470012e2",
-                "reference": "d32c57d8389113742f4a88725a170236470012e2",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
+                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
                 "shasum": ""
             },
             "require": {
@@ -11399,7 +11467,7 @@
                 "phpmd/phpmd": "^2.9",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12.54",
-                "phpunit/phpunit": "^7.5 || ^8.0",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.14",
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "bin": [
@@ -11463,7 +11531,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-17T20:55:32+00:00"
+            "time": "2021-01-26T20:46:41+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -18904,16 +18972,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.69",
+            "version": "0.12.70",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8f436ea35241da33487fd0d38b4bc3e6dfe30ea8"
+                "reference": "07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8f436ea35241da33487fd0d38b4bc3e6dfe30ea8",
-                "reference": "8f436ea35241da33487fd0d38b4bc3e6dfe30ea8",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee",
+                "reference": "07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee",
                 "shasum": ""
             },
             "require": {
@@ -18944,7 +19012,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.69"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.70"
             },
             "funding": [
                 {
@@ -18960,7 +19028,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-24T14:55:37+00:00"
+            "time": "2021-01-27T17:06:47+00:00"
         },
         {
             "name": "react/promise",

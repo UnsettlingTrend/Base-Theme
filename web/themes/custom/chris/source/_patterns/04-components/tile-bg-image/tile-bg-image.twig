@@ -1,0 +1,26 @@
+{% set classes = [
+  'tile-bg-image',
+  modifier_classes ? modifier_classes,
+  has_overlay ? 'has-overlay',
+]|join(' ')|trim %}
+
+<div class="{{ classes }}"{% if tile_image %} style="background-image: url({{ tile_image }});"{% endif %}{% if image_alt %} role="img" aria-label="{{ image_alt }}"{% endif %}>
+  <div class="tile-bg-image__content">
+    {% if tile_title %}<span>1</span>
+      <h1 class="tile-bg-image__title">{{ tile_title }}</h1>
+    {% endif %}
+    {% if tile_summary %}<span>2</span>
+      <div class="tile-bg-image__summary">{{ tile_summary }}</div>
+    {% endif %}
+    {% if tile_button_text and tile_button_url %}<span>3</span>
+      <div class="tile-bg-image__button">
+        {% include '@components/button/button.twig' with {
+          'modifier_classes': 'button--large',
+          'url': tile_button_url,
+          'text': tile_button_text
+        } %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>

@@ -160,6 +160,7 @@
         "drupal/allowed_formats": "^1.2",
         "drupal/auto_entitylabel": "^3.0@beta",
         "drupal/better_exposed_filters": "^5.0.0",
+        "drupal/bg_image_formatter": "^1.14",
         "drupal/blazy": "^2.0",
         "drupal/bootstrap": "^3.21",
         "drupal/captcha": "^1.0@beta",
@@ -295,7 +296,7 @@
         "patches-file": "patches/composer.patches.json",
         "installer-paths": {
             "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
+            "web/libraries/{$name}": ["type:drupal-library", "name:michaeldrennen/robinhood"],
             "web/modules/contrib/{$name}": ["type:drupal-module"],
             "web/profiles/contrib/{$name}": ["type:drupal-profile"],
             "web/themes/contrib/{$name}": ["type:drupal-theme"],
