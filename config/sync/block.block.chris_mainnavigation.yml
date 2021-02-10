@@ -1,4 +1,4 @@
-uuid: c6032b48-13eb-455b-baba-23931b0f32f7
+uuid: 4e409680-0d99-49d5-8dd8-58bf9b9df010
 langcode: en
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
   module:
     - system
   theme:
-    - cf
-id: cf_mainnavigation
-theme: cf
+    - chris
+id: chris_mainnavigation
+theme: chris
 region: navigation
 weight: -6
 provider: null

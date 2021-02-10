@@ -1,17 +1,17 @@
-uuid: ee8d2659-edbe-4acd-9c46-0cf634a6d021
+uuid: c77f6c14-0d34-4d10-986c-5a4020b87919
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - chris
 _core:
-  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
-id: bootstrap_messages
-theme: bootstrap
-region: header
-weight: -50
+  default_config_hash: YqKTtloWJ8FjLtfVNfrHaK6kVgxT67lC1cJ3j6i6WLo
+id: chris_messages
+theme: chris
+region: highlighted
+weight: -5
 provider: null
 plugin: system_messages_block
 settings:

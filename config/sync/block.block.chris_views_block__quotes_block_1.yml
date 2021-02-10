@@ -1,4 +1,4 @@
-uuid: 4c7731fb-98b6-4e09-bcfd-03fdf7cb4119
+uuid: 52ee2b7f-b46d-4755-beda-bf683d1d23a8
 langcode: en
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
   module:
     - views
   theme:
-    - cf
-id: cf_views_block__quotes_block_1
-theme: cf
+    - chris
+id: chris_views_block__quotes_block_1
+theme: chris
 region: footer
 weight: 0
 provider: null

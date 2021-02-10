@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_tags
     - field.field.node.page.field_take_aways
-    - field.field.node.page.layout_builder__layout
     - node.type.page
     - workflows.workflow.editorial
   module:
@@ -36,20 +35,20 @@ bundle: page
 mode: default
 content:
   comment:
-    weight: 15
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: comment_default
     region: content
   created:
     type: datetime_timestamp
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   field_paragraph:
     type: paragraphs
-    weight: 4
+    weight: 3
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -68,20 +67,20 @@ content:
     region: content
   field_preview_image:
     type: media_library_widget
-    weight: 5
+    weight: 4
     settings:
       media_types: {  }
     third_party_settings: {  }
     region: content
   field_show_date:
-    weight: 2
+    weight: 1
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
     region: content
   field_subtitle:
-    weight: 1
+    weight: 0
     settings:
       size: 60
       placeholder: ''
@@ -92,7 +91,7 @@ content:
     type: text_textfield
     region: content
   field_tags:
-    weight: 6
+    weight: 5
     settings:
       match_operator: CONTAINS
       size: 60
@@ -102,7 +101,7 @@ content:
     type: entity_reference_autocomplete_tags
     region: content
   field_take_aways:
-    weight: 3
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -114,20 +113,20 @@ content:
     region: content
   langcode:
     type: language_select
-    weight: 7
+    weight: 6
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 100
+    weight: 15
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 12
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -135,34 +134,26 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 10
+    weight: 9
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 13
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 11
+    weight: 10
     region: content
-    third_party_settings: {  }
-  title:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 8
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
@@ -171,9 +162,9 @@ content:
       match_limit: 10
     third_party_settings: {  }
   url_redirects:
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
-  layout_builder__layout: true
+  title: true

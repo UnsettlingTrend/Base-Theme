@@ -1,4 +1,4 @@
-uuid: bdbb38d6-919c-4416-a433-f41becd7a638
+uuid: 583a2544-53a2-4bba-9ec9-6bcbc389b041
 langcode: en
 status: true
 dependencies:
@@ -8,10 +8,10 @@ dependencies:
     - system
     - views
   theme:
-    - cf
-id: cf_exposedformsearch_contentpage_search
-theme: cf
-region: navigation_collapsible
+    - chris
+id: chris_exposedformsearch_contentpage_search_2
+theme: chris
+region: header
 weight: -7
 provider: null
 plugin: 'views_exposed_filter_block:search_content-page_search'
@@ -25,5 +25,5 @@ visibility:
   request_path:
     id: request_path
     pages: /search/content
-    negate: true
+    negate: false
     context_mapping: {  }

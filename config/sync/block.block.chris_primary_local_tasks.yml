@@ -1,13 +1,13 @@
-uuid: 8e0e2954-3689-4922-82c0-80e130ec6ddd
+uuid: 57d8e5d7-7d88-4d87-adf0-8d943ebfa650
 langcode: en
 status: false
 dependencies:
   theme:
-    - cf
+    - chris
 _core:
   default_config_hash: CyX_aDKAka2_eihevNLscCHDYrzDgIqwWzFVEFRKIww
-id: cf_primary_local_tasks
-theme: cf
+id: chris_primary_local_tasks
+theme: chris
 region: content
 weight: 0
 provider: null

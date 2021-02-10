@@ -1,26 +1,26 @@
-uuid: 93b41800-4b61-41ca-83b4-10cabf8e2c95
+uuid: e0af53c5-58cc-4a1b-b477-e6b60742477e
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.content_type
+    - facets.facet.tags
   module:
     - facets
     - system
   theme:
-    - cf
-id: contenttype
-theme: cf
-region: sidebar_first
-weight: -5
+    - chris
+id: chris_tags
+theme: chris
+region: header
+weight: -4
 provider: null
-plugin: 'facet_block:content_type'
+plugin: 'facet_block:tags'
 settings:
-  id: 'facet_block:content_type'
-  label: 'Content type'
+  id: 'facet_block:tags'
+  label: Tags
   provider: facets
   label_display: '0'
-  block_id: contenttype
+  block_id: tags
 visibility:
   request_path:
     id: request_path

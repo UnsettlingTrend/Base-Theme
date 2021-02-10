@@ -1,4 +1,4 @@
-uuid: 96ceaded-18b2-485b-b7e3-675d2fb005a2
+uuid: 95465a5b-9441-4ef0-b4d1-b6d2e44a3cbe
 langcode: en
 status: true
 dependencies:
@@ -8,10 +8,10 @@ dependencies:
     - facets_summary
     - system
   theme:
-    - cf
-id: facetsummary
-theme: cf
-region: sidebar_first
+    - chris
+id: chris_facetsummary
+theme: chris
+region: header
 weight: -6
 provider: null
 plugin: 'facets_summary_block:facet_summary'

@@ -1,17 +1,15 @@
-uuid: 5dbb5d89-2644-482a-ad6f-0fbc5b310c30
+uuid: 562a0bd0-2b92-4f55-aef5-8092e91dae5c
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
-_core:
-  default_config_hash: Cy3vkpYrD1O5JG-BeEnokF0bByHYDEa8CBfWivB4_SQ
-id: bootstrap_branding
-theme: bootstrap
-region: navigation
-weight: 0
+    - chris
+id: chris_sitebranding
+theme: chris
+region: header
+weight: -7
 provider: null
 plugin: system_branding_block
 settings:
@@ -19,7 +17,7 @@ settings:
   label: 'Site branding'
   provider: system
   label_display: '0'
-  use_site_logo: true
+  use_site_logo: false
   use_site_name: true
   use_site_slogan: false
 visibility: {  }

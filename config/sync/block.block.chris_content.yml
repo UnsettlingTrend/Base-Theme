@@ -1,15 +1,15 @@
-uuid: 45441e9d-d2cd-4eac-a617-d4dbd18210ec
+uuid: 7418e688-ebb0-46be-8590-eed02e0369c4
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - cf
+    - chris
 _core:
   default_config_hash: 80N66GdzEvwqi1m-_GZ-ulkk8AJG9beoXcZ4-pMVKjI
-id: cf_content
-theme: cf
+id: chris_content
+theme: chris
 region: content
 weight: -1
 provider: null
