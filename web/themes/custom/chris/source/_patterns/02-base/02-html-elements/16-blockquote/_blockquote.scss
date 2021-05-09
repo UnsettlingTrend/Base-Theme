@@ -31,13 +31,18 @@ blockquote {
   cite {
     display: block;
     margin-top: rem(gesso-spacing(2));
-    text-align: right;
+    padding-left: rem(gesso-spacing(2));
+    text-align: left;
 
     em {
       border-left: 1px solid $blockquote-cite-divider-color;
       font-weight: gesso-font-weight(regular);
       margin-left: rem(gesso-spacing(0.5));
       padding-left: rem(gesso-spacing(1));
+    }
+
+    &::before {
+      content: '\2014';
     }
   }
 

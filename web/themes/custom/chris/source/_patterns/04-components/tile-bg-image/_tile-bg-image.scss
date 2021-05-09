@@ -7,6 +7,12 @@ $tile-bg-image-bp: gesso-breakpoint(desktop) !default;
   background-position: center;
   background-size: cover;
   color: gesso-color(text, on-light);
-  max-width: 300px;
   text-align: center;
+  width: 50%;
+
+  &::after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
 }
