@@ -185,7 +185,6 @@ module:
   standard: 1000
 theme:
   bootstrap: 0
-  cf: 0
   claro: 0
   stable: 0
   chris: 0
