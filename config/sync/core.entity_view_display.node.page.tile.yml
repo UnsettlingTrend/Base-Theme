@@ -13,7 +13,6 @@ dependencies:
     - field.field.node.page.field_take_aways
     - node.type.page
   module:
-    - entity_reference_revisions
     - field_layout
     - layout_builder
     - text
@@ -32,15 +31,11 @@ targetEntityType: node
 bundle: page
 mode: tile
 content:
-  field_paragraph:
-    type: entity_reference_revisions_entity_view
-    weight: 2
-    region: content
-    label: above
-    settings:
-      view_mode: default
-      link: ''
+  content_moderation_control:
+    weight: -20
+    settings: {  }
     third_party_settings: {  }
+    region: content
   field_preview_image:
     type: entity_reference_entity_view
     weight: 0
@@ -59,7 +54,7 @@ content:
     region: content
 hidden:
   comment: true
-  content_moderation_control: true
+  field_paragraph: true
   field_show_date: true
   field_tags: true
   field_take_aways: true

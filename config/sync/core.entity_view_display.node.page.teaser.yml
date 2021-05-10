@@ -22,8 +22,34 @@ third_party_settings:
     id: layout_onecol
     settings: {  }
   layout_builder:
-    enabled: false
-    allow_custom: false
+    enabled: true
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          048d0a0d-35b4-4062-ac77-e3cffff1665c:
+            uuid: 048d0a0d-35b4-4062-ac77-e3cffff1665c
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:links'
+            additional: {  }
+            weight: 1
+          1e02af0c-7b89-47c3-a917-34ebf6b2e914:
+            uuid: 1e02af0c-7b89-47c3-a917-34ebf6b2e914
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:content_moderation_control'
+            additional: {  }
+            weight: 2
+        third_party_settings: {  }
 _core:
   default_config_hash: cSv5lDnbIgDug475Hdz3woED2XMqYv3awI-J9u1JLbY
 id: node.page.teaser

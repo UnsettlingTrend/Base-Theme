@@ -22,8 +22,53 @@ third_party_settings:
     id: layout_onecol
     settings: {  }
   layout_builder:
-    enabled: false
+    enabled: true
     allow_custom: false
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          8aa4c0ea-8605-43df-8e31-f5d32de7e484:
+            uuid: 8aa4c0ea-8605-43df-8e31-f5d32de7e484
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:search_api_excerpt'
+            additional: {  }
+            weight: 1
+          a12c4632-fde6-4ed2-89e6-b0ef9b8a29ee:
+            uuid: a12c4632-fde6-4ed2-89e6-b0ef9b8a29ee
+            region: content
+            configuration:
+              id: 'field_block:node:page:field_subtitle'
+              label: Subtitle
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: text_default
+                settings: {  }
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+            additional: {  }
+            weight: 0
+          045d33ca-e16d-49b4-bd93-761a41406bac:
+            uuid: 045d33ca-e16d-49b4-bd93-761a41406bac
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:content_moderation_control'
+            additional: {  }
+            weight: 2
+        third_party_settings: {  }
 _core:
   default_config_hash: gTB0Aw9yfUPvjMd_Pznb33eEqIGHqNQb5JtR3jZ18TE
 id: node.page.search_result

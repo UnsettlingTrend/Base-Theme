@@ -141,12 +141,39 @@
                     "composer/installers": "~1.0"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "recurser/jquery-simple-color",
+                "version": "master",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/recurser/jquery-simple-color.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bgrins/spectrum",
+                "version": "1.8.0",
+                "type": "drupal-library",
+                "source": {
+                    "url": "https://github.com/bgrins/spectrum.git",
+                    "type": "git",
+                    "reference": "1.8.0"
+                }
+            }
         }
     ],
     "require": {
         "ext-dom": "20031129",
         "ext-json": "*",
         "ext-zip": "^1.15",
+        "bgrins/spectrum": "^1.8",
         "ckeditor/codesnippet": "^4.11",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
@@ -200,6 +227,7 @@
         "drupal/gesso": "^4.0",
         "drupal/google_analytics": "^3.0",
         "drupal/group": "^1.0@RC",
+        "drupal/image_effects": "^3.1",
         "drupal/image_widget_crop": "^2.1",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/jira_rest": "^4.x-dev",
@@ -252,6 +280,7 @@
         "mnsami/composer-custom-directory-installer": "^2.0",
         "php-http/httplug": "^2.0",
         "phpunit/phpunit": "^8.0",
+        "recurser/jquery-simple-color": "master",
         "simeydotme/jquery-ui-slider-pips": "^1.11",
         "squizlabs/php_codesniffer": "^3.3",
         "webflo/drupal-finder": "^1.0.0",

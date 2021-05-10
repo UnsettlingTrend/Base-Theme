@@ -1,0 +1,29 @@
+uuid: 87da33aa-6ed8-431d-8da7-191fd92f9019
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search_content
+  module:
+    - system
+    - views
+  theme:
+    - cf
+id: exposedformsearch_contentpage_search_2
+theme: cf
+region: sidebar_first
+weight: -7
+provider: null
+plugin: 'views_exposed_filter_block:search_content-page_search'
+settings:
+  id: 'views_exposed_filter_block:search_content-page_search'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: false
+    context_mapping: {  }
