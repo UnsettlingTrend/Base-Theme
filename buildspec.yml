@@ -3,6 +3,7 @@ phases:
   install:
     runtime-versions:
       php: 7.4
+      nodejs: 12.x
     commands:
       # Print the version of Linux
       #- lsb_release -a
@@ -34,12 +35,16 @@ phases:
       #- php composer-setup.php ;
       #- php -r "unlink('composer-setup.php');" ;
       #- mv composer.phar /usr/local/bin/composer
-      #- npm install -g gulp
+
 
       # Start Mysql
       #- apt-get install -y mysql-server
       #- su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
+  pre-build:
+    commands:
+      - npm install -g gulp
   build:
+    # Run build scriptss
     commands:
       #- composer -vvv about
       #- ls /etc/php/
@@ -55,7 +60,9 @@ phases:
       # - /usr/bin/mysql  -u root -e "GRANT ALL ON *.* TO 'test'@'localhost' IDENTIFIED BY '' WITH GRANT OPTION"
       # - mysqladmin -u test create test
       #- ./vendor/bin/phpunit
+      bash scripts/aws/build.sh
   post_build:
+    # Package up the build artifacts
     commands:
       #- echo Build completed on `date`
       #- tar -czf build.tar web config
