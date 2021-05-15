@@ -27,11 +27,7 @@ phases:
       #Enable xdebug - phpunit uses this for code coverage
       #- phpenmod xdebug
 
-      #Install composer and gulp
-      #- php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-      #- php composer-setup.php ;
-      #- php -r "unlink('composer-setup.php');" ;
-      #- mv composer.phar /usr/local/bin/composer
+
 
 
       # Start Mysql
@@ -42,7 +38,14 @@ phases:
       # Install needed PHP packages
       - yum update -y
       - yum install -y php-dom php-gd php-simplexml php-xml php-opcache php-mbstring
-      - # Install gulp
+      # Restart apache and enable xdebug
+      - systemctl restart apache2
+      - phpenmod xdebug
+      # Install composer and gulp
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php composer-setup.php ;
+      - php -r "unlink('composer-setup.php');" ;
+      - mv composer.phar /usr/local/bin/composer
       - npm install -g gulp
   build:
     # Run build scriptss
