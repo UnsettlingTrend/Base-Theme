@@ -41,11 +41,8 @@ phases:
     commands:
       # Install needed PHP packages
       - yum update -y
-      - yum install -y  software-properties-common
-      - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-      - yum update -y
-      - yum install -y php7.4-ldap php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-mysql php7.4-mbstring php7.4-gd php7.4-readline php7.4-opcache php7.4-xdebug php7.4-dom php7.4-xdebug php7.4-curl unzip
-      # Install gulp
+      - yum install -y php-dom php-gd php-simplexml php-xml php-opcache php-mbstring
+      - # Install gulp
       - npm install -g gulp
   build:
     # Run build scriptss
