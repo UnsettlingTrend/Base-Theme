@@ -1,0 +1,17 @@
+uuid: 2aebf546-c88e-4aac-abdd-1a17da7ff1ea
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Recipe
+type: recipe
+description: 'A cooking <em>recipe</em>.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

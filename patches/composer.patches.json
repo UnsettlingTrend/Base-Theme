@@ -1,7 +1,4 @@
 {
   "patches": {
-    "drupal/group": {
-      "Fix issue 3068918": "https://www.drupal.org/files/issues/2019-10-30/3068918-8.patch"
-    }
   }
 }

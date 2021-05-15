@@ -1,0 +1,11 @@
+uuid: bf48f68d-a0af-40f5-b437-0ba33c92b6ae
+langcode: en
+status: true
+dependencies: {  }
+id: developer
+label: Developer
+weight: 3
+is_admin: null
+permissions:
+  - 'access environment indicator'
+  - 'administer environment indicator settings'

@@ -1,5 +1,0 @@
-name: CF Migrate
-type: module
-description: Migration module for moving the out-of-date ChrisFeragotti.com site to a current version of Drupal 8.
-core: 8.x
-package: Other

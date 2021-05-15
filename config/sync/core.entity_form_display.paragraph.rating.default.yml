@@ -4,11 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.rating.field_rating_category
-    - field.field.paragraph.rating.field_rating_value
     - paragraphs.paragraphs_type.rating
   module:
     - field_layout
-    - fivestar
     - layout_discovery
 third_party_settings:
   field_layout:
@@ -25,15 +23,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_select
-    region: content
-  field_rating_value:
-    weight: 1
-    settings:
-      display_format: average
-      text_format: none
-      fivestar_widget: modules/contrib/fivestar/widgets/basic/basic.css
-    third_party_settings: {  }
-    type: fivestar_stars
     region: content
 hidden:
   created: true

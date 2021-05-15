@@ -1,26 +1,73 @@
-core: 8.x
+name: Chris
 type: theme
-base theme: bootstrap
-
-name: 'Chris'
-description: 'Uses the jsDelivr CDN for all CSS and JavaScript. No source files or compiling is necessary and is recommended for simple sites or beginners.'
-package: 'Bootstrap'
-
-regions:
-  navigation: 'Navigation'
-  navigation_collapsible: 'Navigation (Collapsible)'
-  header: 'Top Bar'
-  highlighted: 'Highlighted'
-  help: 'Help'
-  content: 'Content'
-  sidebar_first: 'Primary'
-  sidebar_second: 'Secondary'
-  footer: 'Footer'
-  page_top: 'Page top'
-  page_bottom: 'Page bottom'
+description: ''
+package: Core
+core_version_requirement: ^8.9 || ^9
+base theme: stable
+dependencies:
+  - components
+  - gesso_helper
 
 libraries:
-  - chris/global-styling
+  - chris/global
+
+libraries-override:
+  core/drupal.dropbutton:
+    js:
+      misc/dropbutton/dropbutton.js: js/overrides/dropbutton.js
+    css:
+      component:
+        /core/themes/stable/css/core/dropbutton/dropbutton.css: false
+  core/drupal.collapse:
+    js:
+      misc/collapse.js: js/overrides/collapse.js
+  core/modernizr:
+    js:
+      assets/vendor/modernizr/modernizr.min.js: js/libraries/modernizr.min.js
+  system/base:
+    css:
+      component:
+        /core/themes/stable/css/system/components/align.module.css: false
+        /core/themes/stable/css/system/components/clearfix.module.css: false
+        /core/themes/stable/css/system/components/container-inline.module.css: false
+        /core/themes/stable/css/system/components/details.module.css: false
+        /core/themes/stable/css/system/components/fieldgroup.module.css: false
+        /core/themes/stable/css/system/components/hidden.module.css: false
+        /core/themes/stable/css/system/components/item-list.module.css: false
+        /core/themes/stable/css/system/components/nowrap.module.css: false
+        /core/themes/stable/css/system/components/position-container.module.css: false
+        /core/themes/stable/css/system/components/progress.module.css: false
+        /core/themes/stable/css/system/components/reset-appearance.module.css: false
+        /core/themes/stable/css/system/components/resize.module.css: false
 
 ckeditor_stylesheets:
-  - css/style.css
+  - https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i&display=swap
+  - css/styles.css
+
+regions:
+  page_top: 'Page top'
+  header: Header
+  navigation: Navigation
+  breadcrumb: Breadcrumb
+  help: Help
+  highlighted: Highlighted
+  preface: Preface
+  content: Content
+  postscript: Postscript
+  footer: Footer
+  disabled: Disabled
+  page_bottom: 'Page bottom'
+
+components:
+  namespaces:
+    base: source/_patterns/02-base
+    layouts: source/_patterns/03-layouts
+    components: source/_patterns/04-components
+    templates: source/_patterns/05-templates
+    pages: source/_patterns/06_pages
+    macros: source/_macros
+
+# Information added by Drupal.org packaging script on 2020-10-15
+version: '4.0.0'
+project: 'chris'
+datestamp: 1602780095

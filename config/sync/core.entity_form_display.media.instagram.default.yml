@@ -9,6 +9,7 @@ dependencies:
   module:
     - field_layout
     - layout_discovery
+    - media
     - path
     - text
 third_party_settings:
@@ -41,7 +42,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: oembed_textfield
     region: content
   langcode:
     type: language_select

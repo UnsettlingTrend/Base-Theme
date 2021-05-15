@@ -1,0 +1,29 @@
+uuid: 583a2544-53a2-4bba-9ec9-6bcbc389b041
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search_content
+  module:
+    - system
+    - views
+  theme:
+    - chris
+id: chris_exposedformsearch_contentpage_search_2
+theme: chris
+region: header
+weight: -7
+provider: null
+plugin: 'views_exposed_filter_block:search_content-page_search'
+settings:
+  id: 'views_exposed_filter_block:search_content-page_search'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: false
+    context_mapping: {  }

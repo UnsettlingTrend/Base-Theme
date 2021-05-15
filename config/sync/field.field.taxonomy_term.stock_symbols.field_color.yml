@@ -1,0 +1,25 @@
+uuid: 957cf756-138e-4b46-be65-85d5c86f2328
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_color
+    - taxonomy.vocabulary.stock_symbols
+  module:
+    - color_field
+id: taxonomy_term.stock_symbols.field_color
+field_name: field_color
+entity_type: taxonomy_term
+bundle: stock_symbols
+label: Color
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    color: '000000'
+    opacity: !!float 1
+default_value_callback: ''
+settings:
+  opacity: 1
+field_type: color_field_type

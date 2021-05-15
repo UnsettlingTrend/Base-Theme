@@ -3,13 +3,15 @@ module:
   address: 0
   admin_toolbar: 0
   admin_toolbar_links_access_filter: 0
-  admin_toolbar_search: 0
   admin_toolbar_tools: 0
   adminimal_admin_toolbar: 0
+  allowed_formats: 0
   auto_entitylabel: 0
   automated_cron: 0
   basic_auth: 0
   better_exposed_filters: 0
+  bg_image_formatter: 0
+  big_pipe: 0
   blazy: 0
   blazy_ui: 0
   block: 0
@@ -25,11 +27,11 @@ module:
   codesnippet: 0
   coffee: 0
   color: 0
+  color_field: 0
   colorbox: 0
   comment: 0
   components: 0
   config: 0
-  config_filter: 0
   config_split: 0
   contact: 0
   content_moderation: 0
@@ -41,6 +43,8 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
+  devel_entity_updates: 0
+  devel_php: 0
   diff: 0
   disable_html5_validation: 0
   draggableviews: 0
@@ -63,28 +67,29 @@ module:
   field_layout: 0
   field_ui: 0
   file: 0
+  file_mdm: 0
+  file_mdm_exif: 0
+  file_mdm_font: 0
   filter: 0
-  fivestar: 0
   geofield: 0
   geolocation: 0
   geolocation_address: 0
   geolocation_google_maps: 0
   geolocation_leaflet: 0
+  gesso_helper: 0
   gnode: 0
-  graphql: 0
-  graphql_core: 0
-  grolesync: 0
   group: 0
   help: 0
   history: 0
   image: 0
   image_captcha: 0
+  image_effects: 0
   image_widget_crop: 0
   inline_form_errors: 0
   jquery_ui: 0
+  jquery_ui_checkboxradio: 0
   jquery_ui_datepicker: 0
-  jquery_ui_tabs: 0
-  jquery_ui_tooltip: 0
+  jquery_ui_slider: 0
   jsonapi: 0
   jsonapi_defaults: 0
   jsonapi_extras: 0
@@ -106,7 +111,6 @@ module:
   migrate_plus: 0
   migrate_tools: 0
   moderation_sidebar: 0
-  module_filter: 0
   node: 0
   options: 0
   page_cache: 0
@@ -121,6 +125,7 @@ module:
   redirect: 0
   redirect_404: 0
   responsive_image: 0
+  rest: 0
   rules: 0
   search_api: 0
   search_api_db: 0
@@ -128,7 +133,6 @@ module:
   settings_tray: 0
   shortcut: 0
   slick: 0
-  slick_paragraphs: 0
   slick_ui: 0
   slick_views: 0
   smart_date: 0
@@ -143,10 +147,13 @@ module:
   tokenuuid: 0
   toolbar: 0
   tour: 0
+  twig_field_value: 0
+  twig_tweak: 0
   typed_data: 0
-  unified_twig_ext: 0
   update: 0
   user: 0
+  ut_robinhood: 0
+  variationcache: 0
   views_bulk_operations: 0
   views_infinite_scroll: 0
   views_ui: 0
@@ -154,7 +161,6 @@ module:
   webform: 0
   webform_access: 0
   webform_attachment: 0
-  webform_devel: 0
   webform_group: 0
   webform_icheck: 0
   webform_image_select: 0
@@ -178,13 +184,10 @@ module:
   paragraphs: 11
   standard: 1000
 theme:
-  stable: 0
-  classy: 0
-  seven: 0
-  adminimal_theme: 0
-  christoph: 0
   bootstrap: 0
-  cf: 0
+  claro: 0
+  stable: 0
+  chris: 0
 profile: standard
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

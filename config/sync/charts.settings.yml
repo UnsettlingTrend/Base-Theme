@@ -1,0 +1,40 @@
+charts_default_settings:
+  fields:
+    stacking: false
+  library: google
+  type: line
+  display:
+    title: Chart
+    title_position: out
+    tooltips: false
+    data_labels: false
+    data_markers: false
+    legend_position: right
+    background: ''
+    three_dimensional: 1
+    polar: 0
+    dimensions:
+      width: ''
+      width_units: '%'
+      height: ''
+      height_units: px
+    gauge:
+      max: '100'
+      min: '0'
+      green_from: '85'
+      green_to: '100'
+      yellow_from: '50'
+      yellow_to: '85'
+      red_from: '0'
+      red_to: '50'
+  xaxis:
+    title: Horizontal
+    labels_rotation: '0'
+  yaxis:
+    title: Vertical
+    min: '0'
+    max: '1000'
+    prefix: ''
+    suffix: ''
+    decimal_count: ''
+    labels_rotation: '0'

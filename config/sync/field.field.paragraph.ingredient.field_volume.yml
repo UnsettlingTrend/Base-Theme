@@ -1,0 +1,21 @@
+uuid: bb5920e5-3c5c-429b-bab5-0b62a9867756
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_volume
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - physical
+id: paragraph.ingredient.field_volume
+field_name: field_volume
+entity_type: paragraph
+bundle: ingredient
+label: Volume
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: physical_measurement

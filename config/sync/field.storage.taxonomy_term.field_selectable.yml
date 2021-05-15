@@ -1,0 +1,18 @@
+uuid: 82c607c4-d34c-4b27-b157-39d386efe8e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.field_selectable
+field_name: field_selectable
+entity_type: taxonomy_term
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

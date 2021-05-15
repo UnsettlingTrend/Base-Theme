@@ -1,0 +1,20 @@
+uuid: e8d5f7df-b368-4a00-b2be-5d4bd513c159
+langcode: en
+status: true
+dependencies:
+  theme:
+    - chris
+_core:
+  default_config_hash: ik4PTMlBD0MWansnSMpSXq5SUlWRJ1IVVt6C7AIbQmc
+id: chris_local_actions
+theme: chris
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

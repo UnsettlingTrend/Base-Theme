@@ -1,0 +1,11 @@
+uuid: d548666f-873e-4d5f-ac49-a767e28437da
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.stock_symbols
+id: taxonomy_term.stock_symbols
+target_entity_type_id: taxonomy_term
+target_bundle: stock_symbols
+default_langcode: site_default
+language_alterable: false
