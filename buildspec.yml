@@ -12,11 +12,8 @@ phases:
       #- export DEBIAN_FRONTEND=noninteractive
 
       #Install php7.4
-      #- apt-get update -y
-      #- apt-get install -y  software-properties-common
-      #- LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-      #- apt-get update -y
-      #- apt-get install -y php7.4-ldap php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-mysql php7.4-mbstring php7.4-gd php7.4-readline php7.4-opcache php7.4-xdebug php7.4-dom php7.4-xdebug php7.4-curl unzip
+
+      ###########
       #- systemctl restart apache2
       #- php -m
       #- ls /usr/lib/php/20180731
@@ -42,6 +39,13 @@ phases:
       #- su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   pre_build:
     commands:
+      # Install needed PHP packages
+      - apt-get update -y
+      - apt-get install -y  software-properties-common
+      - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+      - apt-get update -y
+      - apt-get install -y php7.4-ldap php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-mysql php7.4-mbstring php7.4-gd php7.4-readline php7.4-opcache php7.4-xdebug php7.4-dom php7.4-xdebug php7.4-curl unzip
+      # Install gulp
       - npm install -g gulp
   build:
     # Run build scriptss
