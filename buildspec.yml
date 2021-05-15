@@ -40,7 +40,7 @@ phases:
       # Start Mysql
       #- apt-get install -y mysql-server
       #- su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
-  pre-build:
+  pre_build:
     commands:
       - npm install -g gulp
   build:
