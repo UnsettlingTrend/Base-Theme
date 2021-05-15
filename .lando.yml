@@ -2,27 +2,36 @@
 # TODO Look into Portainer
 
 name: cf
-recipe: drupal8
+recipe: drupal9
 
 env_file:
-  - lando/lando.env
+ - lando/lando.env
 
 config:
-  php: 7.3
+  php: '7.4'
+  composer_version: 2
   via: apache
   webroot: web
-  xdebug: false
-  conf:
+  xdebug: true
+  config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
 
 proxy:
+  search:
+    - search.cf.lndo.site
   pma:
-    - db-cf.lndo.site
+    - db.cf.lndo.site
   mailhog:
-    - mail-cf.lndo.site
+    - mail.cf.lndo.site
 
 services:
+  search:
+    type: solr:8.4
+    portforward: true
+    core: collection1
+    config:
+      dir: config/solr-conf
   database:
     type: mysql:5.7
   #    portforward: 3310
@@ -32,11 +41,12 @@ services:
       - database
   appserver:
     composer:
-      phpunit/phpunit: '*'
       behat/behat: 3.3.1
-    run:
-      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
+#    run:
+#      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
     run_as_root:
+#      - "apt-get install python3-pip"
+#      - "pip3 install robin_stocks"
       - "bash /app/lando/scripts/build.sh"
     overrides:
       environment:
@@ -54,6 +64,10 @@ services:
     portforward: true
 
 tooling:
+  composer:
+    service: appserver
+    description: run composer commands
+    cmd: /usr/local/bin/composer
   drush:
     service: appserver
     description: run drush commands

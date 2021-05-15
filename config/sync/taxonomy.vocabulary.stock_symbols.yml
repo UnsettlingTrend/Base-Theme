@@ -1,0 +1,8 @@
+uuid: 74d6fb6c-013d-456e-8b8e-aab3ba3e3535
+langcode: en
+status: true
+dependencies: {  }
+name: 'Stock Symbols'
+vid: stock_symbols
+description: 'A list of stock symbols'
+weight: 0

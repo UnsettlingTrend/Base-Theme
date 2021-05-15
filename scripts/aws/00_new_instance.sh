@@ -2,14 +2,21 @@
 # These are commands that will need to be run on brand new instances before codedeploy can work
 
 # Install codedeploy agent
-sudo yum update
+sudo yum update -y
 sudo yum install ruby -y
 cd /home/ec2-user
 wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install      # Verify region!
 chmod +x ./install
 sudo ./install auto
 sudo service codedeploy-agent start
-sudo service codedeploy-agent status
+# sudo service codedeploy-agent status
+
+# Install mySQL
+sudo yum install mysql -y
+# sudo chkconfig mysql on
+sudo yum install php-fpm -y
+sudo chkconfig php-fpm on
+
 
 # Create the webroot directory
 sudo mkdir -p /var/www/html
@@ -38,7 +45,9 @@ sudo make && sudo make install
 
 # Set the user credentials
 sudo touch /etc/passwd-s3fs
+sudo su
 # TODO Add an IAM user's accesskey:secretkey combo; probably the drupal-service user
 sudo echo 'accesskey:secretkey' >> /etc/passwd-s3fs
+exit
 sudo chmod 640 /etc/passwd-s3fs
 ##################### END Configure S3 #############################################################################

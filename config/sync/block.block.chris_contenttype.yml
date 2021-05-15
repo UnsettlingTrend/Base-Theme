@@ -1,0 +1,29 @@
+uuid: 81352b07-a954-4853-99dd-cbdc12650137
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.content_type
+  module:
+    - facets
+    - system
+  theme:
+    - chris
+id: chris_contenttype
+theme: chris
+region: header
+weight: -5
+provider: null
+plugin: 'facet_block:content_type'
+settings:
+  id: 'facet_block:content_type'
+  label: 'Content type'
+  provider: facets
+  label_display: '0'
+  block_id: contenttype
+visibility:
+  request_path:
+    id: request_path
+    pages: /search/content
+    negate: false
+    context_mapping: {  }

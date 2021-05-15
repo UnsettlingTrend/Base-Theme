@@ -1,0 +1,52 @@
+uuid: ccdcf9ad-b6f2-4232-9d3f-b7176e1b6115
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ingredient.field_ingredient
+    - field.field.paragraph.ingredient.field_volume
+    - field.field.paragraph.ingredient.field_weight
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - field_layout
+    - layout_discovery
+    - physical
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
+id: paragraph.ingredient.default
+targetEntityType: paragraph
+bundle: ingredient
+mode: default
+content:
+  field_ingredient:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_volume:
+    weight: 1
+    settings:
+      default_unit: ''
+      allow_unit_change: true
+    third_party_settings: {  }
+    type: physical_measurement_default
+    region: content
+  field_weight:
+    weight: 2
+    settings:
+      default_unit: ''
+      allow_unit_change: true
+    third_party_settings: {  }
+    type: physical_measurement_default
+    region: content
+hidden:
+  created: true
+  status: true

@@ -11,7 +11,7 @@ third_party_settings:
 id: instagram
 label: 'Instagram post'
 description: ''
-source: instagram
+source: 'oembed:instagram'
 queue_thumbnail_downloads: false
 new_revision: false
 source_configuration:

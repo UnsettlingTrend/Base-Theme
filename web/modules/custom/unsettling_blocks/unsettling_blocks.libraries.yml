@@ -1,7 +1,0 @@
-unsettling.cryptocurrency:
-  version: 1.x
-  css:
-    component:
-      css/cryptocurrency.css: {}
-  js:
-    js/cryptocurrency.css: {}

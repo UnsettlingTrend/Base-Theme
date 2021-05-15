@@ -1,18 +1,14 @@
 <?php
+
 /**
  * @file
- * Bootstrap sub-theme.
- *
- * Place your custom PHP code in this file.
+ * Functions to support theming.
  */
 
-//chris_preprocess_node($variables) {
-//  ddl($variables, 'vars');
-//}
-
-//function chris_preprocess(&$variables, $hook, $info) {
-  //Bootstrap::preprocess($variables, $hook, $info);
-//  ddl($variables, 'vars');
-//  ddl($hook, 'hook');
-//  ddl($info, 'info');
-//}
+require_once dirname(__FILE__) . '/includes/block.inc';
+require_once dirname(__FILE__) . '/includes/field.inc';
+require_once dirname(__FILE__) . '/includes/form.inc';
+require_once dirname(__FILE__) . '/includes/html.inc';
+require_once dirname(__FILE__) . '/includes/navigation.inc';
+require_once dirname(__FILE__) . '/includes/taxonomy.inc';
+require_once dirname(__FILE__) . '/includes/views.inc';

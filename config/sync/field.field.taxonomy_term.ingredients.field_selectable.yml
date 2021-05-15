@@ -1,0 +1,23 @@
+uuid: 09f50fbb-546d-46e4-b7a7-6b513f8ed595
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_selectable
+    - taxonomy.vocabulary.ingredients
+id: taxonomy_term.ingredients.field_selectable
+field_name: field_selectable
+entity_type: taxonomy_term
+bundle: ingredients
+label: Selectable
+description: 'Whether or not this can be selected as an Ingredient.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Selectable
+  off_label: 'Not Selectable'
+field_type: boolean
