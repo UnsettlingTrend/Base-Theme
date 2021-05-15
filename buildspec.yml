@@ -8,57 +8,57 @@ phases:
       #- lsb_release -a
 
       # Avoid warnings/errors due to no interactive CLI
-      - export DEBIAN_FRONTEND=noninteractive
+      #- export DEBIAN_FRONTEND=noninteractive
 
       #Install php7.4
-      - apt-get update -y
-      - apt-get install -y  software-properties-common
-      - LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
-      - apt-get update -y
-      - apt-get install -y php7.4-ldap php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-mysql php7.4-mbstring php7.4-gd php7.4-readline php7.4-opcache php7.4-xdebug php7.4-dom php7.4-xdebug php7.4-curl unzip
+      #- apt-get update -y
+      #- apt-get install -y  software-properties-common
+      #- LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+      #- apt-get update -y
+      #- apt-get install -y php7.4-ldap php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-mysql php7.4-mbstring php7.4-gd php7.4-readline php7.4-opcache php7.4-xdebug php7.4-dom php7.4-xdebug php7.4-curl unzip
       #- systemctl restart apache2
-      - php -m
-      - ls /usr/lib/php/20180731
-      - touch /usr/local/etc/php/conf.d/extra_config.ini
-      - "echo extension_dir=\"/usr/lib/php/20180731/\" >> /usr/local/etc/php/conf.d/extra_config.ini"
-      - "echo extension=gd.so >> /usr/local/etc/php/conf.d/extra_config.ini"
-      - "echo zend_extension=xdebug.so >> /usr/local/etc/php/conf.d/extra_config.ini"
-      - cat /usr/local/etc/php/conf.d/extra_config.ini
-      - php -m
+      #- php -m
+      #- ls /usr/lib/php/20180731
+      #- touch /usr/local/etc/php/conf.d/extra_config.ini
+      #- "echo extension_dir=\"/usr/lib/php/20180731/\" >> /usr/local/etc/php/conf.d/extra_config.ini"
+      #- "echo extension=gd.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+      #- "echo zend_extension=xdebug.so >> /usr/local/etc/php/conf.d/extra_config.ini"
+      #- cat /usr/local/etc/php/conf.d/extra_config.ini
+      #- php -m
 
       #Enable xdebug - phpunit uses this for code coverage
-      - phpenmod xdebug
+      #- phpenmod xdebug
 
       #Install composer and gulp
-      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-      - php composer-setup.php ;
-      - php -r "unlink('composer-setup.php');" ;
-      - mv composer.phar /usr/local/bin/composer
-      - npm install -g gulp
+      #- php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      #- php composer-setup.php ;
+      #- php -r "unlink('composer-setup.php');" ;
+      #- mv composer.phar /usr/local/bin/composer
+      #- npm install -g gulp
 
       # Start Mysql
-      - apt-get install -y mysql-server
-      - su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
+      #- apt-get install -y mysql-server
+      #- su mysql -s /bin/bash -c "/usr/sbin/mysqld" &
   build:
     commands:
-      - composer -vvv about
-      - ls /etc/php/
-      - php -v
-      - echo Build started on `date`
-      - echo Installing composer deps
-      - composer install --no-progress --no-suggest
-      - npm -v
-      - echo Installing nodejs deps
-      - npm install
+      #- composer -vvv about
+      #- ls /etc/php/
+      #- php -v
+      #- echo Build started on `date`
+      #- echo Installing composer deps
+      #- composer install --no-progress --no-suggest
+      #- npm -v
+      #- echo Installing nodejs deps
+      #- npm install
       # Do you need to do this? In many cases phpunit will use sqllite or similar to avoid the need for a real DB.
       # If you don't need it delete it
       # - /usr/bin/mysql  -u root -e "GRANT ALL ON *.* TO 'test'@'localhost' IDENTIFIED BY '' WITH GRANT OPTION"
       # - mysqladmin -u test create test
-      - ./vendor/bin/phpunit
+      #- ./vendor/bin/phpunit
   post_build:
     commands:
-      - echo Build completed on `date`
-      - tar -czf build.tar web config
+      #- echo Build completed on `date`
+      #- tar -czf build.tar web config
 artifacts:
   files:
     - build.tar
