@@ -5,7 +5,7 @@ phases:
       php: 7.4
     commands:
       # Print the version of Linux
-      - lsb_release -a
+      #- lsb_release -a
 
       # Avoid warnings/errors due to no interactive CLI
       - export DEBIAN_FRONTEND=noninteractive
@@ -25,8 +25,6 @@ phases:
       - "echo zend_extension=xdebug.so >> /usr/local/etc/php/conf.d/extra_config.ini"
       - cat /usr/local/etc/php/conf.d/extra_config.ini
       - php -m
-
-
 
       #Enable xdebug - phpunit uses this for code coverage
       - phpenmod xdebug
