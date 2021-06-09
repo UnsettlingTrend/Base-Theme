@@ -19,7 +19,7 @@ gulp build
 #todo Delete all unnecessary code; like node_modules
 # Delete all unnecessary code.
 echo Return to source root and delete unneeded code...
-cd CODEBUILD_SRC_DIR
+cd $CODEBUILD_SRC_DIR
 find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
 
 
