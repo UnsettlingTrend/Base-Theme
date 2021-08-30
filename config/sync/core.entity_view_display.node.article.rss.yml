@@ -23,7 +23,9 @@ third_party_settings:
     sections:
       -
         layout_id: layout_onecol
-        layout_settings: {  }
+        layout_settings:
+          label: ''
+          context_mapping: {  }
         components:
           37bcee79-2f89-4df6-9442-b0fb5ea6d7a6:
             uuid: 37bcee79-2f89-4df6-9442-b0fb5ea6d7a6
@@ -54,3 +56,4 @@ hidden:
   field_image: true
   field_tags: true
   langcode: true
+  search_api_excerpt: true
