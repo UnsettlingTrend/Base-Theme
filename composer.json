@@ -264,7 +264,7 @@
         "drupal/twig_field_value": "^2.0",
         "drupal/twig_tweak": "^3.0",
         "drupal/video_embed_field": "~2.0",
-        "drupal/views_bulk_operations": "^3.0",
+        "drupal/views_bulk_operations": "^4.0",
         "drupal/views_infinite_scroll": "^1.5",
         "drupal/votingapi": "^3.0@beta",
         "drupal/warmer": "^2.0",
