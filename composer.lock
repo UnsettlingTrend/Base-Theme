@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c63594a959f451cd8e9d2bb4b4a6202",
+    "content-hash": "5ec4e1dff303d1cac2293394b7d78b2a",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -6034,39 +6034,36 @@
         },
         {
             "name": "drupal/facets",
-            "version": "1.8.0",
+            "version": "2.0.0-rc1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/facets.git",
-                "reference": "8.x-1.8"
+                "reference": "2.0.0-rc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/facets-8.x-1.8.zip",
-                "reference": "8.x-1.8",
-                "shasum": "f621b84b59c5315db14a0529df5dfc74ca5bc9de"
+                "url": "https://ftp.drupal.org/files/projects/facets-2.0.0-rc1.zip",
+                "reference": "2.0.0-rc1",
+                "shasum": "037396e2bc3901ba3aa98ffb85c7a2b1b845a1cc"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9"
+                "drupal/core": "^9.1"
             },
             "conflict": {
                 "drupal/search_api": "<1.14"
             },
             "require-dev": {
-                "drupal/search_api": "~1.14"
+                "drupal/search_api": "~1.21"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.8",
-                    "datestamp": "1620838256",
+                    "version": "2.0.0-rc1",
+                    "datestamp": "1636721596",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
                     }
-                },
-                "branch-alias": {
-                    "dev-8.x-1.x": "1.x-dev"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
