@@ -1,6 +1,14 @@
-import robin_stocks as r
+import robin_stocks.robinhood as r
 from includes import utils as u
 from decimal import Decimal, ROUND_HALF_UP
+
+
+def get_all_history():
+    #r.export.export_completed_stock_orders("order_history", "../../../../../robinhood_history/stock_history")
+    #r.export.export_completed_crypto_orders("order_history", "../../../../../robinhood_history/crypto_history")
+    #r.export.export_completed_option_orders("order_history", "../../../../../robinhood_history/option_history")
+    return
+    #TODO this file location should be brought in through PHP/Drupal config, not hardcoded.
 
 
 def get_all_holdings():

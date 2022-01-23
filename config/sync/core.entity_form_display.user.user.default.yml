@@ -51,19 +51,19 @@ content:
     third_party_settings: {  }
   user_picture:
     type: image_widget_crop
+    weight: -1
+    region: content
     settings:
-      show_default_crop: true
-      warn_multiple_usages: true
+      progress_indicator: throbber
       preview_image_style: thumbnail
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - square
       crop_types_required:
         - square
-      progress_indicator: throbber
+      warn_multiple_usages: true
       show_crop_area: false
+      show_default_crop: true
     third_party_settings: {  }
-    weight: -1
-    region: content
 hidden:
   langcode: true

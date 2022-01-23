@@ -5,10 +5,10 @@ dependencies: {  }
 id: local
 label: Local
 description: "Configuration settings for local development environments.\t"
+weight: 0
 storage: folder
 folder: ../config/local
 module: {  }
 theme: {  }
-weight: 0
 complete_list: {  }
 partial_list: {  }

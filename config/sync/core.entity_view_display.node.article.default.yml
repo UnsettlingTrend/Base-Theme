@@ -35,72 +35,72 @@ third_party_settings:
             uuid: 8a35ba53-45b4-4973-b87e-70f01bf7d290
             region: content
             configuration:
+              id: 'field_block:node:article:field_image'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:field_image'
               formatter:
                 type: image
+                label: hidden
                 settings:
-                  image_style: large
                   image_link: ''
+                  image_style: large
                   svg_attributes:
-                    width: ''
-                    height: ''
+                    width: null
+                    height: null
                   svg_render_as_image: true
                 third_party_settings: {  }
-                label: hidden
-            additional: {  }
             weight: 0
+            additional: {  }
           71cb8202-a2cd-4b48-af08-4d2f020c88ec:
             uuid: 71cb8202-a2cd-4b48-af08-4d2f020c88ec
             region: content
             configuration:
+              id: 'field_block:node:article:body'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:body'
               formatter:
                 type: text_default
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
-                label: hidden
-            additional: {  }
             weight: 1
+            additional: {  }
           46d7972d-4af2-4c06-a532-ccf5ab3e0d93:
             uuid: 46d7972d-4af2-4c06-a532-ccf5ab3e0d93
             region: content
             configuration:
+              id: 'field_block:node:article:field_tags'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:field_tags'
               formatter:
                 type: entity_reference_label
                 label: above
                 settings:
                   link: true
                 third_party_settings: {  }
-            additional: {  }
             weight: 2
+            additional: {  }
           b6e57ecd-2a44-411f-97a9-43f1c2905d3d:
             uuid: b6e57ecd-2a44-411f-97a9-43f1c2905d3d
             region: content
             configuration:
+              id: 'extra_field_block:node:article:links'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'extra_field_block:node:article:links'
-            additional: {  }
             weight: 3
+            additional: {  }
           f7427dfc-71e4-4f68-aa45-9830e43db89f:
             uuid: f7427dfc-71e4-4f68-aa45-9830e43db89f
             region: content
             configuration:
+              id: 'field_block:node:article:comment'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:comment'
               formatter:
                 type: comment_default
                 label: above
@@ -108,8 +108,8 @@ third_party_settings:
                   view_mode: default
                   pager_id: 0
                 third_party_settings: {  }
-            additional: {  }
             weight: 4
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
@@ -120,46 +120,46 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 0
-    region: content
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    label: hidden
+    weight: 0
+    region: content
   comment:
     type: comment_default
-    weight: 110
-    region: content
     label: above
     settings:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
+    weight: 110
+    region: content
   field_image:
     type: image
-    weight: -1
-    region: content
+    label: hidden
     settings:
-      image_style: large
       image_link: ''
+      image_style: large
       svg_attributes:
-        width: ''
-        height: ''
+        width: null
+        height: null
       svg_render_as_image: true
     third_party_settings: {  }
-    label: hidden
+    weight: -1
+    region: content
   field_tags:
     type: entity_reference_label
-    weight: 10
-    region: content
     label: above
     settings:
       link: true
     third_party_settings: {  }
-  links:
-    weight: 100
+    weight: 10
     region: content
+  links:
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   langcode: true
   search_api_excerpt: true

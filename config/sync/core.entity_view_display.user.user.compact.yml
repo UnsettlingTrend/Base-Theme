@@ -31,43 +31,43 @@ third_party_settings:
             configuration:
               id: 'field_block:user:user:user_picture'
               label: Picture
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: image
-                settings:
-                  image_style: user
-                  image_link: content
-                  svg_render_as_image: 1
-                  svg_attributes:
-                    width: ''
-                    height: ''
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: image
+                label: hidden
+                settings:
+                  image_link: content
+                  image_style: user
+                  svg_attributes:
+                    width: null
+                    height: null
+                  svg_render_as_image: true
+                third_party_settings: {  }
             weight: 1
+            additional: {  }
           6ca1b0af-8900-46cb-aa99-e79ac60b5811:
             uuid: 6ca1b0af-8900-46cb-aa99-e79ac60b5811
             region: content
             configuration:
               id: 'field_block:user:user:name'
               label: Name
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: string
-                settings:
-                  link_to_entity: true
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: string
+                label: hidden
+                settings:
+                  link_to_entity: true
+                third_party_settings: {  }
             weight: 2
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: '-cLsS3M3JycipXQt9rEb81_HxKneReoGuRh8ijcOPXs'
@@ -78,17 +78,17 @@ mode: compact
 content:
   user_picture:
     type: image
-    weight: 0
-    region: content
+    label: hidden
     settings:
-      image_style: thumbnail
       image_link: content
+      image_style: thumbnail
       svg_attributes:
-        width: ''
-        height: ''
+        width: null
+        height: null
       svg_render_as_image: true
     third_party_settings: {  }
-    label: hidden
+    weight: 0
+    region: content
 hidden:
   langcode: true
   member_for: true

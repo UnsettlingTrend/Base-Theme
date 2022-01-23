@@ -18,15 +18,17 @@ class TestPageController extends ControllerBase {
     $module_handler = \Drupal::service('module_handler');
     $module_path = $module_handler->getModule('ut_robinhood')->getPath();
 
+    // Save the current working directory to return to later.
+    $cwd = getcwd();
+    // Change to the python directory
+    chdir($module_path . '/python/');
 
-
-  //  require('');
-    $command = escapeshellcmd('python3 ' . $module_path . '/python/main.py');
-    dpm($command, '$command');
+    $command = escapeshellcmd('python3 ' . 'main.py');
     $output = shell_exec($command);
     dpm($output, '$output1');
-    $output = shell_exec('pwd');
-    dpm($output, '$output2');
+
+    // Return to the current working directory before this.
+    chdir($cwd);
     return [
       '#markup' => 'This is a test page',
     ];

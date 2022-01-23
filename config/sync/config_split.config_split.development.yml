@@ -5,6 +5,7 @@ dependencies: {  }
 id: development
 label: Development
 description: 'Configuration settings for development server.'
+weight: 1
 storage: folder
 folder: ../config/dev
 module:
@@ -13,6 +14,5 @@ module:
   devel_generate: 0
   kint: 0
 theme: {  }
-weight: 1
 complete_list: {  }
 partial_list: {  }

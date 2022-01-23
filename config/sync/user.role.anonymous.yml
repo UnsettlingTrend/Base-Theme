@@ -1,7 +1,16 @@
 uuid: 24cf3337-2e31-457b-a43f-7068d8edf161
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.restricted_html
+  module:
+    - comment
+    - contact
+    - filter
+    - media
+    - paragraphs_type_permissions
+    - system
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
 id: anonymous
@@ -13,7 +22,6 @@ permissions:
   - 'access content'
   - 'access site-wide contact form'
   - 'access user profiles'
-  - 'search content'
   - 'use text format restricted_html'
   - 'view media'
   - 'view paragraph content media'

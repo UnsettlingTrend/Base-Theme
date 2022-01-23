@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   action: 0
   address: 0
@@ -74,8 +76,14 @@ module:
   geofield: 0
   geolocation: 0
   geolocation_address: 0
+  geolocation_geofield: 0
+  geolocation_geometry: 0
+  geolocation_geometry_data: 0
+  geolocation_geometry_natural_earth_countries: 0
   geolocation_google_maps: 0
+  geolocation_google_places_api: 0
   geolocation_leaflet: 0
+  geolocation_search_api: 0
   gesso_helper: 0
   gnode: 0
   group: 0
@@ -129,6 +137,8 @@ module:
   rules: 0
   search_api: 0
   search_api_db: 0
+  search_api_location: 0
+  search_api_location_views: 0
   serialization: 0
   settings_tray: 0
   shortcut: 0
@@ -189,5 +199,3 @@ theme:
   stable: 0
   chris: 0
 profile: standard
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

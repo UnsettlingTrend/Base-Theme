@@ -34,50 +34,50 @@ third_party_settings:
             uuid: fedb675a-88f2-485b-b057-0b3db5988daf
             region: content
             configuration:
+              id: 'field_block:node:article:body'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:body'
               formatter:
                 type: text_default
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
-                label: hidden
-            additional: {  }
             weight: 0
+            additional: {  }
           e084fd23-5157-4015-8add-83260bff72ee:
             uuid: e084fd23-5157-4015-8add-83260bff72ee
             region: content
             configuration:
+              id: 'field_block:node:article:field_tags'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:field_tags'
               formatter:
                 type: entity_reference_label
+                label: hidden
                 settings:
                   link: false
                 third_party_settings: {  }
-                label: hidden
-            additional: {  }
             weight: 1
+            additional: {  }
           4f4ae38f-8247-49e6-a823-088c04919016:
             uuid: 4f4ae38f-8247-49e6-a823-088c04919016
             region: content
             configuration:
+              id: 'field_block:node:article:comment'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:article:comment'
               formatter:
                 type: comment_default
-                settings:
-                  pager_id: 0
-                  view_mode: default
-                third_party_settings: {  }
                 label: hidden
-            additional: {  }
+                settings:
+                  view_mode: default
+                  pager_id: 0
+                third_party_settings: {  }
             weight: 2
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: UyS6h90lp_2z8y-boEip0WxzO-BGPHubSfeQYnjwg_4
@@ -88,27 +88,27 @@ mode: search_index
 content:
   body:
     type: text_default
-    weight: 0
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    label: hidden
+    weight: 0
     region: content
   comment:
     type: comment_default
-    weight: 2
-    settings:
-      pager_id: 0
-      view_mode: default
-    third_party_settings: {  }
     label: hidden
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    weight: 2
     region: content
   field_tags:
     type: entity_reference_label
-    weight: 1
+    label: hidden
     settings:
       link: false
     third_party_settings: {  }
-    label: hidden
+    weight: 1
     region: content
 hidden:
   field_image: true

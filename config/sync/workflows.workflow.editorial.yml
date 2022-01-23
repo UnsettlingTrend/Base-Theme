@@ -20,19 +20,19 @@ type_settings:
       default_revision: true
     draft:
       label: Draft
-      published: false
-      default_revision: false
       weight: -5
-    needs_review:
       published: false
       default_revision: false
+    needs_review:
       label: 'Needs Review'
       weight: 6
+      published: false
+      default_revision: false
     published:
       label: Published
+      weight: 0
       published: true
       default_revision: true
-      weight: 0
   transitions:
     archive:
       label: Archive
@@ -54,18 +54,18 @@ type_settings:
       weight: 4
     create_new_draft:
       label: 'Create New Draft'
+      from:
+        - draft
+        - published
       to: draft
       weight: 0
-      from:
-        - draft
-        - published
     publish:
       label: Publish
-      to: published
-      weight: 1
       from:
         - draft
         - published
+      to: published
+      weight: 1
     review:
       label: 'Send for Review'
       from:

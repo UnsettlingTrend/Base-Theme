@@ -36,12 +36,12 @@ third_party_settings:
             configuration:
               id: 'extra_field_block:node:article:search_api_excerpt'
               label: 'Search result excerpt'
-              provider: layout_builder
               label_display: '0'
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
-            additional: {  }
             weight: 0
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: uFyekWl4pl40ClJFmjk9tcyPJ-WFSXYsItJHB_XbQqs
@@ -52,29 +52,29 @@ mode: search_result
 content:
   body:
     type: text_summary_or_trimmed
-    weight: 1
+    label: hidden
     settings:
       trim_length: 300
     third_party_settings: {  }
-    label: hidden
+    weight: 1
     region: content
   field_image:
     type: image
-    weight: 0
+    label: hidden
     settings:
-      image_style: thumbnail
       image_link: content
+      image_style: thumbnail
       svg_attributes:
-        width: ''
-        height: ''
+        width: null
+        height: null
       svg_render_as_image: true
     third_party_settings: {  }
-    label: hidden
+    weight: 0
     region: content
   links:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+    weight: 2
     region: content
 hidden:
   comment: true

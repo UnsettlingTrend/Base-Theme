@@ -9,19 +9,6 @@ dependencies:
     - search_api
 id: facet_summary
 name: 'Facet Summary'
-facets:
-  content_type:
-    checked: true
-    label: 'Content type'
-    separator: ', '
-    weight: 0
-    show_count: false
-  tags:
-    checked: true
-    label: Tags
-    separator: ', '
-    weight: 0
-    show_count: false
 facet_source_id: 'search_api:views_page__search_content__page_search'
 processor_configs:
   hide_when_not_rendered:
@@ -35,3 +22,16 @@ processor_configs:
       build: '30'
     settings:
       link_text: 'Reset all facets'
+facets:
+  content_type:
+    checked: true
+    label: 'Content type'
+    separator: ', '
+    show_count: false
+    weight: 0
+  tags:
+    checked: true
+    label: Tags
+    separator: ', '
+    show_count: false
+    weight: 0

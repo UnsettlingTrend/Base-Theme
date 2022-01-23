@@ -39,3 +39,6 @@ node_modules
 *.sql.gz
 *.sql
 /.editorconfig
+
+# Ignore any csv files robin_stocks produces
+robinhood_history/*.csv

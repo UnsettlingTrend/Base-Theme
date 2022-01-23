@@ -1,7 +1,7 @@
 # The unsername and password for Robinhood
 # TODO This should be moved out of here eventually into a more secure location...
 account_username: 'chrisferagotti@gmail.com'
-account_password: 'Vw40ixB!I5WgD5o'
+account_password: 'AoV2v$eL57@ZE#4a!fw'
 # Whether or not to attempt day trades.
 daytrade: FALSE
 # The minimal percentage gain for a stock to attempt to sell

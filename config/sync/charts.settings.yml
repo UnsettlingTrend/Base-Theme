@@ -1,18 +1,18 @@
 charts_default_settings:
-  fields:
-    stacking: false
   library: google
   type: line
+  fields:
+    stacking: false
   display:
     title: Chart
     title_position: out
-    tooltips: false
     data_labels: false
     data_markers: false
     legend_position: right
     background: ''
     three_dimensional: 1
     polar: 0
+    tooltips: false
     dimensions:
       width: ''
       width_units: '%'

@@ -41,10 +41,10 @@ filters:
     status: false
     weight: 3
     settings:
+      media_switch: ''
       filter_tags:
         img: img
         iframe: iframe
-      media_switch: ''
       use_data_uri: '0'
   filter_html:
     id: filter_html

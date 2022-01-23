@@ -22,31 +22,31 @@ bundle: ingredient
 mode: default
 content:
   field_ingredient:
+    type: entity_reference_autocomplete
     weight: 0
+    region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_volume:
+    type: physical_measurement_default
     weight: 1
+    region: content
     settings:
       default_unit: ''
       allow_unit_change: true
     third_party_settings: {  }
-    type: physical_measurement_default
-    region: content
   field_weight:
+    type: physical_measurement_default
     weight: 2
+    region: content
     settings:
       default_unit: ''
       allow_unit_change: true
     third_party_settings: {  }
-    type: physical_measurement_default
-    region: content
 hidden:
   created: true
   status: true

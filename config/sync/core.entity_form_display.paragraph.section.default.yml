@@ -21,6 +21,7 @@ content:
   field_paragraph:
     type: entity_reference_paragraphs
     weight: 1
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -29,7 +30,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
 hidden:
   created: true
   status: true

@@ -1,0 +1,26 @@
+uuid: 9d9b199c-06b8-4572-8419-09aeb4ce8787
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_address
+    - paragraphs.paragraphs_type.location
+  module:
+    - address
+id: paragraph.location.field_address
+field_name: field_address
+entity_type: paragraph
+bundle: location
+label: Address
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries:
+    US: US
+  langcode_override: ''
+  field_overrides: {  }
+  fields: {  }
+field_type: address

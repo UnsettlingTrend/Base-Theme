@@ -27,33 +27,33 @@ third_party_settings:
             uuid: a9baae9e-1c08-49d4-93d3-b0715ba47e1e
             region: content
             configuration:
+              id: 'field_block:paragraphs_library_item:paragraphs_library_item:label'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:paragraphs_library_item:paragraphs_library_item:label'
               formatter:
                 type: string
                 label: hidden
                 settings:
                   link_to_entity: false
                 third_party_settings: {  }
-            additional: {  }
             weight: 0
+            additional: {  }
           bda14907-a040-441d-b13a-04dbd8646a3a:
             uuid: bda14907-a040-441d-b13a-04dbd8646a3a
             region: content
             configuration:
+              id: 'field_block:paragraphs_library_item:paragraphs_library_item:paragraphs'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:paragraphs_library_item:paragraphs_library_item:paragraphs'
               formatter:
-                label: hidden
                 type: paragraph_summary
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
-            additional: {  }
             weight: 1
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: 298FcPciNgWk7pojyH1AA-0apcAkJulU6N3PO89ZXIk
@@ -64,19 +64,19 @@ mode: summary
 content:
   label:
     type: string
-    weight: 0
     label: hidden
-    region: content
     settings:
       link_to_entity: false
     third_party_settings: {  }
-  paragraphs:
-    label: hidden
-    type: paragraph_summary
     weight: 0
     region: content
+  paragraphs:
+    type: paragraph_summary
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   content_moderation_control: true
   langcode: true

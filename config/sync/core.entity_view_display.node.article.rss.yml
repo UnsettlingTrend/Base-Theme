@@ -31,12 +31,12 @@ third_party_settings:
             uuid: 37bcee79-2f89-4df6-9442-b0fb5ea6d7a6
             region: content
             configuration:
+              id: 'extra_field_block:node:article:links'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'extra_field_block:node:article:links'
-            additional: {  }
             weight: 0
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: 2rIr6K5Q0UQ9khg0zE_CK-PtJH76UL-BDDZcZnZzwCc
@@ -46,10 +46,10 @@ bundle: article
 mode: rss
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   body: true
   comment: true

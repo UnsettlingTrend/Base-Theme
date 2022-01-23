@@ -51,10 +51,10 @@ filters:
     status: false
     weight: -42
     settings:
+      media_switch: ''
       filter_tags:
         img: img
         iframe: iframe
-      media_switch: ''
       use_data_uri: '0'
   filter_html_image_secure:
     id: filter_html_image_secure

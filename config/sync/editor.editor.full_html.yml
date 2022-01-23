@@ -59,9 +59,9 @@ settings:
       language_list: un
     codemirror:
       enable: true
-      startupMode: wysiwyg
       mode: htmlmixed
       theme: default
+      startupMode: wysiwyg
       options:
         lineNumbers: true
         lineWrapping: true

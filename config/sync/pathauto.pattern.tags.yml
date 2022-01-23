@@ -12,12 +12,12 @@ pattern: '[term:vocabulary:name]/[term:name]'
 selection_criteria:
   636a94b4-47de-49f3-af20-50f7ab75d9d7:
     id: 'entity_bundle:taxonomy_term'
-    bundles:
-      tags: tags
     negate: false
+    uuid: 636a94b4-47de-49f3-af20-50f7ab75d9d7
     context_mapping:
       taxonomy_term: taxonomy_term
-    uuid: 636a94b4-47de-49f3-af20-50f7ab75d9d7
+    bundles:
+      tags: tags
 selection_logic: and
 weight: -5
 relationships: {  }

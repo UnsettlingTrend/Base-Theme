@@ -27,27 +27,27 @@ third_party_settings:
             uuid: 92b20274-bdb0-4808-b353-9f2a41c36231
             region: content
             configuration:
+              id: 'field_block:comment:comment:comment_body'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:comment:comment:comment_body'
               formatter:
-                label: hidden
                 type: text_default
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
-            additional: {  }
             weight: 0
+            additional: {  }
           917b68e8-5595-4cd9-a01f-80fd7480404c:
             uuid: 917b68e8-5595-4cd9-a01f-80fd7480404c
             region: content
             configuration:
+              id: 'extra_field_block:comment:comment:links'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'extra_field_block:comment:comment:links'
-            additional: {  }
             weight: 1
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: 77Ye1kR-P6AaiGfEO8mnXNSr7nqtnP3PiiVBwJeGGMI
@@ -57,17 +57,17 @@ bundle: comment
 mode: default
 content:
   comment_body:
-    label: hidden
     type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
+  links:
     settings: {  }
     third_party_settings: {  }
-  links:
     weight: 100
     region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   langcode: true
   search_api_excerpt: true

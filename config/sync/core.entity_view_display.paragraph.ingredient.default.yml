@@ -15,26 +15,26 @@ bundle: ingredient
 mode: default
 content:
   field_ingredient:
-    weight: 0
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 0
     region: content
   field_volume:
-    weight: 1
+    type: physical_measurement_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: physical_measurement_default
+    weight: 1
     region: content
   field_weight:
-    weight: 2
+    type: physical_measurement_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: physical_measurement_default
+    weight: 2
     region: content
 hidden:
   search_api_excerpt: true

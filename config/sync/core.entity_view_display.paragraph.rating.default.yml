@@ -11,12 +11,12 @@ bundle: rating
 mode: default
 content:
   field_rating_category:
-    weight: 0
+    type: entity_reference_label
     label: hidden
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 0
     region: content
 hidden:
   search_api_excerpt: true

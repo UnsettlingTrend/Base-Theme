@@ -32,25 +32,25 @@ bundle: page
 mode: tile
 content:
   content_moderation_control:
-    weight: -20
     settings: {  }
     third_party_settings: {  }
+    weight: -20
     region: content
   field_preview_image:
     type: entity_reference_entity_view
-    weight: 0
     label: hidden
     settings:
       view_mode: tile
       link: false
     third_party_settings: {  }
+    weight: 0
     region: content
   field_subtitle:
-    weight: 1
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 1
     region: content
 hidden:
   comment: true

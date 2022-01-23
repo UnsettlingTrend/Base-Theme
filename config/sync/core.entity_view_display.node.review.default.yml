@@ -18,15 +18,15 @@ dependencies:
     - user
 third_party_settings:
   layout_builder:
-    allow_custom: false
     enabled: true
+    allow_custom: false
     sections:
       -
         layout_id: layout_twocol_section
         layout_settings:
           label: ''
-          column_widths: 75-25
           context_mapping: {  }
+          column_widths: 75-25
         components:
           00b51cfa-c2f9-4cac-8b26-c3d002a4bbd9:
             uuid: 00b51cfa-c2f9-4cac-8b26-c3d002a4bbd9
@@ -34,154 +34,153 @@ third_party_settings:
             configuration:
               id: 'field_block:node:review:field_paragraph'
               label: Paragraphs
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: entity_reference_revisions_entity_view
-                settings:
-                  view_mode: default
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
             weight: 1
+            additional: {  }
           5f0a451b-2e2e-4f22-bccc-b6b4cfb2c5e0:
             uuid: 5f0a451b-2e2e-4f22-bccc-b6b4cfb2c5e0
             region: second
             configuration:
               id: 'field_block:node:review:field_ratings'
               label: Ratings
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: entity_reference_revisions_entity_view
-                settings:
-                  view_mode: default
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
             weight: 5
+            additional: {  }
           7ce3203f-0728-49c9-8e76-19460f606aef:
             uuid: 7ce3203f-0728-49c9-8e76-19460f606aef
             region: second
             configuration:
               id: 'extra_field_block:node:review:links'
               label: Links
-              provider: layout_builder
               label_display: '0'
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
-            additional: {  }
             weight: 0
+            additional: {  }
           83bd023b-3634-4eef-9657-627aa0d22e83:
             uuid: 83bd023b-3634-4eef-9657-627aa0d22e83
             region: second
             configuration:
               id: 'field_block:node:review:uid'
               label: 'Authored by'
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: entity_reference_entity_view
-                settings:
-                  view_mode: compact
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: compact
+                third_party_settings: {  }
             weight: 1
+            additional: {  }
           35a2a335-454b-4ce3-b631-36f599ee9a64:
             uuid: 35a2a335-454b-4ce3-b631-36f599ee9a64
             region: second
             configuration:
               id: 'field_block:node:review:field_date_time'
               label: 'Date and Time'
-              provider: layout_builder
               label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
               formatter:
-                label: hidden
                 type: datetime_time_ago
+                label: hidden
                 settings:
                   future_format: '@interval hence'
                   past_format: '@interval ago'
                   granularity: 2
                 third_party_settings: {  }
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-            additional: {  }
             weight: 3
+            additional: {  }
           61629a4a-cd58-4913-b5c7-35d8dccf468c:
             uuid: 61629a4a-cd58-4913-b5c7-35d8dccf468c
             region: second
             configuration:
               id: 'field_block:node:review:field_address'
               label: Address
-              provider: layout_builder
               label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
               formatter:
-                label: hidden
                 type: geolocation_address
+                label: hidden
                 settings:
-                  data_provider_settings:
-                    geocoder: photon
-                  set_marker: '1'
+                  set_marker: true
+                  use_overridden_map_settings: true
                   title: '[geolocation_current_item:organization]'
                   info_text:
                     value: '[geolocation_current_item:organization]'
                     format: plain_text
-                  replacement_patterns:
-                    token_geolocation:
-                      token_items: ''
                   centre:
                     fit_bounds:
                       enable: true
-                      settings:
-                        min_zoom: 10
-                        reset_zoom: false
                       weight: -101
+                      settings:
+                        reset_zoom: false
+                        min_zoom: 10
                       map_center_id: fit_bounds
                     client_location:
-                      weight: 0
                       enable: false
+                      weight: 0
                       map_center_id: client_location
                     fixed_boundaries:
+                      enable: false
+                      weight: 0
                       settings:
-                        north: ''
-                        east: ''
                         south: ''
                         west: ''
-                      weight: 0
-                      enable: false
+                        north: ''
+                        east: ''
                       map_center_id: fixed_boundaries
                     fixed_value:
+                      enable: false
+                      weight: 0
                       settings:
+                        location_option_id: fixed_value
                         latitude: null
                         longitude: null
-                        location_option_id: fixed_value
-                      weight: 0
-                      enable: false
                       map_center_id: location_plugins
                     ipstack:
-                      settings:
-                        access_key: ''
-                        location_option_id: ipstack
-                      weight: 0
                       enable: false
+                      weight: 0
+                      settings:
+                        location_option_id: ipstack
+                        access_key: ''
                       map_center_id: location_plugins
                     freeogeoip:
-                      weight: 0
                       enable: false
-                      map_center_id: location_plugins
+                      weight: 0
                       settings:
                         location_option_id: freeogeoip
+                      map_center_id: location_plugins
                   map_provider_id: leaflet
                   map_provider_settings:
                     map_features:
@@ -189,292 +188,292 @@ third_party_settings:
                         weight: 0
                         settings:
                           position: topright
-                          default_label: false
+                          default_label: ''
                           tile_layer_providers:
                             OpenStreetMap:
                               'OpenStreetMap Mapnik':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap BlackAndWhite':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap DE':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap CH':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap France':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap HOT':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenStreetMap BZH':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             OpenTopoMap:
                               OpenTopoMap:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             Thunderforest:
                               'Thunderforest OpenCycleMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest Transport':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest TransportDark':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest SpinalMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest Landscape':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest Outdoors':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Thunderforest Pioneer':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             OpenMapSurfer:
                               'OpenMapSurfer Roads':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'OpenMapSurfer Grayscale':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             Hydda:
                               'Hydda Full':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Hydda Base':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             MapBox:
                               MapBox:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             Stamen:
                               'Stamen Toner':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen TonerBackground':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen TonerLite':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen Watercolor':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen Terrain':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen TerrainBackground':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Stamen TopOSMRelief':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             Esri:
                               'Esri WorldStreetMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri DeLorme':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldTopoMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldImagery':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldTerrain':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldShadedRelief':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldPhysical':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri OceanBasemap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri NatGeoWorldMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'Esri WorldGrayCanvas':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             HERE:
                               'HERE normalDay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayCustom':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayGrey':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayGreyMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayTransit':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalDayTransitMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNight':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNightMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNightGrey':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNightGreyMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNightTransit':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE normalNightTransitMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE redcuedDay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE redcuedNight':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE basicMap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE mapLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE trafficFlow':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE carnavDayGrey':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE hybridDayMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE hybridDayTransit':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE hybridDayGrey':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE pedestrianDay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE pedestrianNight':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE satelliteDay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE terrainDay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HERE terrainDayMobile':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             FreeMapSK:
                               FreeMapSK:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             MtbMap:
                               MtbMap:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             CartoDB:
                               'CartoDB Positron':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB PositronNoLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB PositronOnlyLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB DarkMatter':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB DarkMatterNoLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB DarkMatterOnlyLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB Voyager':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB VoyagerNoLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB VoyagerOnlyLabels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'CartoDB VoyagerLabelsUnder':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             HikeBike:
                               HikeBike:
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'HikeBike HillShading':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             BasemapAT:
                               'BasemapAT basemap':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'BasemapAT grau':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'BasemapAT overlay':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'BasemapAT highdpi':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'BasemapAT orthofoto':
-                                label: ''
                                 checkbox: false
+                                label: ''
                             NLS:
                               NLS:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             Wikimedia:
                               Wikimedia:
-                                label: ''
                                 checkbox: false
+                                label: ''
                             GeoportailFrance:
                               'GeoportailFrance parcels':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'GeoportailFrance ignMaps':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'GeoportailFrance maps':
-                                label: ''
                                 checkbox: false
+                                label: ''
                               'GeoportailFrance orthos':
-                                label: ''
                                 checkbox: false
+                                label: ''
                           tile_providers_options:
                             Thunderforest:
                               apikey: ''
@@ -533,13 +532,14 @@ third_party_settings:
                           scroll_target_id: ''
                         enabled: false
                       leaflet_marker_popup:
-                        enabled: true
                         weight: 0
                         settings:
                           info_auto_display: false
+                        enabled: true
                       leaflet_marker_icon:
                         weight: 0
                         settings:
+                          marker_shadow_path: ''
                           marker_icon_path: ''
                           icon_size:
                             width: null
@@ -550,7 +550,6 @@ third_party_settings:
                           popup_anchor:
                             x: 0
                             'y': 0
-                          marker_shadow_path: ''
                           shadow_size:
                             width: null
                             height: null
@@ -561,10 +560,10 @@ third_party_settings:
                       leaflet_marker_clusterer:
                         weight: 0
                         settings:
-                          disable_clustering_at_zoom: 0
                           cluster_settings:
                             show_coverage_on_hover: false
                             zoom_to_bounds_on_click: false
+                          disable_clustering_at_zoom: 0
                         enabled: false
                       leaflet_control_zoom:
                         weight: 0
@@ -599,10 +598,10 @@ third_party_settings:
                             autocomplete_min_length: 1
                             component_restrictions:
                               route: ''
-                              locality: ''
-                              administrative_area: ''
-                              postal_code: ''
                               country: ''
+                              administrative_area: ''
+                              locality: ''
+                              postal_code: ''
                             boundary_restriction:
                               south: ''
                               west: ''
@@ -610,10 +609,10 @@ third_party_settings:
                               east: ''
                         enabled: false
                       leaflet_control_fullscreen:
-                        enabled: true
                         weight: 0
                         settings:
                           position: topright
+                        enabled: true
                       leaflet_gesture_handling:
                         weight: 0
                         enabled: false
@@ -635,31 +634,32 @@ third_party_settings:
                           transparent: false
                           identify: false
                         enabled: false
+                    zoom: '10'
                     height: 300px
                     width: 100%
-                    zoom: '10'
-                  use_overridden_map_settings: 1
+                  data_provider_settings:
+                    geocoder: photon
+                  replacement_patterns:
+                    token_geolocation:
+                      token_items: ''
                 third_party_settings: {  }
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-            additional: {  }
             weight: 6
+            additional: {  }
           b10df697-732c-4f6a-af17-6aa08dca33be:
             uuid: b10df697-732c-4f6a-af17-6aa08dca33be
             region: first
             configuration:
+              id: 'field_block:node:review:field_geolocation'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:node:review:field_geolocation'
               formatter:
+                type: geolocation_latlng
                 label: above
                 settings: {  }
                 third_party_settings: {  }
-                type: geolocation_latlng
-            additional: {  }
             weight: 2
+            additional: {  }
         third_party_settings: {  }
 id: node.review.default
 targetEntityType: node
@@ -667,51 +667,51 @@ bundle: review
 mode: default
 content:
   field_address:
-    weight: 103
+    type: address_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: address_default
+    weight: 103
     region: content
   field_date_time:
-    weight: 102
+    type: datetime_default
     label: hidden
     settings:
-      format_type: medium
       timezone_override: ''
+      format_type: medium
     third_party_settings: {  }
-    type: datetime_default
+    weight: 102
     region: content
   field_geolocation:
-    weight: 106
+    type: geolocation_latlng
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: geolocation_latlng
+    weight: 106
     region: first
   field_paragraph:
-    weight: 104
+    type: entity_reference_revisions_entity_view
     label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    type: entity_reference_revisions_entity_view
+    weight: 104
     region: content
   field_ratings:
     type: entity_reference_revisions_entity_view
-    weight: 105
     label: hidden
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 105
     region: content
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   langcode: true
   search_api_excerpt: true

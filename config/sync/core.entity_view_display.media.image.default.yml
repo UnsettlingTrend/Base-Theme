@@ -16,6 +16,7 @@ third_party_settings:
     settings: {  }
   layout_builder:
     enabled: true
+    allow_custom: false
     sections:
       -
         layout_id: layout_onecol
@@ -29,26 +30,25 @@ third_party_settings:
             configuration:
               id: 'field_block:media:image:field_media_image'
               label: Image
-              provider: layout_builder
               label_display: '0'
-              formatter:
-                label: hidden
-                type: image
-                settings:
-                  image_style: max_1300x1300
-                  image_link: file
-                  svg_render_as_image: 1
-                  svg_attributes:
-                    width: ''
-                    height: ''
-                third_party_settings: {  }
+              provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
                 view_mode: view_mode
-            additional: {  }
+              formatter:
+                type: image
+                label: hidden
+                settings:
+                  image_link: file
+                  image_style: max_1300x1300
+                  svg_attributes:
+                    width: null
+                    height: null
+                  svg_render_as_image: true
+                third_party_settings: {  }
             weight: 0
+            additional: {  }
         third_party_settings: {  }
-    allow_custom: false
 _core:
   default_config_hash: jOwnt_yq6AKAfqU6f0xKnxEkFQ2eTPJWxrk3WMLbL68
 id: media.image.default
@@ -57,16 +57,16 @@ bundle: image
 mode: default
 content:
   field_media_image:
+    type: image
     label: visually_hidden
     settings:
-      image_style: ''
       image_link: file
+      image_style: ''
       svg_attributes:
-        width: ''
-        height: ''
+        width: null
+        height: null
       svg_render_as_image: true
     third_party_settings: {  }
-    type: image
     weight: 1
     region: content
 hidden:

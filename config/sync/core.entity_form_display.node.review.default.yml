@@ -34,25 +34,27 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_address:
-    weight: 26
-    settings: {  }
-    third_party_settings: {  }
     type: address_default
+    weight: 26
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_date_time:
-    weight: 1
-    settings: {  }
-    third_party_settings: {  }
     type: datetime_default
+    weight: 1
     region: content
-  field_geolocation:
-    weight: 29
     settings: {  }
     third_party_settings: {  }
+  field_geolocation:
     type: geolocation_latlng
+    weight: 29
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_paragraph:
+    type: entity_reference_paragraphs
     weight: 27
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -61,11 +63,10 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
     third_party_settings: {  }
-    type: entity_reference_paragraphs
-    region: content
   field_ratings:
     type: entity_reference_paragraphs
     weight: 28
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -74,7 +75,6 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
     third_party_settings: {  }
-    region: content
   langcode:
     type: language_select
     weight: 3
@@ -90,24 +90,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 11
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 7
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -120,12 +120,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 4
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 9
