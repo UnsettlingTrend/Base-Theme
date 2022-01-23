@@ -4,7 +4,7 @@ set -e
 #composer -vvv about
 #ls /etc/php/
 #php -v
-echo Build started on `date`
+echo Build started on "$(date)"
 echo Installing composer packages...
 composer install --no-progress --no-suggest
 echo Installing nodejs packages...
@@ -19,7 +19,7 @@ gulp build
 #todo Delete all unnecessary code; like node_modules
 # Delete all unnecessary code.
 echo Return to source root and delete unneeded code...
-cd $CODEBUILD_SRC_DIR
+cd "$CODEBUILD_SRC_DIR"
 find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
 
 
