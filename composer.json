@@ -199,6 +199,7 @@
         "drupal/color_field": "^2.4",
         "drupal/colorbox": "^1.4",
         "drupal/components": "^3.0",
+        "drupal/config_filter": "^2.2",
         "drupal/config_split": "^2",
         "drupal/console": "^1.9",
         "drupal/core-composer-scaffold": "^9.0",
@@ -305,7 +306,19 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/console-extend-plugin": true,
+            "drupal-composer/drupal-scaffold": true,
+            "m7sk/composer-svn-export-plugin": true,
+            "wikimedia/composer-merge-plugin": true,
+            "drupal/core-composer-scaffold": true,
+            "drupal/core-project-message": true,
+            "mnsami/composer-custom-directory-installer": true,
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "classmap": [

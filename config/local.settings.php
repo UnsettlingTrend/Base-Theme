@@ -139,9 +139,9 @@ $settings['trusted_host_patterns'] = array(
 );
 
 $databases['default']['default'] = array (
-  'database' => 'drupal8',
-  'username' => 'drupal8',
-  'password' => 'drupal8',
+  'database' => 'drupal9',
+  'username' => 'drupal9',
+  'password' => 'drupal9',
   'prefix' => '',
   'host' => 'database',
   'port' => '3306',

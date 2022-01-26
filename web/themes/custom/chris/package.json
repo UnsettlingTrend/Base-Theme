@@ -66,6 +66,7 @@
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
     "domready": "^1.0.8",
+    "gulp-install": "^1.1.0",
     "lightercollective": "^0.3.0"
   }
 }

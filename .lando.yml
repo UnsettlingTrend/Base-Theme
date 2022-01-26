@@ -42,6 +42,12 @@ services:
   appserver:
     composer:
       behat/behat: 3.3.1
+    build_as_root:
+      # Note that you will want to use the script for the major version of node you want to install
+      # See: https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
+      - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+      - apt-get install -y nodejs
+      - npm install --global gulp-cli
 #    run:
 #      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
     run_as_root:
@@ -51,12 +57,6 @@ services:
     overrides:
       environment:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"  # TODO Get this out of this file, but it doesn't seem to work in .lando.base.yml
-  node:
-    type: node:10
-    globals:
-      gulp-cli: latest
-    build:
-      - "cd $LANDO_MOUNT && npm install"
   mailhog:
     type: mailhog
     hogfrom:
@@ -80,8 +80,8 @@ tooling:
     description: run behat- use lando behat
     cmd: cd /app ; behat  # Run behat from the /app  directory
   node:
-    service: node
+    service: appserver
   npm:
-    service: node
+    service: appserver
   gulp:
-    service: node
+    service: appserver
