@@ -317,7 +317,8 @@
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
             "mnsami/composer-custom-directory-installer": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "autoload": {
