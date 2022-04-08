@@ -3,8 +3,9 @@ phases:
   install:
     runtime-versions:
       php: 7.4
-      nodejs: 14.x
+      #nodejs: 12.x # As of this writing, Amazon Linux 2 instance only goes to 12; install 14.x below
     commands:
+      - n 14.x
   pre_build:
     commands:
       bash scripts/aws/codebuild_pre_build.sh
