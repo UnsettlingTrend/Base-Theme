@@ -3,9 +3,9 @@ phases:
   install:
     runtime-versions:
       php: 7.4
-      #nodejs: 12.x # As of this writing, Amazon Linux 2 instance only goes to 12; install 14.x below
+      #nodejs: 12.x # As of this writing, Amazon Linux 2 instance only goes to 12; install 14.x below as per https://stackoverflow.com/questions/70205746/aws-codebuild-error-major-version-of-alias-14-x-is-not-supported-in-runtime
     commands:
-      - n 14.x
+      - n 14
   pre_build:
     commands:
       bash scripts/aws/codebuild_pre_build.sh
