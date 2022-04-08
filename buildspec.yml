@@ -3,7 +3,7 @@ phases:
   install:
     runtime-versions:
       php: 7.4
-      nodejs: 16.x
+      nodejs: 14.x
     commands:
   pre_build:
     commands:
