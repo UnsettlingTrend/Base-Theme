@@ -10,7 +10,7 @@ type: 'canonical_entities:node'
 pattern: 'reviews/[node:title]'
 selection_criteria:
   e0060229-4cab-4f4e-9a18-ddc4fff9acca:
-    id: node_type
+    id: 'entity_bundle:node'
     negate: false
     uuid: e0060229-4cab-4f4e-9a18-ddc4fff9acca
     context_mapping:
