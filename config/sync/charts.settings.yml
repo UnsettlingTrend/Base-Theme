@@ -38,3 +38,6 @@ charts_default_settings:
     suffix: ''
     decimal_count: ''
     labels_rotation: '0'
+advanced:
+  requirements:
+    cdn: true
