@@ -51,6 +51,8 @@ content:
         width: null
         height: null
       svg_render_as_image: true
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 5
     region: content
@@ -64,3 +66,4 @@ content:
 hidden:
   langcode: true
   name: true
+  search_api_excerpt: true

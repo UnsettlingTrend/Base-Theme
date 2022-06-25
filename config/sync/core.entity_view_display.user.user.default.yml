@@ -58,6 +58,29 @@ third_party_settings:
                 entity: layout_builder.entity
             weight: 1
             additional: {  }
+          377dda27-0484-4a38-b336-5fcbdac6cc15:
+            uuid: 377dda27-0484-4a38-b336-5fcbdac6cc15
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:user:user:user_picture'
+              formatter:
+                type: image
+                label: hidden
+                settings:
+                  image_link: content
+                  image_style: thumbnail
+                  svg_attributes:
+                    width: null
+                    height: null
+                  svg_render_as_image: true
+                  image_loading:
+                    attribute: lazy
+                third_party_settings: {  }
+            weight: 2
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
@@ -81,6 +104,8 @@ content:
         width: null
         height: null
       svg_render_as_image: true
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content

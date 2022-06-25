@@ -93,6 +93,29 @@ third_party_settings:
                 entity: layout_builder.entity
             weight: 3
             additional: {  }
+          12b153fd-5324-4862-b4e7-ad160ef16169:
+            uuid: 12b153fd-5324-4862-b4e7-ad160ef16169
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:article:field_image'
+              formatter:
+                type: image
+                label: hidden
+                settings:
+                  image_link: content
+                  image_style: medium
+                  svg_attributes:
+                    width: null
+                    height: null
+                  svg_render_as_image: true
+                  image_loading:
+                    attribute: lazy
+                third_party_settings: {  }
+            weight: 4
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: 4NcL2hSQZBpJbYtNuh5jC6kyQTcAc1m5bQpTegEWEso
@@ -119,6 +142,8 @@ content:
         width: null
         height: null
       svg_render_as_image: true
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: -1
     region: content
