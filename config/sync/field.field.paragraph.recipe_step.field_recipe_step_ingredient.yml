@@ -1,0 +1,52 @@
+uuid: 57c62f00-7a67-4548-b5d5-f6bc86db6238
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recipe_step_ingredient
+    - paragraphs.paragraphs_type.ingredient
+    - paragraphs.paragraphs_type.recipe_step
+  module:
+    - entity_reference_revisions
+id: paragraph.recipe_step.field_recipe_step_ingredient
+field_name: field_recipe_step_ingredient
+entity_type: paragraph
+bundle: recipe_step
+label: Ingredient
+description: 'Any ingredients used in this step and their measurements.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      ingredient: ingredient
+    negate: 0
+    target_bundles_drag_drop:
+      from_library:
+        weight: 9
+        enabled: false
+      ingredient:
+        weight: 10
+        enabled: true
+      location:
+        weight: 11
+        enabled: false
+      media:
+        weight: 12
+        enabled: false
+      rating:
+        weight: 13
+        enabled: false
+      recipe_step:
+        weight: 14
+        enabled: false
+      section:
+        weight: 15
+        enabled: false
+      text:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

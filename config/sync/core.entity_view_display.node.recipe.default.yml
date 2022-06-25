@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.recipe.body
-    - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_recipe_steps
     - node.type.recipe
   module:
     - entity_reference_revisions
@@ -22,7 +22,7 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
-  field_ingredients:
+  field_recipe_steps:
     type: entity_reference_revisions_entity_view
     label: above
     settings:

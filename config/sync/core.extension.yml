@@ -84,7 +84,6 @@ module:
   geolocation_google_places_api: 0
   geolocation_leaflet: 0
   geolocation_search_api: 0
-  gesso_helper: 0
   gnode: 0
   group: 0
   help: 0
@@ -195,10 +194,10 @@ module:
   content_translation: 10
   views: 10
   paragraphs: 11
+  publication_date: 99
   standard: 1000
 theme:
   bootstrap: 0
   claro: 0
   stable: 0
-  chris: 0
 profile: standard

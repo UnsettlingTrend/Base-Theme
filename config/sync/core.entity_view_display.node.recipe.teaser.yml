@@ -5,7 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.recipe.body
-    - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_recipe_steps
     - node.type.recipe
   module:
     - text
@@ -29,6 +29,6 @@ content:
     weight: 100
     region: content
 hidden:
-  field_ingredients: true
+  field_recipe_steps: true
   langcode: true
   search_api_excerpt: true

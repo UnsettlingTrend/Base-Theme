@@ -1,4 +1,4 @@
-uuid: 7ac924de-99f4-4904-87aa-90f286042c1b
+uuid: 9378aece-6275-4cb2-80f8-82d565496d7d
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,8 @@ dependencies:
     - entity_reference_revisions
     - node
     - paragraphs
-id: node.field_ingredients
-field_name: field_ingredients
+id: node.field_recipe_steps
+field_name: field_recipe_steps
 entity_type: node
 type: entity_reference_revisions
 settings:

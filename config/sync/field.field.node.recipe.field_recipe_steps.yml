@@ -1,18 +1,18 @@
-uuid: ed92ef17-78f6-4fd7-97dc-257b34cf9c56
+uuid: 52fa424e-6c6f-48db-933b-0eeeabbce040
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_ingredients
+    - field.storage.node.field_recipe_steps
     - node.type.recipe
-    - paragraphs.paragraphs_type.ingredient
+    - paragraphs.paragraphs_type.recipe_step
   module:
     - entity_reference_revisions
-id: node.recipe.field_ingredients
-field_name: field_ingredients
+id: node.recipe.field_recipe_steps
+field_name: field_recipe_steps
 entity_type: node
 bundle: recipe
-label: Ingredients
+label: Steps
 description: ''
 required: false
 translatable: false
@@ -22,25 +22,31 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      ingredient: ingredient
+      recipe_step: recipe_step
     negate: 0
     target_bundles_drag_drop:
       from_library:
-        weight: 7
-        enabled: false
-      ingredient:
-        weight: 8
-        enabled: true
-      media:
         weight: 9
         enabled: false
-      rating:
+      ingredient:
         weight: 10
         enabled: false
-      section:
+      location:
         weight: 11
         enabled: false
-      text:
+      media:
         weight: 12
+        enabled: false
+      rating:
+        weight: 13
+        enabled: false
+      recipe_step:
+        weight: 14
+        enabled: true
+      section:
+        weight: 15
+        enabled: false
+      text:
+        weight: 16
         enabled: false
 field_type: entity_reference_revisions

@@ -1,27 +1,27 @@
-uuid: 54901b31-2220-45e9-a018-915587876609
+uuid: f442cb9f-7d21-4d35-889f-ab157eaa3275
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.body
-    - node.type.recipe
+    - field.storage.paragraph.field_text
+    - paragraphs.paragraphs_type.recipe_step
   module:
     - allowed_formats
     - text
 third_party_settings:
   allowed_formats:
     allowed_formats: {  }
-id: node.recipe.body
-field_name: body
-entity_type: node
-bundle: recipe
-label: Description
+id: paragraph.recipe_step.field_text
+field_name: field_text
+entity_type: paragraph
+bundle: recipe_step
+label: Text
 description: ''
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  display_summary: true
+  display_summary: false
   required_summary: false
 field_type: text_with_summary

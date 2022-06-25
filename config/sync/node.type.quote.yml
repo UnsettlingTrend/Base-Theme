@@ -11,7 +11,7 @@ third_party_settings:
     parent: 'main:'
 name: Quote
 type: quote
-description: ''
+description: 'An interesting <em>quote</em>.'
 help: ''
 new_revision: true
 preview_mode: 1

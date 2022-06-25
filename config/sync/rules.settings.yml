@@ -1,5 +1,11 @@
 _core:
   default_config_hash: alE0QceCqKyU2plA8_LELZeCByMYgh2CnTfuBeINp4g
+system_log:
+  log_level: warning
+debug_log:
+  enabled: false
+  system_debug: false
+  log_level: null
 log: false
 debug_screen: false
 log_level_system: warning

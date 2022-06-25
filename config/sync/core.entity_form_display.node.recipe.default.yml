@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.recipe.body
-    - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_recipe_steps
     - node.type.recipe
   module:
     - content_moderation
@@ -39,17 +39,24 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_ingredients:
-    type: entity_reference_paragraphs
+  field_recipe_steps:
+    type: paragraphs
     weight: 122
     region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
-      edit_mode: open
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: all
+      closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
     third_party_settings: {  }
   langcode:
     type: language_select

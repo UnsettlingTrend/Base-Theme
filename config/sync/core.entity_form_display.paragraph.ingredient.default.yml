@@ -36,7 +36,7 @@ content:
     weight: 1
     region: content
     settings:
-      default_unit: ''
+      default_unit: 'fl oz'
       allow_unit_change: true
     third_party_settings: {  }
   field_weight:
@@ -44,7 +44,7 @@ content:
     weight: 2
     region: content
     settings:
-      default_unit: ''
+      default_unit: oz
       allow_unit_change: true
     third_party_settings: {  }
 hidden:

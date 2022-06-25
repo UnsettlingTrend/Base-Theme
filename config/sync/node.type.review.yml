@@ -11,7 +11,7 @@ third_party_settings:
     parent: 'main:'
 name: Review
 type: review
-description: ''
+description: 'A business <em>review</em>.'
 help: ''
 new_revision: true
 preview_mode: 1

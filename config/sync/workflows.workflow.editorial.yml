@@ -3,7 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
+    - node.type.article
     - node.type.page
+    - node.type.recipe
+    - node.type.review
   module:
     - content_moderation
 _core:
@@ -77,5 +80,8 @@ type_settings:
       weight: 5
   entity_types:
     node:
+      - article
       - page
+      - recipe
+      - review
   default_moderation_state: draft
