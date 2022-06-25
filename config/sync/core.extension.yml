@@ -178,6 +178,7 @@ module:
   webform_image_select: 0
   webform_jqueryui_buttons: 0
   webform_location_geocomplete: 0
+  webform_location_places: 0
   webform_node: 0
   webform_options_custom: 0
   webform_options_limit: 0
