@@ -75,8 +75,6 @@ settings:
   plugins:
     stylescombo:
       styles: ''
-    language:
-      language_list: un
     codemirror:
       enable: true
       mode: htmlmixed
