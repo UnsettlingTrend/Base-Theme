@@ -6,13 +6,11 @@ id: local
 label: local
 description: ''
 weight: 0
+stackable: false
+storage: null
 folder: ../config/local
 module:
   devel: 0
 theme: {  }
-blacklist: {  }
-graylist:
-  - environment_indicator.indicator
-  - maillog.settings
-graylist_dependents: false
-graylist_skip_equal: true
+complete_list: {  }
+partial_list: {  }
