@@ -54,7 +54,7 @@ services:
     globals:
       gulp-cli: latest
     build:
-      - "cd $LANDO_MOUNT && npm install"
+      - "cd $LANDO_MOUNT && npm install -y"
   mailhog:
     type: mailhog
     hogfrom:
