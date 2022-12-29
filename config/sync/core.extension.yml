@@ -45,8 +45,6 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
-  devel_entity_updates: 0
-  devel_php: 0
   diff: 0
   disable_html5_validation: 0
   draggableviews: 0
