@@ -109,6 +109,7 @@ module:
   leaflet_more_maps: 0
   leaflet_views: 0
   link: 0
+  maillog: 0
   media: 0
   media_entity_browser: 0
   media_entity_instagram: 0
