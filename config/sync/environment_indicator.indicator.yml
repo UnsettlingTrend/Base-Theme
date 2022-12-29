@@ -1,3 +1,3 @@
-name: local
-fg_color: '#d9ede6'
-bg_color: '#0d3cd8'
+name: Production
+fg_color: '#f2f2f2'
+bg_color: '#ff0000'

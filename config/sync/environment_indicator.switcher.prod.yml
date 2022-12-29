@@ -6,5 +6,5 @@ machine: prod
 description: null
 name: prod
 url: 'http://chrisferagotti.com'
-fg_color: '#ff1d00'
-bg_color: '#d9ede6'
+fg_color: '#d0d0d0'
+bg_color: '#0d0d0d'

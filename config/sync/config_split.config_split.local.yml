@@ -1,0 +1,18 @@
+uuid: 2027e475-3938-4666-bbe3-e2dde65b048c
+langcode: en
+status: true
+dependencies: {  }
+id: local
+label: local
+description: ''
+weight: 0
+folder: ../config/local
+module:
+  devel: 0
+theme: {  }
+blacklist: {  }
+graylist:
+  - environment_indicator.indicator
+  - maillog.settings
+graylist_dependents: false
+graylist_skip_equal: true

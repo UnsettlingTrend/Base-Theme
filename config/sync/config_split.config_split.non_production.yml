@@ -1,0 +1,15 @@
+uuid: 59faebfb-d93f-4b98-983a-24d4b6292dcd
+langcode: en
+status: true
+dependencies: {  }
+id: non_production
+label: non-production
+description: ''
+weight: 0
+folder: ../config/non_production
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: false
+graylist_skip_equal: true
