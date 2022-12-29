@@ -5,10 +5,9 @@ name: cf
 recipe: drupal9
 
 env_file:
- - lando/lando.env
+ - lando/defaults.env
 
 config:
-  php: '7.4'
   composer_version: 2
   via: apache
   webroot: web
@@ -40,23 +39,22 @@ services:
     hosts:
       - database
   appserver:
+    type: php:8.1
     composer:
       behat/behat: 3.3.1
-    build_as_root:
-      # Note that you will want to use the script for the major version of node you want to install
-      # See: https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-      - curl -sL https://deb.nodesource.com/setup_14.x | bash -
-      - apt-get install -y nodejs
-      - npm install --global gulp-cli
-#    run:
-#      - "ln -s /usr/local/bin/composer /usr/local/bin/composer.phar"
+    overrides:
+      environment:
+        DRUSH_OPTIONS_URI: "https://cf.lndo.site"
     run_as_root:
 #      - "apt-get install python3-pip"
 #      - "pip3 install robin_stocks"
       - "bash /app/lando/scripts/build.sh"
-    overrides:
-      environment:
-        DRUSH_OPTIONS_URI: "https://cf.lndo.site"  # TODO Get this out of this file, but it doesn't seem to work in .lando.base.yml
+  node:
+    type: node:16
+    globals:
+      gulp-cli: latest
+    build:
+      - "cd $LANDO_MOUNT && npm install"
   mailhog:
     type: mailhog
     hogfrom:
@@ -68,10 +66,11 @@ tooling:
     service: appserver
     description: run composer commands
     cmd: /usr/local/bin/composer
-  drush:
+  drupal:
     service: appserver
-    description: run drush commands
-    cmd: /app/vendor/drush/drush/drush
+    description: Runs Drupal console
+    cmd: /app/vendor/bin/drupal
+    user: www-data
   phpunit:
     service: appserver
     description: run PHPUnit- use lando phpunit
@@ -80,8 +79,8 @@ tooling:
     description: run behat- use lando behat
     cmd: cd /app ; behat  # Run behat from the /app  directory
   node:
-    service: appserver
+    service: node
   npm:
-    service: appserver
+    service: node
   gulp:
-    service: appserver
+    service: node
