@@ -25,7 +25,6 @@ module:
   charts_api_example: 0
   charts_google: 0
   ckeditor: 0
-  ckeditor_codemirror: 0
   codesnippet: 0
   coffee: 0
   color: 0
