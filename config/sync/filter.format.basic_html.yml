@@ -6,6 +6,7 @@ dependencies:
     - blazy
     - editor
     - entity_embed
+    - slick
 _core:
   default_config_hash: P8ddpAIKtawJDi5SzOwCzVnnNYqONewSTJ6Xn0dW_aQ
 name: 'Basic HTML'
@@ -18,7 +19,7 @@ filters:
     status: true
     weight: -50
     settings:
-      allowed_html: '<a href hreflang class="btn btn-gray"> <em> <strong> <cite> <blockquote cite> <code class=""> <pre class=""> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <br> <span style> <img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix"> <p class="clearfix"> <drupal-entity alt title class="" data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button> <table class="table table-responsive table-striped"> <td> <th scope> <tr scope> <details> <summary>'
+      allowed_html: '<a href hreflang class="btn btn-gray"> <em> <strong> <cite> <blockquote cite> <code class> <pre class> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p class="clearfix"> <br> <span style> <img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix"> <table class="table table-responsive table-striped"> <td> <th scope> <tr scope> <details> <summary> <u> <s> <sup> <sub> <caption> <tbody> <thead> <tfoot> <drupal-entity alt title data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-langcode alt title data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-langcode alt title class>'
       filter_html_help: false
       filter_html_nofollow: false
   filter_align:
@@ -52,6 +53,9 @@ filters:
     weight: -42
     settings:
       media_switch: ''
+      hybrid_style: ''
+      box_style: ''
+      box_caption: ''
       filter_tags:
         img: img
         iframe: iframe
@@ -87,3 +91,37 @@ filters:
     status: false
     weight: -45
     settings: {  }
+  slick_filter:
+    id: slick_filter
+    provider: slick
+    status: false
+    weight: 4
+    settings:
+      optionset: default
+      layout: ''
+      skin: ''
+      background: false
+      box_media_style: ''
+      loading: ''
+      preload: false
+      responsive_image_style: ''
+      box_style: ''
+      image_style: ''
+      media_switch: ''
+      ratio: ''
+      thumbnail_style: ''
+      overridables:
+        arrows: '0'
+        autoplay: '0'
+        dots: '0'
+        draggable: '0'
+        infinite: '0'
+        mouseWheel: '0'
+        randomize: '0'
+        variableWidth: '0'
+      optionset_thumbnail: ''
+      skin_thumbnail: ''
+      thumbnail_caption: ''
+      thumbnail_effect: ''
+      thumbnail_position: ''
+      override: false

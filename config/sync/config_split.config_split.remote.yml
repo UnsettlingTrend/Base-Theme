@@ -1,17 +1,17 @@
-uuid: 2027e475-3938-4666-bbe3-e2dde65b048c
+uuid: b0d06e2f-be27-4f1f-bacb-9b9502239ca7
 langcode: en
 status: true
 dependencies: {  }
-id: local
-label: local
+id: remote
+label: remote
 description: ''
 weight: 0
 stackable: false
 storage: folder
-folder: ../config/local
+folder: ../config/remote
 module:
-  devel: 0
+  s3fs: 0
 theme: {  }
 complete_list:
-  - environment_indicator.indicator
+  - s3fs.settings
 partial_list: {  }

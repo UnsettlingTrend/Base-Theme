@@ -815,7 +815,7 @@ $databases['default']['default'] = array (
 $settings['config_sync_directory'] = '../config/sync';
 
 $settings['trusted_host_patterns'] = [
-  'chrisferagotti\.com'
+  '^chrisferagotti\.com$'
 ];
 
 $settings['file_private_path'] = '../private';
@@ -838,12 +838,14 @@ if (getenv('ENVIRONMENT') === 'prod') {
   $config['config_split.config_split.local']['status'] = FALSE;
   $config['config_split.config_split.non_production']['status'] = FALSE;
   $config['config_split.config_split.production']['status'] = TRUE;
+  $config['config_split.config_split.remote']['status'] = TRUE;
 }
 else {
   $config['config_split.config_split.local']['status'] = TRUE;
   $config['config_split.config_split.non_production']['status'] = TRUE;
   $config['config_split.config_split.production']['status'] = FALSE;
+  $config['config_split.config_split.remote']['status'] = FALSE;
 }
 
-// Move twig files outside of standard storage so they don't go to s3fs
+// Move twig files outside standard storage, so they don't go to s3fs
 $settings['php_storage']['twig']['directory'] = '../storage/php';

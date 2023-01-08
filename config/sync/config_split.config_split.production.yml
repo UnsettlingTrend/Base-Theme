@@ -7,9 +7,11 @@ label: production
 description: ''
 weight: 0
 stackable: false
-storage: null
+storage: folder
 folder: ../config/prod
-module: {  }
+module:
+  s3fs: 0
 theme: {  }
-complete_list: {  }
+complete_list:
+  - environment_indicator.indicator
 partial_list: {  }
