@@ -5,8 +5,8 @@ dependencies:
   config:
     - core.entity_view_display.comment.comment.default
     - field.field.node.page.comment
+    - field.field.node.page.field_image
     - field.field.node.page.field_paragraph
-    - field.field.node.page.field_preview_image
     - field.field.node.page.field_show_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_tags
@@ -17,6 +17,7 @@ dependencies:
     - entity_reference_revisions
     - field_layout
     - layout_builder
+    - svg_image
     - text
     - user
 third_party_settings:
@@ -46,6 +47,21 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_paragraph:
     type: entity_reference_revisions_entity_view
@@ -84,7 +100,7 @@ content:
     weight: 0
     region: content
 hidden:
-  field_preview_image: true
   field_show_date: true
   langcode: true
+  published_at: true
   search_api_excerpt: true

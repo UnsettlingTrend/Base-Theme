@@ -1,0 +1,26 @@
+uuid: 969d1682-e8bc-4dd6-b158-55263897129f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_take_aways
+    - node.type.article
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    allowed_formats:
+      - basic_html
+id: node.article.field_take_aways
+field_name: field_take_aways
+entity_type: node
+bundle: article
+label: 'The take-aways'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

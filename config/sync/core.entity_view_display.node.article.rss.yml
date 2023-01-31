@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.rss
-    - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_image
+    - field.field.node.article.field_show_date
+    - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
+    - field.field.node.article.field_take_aways
     - node.type.article
   module:
     - field_layout
@@ -37,6 +39,16 @@ third_party_settings:
                 entity: layout_builder.entity
             weight: 0
             additional: {  }
+          d4040b78-dbc6-47d9-9d5e-2acbdf078237:
+            uuid: d4040b78-dbc6-47d9-9d5e-2acbdf078237
+            region: content
+            configuration:
+              id: 'extra_field_block:node:article:content_moderation_control'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+            weight: 1
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: 2rIr6K5Q0UQ9khg0zE_CK-PtJH76UL-BDDZcZnZzwCc
@@ -45,15 +57,23 @@ targetEntityType: node
 bundle: article
 mode: rss
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
     weight: 100
     region: content
 hidden:
-  body: true
   comment: true
   field_image: true
+  field_show_date: true
+  field_subtitle: true
   field_tags: true
+  field_take_aways: true
   langcode: true
+  published_at: true
   search_api_excerpt: true

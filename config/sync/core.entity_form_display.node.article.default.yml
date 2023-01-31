@@ -3,17 +3,22 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.field_image
+    - field.field.node.article.field_show_date
+    - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
+    - field.field.node.article.field_take_aways
     - image.style.thumbnail
     - node.type.article
+    - workflows.workflow.editorial
   module:
     - comment
+    - content_moderation
     - field_layout
     - layout_discovery
     - path
+    - publication_date
     - svg_image
     - text
 third_party_settings:
@@ -28,16 +33,6 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 1
-    region: content
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-      show_summary: false
-    third_party_settings: {  }
   comment:
     type: comment_default
     weight: 20
@@ -58,6 +53,21 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
+  field_show_date:
+    type: boolean_checkbox
+    weight: 124
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_subtitle:
+    type: text_textfield
+    weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_tags:
     type: entity_reference_autocomplete_tags
     weight: 3
@@ -68,12 +78,26 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_take_aways:
+    type: text_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 2
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -87,6 +111,12 @@ content:
     region: content
     settings:
       display_label: true
+    third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
