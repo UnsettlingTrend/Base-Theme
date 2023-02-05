@@ -183,7 +183,7 @@
         "drupal/admin_toolbar": "^3.0",
         "drupal/adminimal_admin_toolbar": "^1.5",
         "drupal/advagg": "^4.0",
-        "drupal/allowed_formats": "^1.2",
+        "drupal/allowed_formats": "^2.0",
         "drupal/auto_entitylabel": "^3.0@beta",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/bg_image_formatter": "^1.14",
