@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_display.comment.comment.default
     - field.field.node.article.comment
     - field.field.node.article.field_image
+    - field.field.node.article.field_paragraph
     - field.field.node.article.field_show_date
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
@@ -14,6 +15,7 @@ dependencies:
     - node.type.article
   module:
     - comment
+    - entity_reference_revisions
     - field_layout
     - layout_builder
     - layout_discovery
@@ -178,6 +180,23 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 10
             additional: {  }
+          b1681b30-3c9d-49a4-a499-4d0a3805d9fc:
+            uuid: b1681b30-3c9d-49a4-a499-4d0a3805d9fc
+            region: content
+            configuration:
+              id: 'field_block:node:article:field_paragraph'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: above
+                settings:
+                  view_mode: default
+                  link: ''
+                third_party_settings: {  }
+            weight: 11
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
@@ -214,6 +233,15 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: -1
+    region: content
+  field_paragraph:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 115
     region: content
   field_show_date:
     type: boolean

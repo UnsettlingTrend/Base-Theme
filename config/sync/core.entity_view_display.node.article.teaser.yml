@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.article.comment
     - field.field.node.article.field_image
+    - field.field.node.article.field_paragraph
     - field.field.node.article.field_show_date
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
@@ -154,6 +155,7 @@ content:
     region: content
 hidden:
   comment: true
+  field_paragraph: true
   field_show_date: true
   field_subtitle: true
   field_take_aways: true
