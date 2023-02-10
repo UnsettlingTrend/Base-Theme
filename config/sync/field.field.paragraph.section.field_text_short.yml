@@ -1,0 +1,29 @@
+uuid: 6769f82b-b3e8-47a6-8066-673acd1f62ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_text_short
+    - paragraphs.paragraphs_type.section
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    allowed_formats:
+      - basic_html
+      - restricted_html
+      - full_html
+      - plain_text
+id: paragraph.section.field_text_short
+field_name: field_text_short
+entity_type: paragraph
+bundle: section
+label: 'Section Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

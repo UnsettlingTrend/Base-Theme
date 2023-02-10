@@ -4,15 +4,18 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.section.field_paragraph
+    - field.field.paragraph.section.field_text_short
     - paragraphs.paragraphs_type.section
   module:
     - field_layout
     - layout_discovery
     - paragraphs
+    - text
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 id: paragraph.section.default
 targetEntityType: paragraph
 bundle: section
@@ -29,6 +32,14 @@ content:
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: ''
+    third_party_settings: {  }
+  field_text_short:
+    type: text_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
