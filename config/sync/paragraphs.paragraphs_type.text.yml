@@ -1,14 +1,10 @@
 uuid: d040f2bc-904f-4162-8d69-b0f70b716f7f
 langcode: en
 status: true
-dependencies:
-  module:
-    - paragraphs_library
-third_party_settings:
-  paragraphs_library:
-    allow_library_conversion: true
+dependencies: {  }
 id: text
 label: Text
 icon_uuid: null
+icon_default: null
 description: ''
 behavior_plugins: {  }

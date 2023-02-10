@@ -4,11 +4,6 @@ status: true
 dependencies:
   content:
     - 'file:file:073dc952-7692-4e7c-8f2b-a159cce22f56'
-  module:
-    - paragraphs_library
-third_party_settings:
-  paragraphs_library:
-    allow_library_conversion: true
 id: location
 label: Location
 icon_uuid: 073dc952-7692-4e7c-8f2b-a159cce22f56
