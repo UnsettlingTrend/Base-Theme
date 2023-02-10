@@ -1,107 +1,88 @@
-uuid: 5319aa2b-64e8-46b0-834b-d22f8ac20ae1
+uuid: e5e247bb-6d2d-406b-a84a-246fe4b694d1
 langcode: en
 status: true
 dependencies:
   config:
     - filter.format.basic_html
   module:
-    - ckeditor
-_core:
-  default_config_hash: AqlPmO16LvJI4D0Ih6u4GFQIzqr5OnLgAUSjcUGWk2g
+    - ckeditor5
 format: basic_html
-editor: ckeditor
+editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      -
-        -
-          name: 'Block Formatting'
-          items:
-            - Format
-            - '-'
-            - Styles
-        -
-          name: Formatting
-          items:
-            - Bold
-            - Italic
-            - Underline
-            - Strike
-            - '-'
-            - Superscript
-            - Subscript
-            - RemoveFormat
-        -
-          name: Alignment
-          items:
-            - JustifyLeft
-            - JustifyBlock
-            - JustifyRight
-            - JustifyCenter
-            - '-'
-            - Outdent
-            - Indent
-        -
-          name: Linking
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-            - '-'
-            - Table
-        -
-          name: Media
-          items:
-            - Blockquote
-            - media_entity_embed
-            - node
-        -
-          name: Undo
-          items:
-            - Undo
-            - Redo
-        -
-          name: Tools
-          items:
-            - CodeSnippet
-            - Source
-            - ShowBlocks
-            - Maximize
+    items:
+      - heading
+      - '|'
+      - bold
+      - italic
+      - underline
+      - strikethrough
+      - superscript
+      - subscript
+      - removeFormat
+      - '|'
+      - alignment
+      - outdent
+      - indent
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - insertTable
+      - '|'
+      - blockQuote
+      - '|'
+      - undo
+      - redo
+      - '|'
+      - sourceEditing
+      - '|'
+      - code
+      - codeBlock
   plugins:
-    stylescombo:
-      styles: ''
-    codesnippet:
-      highlight_style: github
-      highlight_languages:
-        apache: apache
-        bash: bash
-        coffeescript: coffeescript
-        css: css
-        ini: ini
-        java: java
-        javascript: javascript
-        json: json
-        makefile: makefile
-        markdown: markdown
-        nginx: nginx
-        perl: perl
-        php: php
-        python: python
-        ruby: ruby
-        sql: sql
-        xml: xml
-        cs: 0
-        cpp: 0
-        diff: 0
-        html: 0
-        http: 0
-        objectivec: 0
-        vbscript: 0
-        xhtml: 0
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_sourceEditing:
+      allowed_tags:
+        - '<cite>'
+        - '<dl>'
+        - '<dt>'
+        - '<dd>'
+        - '<span>'
+        - '<details>'
+        - '<summary>'
+        - '<code class>'
+        - '<pre class>'
+        - '<img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix">'
+        - '<drupal-entity alt title data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-langcode class>'
+        - '<a hreflang class="btn btn-gray">'
+        - '<blockquote cite>'
+        - '<ul type>'
+        - '<ol type>'
+        - '<h2 id>'
+        - '<h3 id>'
+        - '<h4 id>'
+        - '<h5 id>'
+        - '<h6 id>'
+        - '<p class="clearfix">'
+        - '<table class="table table-responsive table-striped">'
+        - '<th scope>'
+        - '<tr scope>'
+    ckeditor5_list:
+      reversed: false
+      startIndex: true
+    ckeditor5_alignment:
+      enabled_alignments:
+        - left
+        - center
+        - right
+        - justify
 image_upload:
   status: true
   scheme: public
