@@ -273,7 +273,6 @@
         "drupal/votingapi": "^3.0@beta",
         "drupal/warmer": "^2.0",
         "drupal/webform": "^6.2@beta",
-        "drupal/webform_group": "^1.0@dev",
         "drupal/workbench": "^1.1",
         "drush/drush": "^11",
         "enyo/dropzone": "~4.3",
