@@ -7,5 +7,5 @@ description: null
 name: local
 weight: ''
 url: 'http://cf.lndo.site'
-fg_color: '#3d3d3d'
+fg_color: '#e0e0e0'
 bg_color: '#4400ff'
