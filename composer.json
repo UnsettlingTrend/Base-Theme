@@ -262,7 +262,7 @@
         "drupal/search_api_sorts": "^1.0",
         "drupal/slick": "^2.7@beta",
         "drupal/slick_views": "^2.7@beta",
-        "drupal/smart_date": "^3.6@beta",
+        "drupal/smart_date": "^4.0@beta",
         "drupal/smart_trim": "^2.0",
         "drupal/svg_image": "^1.8",
         "drupal/token": "^1.1",
