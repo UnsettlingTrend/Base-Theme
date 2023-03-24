@@ -1,13 +1,13 @@
 uuid: 59faebfb-d93f-4b98-983a-24d4b6292dcd
 langcode: en
-status: true
+status: false
 dependencies: {  }
 id: non_production
 label: non-production
 description: ''
 weight: 0
 stackable: false
-storage: null
+storage: folder
 folder: ../config/non_production
 module: {  }
 theme: {  }
