@@ -157,6 +157,7 @@ module:
   twig_tweak: 0
   typed_data: 0
   update: 0
+  upgrade_status: 0
   user: 0
   ut_robinhood: 0
   variationcache: 0
