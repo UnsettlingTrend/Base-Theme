@@ -47,6 +47,12 @@ services:
     overrides:
       environment:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
+        # support debugging Drush with XDEBUG.
+        PHP_IDE_CONFIG: "serverName=appserver"
+        LANDO_HOST_IP: "host.docker.internal"
+        XDEBUG_CONFIG: "remote_enable=1 remote_host=host.docker.internal"
+    build:
+      - "/app/vendor/bin/phpcs --config-set installed_paths /app/vendor/drupal/coder/coder_sniffer"
     run_as_root:
 #      - "apt-get install python3-pip"
 #      - "pip3 install robin_stocks"
@@ -75,14 +81,28 @@ tooling:
     user: www-data
   phpunit:
     service: appserver
-    description: run PHPUnit- use lando phpunit
+    description: Runs phpunit with config at web/sites/default/local.phpunit.xml
+    cmd: /app/vendor/bin/phpunit -v -c /app/web/sites/default/local.phpunit.xml
+  phpcs:
+    service: appserver
+    cmd: "php --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml"
   behat:
     service: appserver
     description: run behat- use lando behat
-    cmd: cd /app ; behat  # Run behat from the /app  directory
+    cmd: cd /app ; behat  # Run behat from the /app directory
   node:
     service: node
   npm:
     service: node
   gulp:
     service: node
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for apache.
+    cmd: docker-php-ext-enable xdebug && /etc/init.d/apache2 reload
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload
+    user: root
