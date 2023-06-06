@@ -809,8 +809,8 @@ $databases['default']['default'] = array (
   'prefix' => '',
   'host' => getenv('DRUPAL_DB_HOST'),
   'port' => getenv('DRUPAL_DB_PORT'),
-  //'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysqyl',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
 );
 $settings['config_sync_directory'] = '../config/sync';
 
