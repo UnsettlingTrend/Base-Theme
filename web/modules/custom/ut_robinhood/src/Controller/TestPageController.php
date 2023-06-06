@@ -25,7 +25,7 @@ class TestPageController extends ControllerBase {
 
     $command = escapeshellcmd('python3 ' . 'main.py');
     $output = shell_exec($command);
-    dpm($output, '$output1');
+//    dpm($output, '$output1');
 
     // Return to the current working directory before this.
     chdir($cwd);

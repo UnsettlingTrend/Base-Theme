@@ -1,0 +1,26 @@
+name: Unsettling Trend (Base Theme)
+type: theme
+description: Unsettling Trend base theme off of Stable9
+core_version_requirement: ^9 || ^10
+base theme: stable9
+
+libraries:
+  - ut_base/ut_base.global-styling
+
+regions:
+  header: Header
+  primary_menu: Primary Menu
+  secondary_menu: Secondary Menu
+  highlighted: Highlighted
+  help: Help
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: First sidebar
+  sidebar_second: Second sidebar
+  footer: Footer
+
+ckeditor-stylesheets:
+  - dist/css/style.css
+
+ckeditor5-stylesheets:
+  - dist/css/style.css

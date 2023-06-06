@@ -1,0 +1,11 @@
+ut_base.global-styling:
+  version: 1.x
+  css:
+    theme:
+      dist/css/style.css: {}
+  js:
+    dist/js/global.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

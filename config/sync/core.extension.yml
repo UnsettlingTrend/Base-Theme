@@ -125,6 +125,7 @@ module:
   path: 0
   path_alias: 0
   physical: 0
+  qrcode: 0
   recaptcha: 0
   redirect: 0
   redirect_404: 0
@@ -188,7 +189,8 @@ module:
   publication_date: 99
   standard: 1000
 theme:
-  bootstrap: 0
   claro: 0
   stable: 0
+  stable9: 0
+  ut_base: 0
 profile: standard

@@ -19,6 +19,12 @@ class LoadTest extends BrowserTestBase {
    */
   public static $modules = ['ut_robinhood'];
 
+
+ /**
+  * {@inheritdoc}
+  */
+ protected $defaultTheme = 'stark';
+
   /**
    * A user with permission to administer site configuration.
    *

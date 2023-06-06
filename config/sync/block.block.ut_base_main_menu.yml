@@ -1,4 +1,4 @@
-uuid: fe934eae-236c-4c24-b2ec-802bc0f51fe7
+uuid: 2d6dbe92-0044-40d0-86c5-c2a420d692b3
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: ERtUwuUKdqiRLiXjBoV7gcIIZgt2IdqWBzqsqtm63w4
-id: bootstrap_main_menu
-theme: bootstrap
-region: navigation_collapsible
+id: ut_base_main_menu
+theme: ut_base
+region: header
 weight: 10
 provider: null
 plugin: 'system_menu_block:main'

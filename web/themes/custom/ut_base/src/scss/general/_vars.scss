@@ -1,0 +1,43 @@
+/**
+ * List of variables used throughout the styling of the site.
+ *
+ * Color palette can be found at https://coolors.co/faa916-fbfffe-6d676e-1b1b1e-96031a-93e9be
+ */
+
+/**** Colors and Hues ****/
+
+$color_primary: #96031a;
+$color_primary_alternate: #60010a;
+
+$color_secondary: #faa916;
+$color_secondary_alternate: #9d6a01;
+
+$color_highlight: #93E9BE;
+
+$color_black: #1b1b1e;
+$color_white: #fcfcfc;
+
+$color_grayscale_white: white;
+$color_grayscale_lighter: #ececec;
+$color_grayscale_light: #a3a3a3;
+$color_grayscale_gray: gray;
+$color_grayscale_dark: #595959;
+$color_grayscale_darker: #202020;
+$color_grayscale_black: black;
+
+/**** Fonts ****/
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap');
+$font_logo: 'Baloo Bhai', cursive;
+
+/*
+$font_default_size: ;
+$font_default_color: $color_black;
+$font_default_weight: ;
+
+$font_caption_color: $color_grayscale_gray;
+$font_caption_weight: ;
+$font_caption_size: ;
+*/
+
+/* Widths */
+$content_max_width: 1200px;

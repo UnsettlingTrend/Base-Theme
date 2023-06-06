@@ -1,0 +1,4 @@
+_core:
+  default_config_hash: wFG1Al1awsHArM2j3QYhItLMNVqgtSIvViasPiy-Ur0
+thumbnails_directory: 'public://qrcode_thumbnails'
+enable_direct_urls: true

@@ -1,15 +1,15 @@
-uuid: 94653586-c09b-4c28-9235-0c3db7a96b88
+uuid: 5c719c68-07cc-4b7f-8f59-446459c994b0
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
-id: bootstrap_content
-theme: bootstrap
+id: ut_base_content
+theme: ut_base
 region: content
 weight: 0
 provider: null

@@ -1,0 +1,45 @@
+table {
+  border-collapse: collapse;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+
+  td {
+    padding: 0 15px 0 15px;
+  }
+
+  thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+
+    tr {
+      height: 60px;
+      background: $color_grayscale_darker;
+
+      th {
+        font-size: 18px;
+        color: #fff;
+        line-height: 1.2;
+        font-weight: unset;
+        margin: 0 15px;
+      }
+    }
+  }
+  tbody {
+    tr {
+      font-size: 15px;
+      color: gray;
+      line-height: 3.0;
+      font-weight: unset;
+
+      &:nth-child(odd) {
+        background-color: $color_grayscale_lighter;
+      }
+
+      &:nth-child(even) {
+        background-color: $color_grayscale_white;
+      }
+    }
+  }
+}

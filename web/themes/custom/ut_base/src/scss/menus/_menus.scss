@@ -1,0 +1,20 @@
+nav.navigation {
+  background-color: $color_secondary;
+
+  a,
+  a:visited {
+    text-decoration: none;
+    color: $color_primary;
+  }
+
+  a.is-active {
+    color: $color_black;
+  }
+  > ul > li {
+    display: inline-block;
+    padding: 15px 10px;
+    > ul {
+      display: none;
+    }
+  }
+}

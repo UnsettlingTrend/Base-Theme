@@ -1,0 +1,9 @@
+.field--name-paragraphs {
+  .paragraph--type--location {
+    &.paragraph--view-mode--default {
+      max-width: $content_max_width;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}

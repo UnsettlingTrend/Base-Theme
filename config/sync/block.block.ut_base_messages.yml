@@ -1,15 +1,15 @@
-uuid: ee8d2659-edbe-4acd-9c46-0cf634a6d021
+uuid: 9d5a46c9-3e02-4ca5-883f-3c7076f7244a
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
-id: bootstrap_messages
-theme: bootstrap
+id: ut_base_messages
+theme: ut_base
 region: header
 weight: -50
 provider: null

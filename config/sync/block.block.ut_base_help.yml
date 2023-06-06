@@ -1,15 +1,15 @@
-uuid: 25a1d8af-107d-4493-a032-0176f2596f7a
+uuid: d97d4d70-8221-45ec-9235-5429736b177b
 langcode: en
 status: true
 dependencies:
   module:
     - help
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
-id: bootstrap_help
-theme: bootstrap
+id: ut_base_help
+theme: ut_base
 region: help
 weight: -30
 provider: null

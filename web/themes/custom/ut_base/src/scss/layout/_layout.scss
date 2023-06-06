@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+}
+
+#block-ut_base-mainpagecontent > article > * {
+  max-width: $content_max_width;
+  margin-right: auto;
+  margin-left: auto;
+}

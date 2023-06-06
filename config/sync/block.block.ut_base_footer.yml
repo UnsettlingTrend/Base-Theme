@@ -1,4 +1,4 @@
-uuid: 12c05462-cc8d-4feb-91fc-fbb992ee3789
+uuid: dc8af87f-2b64-428e-b951-20488b229d86
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: 4VDn3bLy009pYlPUWQBHaaGVJu8FPnxNfr2DYrAnNHI
-id: bootstrap_footer
-theme: bootstrap
+id: ut_base_footer
+theme: ut_base
 region: footer
 weight: 0
 provider: null

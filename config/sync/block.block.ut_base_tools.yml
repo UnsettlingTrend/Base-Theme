@@ -1,4 +1,4 @@
-uuid: f9dc30d9-4648-43de-8f7a-c2a2f3a209c9
+uuid: da6a5893-3b23-4176-95ca-bd29d439d135
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,11 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: SrPItPkAevw9hGX_v5AfsVyw6vkoog7ZVLSJYqwsBHc
-id: bootstrap_tools
-theme: bootstrap
+id: ut_base_tools
+theme: ut_base
 region: sidebar_second
 weight: 0
 provider: null

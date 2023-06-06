@@ -1,15 +1,15 @@
-uuid: bc80e0f3-69ed-49ae-9bde-4ddeddcb030f
+uuid: e52535ec-bd10-466c-9986-a46ce9a5ec89
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: wDR9JKEATSWldBjw8du8s3G2zjEYeQf88nlld11hMLo
-id: bootstrap_breadcrumbs
-theme: bootstrap
+id: ut_base_breadcrumbs
+theme: ut_base
 region: header
 weight: -100
 provider: null

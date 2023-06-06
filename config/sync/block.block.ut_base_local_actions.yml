@@ -1,13 +1,13 @@
-uuid: a17b86f8-c714-4738-91aa-be85e209126e
+uuid: 466b13a0-a7f1-4932-87cf-1de16726e49d
 langcode: en
 status: true
 dependencies:
   theme:
-    - bootstrap
+    - ut_base
 _core:
   default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
-id: bootstrap_local_actions
-theme: bootstrap
+id: ut_base_local_actions
+theme: ut_base
 region: header
 weight: 20
 provider: null

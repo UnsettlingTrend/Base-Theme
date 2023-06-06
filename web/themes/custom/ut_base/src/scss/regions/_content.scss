@@ -1,0 +1,14 @@
+div.region.region-content {
+
+  #block-ut_base-tabs,
+  div[data-drupal-messages],
+  article > footer,
+  .node__content .field--name-field-paragraphs > .field__item > *,
+  #block-ut_base-mainpagecontent > .views-element-container,
+  .field--name-body {
+    max-width: $content_max_width;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}
