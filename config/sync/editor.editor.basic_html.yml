@@ -41,6 +41,12 @@ settings:
       - code
       - codeBlock
   plugins:
+    ckeditor5_alignment:
+      enabled_alignments:
+        - left
+        - center
+        - right
+        - justify
     ckeditor5_heading:
       enabled_headings:
         - heading2
@@ -48,6 +54,9 @@ settings:
         - heading4
         - heading5
         - heading6
+    ckeditor5_list:
+      reversed: false
+      startIndex: true
     ckeditor5_sourceEditing:
       allowed_tags:
         - '<cite>'
@@ -74,15 +83,6 @@ settings:
         - '<table class="table table-responsive table-striped">'
         - '<th scope>'
         - '<tr scope>'
-    ckeditor5_list:
-      reversed: false
-      startIndex: true
-    ckeditor5_alignment:
-      enabled_alignments:
-        - left
-        - center
-        - right
-        - justify
 image_upload:
   status: true
   scheme: public
