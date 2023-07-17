@@ -167,4 +167,5 @@ $databases['default']['default'] = array (
 
 $settings['trusted_host_patterns'] = [
   '^cf\.lndo\.site$',
+  '^localhost$',
 ];
