@@ -153,12 +153,12 @@ variables:
 ## Uncomment to add your stages.
 stages:
   - build
-#   - qa
-#   - test
-#   - metrics
-#   # Add your stages, for example deploy.
+  - qa
+  - test
+  - metrics
+  # Add your stages, for example deploy.
 #   - deploy to testing
-  - deploy to production
+  - deploy
 
 # Create any new job below or copy existing jobs to override.
 
