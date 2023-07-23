@@ -153,9 +153,9 @@ variables:
 ## Uncomment to add your stages.
 stages:
   - build
-  - qa
-  - test
-  - metrics
+#  - qa
+#  - test
+#  - metrics
   # Add your stages, for example deploy.
 #   - deploy to testing
   - deploy
