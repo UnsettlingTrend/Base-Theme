@@ -1,164 +1,28 @@
-################################################################################
-# Gitlab CI integration for Drupal 9+ project or module: tests, code quality,
-# linting, metrics and deploy samples.
-#
-# @project: https://gitlab.com/mog33/gitlab-ci-drupal
-# @documentation: https://mog33.gitlab.io/gitlab-ci-drupal
-# @issues: https://gitlab.com/mog33/gitlab-ci-drupal/-/issues
-# @author: Jean Valverde contact@dev-drupal.com
-# @license: GPL-3
-#
-# If you want to support this project, you can:
-# - Buy me a coffee: https://bit.ly/34jPKcE
-# - Hire me as a freelance for any Drupal related work
-# - Promote me to any company looking for any Drupal related work
-# - Help me with testing / documentation / grammar fixes / use cases...
-#
-################################################################################
-
-include:
-  # Gitlab source when your project is hosted on Gitlab.com.
-  # 'ref' is the branch, should be sync with next variable `CI_REF`.
-  - project: 'mog33/gitlab-ci-drupal'
-    ref: 4.x-dev
-    file: '/.gitlab-ci/jobs.gitlab-ci.yml'
-  # If hosted on an other Gitlab instance.
-  # - remote: 'https://gitlab.com/mog33/gitlab-ci-drupal/-/raw/4.x-dev/.gitlab-ci/jobs.gitlab-ci.yml'
-
-  # Use a Workflow template matching your needs side of `CI_SKIP_*` variables.
-  # @see https://docs.gitlab.com/ee/ci/yaml/workflow.html#workflowrules-templates
-  - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
-  # - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
-
-################################################################################
-# Gitlab-CI variables documentation:
-# @see https://docs.gitlab.com/ee/ci/variables/
-################################################################################
-
-variables:
-  # Mandatory to get default variables.
-  # @see https://gitlab.com/mog33/gitlab-ci-drupal/-/raw/4.x-dev/.gitlab-ci/template/variables.yml
-  extends: .default_variables
-
-  # Docker image ref used for ci.
-  CI_REF: "4.x-dev"
-  # Minor Drupal version to work with.
-  # @see https://hub.docker.com/r/mogtofu33/drupal-ci/tags
-  CI_DRUPAL_VERSION:
-    value: "10.0"
-    description: The version of Drupal to use for this Pipeline.
-  # Relative path to the Drupal web root.
-  # For a project based on Drupal this is 'web'. Can be 'docroot' or 'html' on
-  # some distributions.
-  CI_DRUPAL_WEB_ROOT: web
-
-  # Path to composer bin folder, default in vendor but can be set in
-  # composer.json as config: bin-dir
-  # CI_COMPOSER_BIN: vendor/bin
-
-  # Specify a group of tests to run rather than all tests in the suite.
-  # CI_PHPUNIT_GROUP: my_group_1,my_group_2
-
-  ##############################################################################
-  # Set variables for a module.
-  #
-  ## Default CI setup is for a 'project' (full Drupal with a composer.json),
-  ## next section contains common variables to change for a module (module,
-  ## theme). Simply uncomment and adapt dirs to set the CI for custom code
-  ## without Drupal.
-
-  # CI_TYPE: module
-  # # Set CI_SKIP_XXX variable to 1 to skip some jobs.
-  # # If no 'build' or 'deploy', set this to 1.
-  # CI_SKIP_BUILD: 0
-  # # Security is for a Drupal project with third party.
-  # CI_SKIP_SECURITY: 1
-  # # If you don't have any css files, you can skip with:
-  # CI_SKIP_LINT_CSS: 1
-  # # If you don't have any javascript files, you can skip with:
-  # CI_SKIP_LINT_JS: 1
-  # # If you don't want to check yaml files, you can skip with:
-  # CI_SKIP_LINT_YAML: 1
-  # # Note: 'CI_PROJECT_DIR' is the folder where this project is mounted in Gitlab-CI.
-  # CI_DIRS_QA_PHPCS: "${CI_PROJECT_DIR}"
-  # CI_DIRS_QA_PHPSTAN: "${CI_PROJECT_DIR}"
-  # CI_DIRS_QA_PHPMD: "${CI_PROJECT_DIR}"
-  # CI_DIRS_LINT_PHP: "${CI_PROJECT_DIR}"
-  # # Files to test with EsLint or StyleLint.
-  # CI_DIRS_LINT_JS: "${CI_PROJECT_DIR}/js/*.js"
-  # CI_DIRS_LINT_YAML: "${CI_PROJECT_DIR}/*.yml"
-  # CI_DIRS_LINT_CSS: "${CI_PROJECT_DIR}/css/*.css"
-  # CI_CONFIG_ESLINT: ${CI_WEB_ROOT}/core/.eslintrc.passing.json
-  # CI_CONFIG_ESLINT_YAML: ${CI_WEB_ROOT}/core/.eslintrc.passing.json
-  # CI_CONFIG_STYLELINT: ${CI_WEB_ROOT}/core/.stylelintrc.json
-  # # PHP code to include for metrics.
-  # CI_DIRS_PHP_METRICS: "${CI_PROJECT_DIR}"
-
-  ##############################################################################
-
-  ##############################################################################
-  # As a sample here is a list of some variables, see documentation for more
-  # variables.
-  #
-  ## List of CI_SKIP_* variables, uncomment to skip a job.
-  #
-  ## Only needed if you have Behat tests, comment or set to 0 to enable.
-  ## @see https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#behat-tests
-  CI_SKIP_TEST_BEHAT: 1
-  ## Can use a profile setup or a sql dump file.
-  # CI_BEHAT_INSTALL_PROFILE: "minimal"
-  ## If a dump is provided, profile will be ignored.
-  ## Support local or remote file with extensions:
-  ## .sql, .sql.gz, .sql.zip
-  # CI_BEHAT_INSTALL_DUMP: "path/relative/to/project/root/dump.sql.zip"
-  # CI_BEHAT_INSTALL_DUMP: "http://url/to/dump.sql.zip"
-  ## Yaml file containing Behat tests.
-  # CI_BEHAT_TESTS: "${CI_PROJECT_DIR}/behat_tests/behat.yml"
-  #
-  ## Only if you have NightwatchJs tests in your code.
-  ## NightwatchJs need some configuration, see
-  ## @see https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage/#nightwatchjs
-  CI_SKIP_TEST_NIGHTWATCHJS: 1
-  ## Default is '--skiptags core', add your tag.
-  # CI_NIGHTWATCH_TESTS: "--tag my_module"
-  #
-  ## If only QA/Lint or Metrics jobs, build can be optional.
-  # CI_SKIP_BUILD: 1
-  #
-  # CI_SKIP_SECURITY: 1
-  #
-  # CI_SKIP_TESTS: 1 # Skip all tests, ignore CI_SKIP_TEST_*.
-  # CI_SKIP_TEST_UNITKERNEL: 1
-  # CI_SKIP_TEST_FUNCTIONAL: 1
-  # CI_SKIP_TEST_FUNCTIONALJS: 1
-  #
-  # CI_SKIP_QA: 1 # Skip all qa, ignore CI_SKIP_QA_*.
-  # CI_SKIP_QA_PHPCS: 1
-  # CI_SKIP_QA_PHPMD: 1
-  # CI_SKIP_QA_PHPSTAN: 1
-  #
-  # CI_SKIP_LINT: 1 # Skip all lint, ignore CI_SKIP_LINT_*.
-  # CI_SKIP_LINT_PHP: 1
-  # CI_SKIP_LINT_CSS: 1
-  # CI_SKIP_LINT_JS: 1
-  # CI_SKIP_LINT_YAML: 1
-  #
-  # CI_SKIP_METRICS: 1
-
-################################################################################
-# Advanced usage with this file, see doc.
-# @see https://mog33.gitlab.io/gitlab-ci-drupal/advanced-usage
-################################################################################
-
-## Uncomment to add your stages.
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-  - build
-#  - qa
-#  - test
-#  - metrics
-  # Add your stages, for example deploy.
-#   - deploy to testing
-  - deploy
-
-# Create any new job below or copy existing jobs to override.
-
+  - test
+sast:
+  stage: test
+include:
+  - template: Security/SAST.gitlab-ci.yml
+docker-build:
+  image: docker:latest
+  stage: test
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
+    - docker push "$CI_REGISTRY_IMAGE:latest"
+  # Run this job in a branch where a Dockerfile exists
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - Dockerfile
