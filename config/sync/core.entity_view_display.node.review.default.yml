@@ -139,6 +139,9 @@ third_party_settings:
                   info_text:
                     value: '[geolocation_current_item:organization]'
                     format: plain_text
+                  replacement_patterns:
+                    token_geolocation:
+                      token_items: ''
                   centre:
                     fit_bounds:
                       enable: true
@@ -639,9 +642,6 @@ third_party_settings:
                     width: 100%
                   data_provider_settings:
                     geocoder: photon
-                  replacement_patterns:
-                    token_geolocation:
-                      token_items: ''
                 third_party_settings: {  }
             weight: 6
             additional: {  }
@@ -660,12 +660,27 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 2
             additional: {  }
+          fbcc0647-8ef4-458b-8b51-b23425aa3c46:
+            uuid: fbcc0647-8ef4-458b-8b51-b23425aa3c46
+            region: first
+            configuration:
+              id: 'extra_field_block:node:review:content_moderation_control'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+            weight: 3
+            additional: {  }
         third_party_settings: {  }
 id: node.review.default
 targetEntityType: node
 bundle: review
 mode: default
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: first
   field_address:
     type: address_default
     label: hidden
@@ -714,4 +729,5 @@ content:
     region: content
 hidden:
   langcode: true
+  published_at: true
   search_api_excerpt: true

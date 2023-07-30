@@ -17,6 +17,11 @@ targetEntityType: node
 bundle: review
 mode: teaser
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
@@ -29,4 +34,5 @@ hidden:
   field_paragraph: true
   field_ratings: true
   langcode: true
+  published_at: true
   search_api_excerpt: true

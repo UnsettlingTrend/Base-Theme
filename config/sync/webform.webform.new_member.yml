@@ -11,7 +11,7 @@ archive: false
 id: new_member
 title: 'New Member'
 description: '<p>Self-signup of new members.</p>'
-category: ''
+categories: {  }
 elements: |-
   name:
     '#type': webform_name

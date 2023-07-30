@@ -16,7 +16,7 @@ archive: false
 id: example_options_custom
 title: 'Example: Custom Options'
 description: 'Example of a custom options element.'
-category: Example
+categories: {  }
 elements: |
   states:
     '#type': 'webform_options_custom:us_states'

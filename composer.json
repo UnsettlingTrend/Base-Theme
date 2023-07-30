@@ -167,9 +167,6 @@
         }
     ],
     "require": {
-        "ext-dom": "20031129",
-        "ext-json": "*",
-        "ext-zip": "^1.15",
         "bgrins/spectrum": "^1.8",
         "ckeditor/codesnippet": "^4.11",
         "composer/installers": "^1.2",

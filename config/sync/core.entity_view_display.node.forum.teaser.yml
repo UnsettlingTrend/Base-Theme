@@ -40,3 +40,5 @@ content:
 hidden:
   comment_forum: true
   langcode: true
+  published_at: true
+  search_api_excerpt: true

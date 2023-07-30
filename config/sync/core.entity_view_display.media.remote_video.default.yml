@@ -40,6 +40,25 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 0
             additional: {  }
+          ff43da57-684b-4200-ad51-0d1d54d0afd5:
+            uuid: ff43da57-684b-4200-ad51-0d1d54d0afd5
+            region: content
+            configuration:
+              id: 'field_block:media:remote_video:field_media_oembed_video'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: oembed
+                label: hidden
+                settings:
+                  max_width: 0
+                  max_height: 0
+                  loading:
+                    attribute: eager
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: gUaDZKMQD3lmLKWPn727X3JHVdKJ525g4EJCCcDVAqk
@@ -54,6 +73,8 @@ content:
     settings:
       max_width: 0
       max_height: 0
+      loading:
+        attribute: eager
     third_party_settings: {  }
     weight: 0
     region: content
