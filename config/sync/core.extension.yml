@@ -191,4 +191,5 @@ theme:
   stable: 0
   stable9: 0
   ut_base: 0
+  gin: 0
 profile: standard
