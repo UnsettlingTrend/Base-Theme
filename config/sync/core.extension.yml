@@ -76,6 +76,8 @@ module:
   geolocation_google_places_api: 0
   geolocation_leaflet: 0
   geolocation_search_api: 0
+  gin_lb: 0
+  gin_toolbar: 0
   gnode: 0
   group: 0
   help: 0
