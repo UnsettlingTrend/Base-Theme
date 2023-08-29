@@ -2,9 +2,11 @@ FROM trafex/php-nginx:3.1.0 AS php
 
 # Change to root to get proper permissions, and add necessary php extensions
 USER root
-RUN apk update
-RUN apk add git patch php-zip php-pdo php-xmlwriter php-tokenizer php-simplexml php-dom php-json docker
-RUN apk update
+RUN apk add --update git patch php-zip php-pdo php-xmlwriter php-tokenizer php-simplexml php-dom php-json docker openrc
+# Start the Docker daemon, and start it after system restart.
+RUN rc-update add docker boot
+RUN reboot
+# Make sure any calls to php are going to php 8.1
 RUN ln -s /etc/php81 /etc/php
 
 # Copy the codebase into the appropriate directory and fix it so it works
