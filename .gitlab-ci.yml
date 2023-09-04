@@ -6,13 +6,33 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
+  - build
   - test
-  - deploy
+#  - deploy
 sast:
   stage: test
 include:
   - template: Security/SAST.gitlab-ci.yml
-docker-build:
+build:
+  image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    #    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
+    #    - docker push "$CI_REGISTRY_IMAGE:latest"
+    # Run this job in a branch where a Dockerfile exists
+    - echo "Building code..."
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - Dockerfile
+  artifacts:
+    paths:
+      - ./
+test:
   image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
   stage: test
   services:
@@ -20,11 +40,24 @@ docker-build:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-#    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
-#    - docker push "$CI_REGISTRY_IMAGE:latest"
-    - php --version
-  # Run this job in a branch where a Dockerfile exists
-  rules:
-    - if: $CI_COMMIT_BRANCH
-      exists:
-        - Dockerfile
+    #    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
+    #    - docker push "$CI_REGISTRY_IMAGE:latest"
+    # Run this job in a branch where a Dockerfile exists
+    - echo "Running tests..."
+  trigger:
+    include:
+      - artifact: ./
+        job: build
+    strategy: depend
+#deploy:
+#  image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
+#  stage: deploy
+#  services:
+#    - docker:dind
+#  before_script:
+#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#  script:
+#    #    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
+#    #    - docker push "$CI_REGISTRY_IMAGE:latest"
+#    # Run this job in a branch where a Dockerfile exists
+#    - echo "Deploying..."
