@@ -24,8 +24,6 @@ test:
     - echo "Running tests..."
     - ls -la
     - pwd
-  needs:
-    - build
 deploy:
   image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
   stage: deploy
