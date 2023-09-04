@@ -22,8 +22,8 @@ docker-build:
   script:
 #    - docker build --pull -t "$CI_REGISTRY_IMAGE:latest" .
 #    - docker push "$CI_REGISTRY_IMAGE:latest"
+    - php --version
   # Run this job in a branch where a Dockerfile exists
-    - echo "Running... ?"
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
