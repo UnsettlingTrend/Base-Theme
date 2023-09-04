@@ -41,3 +41,9 @@ deploy:
     - pwd
   needs:
     - test
+  artifacts:
+    paths:
+      - ./
+    exclude:
+      # Don't include any tests directories in the deploy artifact.
+      - ./**/tests/
