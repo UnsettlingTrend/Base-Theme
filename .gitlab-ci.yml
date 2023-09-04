@@ -44,12 +44,8 @@ test:
     #    - docker push "$CI_REGISTRY_IMAGE:latest"
     # Run this job in a branch where a Dockerfile exists
     - echo "Running tests..."
-  trigger:
-    include:
-      - artifact: ./
-        job: build
-    strategy: depend
-#deploy:
+  needs:
+    - build
 #  image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
 #  stage: deploy
 #  services:
