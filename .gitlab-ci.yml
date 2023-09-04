@@ -12,8 +12,8 @@ stages:
 # Disable the SAST test for the time-being to save on build time while testing....
 #sast:
 #  stage: test
-include:
-  - template: Security/SAST.gitlab-ci.yml
+#include:
+#  - template: Security/SAST.gitlab-ci.yml
 build:
   image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
   stage: build
@@ -32,9 +32,9 @@ build:
     - if: $CI_COMMIT_BRANCH
       exists:
         - Dockerfile
-  artifacts:
-    paths:
-      - ./
+#  artifacts:
+#    paths:
+#      - ./
 test:
   image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
   stage: test
@@ -47,6 +47,11 @@ test:
     #    - docker push "$CI_REGISTRY_IMAGE:latest"
     # Run this job in a branch where a Dockerfile exists
     - echo "Running tests..."
+    - ls -la
+    - pwd
+  after_script:
+    # Remove tests directories and files, and cleanup other unnecessary things for deployment.
+    - rm -rf tests
     - ls -la
     - pwd
   needs:
