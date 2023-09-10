@@ -35,7 +35,7 @@ deploy:
   script:
     # Remove tests directories and files, and cleanup other unnecessary things for deployment.
     - find web -name 'tests' -type d -exec rm -rf '{}' ';' || true
-    - tar cf app.tar ./
+    - tar cf app.tar.gz ./
     - echo "Deploying..."
     - ls -la
     - pwd
