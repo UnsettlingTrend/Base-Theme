@@ -43,4 +43,4 @@ deploy:
     - test
   artifacts:
     paths:
-      - ./app.tar
+      - ./app.tar.gz
