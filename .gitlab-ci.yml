@@ -35,8 +35,7 @@ deploy:
   script:
     # Remove tests directories and files, and cleanup other unnecessary things for deployment.
     - find web -name 'tests' -type d -exec rm -rf '{}' ';' || true
-    - cd ..
-    - tar cf app.tar chrisferagotti
+    - tar cf /build/app.tar /build/unsettlingtrend/chrisferagotti
     - echo "Deploying..."
     - ls -la
     - pwd
@@ -44,7 +43,4 @@ deploy:
     - test
   artifacts:
     paths:
-      - ./
-    exclude:
-      # Don't include any tests directories in the deploy artifact.
-      - ./**/tests/
+      - /build/app.tar
