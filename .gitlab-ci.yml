@@ -34,7 +34,9 @@ deploy:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     # Remove tests directories and files, and cleanup other unnecessary things for deployment.
-    - rm -rf tests
+    - find web -name 'tests' -type d -exec rm -rf '{}' ';' || true
+    - cd ..
+    - tar cf app.tar chrisferagotti
     - echo "Deploying..."
     - ls -la
     - pwd
