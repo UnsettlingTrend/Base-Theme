@@ -25,7 +25,8 @@ content:
     type: address_default
     weight: 0
     region: content
-    settings: {  }
+    settings:
+      wrapper_type: details
     third_party_settings: {  }
   field_geofield:
     type: geofield_latlon

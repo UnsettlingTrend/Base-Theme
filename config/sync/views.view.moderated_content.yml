@@ -2,7 +2,10 @@ uuid: af082318-2069-4441-a23e-111d194ec747
 langcode: en
 status: true
 dependencies:
+  config:
+    - workflows.workflow.editorial
   module:
+    - content_moderation
     - node
     - user
 _core:

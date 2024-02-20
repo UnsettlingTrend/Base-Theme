@@ -155,9 +155,9 @@ $settings['skip_permissions_hardening'] = TRUE;
 # $settings['config_exclude_modules'] = ['devel', 'stage_file_proxy'];
 
 $databases['default']['default'] = array (
-  'database' => 'drupal9',
-  'username' => 'drupal9',
-  'password' => 'drupal9',
+  'database' => 'drupal10',
+  'username' => 'drupal10',
+  'password' => 'drupal10',
   'prefix' => '',
   'host' => 'database',
   'port' => '3306',

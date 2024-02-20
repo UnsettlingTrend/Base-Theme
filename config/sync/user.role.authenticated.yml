@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
+    - filter.format.webform_default
   module:
     - comment
     - contact
+    - file
     - filter
     - media
     - paragraphs_type_permissions
@@ -24,9 +26,11 @@ permissions:
   - 'access shortcuts'
   - 'access site-wide contact form'
   - 'access user profiles'
+  - 'delete own files'
   - 'post comments'
   - 'skip comment approval'
   - 'use text format basic_html'
+  - 'use text format webform_default'
   - 'view media'
   - 'view paragraph content media'
   - 'view paragraph content rating'

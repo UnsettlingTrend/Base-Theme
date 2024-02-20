@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - environment_indicator
+    - file
 id: developer
 label: Developer
 weight: 3
@@ -11,3 +12,4 @@ is_admin: null
 permissions:
   - 'access environment indicator'
   - 'administer environment indicator settings'
+  - 'delete own files'

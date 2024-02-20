@@ -23,9 +23,9 @@ content:
     weight: 101
     region: content
   content_moderation_control:
+    weight: -20
     settings: {  }
     third_party_settings: {  }
-    weight: -20
     region: content
   field_recipe_steps:
     type: entity_reference_revisions_entity_view

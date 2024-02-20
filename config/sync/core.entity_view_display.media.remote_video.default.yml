@@ -40,14 +40,14 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 0
             additional: {  }
-          ff43da57-684b-4200-ad51-0d1d54d0afd5:
-            uuid: ff43da57-684b-4200-ad51-0d1d54d0afd5
+          5c99b414-3a49-46ec-9d74-b88aee74ad9f:
+            uuid: 5c99b414-3a49-46ec-9d74-b88aee74ad9f
             region: content
             configuration:
-              id: 'field_block:media:remote_video:field_media_oembed_video'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
+              id: 'field_block:media:remote_video:field_media_oembed_video'
               formatter:
                 type: oembed
                 label: hidden

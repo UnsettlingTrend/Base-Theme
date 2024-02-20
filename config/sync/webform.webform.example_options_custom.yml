@@ -16,7 +16,8 @@ archive: false
 id: example_options_custom
 title: 'Example: Custom Options'
 description: 'Example of a custom options element.'
-categories: {  }
+categories:
+  - Example
 elements: |
   states:
     '#type': 'webform_options_custom:us_states'
@@ -117,6 +118,8 @@ settings:
   wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
+  wizard_page_type: container
+  wizard_page_title_tag: h2
   preview: 1
   preview_label: ''
   preview_title: ''

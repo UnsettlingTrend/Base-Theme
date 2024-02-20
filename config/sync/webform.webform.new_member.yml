@@ -16,7 +16,6 @@ elements: |-
   name:
     '#type': webform_name
     '#title': Name
-    '#multiple__no_items_message': '<p>No items entered. Please add items below.</p>'
     '#title__access': false
     '#middle__access': false
     '#suffix__access': false
@@ -25,13 +24,11 @@ elements: |-
   email:
     '#type': webform_email_confirm
     '#title': Email
-    '#multiple__no_items_message': '<p>No items entered. Please add items below.</p>'
     '#confirm__title': Email
     '#required': true
   phone:
     '#type': webform_telephone
     '#title': Phone
-    '#multiple__no_items_message': '<p>No items entered. Please add items below.</p>'
     '#ext__access': false
 css: ''
 javascript: ''

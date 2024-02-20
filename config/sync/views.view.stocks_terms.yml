@@ -6,6 +6,7 @@ dependencies:
     - taxonomy.vocabulary.stock_symbols
   module:
     - charts
+    - charts_google
     - taxonomy
     - user
 id: stocks_terms

@@ -2,7 +2,7 @@
 # TODO Look into Portainer
 
 name: cf
-recipe: drupal9
+recipe: drupal10
 
 env_file:
  - lando/defaults.env
@@ -11,7 +11,7 @@ config:
   composer_version: 2
   via: apache
   webroot: web
-  xdebug: true
+  xdebug: 'develop,debug'
   config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
@@ -28,14 +28,11 @@ proxy:
 
 services:
   search:
-    type: solr:8.4
+    type: elasticsearch
     portforward: true
-    core: collection1
-    config:
-      dir: config/solr-conf
   database:
     type: mysql:8.0.32
-  #    portforward: 3310
+    # portforward: 3310
   pma:
     type: phpmyadmin
     hosts:
@@ -50,7 +47,9 @@ services:
         # support debugging Drush with XDEBUG.
         PHP_IDE_CONFIG: "serverName=appserver"
         LANDO_HOST_IP: "host.docker.internal"
-        XDEBUG_CONFIG: "remote_enable=1 remote_host=host.docker.internal"
+        #XDEBUG_CONFIG: "remote_enable=1 remote_host=host.docker.internal"
+        XDEBUG_SESSION_START: lando
+        XDEBUG_SESSION: "PHPSTORM"
     build:
       - "/app/vendor/bin/phpcs --config-set installed_paths /app/vendor/drupal/coder/coder_sniffer"
     run_as_root:
@@ -96,13 +95,17 @@ tooling:
     service: node
   gulp:
     service: node
-  xdebug-on:
+  xon:
     service: appserver
-    description: Enable xdebug for apache.
-    cmd: docker-php-ext-enable xdebug && /etc/init.d/apache2 reload
+    description: Enable Xdebug.
     user: root
-  xdebug-off:
+    cmd:
+      - docker-php-ext-enable xdebug && kill -USR2 $(pgrep -o php-fpm) > /dev/null || /etc/init.d/apache2 reload
+      - tput setaf 2 && echo "Xdebug On" && tput sgr 0 && echo
+  xoff:
     service: appserver
-    description: Disable xdebug for apache.
-    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload
+    description: Disable Xdebug.
     user: root
+    cmd:
+      - rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 $(pgrep -o php-fpm) > /dev/null || /etc/init.d/apache2 reload
+      - tput setaf 1 && echo "Xdebug Off" && tput sgr 0 && echo
