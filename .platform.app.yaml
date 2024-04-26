@@ -1,0 +1,130 @@
+# The name of this app. Must be unique within a project.
+name: cf
+
+# The runtime the application uses. The 'type' key defines the base container
+# image that will be used to run the application. There is a separate base
+# container image for each primary language for the application,
+# in multiple versions. Check the PHP documentation
+# (https://docs.platform.sh/languages/php.html#supported-versions)
+# to find the supported versions for the 'php' type.
+type: 'php:8.1'
+
+variables:
+  env:
+    # Update these for your desired NVM and Node versions.
+    NVM_VERSION: v0.39.3
+    NODE_VERSION: v18.14.2
+
+dependencies:
+  php:
+    composer/composer: '^2.1'
+
+# The following block defines a single writable directory, 'web/uploads'
+# The 'source' specifies where the writable mount is. The 'local' source
+# indicates that the mount point will point to a local directory on the
+# application container. The 'source_path' specifies the subdirectory
+# from within the source that the mount should point at.
+# The 'mounts' describe writable, persistent filesystem mounts in the application.
+mounts:
+  # The default Drupal files directory.
+  '/web/sites/default/files':
+    source: local
+    source_path: 'files'
+  # Drupal gets its own dedicated tmp directory. The settings.platformsh.php
+  # file will automatically configure Drupal to use this directory.
+  '/tmp':
+    source: local
+    source_path: 'tmp'
+  # Private file uploads are stored outside the web root. The settings.platformsh.php
+  # file will automatically configure Drupal to use this directory.
+  '/private':
+    source: local
+    source_path: 'private'
+  # Storage location for PHP and Twig Template related files.
+  '/storage':
+    source: local
+    source_path: 'storage'
+  # Drush needs a scratch space for its own caches.
+  '/.drush':
+    source: local
+    source_path: 'drush'
+  # Drush will try to save backups to this directory, so it must be
+  # writeable even though you will almost never need to use it.
+  '/drush-backups':
+    source: local
+    source_path: 'drush-backups'
+  # Drupal Console will try to save backups to this directory, so it must be
+  # writeable even though you will almost never need to use it.
+  '/.console':
+    source: local
+    source_path: 'console'
+
+# The size of the persistent disk of the application (in MB).
+disk: 512
+
+# Configuration of the build of this application.
+build:
+  # Automatically run `composer install` on every build.
+  flavor: composer
+
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+  build: |
+    set -e
+    unset NPM_CONFIG_PREFIX
+    export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
+    # Link cache with app
+    if [ ! -d "$PLATFORM_CACHE_DIR/.nvm" ]; then
+        mkdir -p $PLATFORM_CACHE_DIR/.nvm
+    fi
+    ln -s $PLATFORM_CACHE_DIR/.nvm $NVM_DIR
+    # Check for Node.js version and install if not present
+    if [ ! -d "$PLATFORM_CACHE_DIR/.nvm/versions/node/$NODE_VERSION" ]; then
+        # Get nvm install script if correct version not present
+        export NVM_INSTALL_FILE="${PLATFORM_CACHE_DIR}/nvm_${NVM_VERSION}_install.sh"
+        if [ ! -f "$NVM_INSTALL_FILE" ]; then
+            wget -nc -O "$NVM_INSTALL_FILE" "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh"
+        fi
+        # Install, automatically using NODE_VERSION
+        bash $NVM_INSTALL_FILE
+    fi
+    # Activate nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    # Use the specified version
+    nvm use "$NODE_VERSION"
+    # Compile assets
+    cd web/themes/custom/ut_base
+    npm ci
+    gulp
+  # The deploy hook runs after your application has been deployed and started.
+  # Code cannot be modified at this point but the database is available.
+  # The site is not accepting requests while this script runs so keep it
+  # fast.
+  deploy: |
+    set -e
+    cd web
+    ../vendor/bin/drush -y cache-rebuild
+    ../vendor/bin/drush -y updatedb
+    ../vendor/bin/drush -y config-import
+    ../vendor/bin/drush -y cache-rebuild
+
+# The relationships of the application with services or other applications.
+#
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form '<service name>:<endpoint name>'.
+relationships:
+  database: 'db:mysql'
+#  search: 'elasticsearch:elasticsearch'
+
+web:
+  locations:
+    '/':
+      root: "web"
+      passthru: "/index.php"
+
+crons:
+  # Run Drupal's cron tasks every 19 minutes.
+  drupal:
+    spec: '*/19 * * * *'
+    cmd: 'cd web ; drush core-cron'
