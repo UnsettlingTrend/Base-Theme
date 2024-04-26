@@ -11,5 +11,6 @@ _core:
   default_config_hash: '-Plpqk58vhNT0G0LUAQoW6AjvSxUl6myg817pn82IWk'
 id: media.slick
 label: 'Slick carousel'
+description: ''
 targetEntityType: media
 cache: true

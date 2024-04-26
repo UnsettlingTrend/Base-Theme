@@ -44,10 +44,10 @@ third_party_settings:
             uuid: 0a9c4e07-87d0-4b5d-8114-6493e487abe8
             region: content
             configuration:
+              id: 'field_block:media:remote_video:field_media_oembed_video'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-              id: 'field_block:media:remote_video:field_media_oembed_video'
               formatter:
                 type: oembed
                 label: hidden

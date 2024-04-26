@@ -244,7 +244,7 @@
         "drupal/redirect": "^1.0@beta",
         "drupal/restui": "^1.16",
         "drupal/rules": "^3.x-dev",
-        "drupal/s3fs": "3.x-dev@dev",
+        "drupal/s3fs": "^3.4",
         "drupal/search_api": "^1.15",
         "drupal/search_api_autocomplete": "^1.4",
         "drupal/search_api_location": "^1.0@alpha",
