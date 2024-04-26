@@ -11,14 +11,12 @@ dependencies:
     - node.type.review
   module:
     - address
-    - content_moderation
     - datetime
     - field_layout
     - geolocation
     - layout_discovery
     - paragraphs
     - path
-    - publication_date
 third_party_settings:
   field_layout:
     id: layout_onecol
@@ -39,8 +37,7 @@ content:
     type: address_default
     weight: 26
     region: content
-    settings:
-      wrapper_type: details
+    settings: {  }
     third_party_settings: {  }
   field_date_time:
     type: datetime_default
@@ -85,12 +82,6 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 100
-    settings: {  }
-    region: content
-    third_party_settings: {  }
   path:
     type: path
     weight: 8
@@ -103,12 +94,6 @@ content:
     region: content
     settings:
       display_label: true
-    third_party_settings: {  }
-  published_at:
-    type: publication_date_timestamp
-    weight: 10
-    region: content
-    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox

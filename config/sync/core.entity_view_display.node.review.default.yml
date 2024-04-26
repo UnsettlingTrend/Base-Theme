@@ -660,8 +660,8 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 2
             additional: {  }
-          5ce9d161-dea1-42ab-84a0-a68696cc7655:
-            uuid: 5ce9d161-dea1-42ab-84a0-a68696cc7655
+          5a3f38eb-4962-4144-8d72-45f8b29b866d:
+            uuid: 5a3f38eb-4962-4144-8d72-45f8b29b866d
             region: first
             configuration:
               label_display: '0'

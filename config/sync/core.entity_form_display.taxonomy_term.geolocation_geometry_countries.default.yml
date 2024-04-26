@@ -1,0 +1,63 @@
+uuid: d19b10ba-f443-49bf-a616-b2a4977502fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.geolocation_geometry_countries.field_geometry_data_geometry
+    - taxonomy.vocabulary.geolocation_geometry_countries
+  module:
+    - field_layout
+    - geolocation_geometry
+    - layout_discovery
+    - path
+  enforced:
+    module:
+      - geolocation_geometry_natural_earth_countries
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
+_core:
+  default_config_hash: 6xvSCXc7kL8VZbwpqL6-9WirXekfVX_rFqq9xhG1u1c
+id: taxonomy_term.geolocation_geometry_countries.default
+targetEntityType: taxonomy_term
+bundle: geolocation_geometry_countries
+mode: default
+content:
+  field_geometry_data_geometry:
+    type: geolocation_geometry_wkt
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 100
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  description: true

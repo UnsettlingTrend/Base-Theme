@@ -6,6 +6,5 @@ dependencies:
     - node
 id: node.tile
 label: Tile
-description: ''
 targetEntityType: node
 cache: true

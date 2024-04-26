@@ -7,7 +7,6 @@ label: non-production
 description: ''
 weight: 0
 stackable: false
-no_patching: false
 storage: folder
 folder: ../config/non_production
 module: {  }

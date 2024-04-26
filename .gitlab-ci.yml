@@ -23,9 +23,9 @@ test:
     - composer install
   script:
     - echo "Running tests..."
-    - ls -la
-    - ls /var/www
-    - pwd
+#    - ls -la
+#    - ls /var/www
+#    - pwd
 deploy:
   image: unsettlingtrend/drupal-php-8.1-nginx-1.22:10.1.2
   stage: deploy
@@ -36,11 +36,11 @@ deploy:
     - composer install
   script:
     # Remove tests directories and files, and cleanup other unnecessary things for deployment.
+    - echo "Deploying..."
     - find ./ -name 'tests' -type d -exec rm -rf '{}' ';' || true
     - tar cf app.tar.gz ./
-    - echo "Deploying..."
-    - ls -la
-    - pwd
+#    - ls -la
+#    - pwd
   needs:
     - test
   artifacts:

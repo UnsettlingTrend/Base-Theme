@@ -12,8 +12,8 @@ _core:
   default_config_hash: HrZTblWpMF4fo6BdbBcyHEu5Hp9ds1IZF3FiRd2Q8rU
 id: ut_base_account_menu
 theme: ut_base
-region: header
-weight: 11
+region: secondary_menu
+weight: -5
 provider: null
 plugin: 'system_menu_block:account'
 settings:

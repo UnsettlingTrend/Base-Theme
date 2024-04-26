@@ -1,0 +1,13 @@
+uuid: 2be6b1d7-56c5-48ff-9268-ee19357529b9
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - geolocation_geometry_natural_earth_countries
+_core:
+  default_config_hash: oxz6TgDisHMjxqL9hBKD3OYejjfdE2gWsJ3E1rEBmQg
+name: Countries
+vid: geolocation_geometry_countries
+description: 'Countries of the world with geometry added, based on Natural Earth data.'
+weight: 0

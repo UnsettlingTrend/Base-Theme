@@ -8,15 +8,16 @@ env_file:
  - lando/defaults.env
 
 config:
-  composer_version: 2
+  php: 8.1
+  composer_version: 2-latest
+  database: mysql:8.0.32
   via: apache
   webroot: web
   xdebug: 'develop,debug'
   config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
-    # This is done purely to fix an issue with mysql 8
-    database: lando/my_custom.cnf
+    database: lando/config/custom.cnf
 
 proxy:
   search:
@@ -30,15 +31,11 @@ services:
   search:
     type: elasticsearch
     portforward: true
-  database:
-    type: mysql:8.0.32
-    # portforward: 3310
   pma:
     type: phpmyadmin
     hosts:
       - database
   appserver:
-    type: php:8.1
     composer:
       behat/behat: 3.3.1
     overrides:

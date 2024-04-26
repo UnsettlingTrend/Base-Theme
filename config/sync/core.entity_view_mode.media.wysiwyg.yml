@@ -6,6 +6,5 @@ dependencies:
     - media
 id: media.wysiwyg
 label: WYSIWYG
-description: ''
 targetEntityType: media
 cache: true

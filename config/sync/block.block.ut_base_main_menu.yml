@@ -12,8 +12,8 @@ _core:
   default_config_hash: ERtUwuUKdqiRLiXjBoV7gcIIZgt2IdqWBzqsqtm63w4
 id: ut_base_main_menu
 theme: ut_base
-region: header
-weight: 10
+region: primary_menu
+weight: -6
 provider: null
 plugin: 'system_menu_block:main'
 settings:

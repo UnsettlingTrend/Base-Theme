@@ -6,6 +6,5 @@ dependencies:
     - paragraphs
 id: paragraph.search_result
 label: 'Search result highlighting input'
-description: ''
 targetEntityType: paragraph
 cache: true

@@ -6,6 +6,5 @@ dependencies:
     - node
 id: node.wysiwyg
 label: WYSIWYG
-description: ''
 targetEntityType: node
 cache: true

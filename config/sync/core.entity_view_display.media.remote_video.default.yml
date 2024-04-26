@@ -40,8 +40,8 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 0
             additional: {  }
-          5c99b414-3a49-46ec-9d74-b88aee74ad9f:
-            uuid: 5c99b414-3a49-46ec-9d74-b88aee74ad9f
+          0a9c4e07-87d0-4b5d-8114-6493e487abe8:
+            uuid: 0a9c4e07-87d0-4b5d-8114-6493e487abe8
             region: content
             configuration:
               label_display: '0'
