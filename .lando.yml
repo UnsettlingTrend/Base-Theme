@@ -54,7 +54,7 @@ services:
 #      - "pip3 install robin_stocks"
       - "bash /app/lando/scripts/build.sh"
   node:
-    type: node:16
+    type: node:18
     globals:
       gulp-cli: latest
     build:

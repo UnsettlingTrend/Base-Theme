@@ -275,6 +275,7 @@
         "michaeldrennen/robinhood": "^1.1",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "php-http/httplug": "^2.0",
+        "platformsh/config-reader": "^2.4",
         "recurser/jquery-simple-color": "master",
         "simeydotme/jquery-ui-slider-pips": "^1.11",
         "squizlabs/php_codesniffer": "^3.3",

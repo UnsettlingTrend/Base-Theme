@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e42e3427250103e908213d91499e722",
+    "content-hash": "687befd7f67a57b3756f7481c4711bd8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -12342,6 +12342,49 @@
                 "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/1.1.4"
             },
             "time": "2023-08-05T09:02:04+00:00"
+        },
+        {
+            "name": "platformsh/config-reader",
+            "version": "2.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/platformsh/config-reader-php.git",
+                "reference": "dc08f50f5a40a767457668ad154116c8ea89cfc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/platformsh/config-reader-php/zipball/dc08f50f5a40a767457668ad154116c8ea89cfc6",
+                "reference": "dc08f50f5a40a767457668ad154116c8ea89cfc6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Platformsh\\ConfigReader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Larry Garfield",
+                    "email": "larry@platform.sh"
+                }
+            ],
+            "description": "Small helper to access Platform.sh environment variables",
+            "support": {
+                "issues": "https://github.com/platformsh/config-reader-php/issues",
+                "source": "https://github.com/platformsh/config-reader-php/tree/2.4.1"
+            },
+            "time": "2023-09-14T17:07:00+00:00"
         },
         {
             "name": "politsin/jquery-ui-touch-punch",
