@@ -815,23 +815,22 @@ $databases['default']['default'] = array (
 $settings['config_sync_directory'] = '../config/sync';
 
 $settings['trusted_host_patterns'] = [
-  '^chrisferagotti\.com$'
+  '^chrisferagotti\.com$',
+  '^.*\.us\.platformsh\.site$'
 ];
 
 $settings['file_private_path'] = '../private';
 
+// Configure the default PhpStorage and Twig template cache directories.
+$settings['php_storage']['default']['directory'] = '../storage/php';
+$settings['php_storage']['twig']['directory'] = '../storage/php';
+
+if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
+  include $app_root . '/' . $site_path . '/settings.platformsh.php';
+}
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
-
-# S3FS settings for media files
-$settings['s3fs.access_key'] = getenv('S3_ACCESS_KEY');
-$settings['s3fs.secret_key'] = getenv('S3_SECRET_KEY');
-$config['s3fs.settings']['bucket'] = getenv('S3_BUCKET');
-$config['s3fs.settings']['hostname'] = getenv('S3_HOSTNAME');
-$settings['s3fs.use_s3_for_public'] = TRUE;
-$settings['s3fs.use_s3_for_private'] = TRUE;
-$config['s3fs.settings']['use_customhost'] = TRUE;
 
 # Make sure only the appropriate configurations are loaded, per environment
 if (getenv('ENVIRONMENT') === 'prod') {
