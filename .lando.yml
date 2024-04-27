@@ -10,7 +10,7 @@ env_file:
 config:
   php: 8.1
   composer_version: 2-latest
-  database: mariadb
+  database: mysql:8.0.32
   via: apache
   webroot: web
   xdebug: 'develop,debug'
