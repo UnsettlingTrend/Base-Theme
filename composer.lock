@@ -21077,7 +21077,6 @@
         "drupal/entity_usage": 15,
         "drupal/facets": 10,
         "drupal/feeds": 10,
-        "drupal/gin": 5,
         "drupal/gin_lb": 5,
         "drupal/gin_toolbar": 5,
         "drupal/inline_entity_form": 5,
