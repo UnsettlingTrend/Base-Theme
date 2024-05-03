@@ -24,7 +24,6 @@ module:
   charts_api_example: 0
   charts_google: 0
   ckeditor5: 0
-  coffee: 0
   color_field: 0
   colorbox: 0
   comment: 0
@@ -54,9 +53,6 @@ module:
   environment_indicator: 0
   environment_indicator_ui: 0
   exif_orientation: 0
-  facets: 0
-  facets_range_widget: 0
-  facets_summary: 0
   field: 0
   field_layout: 0
   field_ui: 0
@@ -75,7 +71,6 @@ module:
   geolocation_google_maps: 0
   geolocation_google_places_api: 0
   geolocation_leaflet: 0
-  geolocation_search_api: 0
   gin_toolbar: 0
   gnode: 0
   group: 0
@@ -132,10 +127,6 @@ module:
   responsive_image: 0
   rest: 0
   rules: 0
-  search_api: 0
-  search_api_db: 0
-  search_api_location: 0
-  search_api_location_views: 0
   serialization: 0
   settings_tray: 0
   shortcut: 0
