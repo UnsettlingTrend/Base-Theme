@@ -169,3 +169,6 @@ $settings['trusted_host_patterns'] = [
   '^cf\.lndo\.site$',
   '^localhost$',
 ];
+
+$settings['file_private_path'] = '../private';
+$settings['file_temp_path'] = '../tmp';
