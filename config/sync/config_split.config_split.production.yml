@@ -10,8 +10,7 @@ stackable: false
 no_patching: false
 storage: folder
 folder: ../config/prod
-module:
-  s3fs: 0
+module: {  }
 theme: {  }
 complete_list:
   - environment_indicator.indicator
