@@ -93,7 +93,7 @@ hooks:
     # Use the specified version
     nvm use "$NODE_VERSION"
     # Compile assets
-    cd web/themes/custom/ut_base
+    cd web/themes/contrib/ut_base
     npm ci
     npm install gulp
 #    gulp

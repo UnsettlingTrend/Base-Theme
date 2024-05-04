@@ -1,9 +1,0 @@
-name: 'UnsettlingTrend Base Theme'
-type: theme
-description: 'A custom Drupal 10 base theme for UnsettlingTrend sites.'
-core_version_requirement: ^10 || ^11
-base theme: stable9
-
-libraries:
-  - ut_base/global-styling
-  - ut_base/global-font

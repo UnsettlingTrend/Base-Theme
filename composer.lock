@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "687befd7f67a57b3756f7481c4711bd8",
+    "content-hash": "7e685ae414656d3a6a61a10fc62609f0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -16138,6 +16138,44 @@
                 }
             ],
             "time": "2023-11-21T18:54:41+00:00"
+        },
+        {
+            "name": "unsettlingtrend/ut_base",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/unsettlingtrend/base-theme.git",
+                "reference": "836f87953b517602c9dd6a8e7532240882046c69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/unsettlingtrend%2Fbase-theme/repository/archive.zip?sha=836f87953b517602c9dd6a8e7532240882046c69",
+                "reference": "836f87953b517602c9dd6a8e7532240882046c69",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/core": "10.*",
+                "php": ">=8.1"
+            },
+            "type": "drupal-theme",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Feragotti (chrisferagotti)",
+                    "homepage": "https://chrisferagotti.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "The base theme used for UnsettlingTrend sites.",
+            "homepage": "https://unsettlingtrend.com/",
+            "support": {
+                "issues": "https://gitlab.com/unsettlingtrend/base-theme/-/issues",
+                "source": "https://gitlab.com/unsettlingtrend/base-theme/-/tree/1.0.0"
+            },
+            "time": "2024-05-04T14:55:13+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

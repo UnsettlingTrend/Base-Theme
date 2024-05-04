@@ -279,6 +279,7 @@
         "recurser/jquery-simple-color": "master",
         "simeydotme/jquery-ui-slider-pips": "^1.11",
         "squizlabs/php_codesniffer": "^3.3",
+        "unsettlingtrend/ut_base": "^1.0",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
     },

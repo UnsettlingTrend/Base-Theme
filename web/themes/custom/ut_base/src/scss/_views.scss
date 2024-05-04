@@ -1,5 +1,0 @@
-div[id^="block-"][id$="-content"] {
-  > div.views-element-container {
-    @include site-max-width();
-  }
-}
