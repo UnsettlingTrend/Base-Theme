@@ -13,6 +13,7 @@ folder: ../config/local
 module:
   devel: 0
 theme: {  }
-complete_list:
+complete_list: {  }
+partial_list:
   - environment_indicator.indicator
-partial_list: {  }
+  - maillog.settings
