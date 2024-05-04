@@ -4,8 +4,8 @@ status: true
 dependencies: {  }
 machine: local
 description: null
-name: local
-weight: ''
+name: Local
+weight: '0'
 url: 'http://cf.lndo.site'
 fg_color: '#e0e0e0'
 bg_color: '#4400ff'

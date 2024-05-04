@@ -5,7 +5,7 @@ dependencies: {  }
 machine: prod
 description: null
 name: prod
-weight: null
+weight: '2'
 url: 'http://chrisferagotti.com'
 fg_color: '#d0d0d0'
-bg_color: '#0d0d0d'
+bg_color: '#ff0000'

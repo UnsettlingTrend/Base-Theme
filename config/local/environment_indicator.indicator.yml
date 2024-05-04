@@ -1,3 +1,6 @@
+name: Local
+fg_color: '#d0d0d0'
+bg_color: '#4400ff'
 adding:
   name: Local
   fg_color: '#d0d0d0'

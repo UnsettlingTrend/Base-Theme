@@ -1,0 +1,11 @@
+uuid: 0aa74d72-05e5-46d7-b3c4-857cf3dba9bf
+langcode: en
+status: true
+dependencies: {  }
+machine: dev
+description: null
+name: Dev
+weight: '1'
+url: ''
+fg_color: '#333333'
+bg_color: '#d7d133'
