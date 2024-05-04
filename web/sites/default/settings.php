@@ -802,20 +802,11 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #  include $app_root . '/' . $site_path . '/settings.local.php';
 #}
 
-$databases['default']['default'] = array (
-  'database' => getenv('DRUPAL_DB_DATABASE'),
-  'username' => getenv('DRUPAL_DB_USERNAME'),
-  'password' => getenv('DRUPAL_DB_PASSWORD'),
-  'prefix' => '',
-  'host' => getenv('DRUPAL_DB_HOST'),
-  'port' => getenv('DRUPAL_DB_PORT'),
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-);
 $settings['config_sync_directory'] = '../config/sync';
 
 $settings['trusted_host_patterns'] = [
   '^chrisferagotti\.com$',
+  '^www\.chrisferagotti\.com$',
   '^.*\.us\.platformsh\.site$'
 ];
 
@@ -831,20 +822,3 @@ if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
-
-# Make sure only the appropriate configurations are loaded, per environment
-if (getenv('ENVIRONMENT') === 'prod') {
-  $config['config_split.config_split.local']['status'] = FALSE;
-  $config['config_split.config_split.non_production']['status'] = FALSE;
-  $config['config_split.config_split.production']['status'] = TRUE;
-  $config['config_split.config_split.remote']['status'] = TRUE;
-}
-else {
-  $config['config_split.config_split.local']['status'] = TRUE;
-  $config['config_split.config_split.non_production']['status'] = TRUE;
-  $config['config_split.config_split.production']['status'] = FALSE;
-  $config['config_split.config_split.remote']['status'] = FALSE;
-}
-
-// Move twig files outside standard storage, so they don't go to s3fs
-$settings['php_storage']['twig']['directory'] = '../storage/php';
