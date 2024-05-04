@@ -1,0 +1,7 @@
+main[role="main"] {
+  div[id^="block-"][id$="-content"] {
+    form.user-login-form{
+      @include site-max-width();
+    }
+  }
+}
