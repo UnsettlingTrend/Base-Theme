@@ -60,7 +60,7 @@ mounts:
     source_path: 'console'
 
 # The size of the persistent disk of the application (in MB).
-disk: 1024
+disk: 512
 
 # Configuration of the build of this application.
 build:
