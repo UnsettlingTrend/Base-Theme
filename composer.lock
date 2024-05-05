@@ -16141,16 +16141,16 @@
         },
         {
             "name": "unsettlingtrend/ut_base",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/unsettlingtrend/base-theme.git",
-                "reference": "836f87953b517602c9dd6a8e7532240882046c69"
+                "reference": "69b65ff74b1fab2345d9c98e073d551c2aedb8cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/unsettlingtrend%2Fbase-theme/repository/archive.zip?sha=836f87953b517602c9dd6a8e7532240882046c69",
-                "reference": "836f87953b517602c9dd6a8e7532240882046c69",
+                "url": "https://gitlab.com/api/v4/projects/unsettlingtrend%2Fbase-theme/repository/archive.zip?sha=69b65ff74b1fab2345d9c98e073d551c2aedb8cb",
+                "reference": "69b65ff74b1fab2345d9c98e073d551c2aedb8cb",
                 "shasum": ""
             },
             "require": {
@@ -16173,9 +16173,9 @@
             "homepage": "https://unsettlingtrend.com/",
             "support": {
                 "issues": "https://gitlab.com/unsettlingtrend/base-theme/-/issues",
-                "source": "https://gitlab.com/unsettlingtrend/base-theme/-/tree/1.0.0"
+                "source": "https://gitlab.com/unsettlingtrend/base-theme/-/tree/1.0.2"
             },
-            "time": "2024-05-04T14:55:13+00:00"
+            "time": "2024-05-04T22:35:49+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
