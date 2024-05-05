@@ -1,64 +1,62 @@
-# TODO Fix PHPUnit testing of only custom themes/modules
-# TODO Look into Portainer
-
 name: cf
 recipe: drupal10
 
 env_file:
- - lando/defaults.env
+  - lando/defaults.env
 
 config:
-  php: 8.1
   composer_version: 2-latest
   database: mysql:8.0.32
-  via: apache
+  php: 8.1
   webroot: web
-  xdebug: 'develop,debug'
   config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
-    database: lando/config/custom.cnf
+  xdebug: true
+
+excludes:
+  - node_modules
 
 proxy:
-  search:
-    - search.cf.lndo.site
+#  search:
+#    - search.cf.lndo.site
   pma:
     - db.cf.lndo.site
   mailhog:
     - mail.cf.lndo.site
 
 services:
-  search:
-    type: elasticsearch
-    portforward: true
+#  search:
+#    type: elasticsearch:7.17.18
+#    portforward: 9200
   pma:
     type: phpmyadmin
     hosts:
       - database
   appserver:
-    composer:
-      behat/behat: 3.3.1
+    build:
+      - composer install
     overrides:
       environment:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
-        # support debugging Drush with XDEBUG.
+        # Allows path mapping in PhpStorm and CLI debugging.
+        # https://docs.lando.dev/guides/lando-phpstorm.html#debugging-cli-commands.
         PHP_IDE_CONFIG: "serverName=appserver"
-        LANDO_HOST_IP: "host.docker.internal"
-        #XDEBUG_CONFIG: "remote_enable=1 remote_host=host.docker.internal"
-        XDEBUG_SESSION_START: lando
-        XDEBUG_SESSION: "PHPSTORM"
-    build:
-      - "/app/vendor/bin/phpcs --config-set installed_paths /app/vendor/drupal/coder/coder_sniffer"
-    run_as_root:
-#      - "apt-get install python3-pip"
-#      - "pip3 install robin_stocks"
-      - "bash /app/lando/scripts/build.sh"
+        # Set debug mode here, instead of in config: xdebug so it can be toggled off and on.
+        # Develop allows additional features, like html in var_dump.
+        # https://xdebug.org/docs/develop.
+        # Debug allows step debugging.
+        # https://xdebug.org/docs/remote.
+        XDEBUG_MODE: 'debug,develop'
+        # Causes Xdebug to trigger on every request, no need to do XDEBUG_SESSION in the URL.
+        XDEBUG_SESSION: 1
   node:
-    type: node:18
+    type: 'node:18'
     globals:
       gulp-cli: latest
-    build:
-      - "cd $LANDO_MOUNT && npm install -y"
+    scanner: false
+    ssl: true
+    sslExpose: false
   mailhog:
     type: mailhog
     hogfrom:
@@ -77,15 +75,7 @@ tooling:
     user: www-data
   phpunit:
     service: appserver
-    description: Runs phpunit with config at web/sites/default/local.phpunit.xml
-    cmd: /app/vendor/bin/phpunit -v -c /app/web/sites/default/local.phpunit.xml
-  phpcs:
-    service: appserver
-    cmd: "php --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml"
-  behat:
-    service: appserver
-    description: run behat- use lando behat
-    cmd: cd /app ; behat  # Run behat from the /app directory
+    description: run PHPUnit- use lando phpunit
   node:
     service: node
   npm:
