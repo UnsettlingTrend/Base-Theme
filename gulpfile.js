@@ -32,18 +32,18 @@ function js() {
 }
 
 // Convert TTF to WOFF2
-function convertTTFtoWOFF2() {
-  return src('src/fonts/*.ttf')
-    .pipe(ttf2woff2())
-    .pipe(dest('src/fonts/'));
-}
+// function convertTTFtoWOFF2() {
+//   return src('src/fonts/*.ttf')
+//     .pipe(ttf2woff2())
+//     .pipe(dest('src/fonts/'));
+// }
 
 // Minify font files
 function compressFonts() {
-  return src('src/fonts/*.{woff,woff2}')
+  return src('src/fonts/*.{ttf,woff2}')
     .pipe(dest(fontsDest));
 }
 
 // Default task
-exports.default = series(parallel(js, css, convertTTFtoWOFF2, compressFonts));
+exports.default = series(js, css, compressFonts);
 
