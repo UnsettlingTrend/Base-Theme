@@ -1,8 +1,0 @@
-{
-  "name": "com.chrisferagotti.unsettlingtrend",
-  "version": "1.0.0",
-  "author": "Chris Feragotti <chrisferagotti@gmail.com>",
-  "dependencies": {
-    "sass": "^1.56.1"
-  }
-}
