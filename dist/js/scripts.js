@@ -1,0 +1,1 @@
+!function(c){Drupal.behaviors.myModuleBehavior={attach:function(e,t){c(".my-element").click(function(){alert("You clicked the element!")})}}}(jQuery);
