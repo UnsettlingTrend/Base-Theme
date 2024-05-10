@@ -92,10 +92,10 @@ hooks:
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     # Use the specified version
     nvm use "$NODE_VERSION"
-    # Compile assets
-    cd web/themes/contrib/ut_base
-    npm ci
-    gulp
+#    # Compile assets
+#    cd web/themes/contrib/ut_base
+#    npm ci
+#    gulp
   # The deploy hook runs after your application has been deployed and started.
   # Code cannot be modified at this point but the database is available.
   # The site is not accepting requests while this script runs so keep it
