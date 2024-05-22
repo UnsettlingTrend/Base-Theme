@@ -1,9 +1,9 @@
 _core:
   default_config_hash: eKR4FfUD7Cp3bXamsCz6GAxh0PCLIZNMa65y2kChIh0
-site_key: 6Lfj4-QpAAAAAC5wAWiCOC2zxQyQKiqLy7Ha1VlL
-secret_key: 6Lfj4-QpAAAAAAT-CN6IrGMGnlea_q1M6rifQS5h
+site_key: 6Lc_6OQpAAAAAPRr3hbviSEJKFhC4UruML0ZRA1t
+secret_key: 6Lc_6OQpAAAAAFQqg84TO3W_TGAxq8NcqOwiTN7u
 verify_hostname: false
-use_globally: true
+use_globally: false
 widget:
   theme: light
   type: image
