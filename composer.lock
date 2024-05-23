@@ -118,16 +118,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.308.0",
+            "version": "3.308.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "806ad75dcb72b6e6569848159e7a350003526bc9"
+                "reference": "bf5f1221d4c5c67d3213150fb91dfb5ce627227b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/806ad75dcb72b6e6569848159e7a350003526bc9",
-                "reference": "806ad75dcb72b6e6569848159e7a350003526bc9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/bf5f1221d4c5c67d3213150fb91dfb5ce627227b",
+                "reference": "bf5f1221d4c5c67d3213150fb91dfb5ce627227b",
                 "shasum": ""
             },
             "require": {
@@ -207,9 +207,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.308.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.308.1"
             },
-            "time": "2024-05-21T18:06:10+00:00"
+            "time": "2024-05-22T18:05:56+00:00"
         },
         {
             "name": "bgrins/spectrum",
@@ -1950,16 +1950,16 @@
         },
         {
             "name": "doctrine/event-manager",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/event-manager.git",
-                "reference": "750671534e0241a7c50ea5b43f67e23eb5c96f32"
+                "reference": "b680156fa328f1dfd874fd48c7026c41570b9c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/750671534e0241a7c50ea5b43f67e23eb5c96f32",
-                "reference": "750671534e0241a7c50ea5b43f67e23eb5c96f32",
+                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/b680156fa328f1dfd874fd48c7026c41570b9c6e",
+                "reference": "b680156fa328f1dfd874fd48c7026c41570b9c6e",
                 "shasum": ""
             },
             "require": {
@@ -1969,10 +1969,10 @@
                 "doctrine/common": "<2.9"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^10",
+                "doctrine/coding-standard": "^12",
                 "phpstan/phpstan": "^1.8.8",
-                "phpunit/phpunit": "^9.5",
-                "vimeo/psalm": "^4.28"
+                "phpunit/phpunit": "^10.5",
+                "vimeo/psalm": "^5.24"
             },
             "type": "library",
             "autoload": {
@@ -2021,7 +2021,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/event-manager/issues",
-                "source": "https://github.com/doctrine/event-manager/tree/2.0.0"
+                "source": "https://github.com/doctrine/event-manager/tree/2.0.1"
             },
             "funding": [
                 {
@@ -2037,7 +2037,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-12T20:59:15+00:00"
+            "time": "2024-05-22T20:47:39+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -2502,30 +2502,30 @@
         },
         {
             "name": "drupal/better_exposed_filters",
-            "version": "6.0.5",
+            "version": "6.0.6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/better_exposed_filters.git",
-                "reference": "6.0.5"
+                "reference": "6.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-6.0.5.zip",
-                "reference": "6.0.5",
-                "shasum": "a325449adf32c13dd8e348bf10979aea301da84e"
+                "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-6.0.6.zip",
+                "reference": "6.0.6",
+                "shasum": "558ca591d450fc64512cae7f98cb4b0241e15ba3"
             },
             "require": {
                 "drupal/core": "^9 || ^10",
-                "drupal/jquery_ui": "^1.6",
-                "drupal/jquery_ui_datepicker": "^2.0",
-                "drupal/jquery_ui_slider": "^2.0.0",
-                "drupal/jquery_ui_touch_punch": "^1.0"
+                "drupal/jquery_ui": "*",
+                "drupal/jquery_ui_datepicker": "*",
+                "drupal/jquery_ui_slider": "*",
+                "drupal/jquery_ui_touch_punch": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "6.0.5",
-                    "datestamp": "1713570803",
+                    "version": "6.0.6",
+                    "datestamp": "1716397541",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -13229,16 +13229,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.10.0",
+            "version": "3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "57e09801c2fbae2d257b8b75bebb3deeb7e9deb2"
+                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/57e09801c2fbae2d257b8b75bebb3deeb7e9deb2",
-                "reference": "57e09801c2fbae2d257b8b75bebb3deeb7e9deb2",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/8f90f7a53ce271935282967f53d0894f8f1ff877",
+                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877",
                 "shasum": ""
             },
             "require": {
@@ -13305,7 +13305,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-05-20T08:11:32+00:00"
+            "time": "2024-05-22T21:24:41+00:00"
         },
         {
             "name": "symfony/console",
@@ -16143,16 +16143,16 @@
         },
         {
             "name": "unsettlingtrend/ut_base",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/unsettlingtrend/base-theme.git",
-                "reference": "7074579e19a41db2e651f0de6990fa9c5a5f022b"
+                "reference": "1dfc56bc4da3dbf315d0aff0d9c742f247b11376"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/unsettlingtrend%2Fbase-theme/repository/archive.zip?sha=7074579e19a41db2e651f0de6990fa9c5a5f022b",
-                "reference": "7074579e19a41db2e651f0de6990fa9c5a5f022b",
+                "url": "https://gitlab.com/api/v4/projects/unsettlingtrend%2Fbase-theme/repository/archive.zip?sha=1dfc56bc4da3dbf315d0aff0d9c742f247b11376",
+                "reference": "1dfc56bc4da3dbf315d0aff0d9c742f247b11376",
                 "shasum": ""
             },
             "require": {
@@ -16175,9 +16175,9 @@
             "homepage": "https://unsettlingtrend.com/",
             "support": {
                 "issues": "https://gitlab.com/unsettlingtrend/base-theme/-/issues",
-                "source": "https://gitlab.com/unsettlingtrend/base-theme/-/tree/1.0.5"
+                "source": "https://gitlab.com/unsettlingtrend/base-theme/-/tree/1.0.6"
             },
-            "time": "2024-05-10T19:02:25+00:00"
+            "time": "2024-05-23T13:47:28+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
