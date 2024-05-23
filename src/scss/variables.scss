@@ -18,7 +18,7 @@ $color-link-visited: #9b7223;
 $color-link-is-active: #d0cfc2;
 $color-background: #e4f2ff;
 
-$color-white: #ddd;
+$color-white: #f6f6f6;
 $color-black: #121212;
 
 $color-gray-lighter: #AAA;
@@ -26,6 +26,10 @@ $color-gray-light: #888;
 $color-gray: #666;
 $color-gray-dark: #444;
 $color-gray-darker: #222;
+
+// --------------- Dependent Colors ---------------
+$color-tag-font: $color-link-visited;
+$color-tag-background: $color-white;
 
 // --------------- Widths ---------------
 
