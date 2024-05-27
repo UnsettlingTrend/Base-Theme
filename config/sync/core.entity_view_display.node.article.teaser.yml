@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.article.comment
     - field.field.node.article.field_image
     - field.field.node.article.field_paragraph
-    - field.field.node.article.field_show_date
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
     - field.field.node.article.field_take_aways
@@ -93,12 +92,12 @@ third_party_settings:
                 settings:
                   image_link: content
                   image_style: medium
+                  image_loading:
+                    attribute: lazy
                   svg_attributes:
                     width: null
                     height: null
                   svg_render_as_image: true
-                  image_loading:
-                    attribute: lazy
                 third_party_settings: {  }
             weight: 4
             additional: {  }
@@ -131,12 +130,12 @@ content:
     settings:
       image_link: content
       image_style: medium
+      image_loading:
+        attribute: lazy
       svg_attributes:
         width: null
         height: null
       svg_render_as_image: true
-      image_loading:
-        attribute: lazy
     third_party_settings: {  }
     weight: -1
     region: content
@@ -156,7 +155,6 @@ content:
 hidden:
   comment: true
   field_paragraph: true
-  field_show_date: true
   field_subtitle: true
   field_take_aways: true
   langcode: true

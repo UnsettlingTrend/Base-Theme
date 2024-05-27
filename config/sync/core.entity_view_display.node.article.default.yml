@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.article.comment
     - field.field.node.article.field_image
     - field.field.node.article.field_paragraph
-    - field.field.node.article.field_show_date
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
     - field.field.node.article.field_take_aways
@@ -55,12 +54,12 @@ content:
     settings:
       image_link: ''
       image_style: large
+      image_loading:
+        attribute: lazy
       svg_attributes:
         width: null
         height: null
       svg_render_as_image: true
-      image_loading:
-        attribute: lazy
     third_party_settings: {  }
     weight: 1
     region: content
@@ -101,7 +100,6 @@ content:
     weight: 2
     region: content
 hidden:
-  field_show_date: true
   langcode: true
   published_at: true
   search_api_excerpt: true
