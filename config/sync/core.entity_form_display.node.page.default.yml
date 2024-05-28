@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.page.comment
     - field.field.node.page.field_image
     - field.field.node.page.field_paragraph
-    - field.field.node.page.field_show_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_tags
     - field.field.node.page.field_take_aways
@@ -74,13 +73,6 @@ content:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
-    third_party_settings: {  }
-  field_show_date:
-    type: boolean_checkbox
-    weight: 2
-    region: content
-    settings:
-      display_label: true
     third_party_settings: {  }
   field_subtitle:
     type: text_textfield
