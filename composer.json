@@ -214,7 +214,7 @@
         "drupal/gin": "^3.0@RC",
         "drupal/gin_lb": "^1.0@RC",
         "drupal/gin_toolbar": "^1.0@RC",
-        "drupal/group": "^3.2",
+        "drupal/group": "^2.2",
         "drupal/image_effects": "^3.1",
         "drupal/image_widget_crop": "^2.1",
         "drupal/inline_entity_form": "^1.0@RC",
