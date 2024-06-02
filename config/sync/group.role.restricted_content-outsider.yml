@@ -7,8 +7,8 @@ dependencies:
 id: restricted_content-outsider
 label: Outsider
 weight: -101
-internal: true
-audience: outsider
 group_type: restricted_content
-permissions_ui: true
 permissions: {  }
+admin: false
+scope: outsider
+global_role: authenticated

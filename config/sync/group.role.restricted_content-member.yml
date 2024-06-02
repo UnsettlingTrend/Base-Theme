@@ -7,10 +7,7 @@ dependencies:
 id: restricted_content-member
 label: Member
 weight: -100
-internal: true
-audience: member
 group_type: restricted_content
-permissions_ui: true
 permissions:
   - 'create group_node:page content'
   - 'create group_node:page entity'
@@ -24,3 +21,6 @@ permissions:
   - 'view group_membership content'
   - 'view group_node:page content'
   - 'view group_node:page entity'
+admin: false
+scope: insider
+global_role: authenticated

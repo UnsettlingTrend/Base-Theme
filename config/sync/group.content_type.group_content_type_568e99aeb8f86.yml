@@ -7,8 +7,6 @@ dependencies:
   module:
     - user
 id: group_content_type_568e99aeb8f86
-label: 'Restricted Content: Group membership'
-description: 'Adds users to groups as members.'
 group_type: restricted_content
 content_plugin: group_membership
 plugin_config:

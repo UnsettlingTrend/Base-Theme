@@ -9,8 +9,6 @@ dependencies:
     - gnode
     - node
 id: group_content_type_f417007bc69a9
-label: 'Restricted Content: Group node (Basic page)'
-description: 'Adds <em class="placeholder">Basic page</em> content to groups both publicly and privately.'
 group_type: restricted_content
 content_plugin: 'group_node:page'
 plugin_config:

@@ -7,26 +7,7 @@ dependencies:
 id: restricted_content-admin
 label: Admin
 weight: 100
-internal: false
-audience: member
 group_type: restricted_content
-permissions_ui: true
-permissions:
-  - 'access content overview'
-  - 'access group_node overview'
-  - 'administer group'
-  - 'administer members'
-  - 'create group_node:page content'
-  - 'create group_node:page entity'
-  - 'delete group'
-  - 'delete own group_node:page content'
-  - 'delete own group_node:page entity'
-  - 'edit group'
-  - 'leave group'
-  - 'update own group_membership content'
-  - 'update own group_node:page content'
-  - 'update own group_node:page entity'
-  - 'view group'
-  - 'view group_membership content'
-  - 'view group_node:page content'
-  - 'view group_node:page entity'
+permissions: {  }
+admin: true
+scope: individual
