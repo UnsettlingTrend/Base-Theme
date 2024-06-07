@@ -6,7 +6,6 @@ dependencies:
     - node.type.article
     - node.type.page
     - node.type.recipe
-    - node.type.review
   module:
     - content_moderation
 _core:
@@ -83,5 +82,4 @@ type_settings:
       - article
       - page
       - recipe
-      - review
   default_moderation_state: draft

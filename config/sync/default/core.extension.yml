@@ -60,15 +60,6 @@ module:
   filter: 0
   flexible_permissions: 0
   geofield: 0
-  geolocation: 0
-  geolocation_address: 0
-  geolocation_geofield: 0
-  geolocation_geometry: 0
-  geolocation_geometry_data: 0
-  geolocation_geometry_natural_earth_countries: 0
-  geolocation_google_maps: 0
-  geolocation_google_places_api: 0
-  geolocation_leaflet: 0
   gin_toolbar: 0
   gnode: 0
   group: 0
@@ -156,7 +147,6 @@ module:
   webform_access: 0
   webform_attachment: 0
   webform_image_select: 0
-  webform_location_places: 0
   webform_node: 0
   webform_options_custom: 0
   webform_options_limit: 0
