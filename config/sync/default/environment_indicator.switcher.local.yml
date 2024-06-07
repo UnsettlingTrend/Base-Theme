@@ -5,7 +5,7 @@ dependencies: {  }
 machine: local
 description: null
 name: Local
-weight: '0'
-url: 'http://cf.lndo.site'
+weight: 0
+url: 'https://cf.lndo.site'
 fg_color: '#e0e0e0'
 bg_color: '#4400ff'

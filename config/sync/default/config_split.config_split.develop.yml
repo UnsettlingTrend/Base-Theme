@@ -1,0 +1,18 @@
+uuid: 79e19428-fe6b-4ade-9ebc-623f94cc707d
+langcode: en
+status: false
+dependencies: {  }
+id: develop
+label: develop
+description: ''
+weight: 0
+stackable: false
+no_patching: false
+storage: folder
+folder: ../config/sync/dev
+module: {  }
+theme: {  }
+complete_list: {  }
+partial_list:
+  - environment_indicator.indicator
+  - maillog.settings

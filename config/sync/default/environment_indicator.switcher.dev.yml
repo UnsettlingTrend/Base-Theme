@@ -5,7 +5,7 @@ dependencies: {  }
 machine: dev
 description: null
 name: Dev
-weight: '1'
-url: ''
+weight: 1
+url: 'https://develop-sr3snxi-qgxm6c7nioky2.ca-1.platformsh.site/'
 fg_color: '#333333'
 bg_color: '#d7d133'

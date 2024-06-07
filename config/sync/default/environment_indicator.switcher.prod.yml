@@ -4,8 +4,8 @@ status: true
 dependencies: {  }
 machine: prod
 description: null
-name: prod
-weight: '2'
-url: 'http://chrisferagotti.com'
+name: Prod
+weight: 2
+url: 'https://chrisferagotti.com'
 fg_color: '#d0d0d0'
 bg_color: '#ff0000'
