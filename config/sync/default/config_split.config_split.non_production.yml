@@ -9,7 +9,7 @@ weight: 0
 stackable: false
 no_patching: false
 storage: folder
-folder: ../config/non_production
+folder: ../config/sync/non_production
 module: {  }
 theme: {  }
 complete_list: {  }

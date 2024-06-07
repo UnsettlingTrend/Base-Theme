@@ -175,7 +175,7 @@ if ($platformsh->hasRelationship($relationship_name)) {
   $config['search_api.server.' . $solr_server_name]['backend_config']['connector_config'] = $platformsh->formattedCredentials($relationship_name, 'drupal-solr');
 }
 
-$settings["config_sync_directory"] = '../config/sync';
+$settings["config_sync_directory"] = '../config/sync/default';
 $settings['file_private_path'] = '../private';
 // Config split settings.
 //$config['config_split.config_split.config_platformsh']['status'] = TRUE;

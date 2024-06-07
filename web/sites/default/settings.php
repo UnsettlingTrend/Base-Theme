@@ -802,7 +802,7 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #  include $app_root . '/' . $site_path . '/settings.local.php';
 #}
 
-$settings['config_sync_directory'] = '../config/sync';
+$settings['config_sync_directory'] = '../config/sync/default';
 
 $settings['trusted_host_patterns'] = [
   '^chrisferagotti\.com$',
