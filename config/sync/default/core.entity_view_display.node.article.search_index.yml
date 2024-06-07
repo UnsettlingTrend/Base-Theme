@@ -3,9 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.comment.default
     - core.entity_view_mode.node.search_index
-    - field.field.node.article.comment
     - field.field.node.article.field_image
     - field.field.node.article.field_paragraph
     - field.field.node.article.field_subtitle
@@ -13,7 +11,6 @@ dependencies:
     - field.field.node.article.field_take_aways
     - node.type.article
   module:
-    - comment
     - field_layout
     - layout_builder
     - layout_discovery
@@ -47,23 +44,6 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 1
             additional: {  }
-          4f4ae38f-8247-49e6-a823-088c04919016:
-            uuid: 4f4ae38f-8247-49e6-a823-088c04919016
-            region: content
-            configuration:
-              id: 'field_block:node:article:comment'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: comment_default
-                label: hidden
-                settings:
-                  view_mode: default
-                  pager_id: 0
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
           00a6497b-91dd-44d2-a394-42afa8c4bf53:
             uuid: 00a6497b-91dd-44d2-a394-42afa8c4bf53
             region: content
@@ -82,15 +62,6 @@ targetEntityType: node
 bundle: article
 mode: search_index
 content:
-  comment:
-    type: comment_default
-    label: hidden
-    settings:
-      view_mode: default
-      pager_id: 0
-    third_party_settings: {  }
-    weight: 2
-    region: content
   content_moderation_control:
     settings: {  }
     third_party_settings: {  }

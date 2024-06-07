@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_result
-    - field.field.node.article.comment
     - field.field.node.article.field_image
     - field.field.node.article.field_paragraph
     - field.field.node.article.field_subtitle
@@ -110,7 +109,6 @@ content:
     weight: 2
     region: content
 hidden:
-  comment: true
   field_paragraph: true
   field_subtitle: true
   field_tags: true

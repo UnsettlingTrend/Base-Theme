@@ -27,7 +27,6 @@ module:
   color_field: 0
   colorbox: 0
   comment: 0
-  components: 0
   config: 0
   config_split: 0
   contact: 0
@@ -126,7 +125,6 @@ module:
   redirect: 0
   responsive_image: 0
   rest: 0
-  rules: 0
   serialization: 0
   settings_tray: 0
   shortcut: 0

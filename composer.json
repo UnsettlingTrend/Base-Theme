@@ -3,6 +3,11 @@
     "description": "Project template for Drupal 8 projects with composer",
     "type": "project",
     "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupal",
+    "support": {
+        "docs": "https://www.drupal.org/docs/user_guide/en/index.html",
+        "chat": "https://www.drupal.org/node/314178"
+    },
     "authors": [
         {
             "name": "Chris Feragotti",
@@ -182,7 +187,6 @@
         "drupal/blazy": "^3.0",
         "drupal/captcha": "^2.0",
         "drupal/charts": "^5.0",
-        "drupal/coder": "^8.3",
         "drupal/coffee": "^1.0@beta",
         "drupal/color_field": "^3.0",
         "drupal/colorbox": "^2.0",
@@ -242,7 +246,6 @@
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.0@beta",
         "drupal/restui": "^1.16",
-        "drupal/rules": "^3.x-dev",
         "drupal/s3fs": "^3.4",
         "drupal/search_api": "^1.15",
         "drupal/search_api_autocomplete": "^1.4",
@@ -272,62 +275,36 @@
         "jackmoore/colorbox": "~1",
         "kenwheeler/slick": "~1.9.0",
         "michaeldrennen/robinhood": "^1.1",
-        "mnsami/composer-custom-directory-installer": "^2.0",
         "php-http/httplug": "^2.0",
         "platformsh/config-reader": "^2.4",
-        "recurser/jquery-simple-color": "master",
         "simeydotme/jquery-ui-slider-pips": "^1.11",
-        "squizlabs/php_codesniffer": "^3.3",
-        "unsettlingtrend/ut_base": "^1.0",
-        "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3"
+        "unsettlingtrend/ut_base": "^1.0"
     },
     "require-dev": {
-        "behat/mink-goutte-driver": "^2.0",
-        "drupal/core-dev": "^10.0",
-        "mikey179/vfsstream": "~1.2",
-        "phpstan/extension-installer": "^1.0",
-        "phpunit/phpunit": "^9.6",
-        "symfony/css-selector": "^6.3"
+        "drupal/core-dev": "^10.0"
+    },
+    "scripts": {
+        "post-drupal-scaffold-cmd": [
+            "patch -p1 < patches/enable_twig_debugging.patch"
+        ]
     },
     "conflict": {
         "drupal/drupal": "*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "composer/installers": true,
             "cweagans/composer-patches": true,
-            "drupal/console-extend-plugin": true,
-            "drupal-composer/drupal-scaffold": true,
-            "m7sk/composer-svn-export-plugin": true,
-            "wikimedia/composer-merge-plugin": true,
+            "composer/installers": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
-            "mnsami/composer-custom-directory-installer": true,
+            "drupal/console-extend-plugin": true,
+            "php-http/discovery": true,
             "phpstan/extension-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "php-http/discovery": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "scripts": {
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-drupal-scaffold-cmd": [
-            "patch -p1 < patches/enable_twig_debugging.patch"
-        ]
     },
     "extra": {
         "patches-file": "patches/composer.patches.json",
@@ -342,10 +319,6 @@
             "drush/contrib/{$name}": ["type:drupal-drush"]
         },
         "drupal-scaffold": {
-            "initial": {
-                ".editorconfig": "../.editorconfig",
-                ".gitattributes": "../.gitattributes"
-            },
             "locations": {
                 "web-root": "./web"
             }
@@ -354,6 +327,27 @@
             "include": [
                 "web/modules/contrib/ckeditor_codemirror/composer.libraries.json",
                 "web/modules/contrib/webform/composer.libraries.json"
+            ]
+        },
+        "drupal-core-project-message": {
+            "include-keys": [
+                "homepage",
+                "support"
+            ],
+            "post-create-project-cmd-message": [
+                "<bg=blue;fg=white>                                                         </>",
+                "<bg=blue;fg=white>  Congratulations, you’ve installed the Drupal codebase  </>",
+                "<bg=blue;fg=white>  from the drupal/recommended-project template!          </>",
+                "<bg=blue;fg=white>                                                         </>",
+                "",
+                "<bg=yellow;fg=black>Next steps</>:",
+                "  * Install the site: https://www.drupal.org/docs/8/install",
+                "  * Read the user guide: https://www.drupal.org/docs/user_guide/en/index.html",
+                "  * Get support: https://www.drupal.org/support",
+                "  * Get involved with the Drupal community:",
+                "      https://www.drupal.org/getting-involved",
+                "  * Remove the plugin that prints this message:",
+                "      composer remove drupal/core-project-message"
             ]
         }
     }
