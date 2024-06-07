@@ -193,6 +193,7 @@ if (isset($platformsh->branch)) {
       break;
     case 'develop':
       $config['config_split.config_split.non_production']['status'] = TRUE;
+      $config['config_split.config_split.develop']['status'] = TRUE;
       break;
     default:
       $config['config_split.config_split.develop']['status'] = TRUE;

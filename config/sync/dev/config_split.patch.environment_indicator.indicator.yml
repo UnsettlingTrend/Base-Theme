@@ -1,0 +1,8 @@
+adding:
+  name: Develop
+  fg_color: '#333333'
+  bg_color: '#D7D133'
+removing:
+  name: Production
+  fg_color: '#f2f2f2'
+  bg_color: '#ff0000'
