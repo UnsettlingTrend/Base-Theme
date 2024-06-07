@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_comments
     - field.field.node.article.field_image
     - field.field.node.article.field_paragraph
     - field.field.node.article.field_subtitle
@@ -10,8 +11,8 @@ dependencies:
     - field.field.node.article.field_take_aways
     - image.style.thumbnail
     - node.type.article
-    - workflows.workflow.editorial
   module:
+    - comment
     - content_moderation
     - field_layout
     - layout_discovery
@@ -35,6 +36,12 @@ content:
   created:
     type: datetime_timestamp
     weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_comments:
+    type: comment_default
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
