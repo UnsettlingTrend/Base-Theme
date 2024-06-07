@@ -11,19 +11,16 @@ db:
   configuration:
     schemas:
       - production
-      - dev
+      - develop
     endpoints:
-      mysql:
+      production:
         default_schema: production
         privileges:
           production: admin
-          migration: ro
-        migration: ro
-      dev:
-        default_schema: dev
+      develop:
+        default_schema: develop
         privileges:
-          dev: admin
-          migration: ro
+          develop: admin
 
   # The name given to the Elasticsearch service (lowercase alphanumeric only).
 #elasticsearch:
