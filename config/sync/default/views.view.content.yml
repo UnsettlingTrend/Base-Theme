@@ -85,21 +85,30 @@ display:
           buttons: false
           action_title: Action
           clear_on_exposed: true
+          force_selection_info: false
           selected_actions:
             -
               action_id: node_unpromote_action
+              preconfiguration:
+                add_confirmation: false
             -
               action_id: node_assign_owner_action
+              preconfiguration:
+                add_confirmation: false
             -
               action_id: node_promote_action
-            -
-              action_id: pathauto_update_alias
+              preconfiguration:
+                add_confirmation: false
             -
               action_id: 'entity:unpublish_action:node'
+              preconfiguration:
+                add_confirmation: false
             -
               action_id: 'entity:publish_action:node'
+              preconfiguration:
+                add_confirmation: false
             -
-              action_id: 'entity:delete_action:node'
+              action_id: views_bulk_operations_delete_entity
         title:
           id: title
           table: node_field_data

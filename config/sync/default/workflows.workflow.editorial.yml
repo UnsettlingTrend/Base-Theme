@@ -5,7 +5,6 @@ dependencies:
   config:
     - node.type.article
     - node.type.page
-    - node.type.recipe
   module:
     - content_moderation
 _core:
@@ -81,5 +80,4 @@ type_settings:
     node:
       - article
       - page
-      - recipe
   default_moderation_state: draft
