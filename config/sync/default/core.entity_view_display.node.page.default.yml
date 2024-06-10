@@ -3,8 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.comment.default
-    - field.field.node.page.comment
     - field.field.node.page.field_image
     - field.field.node.page.field_paragraph
     - field.field.node.page.field_subtitle
@@ -12,7 +10,6 @@ dependencies:
     - field.field.node.page.field_take_aways
     - node.type.page
   module:
-    - comment
     - entity_reference_revisions
     - field_layout
     - layout_builder
@@ -33,15 +30,6 @@ targetEntityType: node
 bundle: page
 mode: default
 content:
-  comment:
-    type: comment_default
-    label: above
-    settings:
-      view_mode: default
-      pager_id: 0
-    third_party_settings: {  }
-    weight: 7
-    region: content
   content_moderation_control:
     settings: {  }
     third_party_settings: {  }

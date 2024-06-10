@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.page.comment
     - field.field.node.page.field_image
     - field.field.node.page.field_paragraph
     - field.field.node.page.field_subtitle
@@ -14,7 +13,6 @@ dependencies:
     - workflows.workflow.editorial
   module:
     - allowed_formats
-    - comment
     - content_moderation
     - field_layout
     - layout_discovery
@@ -35,12 +33,6 @@ targetEntityType: node
 bundle: page
 mode: default
 content:
-  comment:
-    type: comment_default
-    weight: 16
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   created:
     type: datetime_timestamp
     weight: 9

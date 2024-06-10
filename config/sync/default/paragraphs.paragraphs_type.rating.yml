@@ -1,9 +1,0 @@
-uuid: c873abfc-2b56-449b-b299-a32f7f117c76
-langcode: en
-status: true
-dependencies: {  }
-id: rating
-label: Rating
-icon_uuid: null
-description: ''
-behavior_plugins: {  }
