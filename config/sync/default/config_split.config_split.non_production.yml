@@ -12,5 +12,6 @@ storage: folder
 folder: ../config/sync/non_production
 module: {  }
 theme: {  }
-complete_list: {  }
+complete_list:
+  - maillog.settings
 partial_list: {  }
