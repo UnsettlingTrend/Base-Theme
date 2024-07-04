@@ -1,9 +1,7 @@
 uuid: 7ca44e6e-4a2b-4886-afcb-d372f2ed86ca
 langcode: en
 status: true
-dependencies:
-  module:
-    - ut_robinhood
+dependencies: {  }
 id: stock_prices
 label: 'Stock Prices'
 module: views
@@ -103,6 +101,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:

@@ -6,3 +6,4 @@ name: Ingredients
 vid: ingredients
 description: 'List of Cooking Ingredients'
 weight: 0
+new_revision: false

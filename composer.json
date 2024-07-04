@@ -246,7 +246,6 @@
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.0@beta",
         "drupal/restui": "^1.16",
-        "drupal/s3fs": "^3.4",
         "drupal/search_api": "^1.15",
         "drupal/search_api_autocomplete": "^1.4",
         "drupal/search_api_location": "^1.0@alpha",

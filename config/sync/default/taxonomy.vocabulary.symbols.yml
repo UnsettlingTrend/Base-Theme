@@ -6,3 +6,4 @@ name: Symbols
 vid: symbols
 description: 'Symbols for stock/crypto/etc.'
 weight: 0
+new_revision: false

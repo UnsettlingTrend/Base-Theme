@@ -6,3 +6,4 @@ name: Companies
 vid: companies
 description: 'List of relevant Companies'
 weight: 0
+new_revision: false

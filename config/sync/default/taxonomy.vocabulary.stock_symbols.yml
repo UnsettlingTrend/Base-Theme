@@ -6,3 +6,4 @@ name: 'Stock Symbols'
 vid: stock_symbols
 description: 'A list of stock symbols'
 weight: 0
+new_revision: false
