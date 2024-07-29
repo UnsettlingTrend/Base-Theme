@@ -10,7 +10,10 @@ stackable: false
 no_patching: false
 storage: folder
 folder: ../config/sync/dev
-module: {  }
+module:
+  devel: 0
+  devel_debug_log: 0
+  devel_kint_extras: 0
 theme: {  }
 complete_list: {  }
 partial_list:
