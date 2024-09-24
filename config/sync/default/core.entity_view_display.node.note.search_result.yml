@@ -1,0 +1,32 @@
+uuid: 033358ac-72f7-4f8a-8d4e-6c641e01284d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_result
+    - field.field.node.note.body
+    - field.field.node.note.field_tags
+    - node.type.note
+  module:
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.note.search_result
+targetEntityType: node
+bundle: note
+mode: search_result
+content:
+  search_api_excerpt:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  field_tags: true
+  langcode: true
+  links: true
+  published_at: true

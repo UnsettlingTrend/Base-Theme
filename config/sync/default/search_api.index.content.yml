@@ -6,7 +6,7 @@ dependencies:
     - field.storage.node.body
     - field.storage.node.field_paragraph
     - field.storage.node.field_subtitle
-    - search_api.server.solr
+    - search_api.server.solr_local
   module:
     - search_api_solr
     - node
@@ -91,6 +91,13 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_subtitle
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
@@ -105,11 +112,38 @@ field_settings:
           page: default
           quote: default
           webform: default
+  role_access:
+    label: 'Role-based access information'
+    property_path: search_api_role_access
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  status:
+    label: Boolean
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
+    dependencies:
+      module:
+        - node
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
     type: string
+    dependencies:
+      module:
+        - node
+  uid:
+    label: 'Entity reference'
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
     dependencies:
       module:
         - node
@@ -125,11 +159,35 @@ processor_settings:
   add_url: {  }
   aggregated_field: {  }
   auto_aggregated_fulltext_field: {  }
+  content_access:
+    weights:
+      preprocess_query: -30
   custom_value: {  }
   entity_type: {  }
+  highlight:
+    weights:
+      postprocess_query: 0
+    prefix: '<strong>'
+    suffix: '</strong>'
+    excerpt: true
+    excerpt_always: false
+    excerpt_length: 256
+    exclude_fields: {  }
+    highlight: always
+    highlight_partial: false
   language_with_fallback: {  }
   rendered_item: {  }
-  solr_date_range: {  }
+  reverse_entity_references: {  }
+  role_access:
+    weights:
+      preprocess_query: -30
+  solr_boost_more_recent:
+    weights:
+      preprocess_query: 0
+    boosts: {  }
+  solr_date_range:
+    weights:
+      preprocess_index: 0
 tracker_settings:
   index_parallel:
     indexing_order: lifo
@@ -137,4 +195,4 @@ options:
   cron_limit: 50
   index_directly: true
   track_changes_in_references: true
-server: solr
+server: solr_local

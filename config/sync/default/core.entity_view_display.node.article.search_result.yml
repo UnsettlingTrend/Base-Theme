@@ -10,73 +10,18 @@ dependencies:
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
     - field.field.node.article.field_take_aways
-    - image.style.thumbnail
     - node.type.article
   module:
     - field_layout
     - layout_builder
-    - layout_discovery
-    - svg_image
     - user
 third_party_settings:
   field_layout:
     id: layout_onecol
     settings: {  }
   layout_builder:
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          f87c46bd-3185-4d2e-902c-f92bc73b310e:
-            uuid: f87c46bd-3185-4d2e-902c-f92bc73b310e
-            region: content
-            configuration:
-              id: 'extra_field_block:node:article:search_api_excerpt'
-              label: 'Search result excerpt'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 0
-            additional: {  }
-          3d08bc6f-2ffd-4755-b211-8822ba1cad9f:
-            uuid: 3d08bc6f-2ffd-4755-b211-8822ba1cad9f
-            region: content
-            configuration:
-              id: 'field_block:node:article:field_image'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: content
-                  image_style: thumbnail
-                  image_loading:
-                    attribute: lazy
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          6ea786fe-4f52-4697-ba44-3c650fe41f37:
-            uuid: 6ea786fe-4f52-4697-ba44-3c650fe41f37
-            region: content
-            configuration:
-              id: 'extra_field_block:node:article:content_moderation_control'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 2
-            additional: {  }
-        third_party_settings: {  }
+    enabled: false
+    allow_custom: false
 _core:
   default_config_hash: uFyekWl4pl40ClJFmjk9tcyPJ-WFSXYsItJHB_XbQqs
 id: node.article.search_result
@@ -84,37 +29,19 @@ targetEntityType: node
 bundle: article
 mode: search_result
 content:
-  content_moderation_control:
+  search_api_excerpt:
     settings: {  }
-    third_party_settings: {  }
-    weight: -20
-    region: content
-  field_image:
-    type: image
-    label: hidden
-    settings:
-      image_link: content
-      image_style: thumbnail
-      image_loading:
-        attribute: lazy
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
     third_party_settings: {  }
     weight: 0
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 2
-    region: content
 hidden:
+  content_moderation_control: true
   field_comments: true
+  field_image: true
   field_paragraph: true
   field_subtitle: true
   field_tags: true
   field_take_aways: true
   langcode: true
+  links: true
   published_at: true
-  search_api_excerpt: true
