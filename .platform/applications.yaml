@@ -1,4 +1,1 @@
-relationships:
-  search:
-    service: solr
-    endpoint: main
+relationships:&#10  search:&#10    service: solr&#10    endpoint: main&#10
