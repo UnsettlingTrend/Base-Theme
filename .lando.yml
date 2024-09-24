@@ -64,7 +64,7 @@ services:
     portforward: true
   search:
     type: solr:9
-    portforward: false
+    portforward: true
     core: lando
     config:
       dir: .platform/solr-conf

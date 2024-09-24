@@ -37,12 +37,9 @@ search:
   type: solr:9.4
   disk: 256
   configuration:
-    configsets:
-      mainconfig: !archive "solr-conf"
     cores:
-      mainindex:
-        core_properties: |
-          configSet=mainconfig
+      collection1:
+        conf_dir: !archive "solr-conf"
     endpoints:
-      main:
-        core: mainindex
+      solr:
+        core: collection1
