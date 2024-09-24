@@ -1,1 +1,10 @@
-# The relationships of the application with services or other applications.&#10#&#10# The left-hand side is the name of the relationship as it will be exposed&#10# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand&#10# side is in the form '<service name>:<endpoint name>'.&#10relationships:&#10  database: 'db:production'&#10  #  search: 'elasticsearch:elasticsearch'&#10  search:&#10    service: solr&#10    endpoint: main&#10
+# The relationships of the application with services or other applications.
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form '<service name>:<endpoint name>'.
+relationships:
+  database: 'db:production'
+  #  search: 'elasticsearch:elasticsearch'
+  search:
+    service: solr
+    endpoint: main
