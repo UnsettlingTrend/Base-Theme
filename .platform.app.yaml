@@ -115,7 +115,6 @@ hooks:
 # side is in the form '<service name>:<endpoint name>'.
 relationships:
   database: 'db:production'
-  #  search: 'elasticsearch:elasticsearch'
   search:
     service: solr
     endpoint: main
