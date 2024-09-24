@@ -6,7 +6,7 @@ dependencies:
     - field.storage.node.body
     - field.storage.node.field_paragraph
     - field.storage.node.field_subtitle
-    - search_api.server.solr_local
+    - search_api.server.solr
   module:
     - search_api_solr
     - node
