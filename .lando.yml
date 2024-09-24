@@ -67,7 +67,7 @@ services:
     portforward: false
     core: lando
     config:
-      dir: lando/solr-conf
+      dir: .platform/solr-conf
 
 tooling:
   composer:
