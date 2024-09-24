@@ -39,7 +39,7 @@ search:
   configuration:
     cores:
       mainindex:
-        conf_dir: !archive ".platform/solr-conf"
+        conf_dir: !archive ".platform/solr-conf/"
     endpoints:
       main:
         core: mainindex
