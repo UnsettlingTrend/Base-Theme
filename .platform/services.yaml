@@ -34,7 +34,7 @@ db:
 #  disk: 512
 
 search:
-  type: solr:9.4
+  type: solr:9.7
   disk: 256
   configuration:
     cores:
