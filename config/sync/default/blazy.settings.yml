@@ -7,3 +7,4 @@ blazy:
   offset: 100
   saveViewportOffsetDelay: 50
   validateDelay: 25
+max_region_count: 0
