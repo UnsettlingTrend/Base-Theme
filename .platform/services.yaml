@@ -36,3 +36,10 @@ db:
 search:
   type: solr:9.4
   disk: 256
+  configuration:
+    cores:
+      mainindex:
+        conf_dir: !archive "core1-conf"
+    endpoints:
+      main:
+        core: mainindex

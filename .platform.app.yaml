@@ -118,6 +118,7 @@ relationships:
 #  search: 'elasticsearch:elasticsearch'
   solr:
     service: solr
+    endpoint: main
 
 web:
   locations:
