@@ -116,7 +116,7 @@ hooks:
 relationships:
   database: 'db:production'
 #  search: 'elasticsearch:elasticsearch'
-  solr:
+  search:
     service: solr
     endpoint: main
 

@@ -39,7 +39,7 @@ search:
   configuration:
     cores:
       mainindex:
-        conf_dir: !archive "core1-conf"
+        conf_dir: !archive "core-conf"
     endpoints:
       main:
         core: mainindex

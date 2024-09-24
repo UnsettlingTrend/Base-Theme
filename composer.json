@@ -250,6 +250,7 @@
         "drupal/search_api": "^1.15",
         "drupal/search_api_autocomplete": "^1.4",
         "drupal/search_api_location": "^1.0@alpha",
+        "drupal/search_api_solr": "^4.3",
         "drupal/search_api_sorts": "^1.0",
         "drupal/slick": "^3.0",
         "drupal/slick_views": "^3.0",
