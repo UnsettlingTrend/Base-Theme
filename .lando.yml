@@ -62,6 +62,12 @@ services:
     hogfrom:
       - appserver
     portforward: true
+  search:
+    type: solr:9
+    portforward: false
+    core: lando
+    config:
+      dir: lando/solr-conf
 
 tooling:
   composer:
