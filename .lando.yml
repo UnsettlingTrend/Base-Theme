@@ -26,9 +26,6 @@ proxy:
     - mail.cf.lndo.site
 
 services:
-#  search:
-#    type: elasticsearch:7.17.18
-#    portforward: 9200
   pma:
     type: phpmyadmin
     hosts:
@@ -65,7 +62,7 @@ services:
   search:
     type: solr:9
     portforward: true
-    core: lando
+    core: collection1
     config:
       dir: .platform/solr-conf
 
