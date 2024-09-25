@@ -13,6 +13,7 @@ dependencies:
     - entity_reference_revisions
     - field_layout
     - layout_builder
+    - layout_discovery
     - svg_image
     - text
     - user
