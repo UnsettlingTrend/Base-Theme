@@ -117,7 +117,7 @@ relationships:
   #  search: 'elasticsearch:elasticsearch'
   search:
     service: search
-    endpoint: main
+    endpoint: solr
 
 web:
   locations:
