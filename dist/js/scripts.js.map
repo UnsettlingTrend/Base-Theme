@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["scripts.js"],"sourcesContent":["(function ($) {\r\n  Drupal.behaviors.customBehavior = {\r\n    attach: function (context, settings) {\r\n      // JavaScript code here\r\n\r\n    }\r\n  };\r\n})(jQuery);\r\n"],"file":"scripts.js"}

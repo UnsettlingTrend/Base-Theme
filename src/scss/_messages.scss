@@ -1,0 +1,22 @@
+div[data-drupal-messages] {
+  .messages__wrapper {
+    max-width: $width-max;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  [data-drupal-message-type="status"] {
+    background-color: $color-status;
+  }
+  [data-drupal-message-type="warning"] {
+    background-color: $color-warning;
+  }
+  [data-drupal-message-type="error"] {
+    background-color: $color-error;
+  }
+
+  > .messages {
+    padding: 10px;
+  }
+
+}
