@@ -8,6 +8,8 @@ $font-size-full: 100%;
 $font-size-small: 80%;
 $font-size-large: 120%;
 
+$font-weight-bold: bold;
+
 // --------------- Colors ---------------
 
 $color-primary: #072e6c;
@@ -27,9 +29,10 @@ $color-gray: #666;
 $color-gray-dark: #444;
 $color-gray-darker: #222;
 
-$color-status: #6ca479;
-$color-warning: #efce85;
-$color-error: #fa7e7e;
+$color-messages-status: #6ca479;
+$color-messages-warning: #efce85;
+$color-messages-error: #fa7e7e;
+$color-messages-font: #fbfdff;
 
 // --------------- Dependent Colors ---------------
 $color-tag-font: $color-link-visited;
