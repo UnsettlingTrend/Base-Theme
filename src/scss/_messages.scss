@@ -19,6 +19,15 @@ div[data-drupal-messages] {
     > .messages {
       padding: 10px;
       color: $color-messages-font;
+
+      a,
+      a:hover,
+      a:link,
+      a:visited,
+      a:focus-visible{
+        color: $color-messages-font;
+        font-weight: $font-weight-bold;
+      }
     }
   }
 

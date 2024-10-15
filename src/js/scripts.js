@@ -1,10 +1,13 @@
-(function ($) {
-  Drupal.behaviors.myModuleBehavior = {
-    attach: function (context, settings) {
-      // Your jQuery code here
-      $('.my-element').click(function () {
-        alert('You clicked the element!');
+(function ($, Drupal, once) {
+  "use strict";
+  Drupal.behaviors.toggleSearchBlock = {
+    attach (context, settings) {
+      once('toggleSearchBlock', 'html').forEach(function (element) {
+        // Your jQuery code here
+        $('#main-search-button').click(function () {
+          $('#block-ut-base-searchapiform').toggle();
+        });
       });
     }
   };
-})(jQuery);
+})(jQuery, Drupal, once);

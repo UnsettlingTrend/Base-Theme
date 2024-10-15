@@ -7,3 +7,4 @@ global-styling:
   dependencies:
     - core/jquery
     - core/drupal
+    - core/once

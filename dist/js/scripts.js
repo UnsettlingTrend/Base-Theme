@@ -1,1 +1,1 @@
-!function(c){Drupal.behaviors.myModuleBehavior={attach:function(e,t){c(".my-element").click(function(){alert("You clicked the element!")})}}}(jQuery);
+!function(t,c,a){"use strict";c.behaviors.toggleSearchBlock={attach(c,o){a("toggleSearchBlock","html").forEach(function(c){t("#main-search-button").click(function(){t("#block-ut-base-searchapiform").toggle()})})}}}(jQuery,Drupal,once);
