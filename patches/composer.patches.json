@@ -5,9 +5,6 @@
     },
     "drupal/disable_html5_validation": {
       "Drupal 10 Compatibility Fix": "https://www.drupal.org/files/issues/2022-06-15/disable_html5_validation.1.x-dev.rector.patch"
-    },
-    "drupal/environment_indicator": {
-      "Make version indicator source and version indicator source fallback configurable.": "https://www.drupal.org/files/issues/2024-07-22/3324621-39.patch"
     }
   }
 }

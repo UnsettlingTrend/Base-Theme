@@ -276,6 +276,7 @@
         "google/charts": "45",
         "jackmoore/colorbox": "~1",
         "kenwheeler/slick": "~1.9.0",
+        "kint-php/kint": "^5.1",
         "michaeldrennen/robinhood": "^1.1",
         "php-http/httplug": "^2.0",
         "platformsh/config-reader": "^2.4",
