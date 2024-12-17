@@ -1,0 +1,87 @@
+// _table.scss (or similar filename in your theme's scss directory)
+
+// Base table styles
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem; // Consistent spacing
+  color: $color-black;
+
+  a {
+    color: $color-black;
+  }
+
+  // Responsive table behavior (optional)
+  @media (max-width: 767px) { // Example breakpoint
+    display: block;
+    overflow-x: auto; // Horizontal scroll on small screens
+  }
+}
+
+th,
+td {
+  padding: 0.75rem; // Comfortable padding
+  text-align: left;
+  border: 1px solid $color-gray-lighter; // Light gray border
+}
+
+th {
+  background-color: $color-gray-light; // Light gray background for header
+  font-weight: bold;
+  color: $color-white;
+
+  a {
+    color: $color-white;
+    text-decoration: none;
+  }
+}
+
+// Striped rows (optional)
+tr:nth-child(even) {
+  background-color: $color-gray-lighter;
+}
+
+// Striped rows (optional)
+tr:nth-child(odd) {
+  background-color: $color-white;
+}
+
+// Hover effect (optional)
+//tr:hover {
+//  background-color: $color-white;
+//}
+
+// Specific table variations (using modifiers)
+.table--striped {
+  tr:nth-child(even) {
+    background-color: lighten($color-secondary, 45%); // Use a color variable or theme setting
+  }
+}
+
+.table--bordered {
+  border: 1px solid $color-gray-lighter;
+}
+
+.table--compact {
+  th,
+  td {
+    padding: 0.5rem; // Reduced padding
+  }
+}
+
+
+.views-table { // Target views tables specifically
+  @extend table; // Inherit base table styles
+
+  th {
+    background-color: $color-secondary; // A darker blue from your theme palette
+    color: $color-white;
+  }
+}
+
+// Responsive adjustments (example)
+@media (max-width: 576px) {
+  .views-table {
+    font-size: 0.875rem; // Smaller font on extra small screens
+  }
+}

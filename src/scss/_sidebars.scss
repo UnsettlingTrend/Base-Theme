@@ -1,0 +1,4 @@
+div.region.sidebar_second,
+div.region.sidebar_first {
+  @include site-max-width();
+}
