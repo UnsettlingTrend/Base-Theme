@@ -5,3 +5,155 @@ main[role="main"] {
     }
   }
 }
+
+
+/*
+  SCSS to style basic HTML form elements in Drupal 10.
+  This SCSS provides a clean, modern, and organized way to style forms.
+  It utilizes variables and nesting for better maintainability.
+
+  Remember to compile this SCSS into CSS before it can be used by the browser.
+  Use a compiler like Sass, Node Sass, or Dart Sass, either locally or as part of a build process.
+*/
+
+// Variables
+$primary-color: #007bff; // Example primary color (blue)
+$secondary-color: #6c757d; // Example secondary color (gray)
+$error-color: #dc3545; // Example error color (red)
+$success-color: #28a745; // Example success color (green)
+$border-color: #ced4da;
+$light-gray: #f8f9fa;
+$font-family: Arial, sans-serif;
+$input-padding: 10px;
+$input-border-radius: 4px;
+$form-max-width: 600px;
+
+// Mixins
+@mixin focus-style() {
+  outline: none;
+  box-shadow: 0 0 3px rgba($primary-color, 0.5);
+}
+
+// Form Container
+form {
+  width: 100%;
+  max-width: $form-max-width;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  background-color: $light-gray;
+  font-family: $font-family;
+
+  // Fieldset
+  fieldset {
+    border: 1px solid $border-color;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: $input-border-radius;
+
+    // Legend
+    legend {
+      font-weight: bold;
+      padding: 0 10px;
+      color: $secondary-color;
+    }
+  }
+
+  // Labels
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  // Text Inputs, Textareas, and Selects
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input[type="search"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    padding: $input-padding;
+    margin-bottom: 10px;
+    border: 1px solid $border-color;
+    border-radius: $input-border-radius;
+    font-family: $font-family;
+    box-sizing: border-box; // Ensure padding is included in the width
+
+    &:focus {
+      @include focus-style();
+    }
+  }
+
+  // Textarea
+  textarea {
+    resize: vertical; // Allow vertical resizing only
+    min-height: 120px;
+  }
+
+  // Select
+  select {
+    appearance: auto;
+  }
+
+  // Checkboxes and Radio Buttons
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 5px;
+    accent-color: $primary-color;
+  }
+
+  // Submit Button
+  input[type="submit"],
+  button[type="submit"] {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: $input-border-radius;
+    cursor: pointer;
+    font-family: $font-family;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+
+    &:focus {
+      @include focus-style();
+    }
+  }
+
+  // Error and Success Styling
+  .form-item--error, /* Drupal error class */
+  .error { /* Generic error class */
+    input,
+    textarea,
+    select {
+      border-color: $error-color;
+    }
+
+    label {
+      color: $error-color;
+    }
+  }
+
+  .form-item--success,
+  .success {
+    input,
+    textarea,
+    select {
+      border-color: $success-color;
+    }
+    label {
+      color: $success-color;
+    }
+  }
+}
