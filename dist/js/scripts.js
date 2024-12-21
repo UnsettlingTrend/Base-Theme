@@ -1,1 +1,1 @@
-!function(t,c,a){"use strict";c.behaviors.toggleSearchBlock={attach(c,o){a("toggleSearchBlock","html").forEach(function(c){t("#main-search-button").click(function(){t("#block-ut-base-searchapiform").toggle()})})}}}(jQuery,Drupal,once);
+((a,c,e)=>{c.behaviors.toggleSearchBlock={attach(c,o){e("toggleSearchBlock","html").forEach(function(c){a("#main-search-button").click(function(){a("#block-ut-base-searchapiform").toggle()})})}}})(jQuery,Drupal,once);

@@ -4,6 +4,9 @@ main[role="main"] {
       @include site-max-width();
     }
   }
+  div[id^="block-"][id$="-socialauthmodallogin"] {
+    @include site-max-width();
+  }
 }
 
 
@@ -44,6 +47,7 @@ form {
   border-radius: 5px;
   background-color: $light-gray;
   font-family: $font-family;
+  box-sizing: border-box;
 
   // Fieldset
   fieldset {
