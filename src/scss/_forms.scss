@@ -4,9 +4,6 @@ main[role="main"] {
       @include site-max-width();
     }
   }
-  div[id^="block-"][id$="-socialauthmodallogin"] {
-    @include site-max-width();
-  }
 }
 
 
