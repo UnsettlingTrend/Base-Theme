@@ -7,7 +7,7 @@ name: cf
 # in multiple versions. Check the PHP documentation
 # (https://docs.platform.sh/languages/php.html#supported-versions)
 # to find the supported versions for the 'php' type.
-type: 'php:8.1'
+type: 'php:8.3'
 
 variables:
   env:
