@@ -1,0 +1,5 @@
+name: 'Utilities'
+type: module
+description: 'Shared utilities for UnsettlingTrend sights.'
+package: UnsettlingTrend
+core_version_requirement: ^10 || ^11

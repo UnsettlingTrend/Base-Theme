@@ -1,11 +1,11 @@
-uuid: 9d696c04-41b7-4297-91f3-84525dc2ae93
+uuid: 6ec91a40-d234-4246-888b-cdf46a96964c
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.media.media_library
     - field.field.media.image.field_media_image
-    - image.style.media_library
+    - image.style.medium
     - media.type.image
   module:
     - svg_image
@@ -21,11 +21,7 @@ content:
     label: hidden
     settings:
       image_link: ''
-      image_style: media_library
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
+      image_style: medium
       image_loading:
         attribute: lazy
     third_party_settings: {  }

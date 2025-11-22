@@ -1,4 +1,4 @@
-uuid: 0f313397-26e3-4df5-ba39-717a7ba1b53c
+uuid: 8980af99-179f-48b7-af33-91b39376ff59
 langcode: en
 status: true
 dependencies:
@@ -14,6 +14,7 @@ settings:
       - bold
       - italic
       - strikethrough
+      - alignment
       - superscript
       - subscript
       - removeFormat
@@ -24,7 +25,7 @@ settings:
       - numberedList
       - '|'
       - blockQuote
-      - drupalInsertImage
+      - drupalMedia
       - insertTable
       - horizontalLine
       - '|'
@@ -33,6 +34,12 @@ settings:
       - '|'
       - sourceEditing
   plugins:
+    ckeditor5_alignment:
+      enabled_alignments:
+        - left
+        - center
+        - right
+        - justify
     ckeditor5_codeBlock:
       languages:
         -
@@ -84,8 +91,6 @@ settings:
         - heading4
         - heading5
         - heading6
-    ckeditor5_imageResize:
-      allow_resize: true
     ckeditor5_list:
       properties:
         reversed: true
@@ -93,6 +98,8 @@ settings:
       multiBlock: true
     ckeditor5_sourceEditing:
       allowed_tags: {  }
+    media_media:
+      allow_view_mode_override: false
 image_upload:
   status: true
   scheme: public

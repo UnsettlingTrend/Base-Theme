@@ -1,11 +1,11 @@
-uuid: 32c1e14f-6069-4898-bfce-0dc0adcec985
+uuid: 7cc6206c-647b-47e9-a23a-4b3d41a6beb3
 langcode: en
 status: true
 dependencies:
   module:
     - user
 _core:
-  default_config_hash: x0E2jGoxP9eHkfDCa_squULlpvddE5h3gln_1oKeViY
+  default_config_hash: ii6Ab07A59NstuhmfXyQ9RgQXjhWoE3V4xdP4EcACQ8
 id: workbench_current_user
 label: 'Workbench: Current user'
 module: views
@@ -20,7 +20,6 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: ''
       fields:
         uid:
           id: uid
@@ -280,8 +279,8 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        roles:
-          id: roles
+        roles_target_id:
+          id: roles_target_id
           table: user__roles
           field: roles_target_id
           relationship: none
@@ -333,6 +332,18 @@ display:
           hide_alter_empty: true
           type: entity_reference_label
           separator: ', '
+          click_sort_column: target_id
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          field_api_classes: false
       pager:
         type: none
         options:
@@ -356,7 +367,6 @@ display:
         type: tag
         options: {  }
       empty: {  }
-      sorts: {  }
       arguments: {  }
       filters:
         uid_current:
@@ -378,8 +388,6 @@ display:
             description: ''
             use_operator: false
             operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: ''
             required: false
             remember: false
@@ -413,17 +421,15 @@ display:
       relationships: {  }
       header:
         area:
-          id: area
+          id: area_text_custom
           table: views
-          field: area
+          field: area_text_custom
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text
+          plugin_id: text_custom
           empty: false
-          content:
-            value: "<h3>{{ name }}'s profile</h3>"
-            format: basic_html
+          content: "<h3>{{ name }}'s profile</h3>"
           tokenize: true
       footer: {  }
       display_extenders: {  }

@@ -1,9 +1,0 @@
-uuid: 2ab8e3cb-34aa-4a31-8ad5-2a92b7fbf69f
-langcode: en
-status: true
-dependencies: {  }
-name: Symbols
-vid: symbols
-description: 'Symbols for stock/crypto/etc.'
-weight: 0
-new_revision: false

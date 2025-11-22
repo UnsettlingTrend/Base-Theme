@@ -1,0 +1,25 @@
+uuid: b9b493d6-a970-432d-a0ab-6eefae649bfc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group_relationship.restricted_content-9376111be9518.group_roles
+    - group.relationship_type.restricted_content-9376111be9518
+id: group_relationship.restricted_content-9376111be9518.default
+targetEntityType: group_relationship
+bundle: restricted_content-9376111be9518
+mode: default
+content:
+  group_roles:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+hidden:
+  entity_id: true
+  langcode: true
+  search_api_excerpt: true
+  uid: true

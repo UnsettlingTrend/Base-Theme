@@ -7,30 +7,37 @@ env_file:
 config:
   composer_version: 2-latest
   database: mysql:8.0.32
-  php: 8.1
+  php: 8.3
   webroot: web
   config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
-  xdebug: 'develop,debug'
+    database: lando/config/custom.cnf
+  xdebug: true
 
 excludes:
   - node_modules
 
 proxy:
 #  search:
-#    - search.cf.lndo.site
+#    - search.tf.lndo.site
   pma:
     - db.cf.lndo.site
   mailhog:
     - mail.cf.lndo.site
+  search:
+    - search.cf.lndo.site
 
 services:
+#  search:
+#    type: elasticsearch:7.17.18
+#    portforward: 9200
   pma:
     type: phpmyadmin
     hosts:
       - database
   appserver:
+    type: php:8.3
     build:
       - composer install
     overrides:
@@ -38,16 +45,17 @@ services:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
         # Allows path mapping in PhpStorm and CLI debugging.
         # https://docs.lando.dev/guides/lando-phpstorm.html#debugging-cli-commands.
-        PHP_IDE_CONFIG: "serverName=appserver"
+        PHP_IDE_CONFIG: "serverName=tf"
         # Set debug mode here, instead of in config: xdebug so it can be toggled off and on.
         # Develop allows additional features, like html in var_dump.
         # https://xdebug.org/docs/develop.
         # Debug allows step debugging.
         # https://xdebug.org/docs/remote.
-        XDEBUG_SESSION_START: lando
-        XDEBUG_SESSION=: 'PHPSTORM'
+        XDEBUG_MODE: 'debug,develop'
+        # Causes Xdebug to trigger on every request, no need to do XDEBUG_SESSION in the URL.
+        XDEBUG_SESSION: 1
   node:
-    type: 'node:18'
+    type: 'node:22'
     globals:
       gulp-cli: latest
     scanner: false
@@ -66,6 +74,8 @@ services:
       dir: .platform/solr-conf
 
 tooling:
+  bash:
+    service: appserver
   composer:
     service: appserver
     description: run composer commands

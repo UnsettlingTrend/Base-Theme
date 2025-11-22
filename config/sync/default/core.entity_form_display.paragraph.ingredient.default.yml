@@ -1,0 +1,148 @@
+uuid: 644eff97-5cae-4fc8-a337-a88a4c1861ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.ingredient.field_denomination
+    - field.field.paragraph.ingredient.field_ingredient
+    - field.field.paragraph.ingredient.field_note
+    - field.field.paragraph.ingredient.field_number
+    - field.field.paragraph.ingredient.field_volume
+    - field.field.paragraph.ingredient.field_weight
+    - paragraphs.paragraphs_type.ingredient
+  module:
+    - field_group
+    - physical
+third_party_settings:
+  field_group:
+    group_amount:
+      children:
+        - group_weight
+        - group_volume
+        - group_number
+      label: Amount
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: tabs
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        required_fields: true
+        direction: horizontal
+        width_breakpoint: 640
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_weight:
+      children:
+        - field_weight
+      label: Weight
+      region: content
+      parent_name: group_amount
+      weight: 20
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+    group_volume:
+      children:
+        - field_volume
+      label: Volume
+      region: content
+      parent_name: group_amount
+      weight: 21
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+    group_number:
+      children:
+        - field_number
+        - field_denomination
+      label: Number
+      region: content
+      parent_name: group_amount
+      weight: 22
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+id: paragraph.ingredient.default
+targetEntityType: paragraph
+bundle: ingredient
+mode: default
+content:
+  field_denomination:
+    type: entity_reference_autocomplete
+    weight: 23
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ingredient:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_note:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_number:
+    type: number
+    weight: 22
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_volume:
+    type: physical_measurement_default
+    weight: 1
+    region: content
+    settings:
+      default_unit: ''
+      allow_unit_change: true
+      available_units: {  }
+    third_party_settings: {  }
+  field_weight:
+    type: physical_measurement_default
+    weight: 0
+    region: content
+    settings:
+      default_unit: ''
+      allow_unit_change: true
+      available_units: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

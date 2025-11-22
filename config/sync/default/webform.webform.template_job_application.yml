@@ -1,4 +1,4 @@
-uuid: db1398a0-3e65-41c3-a7b4-6848ccef2400
+uuid: 1cbe3ea6-700e-45fd-81ae-c69c75c6da19
 langcode: en
 status: closed
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - webform_templates
 _core:
-  default_config_hash: wGgz0Pm3SP3WyZEzdEUmiYLlE7ntOdPHPpW6QKVEa1Y
+  default_config_hash: 93CTCzNXdhaZylePWZND9NCuGzG7wo64r75tmW6Kfc0
 weight: 0
 open: null
 close: null
@@ -29,10 +29,10 @@ elements: |
       '#title': 'Last Name'
       '#type': textfield
       '#required': true
-    gender:
+    sex:
       '#type': webform_radios_other
-      '#title': Gender
-      '#options': gender
+      '#title': Sex
+      '#options': sex
       '#required': true
   contact_information:
     '#title': 'Contact Information'
@@ -305,6 +305,7 @@ handlers:
       attachments: false
       twig: false
       theme_name: ''
+      langcode: ''
       parameters: {  }
       debug: false
 variants: {  }

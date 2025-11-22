@@ -1,4 +1,4 @@
-uuid: 6c0e95b6-5493-4a54-9844-98cb031f4275
+uuid: 0e39f8fa-1495-4c22-b30b-c06ffd0a010b
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: ut_base_content
 theme: ut_base
 region: content
-weight: -2
+weight: -4
 provider: null
 plugin: system_main_block
 settings:

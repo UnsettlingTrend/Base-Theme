@@ -1,14 +1,15 @@
-uuid: 03c13ea4-aa3b-4c36-a6aa-236bc3cafa65
+uuid: 2ed25b8f-9952-412f-85e4-150f7f3f7059
 langcode: en
 status: true
 dependencies:
   config:
     - node.type.article
     - node.type.page
+    - node.type.recipe
   module:
     - content_moderation
 _core:
-  default_config_hash: T_JxNjYlfoRBi7Bj1zs5Xv9xv1btuBkKp5C1tNrjMhI
+  default_config_hash: Ln7YAg2WXZ-5wn9ib-v9qOKFxF2YZLnwSKtX-V455hE
 id: editorial
 label: Editorial
 type: content_moderation
@@ -67,7 +68,7 @@ type_settings:
         - published
       to: published
       weight: 1
-    review:
+    send_for_review:
       label: 'Send for Review'
       from:
         - archived
@@ -80,4 +81,5 @@ type_settings:
     node:
       - article
       - page
+      - recipe
   default_moderation_state: draft

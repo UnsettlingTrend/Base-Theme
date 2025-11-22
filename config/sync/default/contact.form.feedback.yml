@@ -1,4 +1,4 @@
-uuid: e9f20f73-420b-468d-947b-917c00338341
+uuid: a879197b-8659-4766-a3fd-4d4ab2a8f834
 langcode: en
 status: true
 dependencies: {  }
@@ -7,7 +7,7 @@ _core:
 id: feedback
 label: 'Website feedback'
 recipients:
-  - automaton@chrisferagotti.com
+  - chrisferagotti@gmail.com
 reply: ''
 weight: 0
 message: 'Your message has been sent.'

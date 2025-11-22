@@ -1,4 +1,4 @@
-uuid: efd3d65e-7665-4f51-b760-3ea47a06010e
+uuid: 34b17554-4e76-4684-b2d9-54ae9607a7f7
 langcode: en
 status: true
 dependencies:
@@ -7,17 +7,9 @@ dependencies:
     - field.field.node.webform.webform
     - node.type.webform
   module:
-    - content_moderation
-    - field_layout
-    - layout_discovery
     - path
     - text
     - webform
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 _core:
   default_config_hash: A3evv2pt6d-bKCPcgjXA5VGTemXWOxG3lSXvWiRWcck
 id: node.webform.default
@@ -46,12 +38,6 @@ content:
     region: content
     settings:
       include_locked: true
-    third_party_settings: {  }
-  moderation_state:
-    type: moderation_state_default
-    weight: 100
-    region: content
-    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -94,7 +80,6 @@ content:
     region: content
     settings:
       match_operator: CONTAINS
-      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }

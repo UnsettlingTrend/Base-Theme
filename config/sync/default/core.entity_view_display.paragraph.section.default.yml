@@ -1,32 +1,23 @@
-uuid: 3107b253-84ac-4887-bdef-a93969ecdca4
+uuid: cbdb278b-ef47-4c73-97df-f7a5d111a684
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.section.field_paragraph
-    - field.field.paragraph.section.field_text_short
+    - field.field.paragraph.section.field_paragraphs
     - paragraphs.paragraphs_type.section
   module:
     - entity_reference_revisions
-    - text
 id: paragraph.section.default
 targetEntityType: paragraph
 bundle: section
 mode: default
 content:
-  field_paragraph:
+  field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
     settings:
       view_mode: default
       link: ''
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_text_short:
-    type: text_default
-    label: hidden
-    settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content

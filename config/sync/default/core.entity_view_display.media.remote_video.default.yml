@@ -1,4 +1,4 @@
-uuid: 5c79da60-ee9e-484b-9210-d808ff550199
+uuid: c2ce615b-0d7a-4e24-a588-87997515bc39
 langcode: en
 status: true
 dependencies:
@@ -6,60 +6,7 @@ dependencies:
     - field.field.media.remote_video.field_media_oembed_video
     - media.type.remote_video
   module:
-    - field_layout
-    - layout_builder
-    - layout_discovery
     - media
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
-  layout_builder:
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          8607a9bc-cfeb-4bf0-9a25-81849fc8e382:
-            uuid: 8607a9bc-cfeb-4bf0-9a25-81849fc8e382
-            region: content
-            configuration:
-              id: 'field_block:media:remote_video:field_media_oembed_video'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: oembed
-                label: hidden
-                settings:
-                  max_width: 0
-                  max_height: 0
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          0a9c4e07-87d0-4b5d-8114-6493e487abe8:
-            uuid: 0a9c4e07-87d0-4b5d-8114-6493e487abe8
-            region: content
-            configuration:
-              id: 'field_block:media:remote_video:field_media_oembed_video'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: oembed
-                label: hidden
-                settings:
-                  max_width: 0
-                  max_height: 0
-                  loading:
-                    attribute: eager
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-        third_party_settings: {  }
 _core:
   default_config_hash: gUaDZKMQD3lmLKWPn727X3JHVdKJ525g4EJCCcDVAqk
 id: media.remote_video.default

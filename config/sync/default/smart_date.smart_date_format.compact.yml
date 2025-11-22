@@ -1,14 +1,14 @@
-uuid: eac06174-9078-4546-813f-ba6ea88129b9
+uuid: a65c6f49-fb2b-4eed-af30-2fba2e83e27d
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: HAQ6FMGj93La_53FLVk4SlAxCwTQPijwqTynbu-5mMk
+  default_config_hash: 3k0ojgMLZae-f358WLWxfKYddQPSaQSnIdAKiYw2wnY
 id: compact
 label: Compact
 date_format: 'M j Y'
 time_format: 'g:ia'
-time_hour_format: 'g:ia'
+time_hour_format: ga
 allday_label: ''
 separator: ' - '
 join: ' | '

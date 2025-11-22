@@ -1,8 +1,0 @@
-# Ignore settings config files, as they're stored in the /config directory and added, as needed, on build for the environment
-
-lando.settings.php
-local.settings.php
-development.settings.php
-production.settings.php
-stage.settings.php
-test.settings.php

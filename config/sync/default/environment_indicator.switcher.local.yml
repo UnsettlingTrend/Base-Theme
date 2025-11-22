@@ -1,4 +1,4 @@
-uuid: ecc472c1-2131-42e6-803d-9b79b1ca4a45
+uuid: 4a74bcbc-0c2b-4f44-8212-0d2473290fb7
 langcode: en
 status: true
 dependencies: {  }
@@ -6,6 +6,6 @@ machine: local
 description: null
 name: Local
 weight: 0
-url: 'https://cf.lndo.site'
-fg_color: '#e0e0e0'
+url: 'https://tf.lndo.site'
+fg_color: '#d0d0d0'
 bg_color: '#4400ff'

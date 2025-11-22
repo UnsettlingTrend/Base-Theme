@@ -1,4 +1,4 @@
-uuid: 19a8fef5-a387-48f3-bfad-22a362873ad3
+uuid: 654bbcdb-6b26-4313-b4f4-30253414d269
 langcode: en
 status: true
 dependencies:
@@ -8,15 +8,9 @@ dependencies:
     - image.style.thumbnail
     - media.type.image
   module:
-    - field_layout
-    - layout_discovery
     - svg_image
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
 _core:
-  default_config_hash: PlyfyVZfALLkP7nbxLpaVKIDUWRioZghWpFDv0_rJ68
+  default_config_hash: BMLrK4zKp8-FFnMseBdT_6h6YipUsKRfbDf_3WUB5HA
 id: media.image.media_library
 targetEntityType: media
 bundle: image
@@ -37,16 +31,9 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
-  name:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
 hidden:
   created: true
+  name: true
   path: true
   status: true
   uid: true

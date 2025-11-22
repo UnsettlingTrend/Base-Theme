@@ -1,97 +1,15 @@
-uuid: b3098212-ef1f-4c87-abd1-e1c75040f1cd
+uuid: ba865b0f-fc1b-41e9-972a-5b156b5eaac8
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.user.compact
+    - field.field.user.user.field_name
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
-    - field_layout
-    - layout_builder
-    - layout_discovery
     - svg_image
     - user
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
-  layout_builder:
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0:
-            uuid: 9e65c53b-25a5-4ad1-b9d1-864ea9c1f4b0
-            region: content
-            configuration:
-              id: 'field_block:user:user:user_picture'
-              label: Picture
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: content
-                  image_style: user
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          6ca1b0af-8900-46cb-aa99-e79ac60b5811:
-            uuid: 6ca1b0af-8900-46cb-aa99-e79ac60b5811
-            region: content
-            configuration:
-              id: 'field_block:user:user:name'
-              label: Name
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: string
-                label: hidden
-                settings:
-                  link_to_entity: true
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-          a4d8e04e-6f60-4818-836a-f13b4e3fe2a3:
-            uuid: a4d8e04e-6f60-4818-836a-f13b4e3fe2a3
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:user:user:user_picture'
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: content
-                  image_style: thumbnail
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                  image_loading:
-                    attribute: lazy
-                third_party_settings: {  }
-            weight: 3
-            additional: {  }
-        third_party_settings: {  }
 _core:
   default_config_hash: '-cLsS3M3JycipXQt9rEb81_HxKneReoGuRh8ijcOPXs'
 id: user.user.compact
@@ -105,16 +23,13 @@ content:
     settings:
       image_link: content
       image_style: thumbnail
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
       image_loading:
         attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  field_name: true
   langcode: true
   member_for: true
   search_api_excerpt: true

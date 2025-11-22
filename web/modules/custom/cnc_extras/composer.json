@@ -1,0 +1,13 @@
+{
+    "name": "cnc_extras",
+    "type": "drupal-module",
+    "description": "Extra things for the Chris & Cammy website.",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/cnc_extras",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/cnc_extras",
+        "source": "http://cgit.drupalcode.org/cnc_extras"
+    }
+}

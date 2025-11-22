@@ -12,8 +12,8 @@ type: 'php:8.3'
 variables:
   env:
     # Update these for your desired NVM and Node versions.
-    NVM_VERSION: v0.39.3
-    NODE_VERSION: v18.14.2
+    NVM_VERSION: v21.0.0
+    NODE_VERSION: v22.11.0
 
 dependencies:
   php:
@@ -92,10 +92,22 @@ hooks:
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     # Use the specified version
     nvm use "$NODE_VERSION"
-#    # Compile assets
-#    cd web/themes/contrib/ut_base
-#    npm ci
-#    gulp
+    # Prepare the theme files and remove node_modules directories after
+    echo "Preparing theme files..."
+    echo "Compiling base theme assets..."
+    cd /app/web/themes/contrib/material_base
+    npm install
+    npm run build
+    # TODO: For now, this is "custom", but will be moved to contrib eventually
+    echo "Compiling sub theme assets..."
+    cd /app/web/themes/custom/ut_material
+    npm install
+    npm run build
+    # Delete node_modules files
+    rm -rf /app/web/themes/custom/ut_material/node_modules /app/web/themes/contrib/material_base/node_modules
+    echo "Finished compiling all theme assets."
+    cd /app
+
   # The deploy hook runs after your application has been deployed and started.
   # Code cannot be modified at this point but the database is available.
   # The site is not accepting requests while this script runs so keep it
@@ -104,17 +116,15 @@ hooks:
     set -e
     cd web
     ../vendor/bin/drush -y cache-rebuild
-    ../vendor/bin/drush -y updatedb
-    ../vendor/bin/drush -y config-import
-    ../vendor/bin/drush -y cache-rebuild
+    ../vendor/bin/drush -y deploy
 
 # The relationships of the application with services or other applications.
+#
 # The left-hand side is the name of the relationship as it will be exposed
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form '<service name>:<endpoint name>'.
 relationships:
   database: 'db:production'
-  #  search: 'elasticsearch:elasticsearch'
   search:
     service: search
     endpoint: solr
@@ -129,4 +139,4 @@ crons:
   # Run Drupal's cron tasks every 19 minutes.
   drupal:
     spec: '*/19 * * * *'
-    cmd: 'cd web ; drush core-cron'
+    cmd: 'cd /app ; vendor/bin/drush core-cron'

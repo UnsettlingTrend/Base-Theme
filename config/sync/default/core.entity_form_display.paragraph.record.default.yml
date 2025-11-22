@@ -1,0 +1,49 @@
+uuid: a8b77f73-eb6e-424a-bde1-c2fa217acb57
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.record.field_date
+    - field.field.paragraph.record.field_media
+    - field.field.paragraph.record.field_text_area
+    - paragraphs.paragraphs_type.record
+  module:
+    - datetime
+    - media_library
+    - text
+id: paragraph.record.default
+targetEntityType: paragraph
+bundle: record
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_media:
+    type: media_library_widget
+    weight: 1
+    region: content
+    settings:
+      media_types:
+        - image
+        - audio
+        - document
+        - remote_video
+        - video
+    third_party_settings: {  }
+  field_text_area:
+    type: text_textarea_with_summary
+    weight: 2
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

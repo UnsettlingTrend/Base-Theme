@@ -1,0 +1,24 @@
+uuid: 1bec874f-b514-4f3d-9591-fdb056f84109
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.limited_html
+  module:
+    - ckeditor5
+format: limited_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - heading
+      - bold
+      - italic
+      - underline
+      - link
+  plugins:
+    ckeditor5_heading:
+      enabled_headings:
+        - heading3
+image_upload:
+  status: false

@@ -1,4 +1,4 @@
-uuid: 0aa74d72-05e5-46d7-b3c4-857cf3dba9bf
+uuid: a70038a1-f135-48a0-8624-236d3e3d34e5
 langcode: en
 status: true
 dependencies: {  }
@@ -6,6 +6,6 @@ machine: dev
 description: null
 name: Dev
 weight: 1
-url: 'https://develop-sr3snxi-qgxm6c7nioky2.ca-1.platformsh.site/'
+url: 'https://develop-sr3snxi-ysbwhsqexx7ne.us-3.platformsh.site'
 fg_color: '#333333'
 bg_color: '#d7d133'

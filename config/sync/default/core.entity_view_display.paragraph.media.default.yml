@@ -1,15 +1,25 @@
-uuid: f96775af-7726-48f9-a9a6-39b22c6ff9ad
+uuid: 51fd4206-48e7-44f0-a9bd-9c4b7306dde8
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.media.field_caption
     - field.field.paragraph.media.field_media
     - paragraphs.paragraphs_type.media
+  module:
+    - text
 id: paragraph.media.default
 targetEntityType: paragraph
 bundle: media
 mode: default
 content:
+  field_caption:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_media:
     type: entity_reference_entity_view
     label: hidden

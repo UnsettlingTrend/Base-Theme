@@ -1,0 +1,23 @@
+uuid: 3a44f35b-4e9c-448f-b4da-1cea716029c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.text_area.field_text_area
+    - paragraphs.paragraphs_type.text_area
+  module:
+    - text
+id: paragraph.text_area.default
+targetEntityType: paragraph
+bundle: text_area
+mode: default
+content:
+  field_text_area:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

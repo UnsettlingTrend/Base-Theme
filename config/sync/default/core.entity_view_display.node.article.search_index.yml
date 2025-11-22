@@ -1,4 +1,4 @@
-uuid: fb467c92-754b-47c2-81e9-d99cae8a0024
+uuid: 72ea1531-433b-4800-9a24-60b820c5e364
 langcode: en
 status: true
 dependencies:
@@ -6,83 +6,54 @@ dependencies:
     - core.entity_view_mode.node.search_index
     - field.field.node.article.field_comments
     - field.field.node.article.field_image
-    - field.field.node.article.field_paragraph
+    - field.field.node.article.field_paragraphs
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
-    - field.field.node.article.field_take_aways
     - node.type.article
   module:
-    - field_layout
+    - entity_reference_revisions
     - layout_builder
-    - layout_discovery
+    - text
     - user
 third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
   layout_builder:
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          e084fd23-5157-4015-8add-83260bff72ee:
-            uuid: e084fd23-5157-4015-8add-83260bff72ee
-            region: content
-            configuration:
-              id: 'field_block:node:article:field_tags'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_label
-                label: hidden
-                settings:
-                  link: false
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          00a6497b-91dd-44d2-a394-42afa8c4bf53:
-            uuid: 00a6497b-91dd-44d2-a394-42afa8c4bf53
-            region: content
-            configuration:
-              id: 'extra_field_block:node:article:content_moderation_control'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 3
-            additional: {  }
-        third_party_settings: {  }
+    enabled: false
+    allow_custom: false
 _core:
-  default_config_hash: UyS6h90lp_2z8y-boEip0WxzO-BGPHubSfeQYnjwg_4
+  default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
 id: node.article.search_index
 targetEntityType: node
 bundle: article
 mode: search_index
 content:
-  content_moderation_control:
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_subtitle:
+    type: text_default
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: -20
+    weight: 0
     region: content
   field_tags:
     type: entity_reference_label
     label: hidden
     settings:
-      link: false
+      link: true
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
 hidden:
+  content_moderation_control: true
   field_comments: true
   field_image: true
-  field_paragraph: true
-  field_subtitle: true
-  field_take_aways: true
   langcode: true
   links: true
-  published_at: true
   search_api_excerpt: true

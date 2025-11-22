@@ -1,4 +1,4 @@
-uuid: f95b415d-b9f2-42b6-b067-540b61411566
+uuid: 2264f1af-3c7a-4093-900d-f5d8ceef21c6
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ _core:
 id: ut_base_local_tasks
 theme: ut_base
 region: content
-weight: -3
+weight: -5
 provider: null
 plugin: local_tasks_block
 settings:

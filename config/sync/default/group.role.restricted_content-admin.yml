@@ -1,4 +1,4 @@
-uuid: 13997fd5-0ecb-4b91-b3e5-4e0b3be8b0c9
+uuid: 61025904-1275-4d97-a05c-79baae83bf67
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,9 @@ dependencies:
     - group.type.restricted_content
 id: restricted_content-admin
 label: Admin
-weight: 100
-group_type: restricted_content
-permissions: {  }
+weight: -99
 admin: true
 scope: individual
+global_role: null
+group_type: restricted_content
+permissions: {  }

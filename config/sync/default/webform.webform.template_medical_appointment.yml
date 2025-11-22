@@ -1,4 +1,4 @@
-uuid: 6abcbb65-c6e5-4b4d-92b7-3b63bcb84d2f
+uuid: 028f1b22-f73a-4953-b593-fda8acbb77d4
 langcode: en
 status: closed
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - webform_templates
 _core:
-  default_config_hash: u5cemK1uBQO-nzKxQnshweELlzA9sTJLWBmbYslYrgc
+  default_config_hash: ku1ImOMHUtXxnkectQHhXukgV4yxtV1n83CazBYp_nU
 weight: 0
 open: null
 close: null
@@ -20,7 +20,7 @@ categories: {  }
 elements: |
   introduction:
     '#markup': 'After you submit the form, a care specialist will call you back within XX hours to schedule an appointment.'
-  h2:
+  hr:
     '#type': webform_horizontal_rule
   call:
     '#markup': 'You may also speak with a care specialist directly by calling <a href="tel:XXX-XXX-XXXX">XXX-XXX-XXXX</a> on Monday–Friday between 8:30 am to 5:00 pm EST.'
@@ -427,6 +427,7 @@ handlers:
       attachments: false
       twig: false
       theme_name: ''
+      langcode: ''
       parameters: {  }
       debug: false
 variants: {  }

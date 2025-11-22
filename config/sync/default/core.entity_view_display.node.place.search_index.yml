@@ -1,0 +1,39 @@
+uuid: afe1afd5-13a4-4939-9886-dd7798689da1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.field.node.place.body
+    - field.field.node.place.field_address
+    - field.field.node.place.field_geolocation_coordinates
+    - field.field.node.place.field_location_type
+    - node.type.place
+  module:
+    - layout_builder
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.place.search_index
+targetEntityType: node
+bundle: place
+mode: search_index
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  book_navigation: true
+  field_address: true
+  field_geolocation_coordinates: true
+  field_location_type: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

@@ -1,9 +1,9 @@
-uuid: 444e704b-36a7-4d0e-a715-5ccbdeaa8799
+uuid: 49be406a-fc0a-4fbc-bbae-848707486f85
 langcode: en
 status: true
 dependencies: {  }
 name: Ingredients
 vid: ingredients
-description: 'List of Cooking Ingredients'
+description: null
 weight: 0
 new_revision: false

@@ -1,0 +1,23 @@
+uuid: af039858-e664-48a0-b557-2e77ea4b1fe8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_servings
+    - node.type.recipe
+id: node.recipe.field_servings
+field_name: field_servings
+entity_type: node
+bundle: recipe
+label: Servings
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

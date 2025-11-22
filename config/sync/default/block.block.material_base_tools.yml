@@ -1,0 +1,27 @@
+uuid: c69b45fc-7c60-45b2-8bb7-279f247329fb
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - material_base
+_core:
+  default_config_hash: zPbSniaDUoCa9XueEvPsFCeBJ47n69lc8_5SCHpuoNQ
+id: material_base_tools
+theme: material_base
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Tools
+  label_display: visible
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

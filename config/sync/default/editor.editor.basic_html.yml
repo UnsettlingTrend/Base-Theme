@@ -1,4 +1,4 @@
-uuid: e5e247bb-6d2d-406b-a84a-246fe4b694d1
+uuid: 43e4371e-3106-4f55-a14e-34613c4fbcf4
 langcode: en
 status: true
 dependencies:
@@ -11,35 +11,24 @@ editor: ckeditor5
 settings:
   toolbar:
     items:
-      - heading
-      - '|'
       - bold
       - italic
-      - underline
-      - strikethrough
-      - superscript
-      - subscript
-      - removeFormat
-      - '|'
       - alignment
-      - outdent
-      - indent
       - '|'
       - link
       - '|'
       - bulletedList
       - numberedList
+      - '|'
       - insertTable
-      - '|'
       - blockQuote
+      - drupalMedia
       - '|'
-      - undo
-      - redo
+      - heading
       - '|'
       - sourceEditing
       - '|'
       - code
-      - codeBlock
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
@@ -47,50 +36,6 @@ settings:
         - justify
         - left
         - right
-    ckeditor5_codeBlock:
-      languages:
-        -
-          label: 'Plain text'
-          language: plaintext
-        -
-          label: C
-          language: c
-        -
-          label: 'C#'
-          language: cs
-        -
-          label: C++
-          language: cpp
-        -
-          label: CSS
-          language: css
-        -
-          label: Diff
-          language: diff
-        -
-          label: HTML
-          language: html
-        -
-          label: Java
-          language: java
-        -
-          label: JavaScript
-          language: javascript
-        -
-          label: PHP
-          language: php
-        -
-          label: Python
-          language: python
-        -
-          label: Ruby
-          language: ruby
-        -
-          label: TypeScript
-          language: typescript
-        -
-          label: XML
-          language: xml
     ckeditor5_heading:
       enabled_headings:
         - heading2
@@ -110,13 +55,8 @@ settings:
         - '<dt>'
         - '<dd>'
         - '<span>'
-        - '<details>'
-        - '<summary>'
-        - '<code class>'
-        - '<pre class>'
-        - '<img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix">'
-        - '<drupal-entity alt title data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-langcode class>'
-        - '<a hreflang class="btn btn-gray">'
+        - '<img src alt height width data-entity-type data-entity-uuid data-align data-caption>'
+        - '<a hreflang>'
         - '<blockquote cite>'
         - '<ul type>'
         - '<ol type>'
@@ -125,10 +65,9 @@ settings:
         - '<h4 id>'
         - '<h5 id>'
         - '<h6 id>'
-        - '<p class="clearfix">'
-        - '<table class="table table-responsive table-striped">'
-        - '<th scope>'
-        - '<tr scope>'
+        - '<drupal-media title>'
+    media_media:
+      allow_view_mode_override: false
 image_upload:
   status: true
   scheme: public

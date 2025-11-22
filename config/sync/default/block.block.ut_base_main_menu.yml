@@ -1,4 +1,4 @@
-uuid: cd8e9fab-28bc-4c0f-b06b-24d7b894a19a
+uuid: b637c566-ada7-4401-9985-2114088fdf7b
 langcode: en
 status: true
 dependencies:
@@ -13,7 +13,7 @@ _core:
 id: ut_base_main_menu
 theme: ut_base
 region: primary_menu
-weight: -5
+weight: -7
 provider: null
 plugin: 'system_menu_block:main'
 settings:

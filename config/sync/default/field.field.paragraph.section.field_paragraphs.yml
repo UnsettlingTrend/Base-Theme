@@ -1,0 +1,51 @@
+uuid: 861a4223-2b8a-4336-9880-708158683b4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_paragraphs
+    - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.section
+    - paragraphs.paragraphs_type.text_area
+  module:
+    - entity_reference_revisions
+id: paragraph.section.field_paragraphs
+field_name: field_paragraphs
+entity_type: paragraph
+bundle: section
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      text_area: text_area
+      media: media
+    negate: 0
+    target_bundles_drag_drop:
+      from_library:
+        weight: -15
+        enabled: false
+      location:
+        weight: -14
+        enabled: false
+      map_marker:
+        weight: -13
+        enabled: false
+      media:
+        weight: -11
+        enabled: true
+      record:
+        weight: -10
+        enabled: false
+      section:
+        weight: -9
+        enabled: false
+      text_area:
+        weight: -12
+        enabled: true
+field_type: entity_reference_revisions

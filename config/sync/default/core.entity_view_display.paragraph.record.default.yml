@@ -1,0 +1,44 @@
+uuid: 95345f0d-801c-4b2a-94fb-8243fbf3f3c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.record.field_date
+    - field.field.paragraph.record.field_media
+    - field.field.paragraph.record.field_text_area
+    - paragraphs.paragraphs_type.record
+  module:
+    - datetime
+    - text
+id: paragraph.record.default
+targetEntityType: paragraph
+bundle: record
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_media:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_text_area:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  search_api_excerpt: true

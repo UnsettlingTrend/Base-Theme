@@ -1,11 +1,10 @@
-uuid: 95f530e8-0764-48e9-9a15-9a3e73bcc91f
+uuid: 5831b65a-3d29-4771-975f-242a0e34fbb0
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.media.media_library
     - field.field.media.audio.field_media_audio_file
-    - field.field.media.audio.field_media_image
     - image.style.thumbnail
     - media.type.audio
   module:
@@ -25,17 +24,12 @@ content:
       image_style: thumbnail
       image_loading:
         attribute: lazy
-      svg_attributes:
-        width: ''
-        height: ''
-      svg_render_as_image: true
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
   created: true
   field_media_audio_file: true
-  field_media_image: true
   langcode: true
   name: true
   search_api_excerpt: true

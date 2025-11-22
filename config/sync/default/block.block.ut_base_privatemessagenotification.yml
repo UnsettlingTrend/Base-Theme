@@ -1,0 +1,22 @@
+uuid: 304d9c5d-24fa-428b-9152-01630b5b00b4
+langcode: en
+status: true
+dependencies:
+  module:
+    - private_message
+  theme:
+    - ut_base
+id: ut_base_privatemessagenotification
+theme: ut_base
+region: primary_menu
+weight: -6
+provider: null
+plugin: private_message_notification_block
+settings:
+  id: private_message_notification_block
+  label: 'Private Message Notification'
+  label_display: '0'
+  provider: private_message
+  ajax_refresh_rate: 15
+  count_method: threads
+visibility: {  }

@@ -1,14 +1,15 @@
-uuid: 1229b63a-0a19-4544-9888-0e11a3bc4498
+uuid: f9f30ad2-a056-4cb6-aead-3d6acc6a4eb6
 langcode: en
 status: true
 dependencies:
   config:
     - group.type.restricted_content
+    - user.role.anonymous
 id: restricted_content-anonymous
 label: Anonymous
 weight: -102
-group_type: restricted_content
-permissions: {  }
 admin: false
 scope: outsider
 global_role: anonymous
+group_type: restricted_content
+permissions: {  }

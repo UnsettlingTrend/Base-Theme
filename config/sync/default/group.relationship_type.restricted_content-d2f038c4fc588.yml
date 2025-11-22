@@ -1,0 +1,17 @@
+uuid: e02c92a2-bef5-4cc6-80ba-30eaa591c3b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.restricted_content
+    - node.type.issue
+  module:
+    - gnode
+    - node
+id: restricted_content-d2f038c4fc588
+group_type: restricted_content
+content_plugin: 'group_node:issue'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

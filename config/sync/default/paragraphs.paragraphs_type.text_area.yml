@@ -1,0 +1,12 @@
+uuid: 3b098af0-1a79-4164-a4fd-6ad57ae2e44c
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'file:file:2b8ba533-04de-46c1-bb93-eb7499529a95'
+id: text_area
+label: 'Text Area'
+icon_uuid: 2b8ba533-04de-46c1-bb93-eb7499529a95
+icon_default: 'data:image/svg+xml;base64,'
+description: 'A WYSIWYG editor.'
+behavior_plugins: {  }

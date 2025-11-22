@@ -1,4 +1,4 @@
-uuid: efdff81c-5887-496d-9df6-a27c2f9ce1fb
+uuid: 62ffba24-df48-4b16-b390-d5c146bcd3b4
 langcode: en
 status: closed
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - webform_templates
 _core:
-  default_config_hash: tioGAxRSmZKnMzvHZXxPpr65CrN0edh64Km1uIaRQRI
+  default_config_hash: sgQAN7bWtJwwG0U7eH5OUdSJOEl2r0Rd4ilvKuasD_E
 weight: 0
 open: null
 close: null
@@ -59,10 +59,10 @@ elements: |
       '#multiple': true
       '#select2': true
       '#options': languages
-    gender:
+    sex:
       '#type': webform_radios_other
-      '#title': Gender
-      '#options': gender
+      '#title': Sex
+      '#options': sex
     biography:
       '#type': text_format
       '#title': Biography
@@ -347,6 +347,7 @@ handlers:
       attachments: false
       twig: false
       theme_name: ''
+      langcode: ''
       parameters: {  }
       debug: false
 variants: {  }

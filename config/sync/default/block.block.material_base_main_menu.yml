@@ -1,0 +1,27 @@
+uuid: 9a5e0d4b-8c10-4dc0-a78f-20dd852cf6a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - material_base
+_core:
+  default_config_hash: kiRtuR8od38O8MRrCgaJ4OXiCOrivXMKS8lRMZ8sqXA
+id: material_base_main_menu
+theme: material_base
+region: navbar
+weight: -5
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

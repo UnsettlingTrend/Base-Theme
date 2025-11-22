@@ -1,44 +1,23 @@
-uuid: 0c585f2f-33a9-48b4-80e0-5af201a449d7
+uuid: ea7600d9-acef-4408-8d53-bd2d5d862324
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.embed
   module:
-    - blazy
     - editor
-    - entity_embed
-    - slick
+    - media
 _core:
   default_config_hash: P8ddpAIKtawJDi5SzOwCzVnnNYqONewSTJ6Xn0dW_aQ
 name: 'Basic HTML'
 format: basic_html
-weight: 0
+weight: -9
 filters:
-  blazy_filter:
-    id: blazy_filter
-    provider: blazy
-    status: false
-    weight: -42
-    settings:
-      media_switch: ''
-      hybrid_style: ''
-      box_style: ''
-      box_media_style: ''
-      box_caption: ''
-      filter_tags:
-        img: img
-        iframe: iframe
-      use_data_uri: '0'
   editor_file_reference:
     id: editor_file_reference
     provider: editor
     status: true
     weight: -46
-    settings: {  }
-  entity_embed:
-    id: entity_embed
-    provider: entity_embed
-    status: true
-    weight: -47
     settings: {  }
   filter_align:
     id: filter_align
@@ -50,7 +29,7 @@ filters:
     id: filter_autop
     provider: filter
     status: false
-    weight: -44
+    weight: -43
     settings: {  }
   filter_caption:
     id: filter_caption
@@ -64,26 +43,26 @@ filters:
     status: true
     weight: -50
     settings:
-      allowed_html: '<br> <p class="clearfix text-align-left text-align-center text-align-right text-align-justify"> <h2 id class="text-align-left text-align-center text-align-right text-align-justify"> <h3 id class="text-align-left text-align-center text-align-right text-align-justify"> <h4 id class="text-align-left text-align-center text-align-right text-align-justify"> <h5 id class="text-align-left text-align-center text-align-right text-align-justify"> <h6 id class="text-align-left text-align-center text-align-right text-align-justify"> <cite> <dl> <dt> <dd> <span> <details> <summary> <code class> <pre class> <img src alt height width data-entity-type data-entity-uuid data-align data-caption class="clearfix"> <drupal-entity alt title data-entity-type data-entity-uuid data-view-mode data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button data-langcode class> <a hreflang class="btn btn-gray" href> <blockquote cite> <ul type> <ol type start> <table class="table table-responsive table-striped"> <th scope rowspan colspan> <tr scope> <strong> <em> <u> <s> <sub> <sup> <li> <td rowspan colspan> <thead> <tbody> <tfoot> <caption>'
+      allowed_html: '<br> <p class="text-align-left text-align-center text-align-right text-align-justify"> <h2 id class="text-align-left text-align-center text-align-right text-align-justify"> <h3 id class="text-align-left text-align-center text-align-right text-align-justify"> <h4 id class="text-align-left text-align-center text-align-right text-align-justify"> <h5 id class="text-align-left text-align-center text-align-right text-align-justify"> <h6 id class="text-align-left text-align-center text-align-right text-align-justify"> <cite> <dl> <dt> <dd> <span> <img src alt height width data-entity-type data-entity-uuid data-align data-caption> <a hreflang href> <blockquote cite> <ul type> <ol type start> <drupal-media title data-entity-type data-entity-uuid alt data-caption data-align> <strong> <em> <code> <li> <table> <tr> <td rowspan colspan> <th rowspan colspan> <thead> <tbody> <tfoot> <caption>'
       filter_html_help: false
       filter_html_nofollow: false
   filter_html_escape:
     id: filter_html_escape
     provider: filter
     status: false
-    weight: -45
+    weight: -44
     settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
-    status: false
-    weight: -41
+    status: true
+    weight: -47
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: false
-    weight: -40
+    weight: -41
     settings: {  }
   filter_image_lazy_load:
     id: filter_image_lazy_load
@@ -95,40 +74,21 @@ filters:
     id: filter_url
     provider: filter
     status: false
-    weight: -43
+    weight: -42
     settings:
       filter_url_length: 72
-  slick_filter:
-    id: slick_filter
-    provider: slick
-    status: false
-    weight: 4
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: -45
     settings:
-      optionset: default
-      layout: ''
-      background: false
-      box_media_style: ''
-      loading: ''
-      preload: false
-      responsive_image_style: ''
-      box_style: ''
-      image_style: ''
-      media_switch: ''
-      ratio: ''
-      thumbnail_style: ''
-      skin: ''
-      overridables:
-        arrows: '0'
-        autoplay: '0'
-        dots: '0'
-        draggable: '0'
-        infinite: '0'
-        mouseWheel: '0'
-        randomize: '0'
-        variableWidth: '0'
-      optionset_thumbnail: ''
-      skin_thumbnail: ''
-      thumbnail_caption: ''
-      thumbnail_effect: ''
-      thumbnail_position: ''
-      override: false
+      default_view_mode: embed
+      allowed_view_modes:
+        embed: embed
+      allowed_media_types:
+        audio: audio
+        document: document
+        image: image
+        remote_video: remote_video
+        video: video

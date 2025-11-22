@@ -1,0 +1,27 @@
+uuid: ab5f32e3-2a3f-4092-8241-0b97e3fa6757
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - ut_material
+_core:
+  default_config_hash: mNH9FqoiwS51KzfXLxLpyUc3OG2OTeqkeQIdLwr3ftk
+id: ut_material_tools
+theme: ut_material
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Tools
+  label_display: visible
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

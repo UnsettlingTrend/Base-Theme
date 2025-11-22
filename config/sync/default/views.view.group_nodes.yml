@@ -1,4 +1,4 @@
-uuid: 0c69173f-6d54-4590-b593-b206078ceb13
+uuid: 3cc89134-74df-452f-9c86-21a53c2b8c12
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
     - group
     - node
 _core:
-  default_config_hash: ZSKjHkl45YTbsYHiq_H7py04GDuX95t-GOHAAb8ZFbk
+  default_config_hash: 50gd6UKSddlPxEUbaEG7l1ZHe5Akog488RFK-jAUkCM
 id: group_nodes
 label: 'Group nodes'
 module: gnode
@@ -297,16 +297,16 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_group_content:
-          id: view_group_content
+        view_group_relationship:
+          id: view_group_relationship
           table: group_relationship
-          field: view_group_content
-          relationship: group_content
+          field: view_group_relationship
+          relationship: group_relationship
           group_type: group
           admin_label: 'View relation link'
-          entity_type: group_content
+          entity_type: group_relationship
           plugin_id: entity_link
-          label: 'Link to Group content'
+          label: 'Link to Group relationship'
           exclude: true
           alter:
             alter_text: false
@@ -350,16 +350,16 @@ display:
           text: 'View relation'
           output_url_as_text: false
           absolute: false
-        edit_group_content:
-          id: edit_group_content
+        edit_group_relationship:
+          id: edit_group_relationship
           table: group_relationship
-          field: edit_group_content
-          relationship: group_content
+          field: edit_group_relationship
+          relationship: group_relationship
           group_type: group
           admin_label: 'Edit relation link'
-          entity_type: group_content
+          entity_type: group_relationship
           plugin_id: entity_link_edit
-          label: 'Link to edit Group content'
+          label: 'Link to edit Group relationship'
           exclude: true
           alter:
             alter_text: false
@@ -401,16 +401,16 @@ display:
           empty_zero: false
           hide_alter_empty: true
           text: 'Edit relation'
-        delete_group_content:
-          id: delete_group_content
+        delete_group_relationship:
+          id: delete_group_relationship
           table: group_relationship
-          field: delete_group_content
-          relationship: group_content
+          field: delete_group_relationship
+          relationship: group_relationship
           group_type: group
           admin_label: 'Delete relation link'
-          entity_type: group_content
+          entity_type: group_relationship
           plugin_id: entity_link_delete
-          label: 'Link to delete Group content'
+          label: 'Link to delete Group relationship'
           exclude: true
           alter:
             alter_text: false
@@ -605,9 +605,9 @@ display:
           hide_alter_empty: true
           destination: true
           fields:
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
-            delete_group_content: delete_group_content
+            view_group_relationship: view_group_relationship
+            edit_group_relationship: edit_group_relationship
+            delete_group_relationship: delete_group_relationship
             edit_node: edit_node
             delete_node: delete_node
             title: '0'
@@ -671,10 +671,10 @@ display:
           id: gid
           table: group_relationship_field_data
           field: gid
-          relationship: group_content
+          relationship: group_relationship
           group_type: group
           admin_label: ''
-          entity_type: group_content
+          entity_type: group_relationship
           entity_field: gid
           plugin_id: numeric
           default_action: 'access denied'
@@ -715,7 +715,7 @@ display:
           entity_field: status
           plugin_id: boolean
           operator: '='
-          value: ''
+          value: '1'
           group: 1
           exposed: true
           expose:
@@ -810,9 +810,9 @@ display:
             type: type
             status: status
             changed: changed
-            view_group_content: view_group_content
-            edit_group_content: edit_group_content
-            delete_group_content: delete_group_content
+            view_group_relationship: view_group_relationship
+            edit_group_relationship: edit_group_relationship
+            delete_group_relationship: delete_group_relationship
             edit_node: edit_node
             delete_node: delete_node
             dropbutton: dropbutton
@@ -846,21 +846,21 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            view_group_content:
+            view_group_relationship:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            edit_group_content:
+            edit_group_relationship:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            delete_group_content:
+            delete_group_relationship:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -910,32 +910,30 @@ display:
           replica: false
           query_tags: {  }
       relationships:
-        group_content:
-          id: group_content
+        group_relationship:
+          id: group_relationship
           table: node_field_data
-          field: group_content
+          field: group_relationship
           relationship: none
           group_type: group
           admin_label: 'Content relation'
           entity_type: node
-          plugin_id: group_content_to_entity_reverse
+          plugin_id: group_relationship_to_entity_reverse
           required: true
-          group_content_plugins: {  }
+          group_relation_plugins: {  }
       header: {  }
       footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: url
-        4: url.query_args
-        5: 'user.node_grants:view'
-        6: route.group
-        7: user.group_permissions
-        8: route.group
-        9: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route.group
+        - url
+        - url.query_args
+        - user.group_permissions
+        - 'user.node_grants:view'
       tags: {  }
   page_1:
     id: page_1
@@ -958,13 +956,11 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        1: 'languages:language_content'
-        2: 'languages:language_interface'
-        3: url
-        4: url.query_args
-        5: 'user.node_grants:view'
-        6: route.group
-        7: user.group_permissions
-        8: route.group
-        9: user.group_permissions
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - route.group
+        - url
+        - url.query_args
+        - user.group_permissions
+        - 'user.node_grants:view'
       tags: {  }

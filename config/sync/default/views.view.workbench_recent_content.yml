@@ -1,4 +1,4 @@
-uuid: 2601660b-8dfd-48c6-978c-f9da06fa4f9b
+uuid: 3dfe429f-30c1-4919-9ed4-28449e054cb7
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: sE8LcWl4XA93if6pA-KTbMmgz3gKkd40g4wxUVmBD8I
+  default_config_hash: LafRQT_cjzkKaN1auQCmIUQR5eTYCYKCUV1tpNgTi9o
 id: workbench_recent_content
 label: 'Workbench: Recent content'
 module: views
@@ -405,6 +405,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 25
           total_pages: null
           id: 0
@@ -422,7 +423,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -442,17 +442,15 @@ display:
         options: {  }
       empty:
         area:
-          id: area
+          id: area_text_custom
           table: views
-          field: area
+          field: area_text_custom
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text
+          plugin_id: text_custom
           empty: true
-          content:
-            value: 'There is no content available for you to edit.'
-            format: basic_html
+          content: 'There is no content available for you to edit.'
           tokenize: false
       sorts:
         changed:
@@ -468,7 +466,6 @@ display:
           order: DESC
           expose:
             label: ''
-            field_identifier: changed
           exposed: false
           granularity: second
       arguments: {  }
@@ -493,8 +490,6 @@ display:
             description: ''
             use_operator: false
             operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: title
             required: false
             remember: true
@@ -536,8 +531,6 @@ display:
             description: ''
             use_operator: false
             operator: type_op
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: type
             required: false
             remember: true
@@ -580,8 +573,6 @@ display:
             description: ''
             use_operator: false
             operator: status_op
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: published
             required: false
             remember: false
@@ -622,8 +613,6 @@ display:
             description: ''
             use_operator: false
             operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: ''
             required: false
             remember: false
@@ -745,7 +734,7 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1077,6 +1066,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 2
@@ -1094,7 +1084,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       filters:
         status:
           id: status
@@ -1116,8 +1105,6 @@ display:
             description: ''
             use_operator: false
             operator: status_op
-            operator_limit_selection: false
-            operator_list: {  }
             identifier: published
             required: false
             remember: false
@@ -1160,21 +1147,19 @@ display:
       link_display: /admin/workbench/content/all
       header:
         area:
-          id: area
+          id: area_text_custom
           table: views
-          field: area
+          field: area_text_custom
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text
+          plugin_id: text_custom
           empty: false
-          content:
-            value: '<h3>Recent content</h3>'
-            format: basic_html
+          content: '<h3>Recent content</h3>'
           tokenize: false
       display_extenders: {  }
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1191,7 +1176,7 @@ display:
       display_description: 'The embedded view for use on a landing page'
       display_extenders: {  }
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

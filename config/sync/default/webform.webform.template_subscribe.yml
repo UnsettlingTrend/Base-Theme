@@ -1,4 +1,4 @@
-uuid: 46e875cd-9391-4c47-a09b-8ce4d0a2705d
+uuid: 34ae0344-956c-4933-981b-de06c2069ddc
 langcode: en
 status: closed
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     module:
       - webform_templates
 _core:
-  default_config_hash: 3YHo9lS4MI-8Kt-7JnzNnn_oNFjwOapvicNwWYMXk1c
+  default_config_hash: br4z07_DxhuWndCGMrU4dX3KQNNcRtR1iSWzPBe7wQM
 weight: 0
 open: null
 close: null
@@ -253,6 +253,7 @@ handlers:
       attachments: false
       twig: false
       theme_name: ''
+      langcode: ''
       parameters: {  }
       debug: false
 variants: {  }

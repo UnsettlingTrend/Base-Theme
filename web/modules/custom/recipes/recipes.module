@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Recipes module.
+ */
+
+/**
+ * Implements hook_theme_suggestions_alter().
+ */
+function recipes_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+  // Use switch so we can easily add another hook in the future.
+  switch ($hook) {
+    case 'paragraph':
+      $suggestions[] = $hook . '__ingredient_default';
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function recipes_theme($existing, $type, $theme, $path) {
+  return [
+    'paragraph__ingredient__default' => [
+      'base hook' => 'paragraph',
+      'path' => $path . '/templates',
+    ],
+    'node__recipe__full' => [
+      'base hook' => 'node',
+      'path' => $path . '/templates',
+    ],
+  ];
+}

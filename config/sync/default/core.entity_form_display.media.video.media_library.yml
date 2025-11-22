@@ -1,21 +1,13 @@
-uuid: c1b48ef7-03be-434b-b47d-3303760dd66a
+uuid: 407b1b3c-3d71-4fa1-955e-70c2ca36259a
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_form_mode.media.media_library
-    - field.field.media.video.field_media_image
     - field.field.media.video.field_media_video_file
     - media.type.video
-  module:
-    - field_layout
-    - layout_discovery
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
 _core:
-  default_config_hash: tDAk5WjHHzEBR0eK2k8ZlWr7Ji5lCSh_ddgoQnmfsCY
+  default_config_hash: kGv8YsopqHvzTzb7QTINWcv0fnNa5ZDQyZxpOQR2vro
 id: media.video.media_library
 targetEntityType: media
 bundle: video
@@ -28,18 +20,10 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
-  name:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
 hidden:
   created: true
-  field_media_image: true
   field_media_video_file: true
+  name: true
   path: true
   status: true
   uid: true

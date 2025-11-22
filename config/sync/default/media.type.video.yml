@@ -1,14 +1,9 @@
-uuid: 9f99ca99-fddc-4eeb-8fae-349b3b6ae05c
+uuid: bf215834-f96b-41e9-84f7-d4d14d68c468
 langcode: en
 status: true
-dependencies:
-  module:
-    - crop
-third_party_settings:
-  crop:
-    image_field: field_media_image
+dependencies: {  }
 _core:
-  default_config_hash: _Cj9j8iA9MZ3HWv7QEwv1Pdxni0UlWGKnMw3Ou0rlXo
+  default_config_hash: hzgvcRgZHltqWf8hBmttoWh95tCJoPL25lPq9YSIRsY
 id: video
 label: Video
 description: 'A locally hosted video file.'

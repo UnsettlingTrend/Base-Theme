@@ -1,4 +1,4 @@
-uuid: 0264fa56-0db5-4ce9-aa39-a43c4069c756
+uuid: 4c5f030e-f377-4f90-870e-a64f15af0b54
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: group.restricted_content.label
 field_name: label
 entity_type: group
 bundle: restricted_content
-label: 'Group Title'
+label: Title
 description: ''
 required: true
 translatable: true

@@ -1,15 +1,13 @@
-uuid: 8f84728e-99fb-44fb-8dce-7e7b8eec555a
+uuid: 35b554b7-33c1-4d30-9998-0e057987a678
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_media
     - media.type.audio
-    - media.type.file
+    - media.type.document
     - media.type.image
-    - media.type.instagram
     - media.type.remote_video
-    - media.type.twitter
     - media.type.video
     - paragraphs.paragraphs_type.media
 id: paragraph.media.field_media
@@ -18,7 +16,7 @@ entity_type: paragraph
 bundle: media
 label: Media
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -27,14 +25,13 @@ settings:
   handler_settings:
     target_bundles:
       audio: audio
-      file: file
+      document: document
       image: image
-      instagram: instagram
       remote_video: remote_video
-      twitter: twitter
       video: video
     sort:
       field: _none
+      direction: ASC
     auto_create: false
     auto_create_bundle: audio
 field_type: entity_reference

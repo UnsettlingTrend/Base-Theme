@@ -1,0 +1,20 @@
+uuid: 2879e10a-3f4d-476d-ab76-8da12699dfae
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - physical
+id: paragraph.field_weight
+field_name: field_weight
+entity_type: paragraph
+type: physical_measurement
+settings:
+  measurement_type: weight
+module: physical
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

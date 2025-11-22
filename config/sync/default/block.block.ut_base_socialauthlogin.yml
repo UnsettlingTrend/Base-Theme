@@ -1,0 +1,33 @@
+uuid: 9e8c0600-9984-4419-89d6-23a7c488ee89
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_auth
+    - system
+    - user
+  theme:
+    - ut_base
+id: ut_base_socialauthlogin
+theme: ut_base
+region: content
+weight: -3
+provider: null
+plugin: social_auth_login
+settings:
+  id: social_auth_login
+  label: 'Social Auth Login'
+  label_display: '0'
+  provider: social_auth
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /user/login
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous

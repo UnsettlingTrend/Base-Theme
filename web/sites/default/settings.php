@@ -810,11 +810,14 @@ $settings['trusted_host_patterns'] = [
   '^.*\.us\.platformsh\.site$'
 ];
 
+// Configure file  directories.
 $settings['file_private_path'] = '../private';
+$settings['file_temp_path'] = '../tmp';
 
 // Configure the default PhpStorage and Twig template cache directories.
 $settings['php_storage']['default']['directory'] = '../storage/php';
 $settings['php_storage']['twig']['directory'] = '../storage/php';
+
 
 if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
   include $app_root . '/' . $site_path . '/settings.platformsh.php';
@@ -822,3 +825,6 @@ if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
+
+// Recommended D10 setting; will default to TRUE in D11
+$settings['state_cache'] = TRUE;

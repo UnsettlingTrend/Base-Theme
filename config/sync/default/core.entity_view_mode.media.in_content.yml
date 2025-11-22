@@ -1,0 +1,11 @@
+uuid: bafa8482-d291-44ee-a1aa-ca44fa0eca87
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.in_content
+label: 'In Content'
+description: 'Media placed using a paragraph in a content node.'
+targetEntityType: media
+cache: true

@@ -1,0 +1,49 @@
+uuid: 0d2fbf35-903b-4caf-bf36-bb061712fd23
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.in_content
+    - field.field.media.image.field_media_image
+    - image.style.full_width
+    - media.type.image
+    - responsive_image.styles.narrow
+  module:
+    - layout_builder
+    - photoswipe
+    - photoswipe_dynamic_caption
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+_core:
+  default_config_hash: B1a2aBHmUulUZN6HrxITEH1tSResuVjXMBEv1lUBtOo
+id: media.image.in_content
+targetEntityType: media
+bundle: image
+mode: in_content
+content:
+  field_media_image:
+    type: photoswipe_responsive_field_formatter
+    label: visually_hidden
+    settings:
+      photoswipe_thumbnail_style_first: ''
+      photoswipe_thumbnail_style: narrow
+      photoswipe_image_style: full_width
+      photoswipe_reference_image_field: ''
+      photoswipe_view_mode: in_content
+      image_loading:
+        attribute: lazy
+    third_party_settings:
+      photoswipe_dynamic_caption:
+        photoswipe_caption: title
+        photoswipe_caption_custom: ''
+    weight: 1
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

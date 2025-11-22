@@ -1,97 +1,38 @@
-uuid: 70af3ec1-9841-4004-b8b6-74f6473d2663
+uuid: 25f043ea-4eb4-431b-bf51-d35444761519
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.media.image.field_media_image
+    - image.style.full_width
+    - image.style.large
+    - image.style.thumbnail
     - media.type.image
   module:
-    - field_layout
-    - layout_builder
-    - layout_discovery
-    - svg_image
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          b70f3d40-5e85-43c3-96f0-eb419ad32a73:
-            uuid: b70f3d40-5e85-43c3-96f0-eb419ad32a73
-            region: content
-            configuration:
-              id: 'field_block:media:image:field_media_image'
-              label: Image
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: file
-                  image_style: max_1300x1300
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          d39d1dad-5b58-4ca5-b64d-f5ad11524072:
-            uuid: d39d1dad-5b58-4ca5-b64d-f5ad11524072
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:media:image:field_media_image'
-              formatter:
-                type: image
-                label: visually_hidden
-                settings:
-                  image_link: file
-                  image_style: ''
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                  image_loading:
-                    attribute: lazy
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-        third_party_settings: {  }
+    - photoswipe
+    - photoswipe_dynamic_caption
 _core:
-  default_config_hash: jOwnt_yq6AKAfqU6f0xKnxEkFQ2eTPJWxrk3WMLbL68
+  default_config_hash: B1a2aBHmUulUZN6HrxITEH1tSResuVjXMBEv1lUBtOo
 id: media.image.default
 targetEntityType: media
 bundle: image
 mode: default
 content:
   field_media_image:
-    type: image
+    type: photoswipe_field_formatter
     label: visually_hidden
     settings:
-      image_link: file
-      image_style: ''
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
+      photoswipe_thumbnail_style_first: large
+      photoswipe_thumbnail_style: thumbnail
+      photoswipe_image_style: full_width
+      photoswipe_reference_image_field: ''
+      photoswipe_view_mode: default
       image_loading:
         attribute: lazy
-    third_party_settings: {  }
+    third_party_settings:
+      photoswipe_dynamic_caption:
+        photoswipe_caption: title
+        photoswipe_caption_custom: ''
     weight: 1
     region: content
 hidden:

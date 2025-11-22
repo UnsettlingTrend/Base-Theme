@@ -1,11 +1,11 @@
-uuid: f05e754d-9444-48c8-b1ed-3e462af7b709
+uuid: 159b3083-5c3b-4708-9972-741c282a3447
 langcode: en
 status: true
 dependencies:
   theme:
     - claro
 _core:
-  default_config_hash: 7cvXIzw8NabmQCWMPqBz0mvIQZzXUZB3OeOTa5eqbCo
+  default_config_hash: ACjBZI5shAMiiUpsz-inLYVXDqNNXRnSzAWV3kV_8Hw
 id: claro_primary_local_tasks
 theme: claro
 region: header

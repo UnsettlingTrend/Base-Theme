@@ -1,0 +1,27 @@
+uuid: bd08d7a3-1c8e-4909-86d8-f8c1da11808e
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.footer
+  module:
+    - system
+  theme:
+    - ut_material
+_core:
+  default_config_hash: ox8RSuHRfHWq5LPi6NqQaFpNucZ5zuBQ6zGu4XFuZR4
+id: ut_material_footer
+theme: ut_material
+region: footer
+weight: -5
+provider: null
+plugin: 'system_menu_block:footer'
+settings:
+  id: 'system_menu_block:footer'
+  label: 'Footer menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

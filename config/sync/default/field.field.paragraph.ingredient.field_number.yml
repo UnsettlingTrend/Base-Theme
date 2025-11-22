@@ -1,0 +1,23 @@
+uuid: e0e94f86-2a12-4fce-9e93-4fb7e897d1f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_number
+    - paragraphs.paragraphs_type.ingredient
+id: paragraph.ingredient.field_number
+field_name: field_number
+entity_type: paragraph
+bundle: ingredient
+label: Number
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.01
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

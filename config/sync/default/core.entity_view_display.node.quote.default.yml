@@ -1,13 +1,14 @@
-uuid: 5d97e739-a18e-4f7f-856c-1e40518c9f44
+uuid: cd2eab8b-dbe2-4731-8890-ea05c163814c
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.quote.body
+    - field.field.node.quote.field_paragraph
     - field.field.node.quote.field_source
     - field.field.node.quote.field_tags
     - node.type.quote
   module:
+    - entity_reference_revisions
     - text
     - user
 id: node.quote.default
@@ -15,12 +16,14 @@ targetEntityType: node
 bundle: quote
 mode: default
 content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
+  field_paragraph:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    weight: 101
+    weight: 102
     region: content
   field_source:
     type: text_default
@@ -31,11 +34,11 @@ content:
     region: content
   field_tags:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
-    weight: 102
+    weight: 1
     region: content
   links:
     settings: {  }
@@ -44,5 +47,5 @@ content:
     region: content
 hidden:
   langcode: true
-  published_at: true
+  private_message_link: true
   search_api_excerpt: true

@@ -1,7 +1,7 @@
 _core:
   default_config_hash: eKR4FfUD7Cp3bXamsCz6GAxh0PCLIZNMa65y2kChIh0
-site_key: 6Lc_6OQpAAAAAPRr3hbviSEJKFhC4UruML0ZRA1t
-secret_key: 6Lc_6OQpAAAAAFQqg84TO3W_TGAxq8NcqOwiTN7u
+site_key: '<environment-variable>'
+secret_key: '<environment-variable>'
 verify_hostname: false
 use_globally: false
 widget:

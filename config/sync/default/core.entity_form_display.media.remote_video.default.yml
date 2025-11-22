@@ -1,4 +1,4 @@
-uuid: 3bd35ff0-9c16-4732-9cc6-29e92d06d378
+uuid: f2dbb8f5-e866-475b-91db-9492516ab718
 langcode: en
 status: true
 dependencies:
@@ -6,17 +6,10 @@ dependencies:
     - field.field.media.remote_video.field_media_oembed_video
     - media.type.remote_video
   module:
-    - field_layout
-    - layout_discovery
     - media
     - path
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 _core:
-  default_config_hash: uWhRDlQVs_4mPe2Ndg4OPnEbSc_MDRwz-QBCGlnm-zs
+  default_config_hash: DfbjvjtGEMGLvm-1Zm7-MCRZj3wpGokUWZOuaK5-1Po
 id: media.remote_video.default
 targetEntityType: media
 bundle: remote_video

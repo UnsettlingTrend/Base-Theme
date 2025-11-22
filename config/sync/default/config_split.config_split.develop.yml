@@ -1,4 +1,4 @@
-uuid: 79e19428-fe6b-4ade-9ebc-623f94cc707d
+uuid: c311f75c-af7a-4835-9256-3a1dcbfc0b66
 langcode: en
 status: false
 dependencies: {  }
@@ -10,10 +10,7 @@ stackable: false
 no_patching: false
 storage: folder
 folder: ../config/sync/dev
-module:
-  devel: 0
-  devel_debug_log: 0
-  devel_kint_extras: 0
+module: {  }
 theme: {  }
 complete_list: {  }
 partial_list:

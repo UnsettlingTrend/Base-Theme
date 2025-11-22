@@ -1,14 +1,14 @@
 _core:
-  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE
 langcode: en
-uuid: 7fc45381-50e1-4e80-9010-f6a61b4efb5e
+uuid: a2e197cc-a8a5-40a3-a5ae-34c96bccc8d0
 name: ChrisFeragotti.com
-mail: automaton@chrisferagotti.com
+mail: chrisferagotti@gmail.com
 slogan: ''
 page:
-  403: /node/149
-  404: /node/269
-  front: /homepage-content
+  403: /node/10
+  404: /node/9
+  front: /node/18
 admin_compact_mode: false
 weight_select_max: 100
 default_langcode: en

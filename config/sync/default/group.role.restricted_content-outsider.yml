@@ -1,14 +1,15 @@
-uuid: f31816b4-6d65-4c9e-a0fd-0b0f275314b3
+uuid: 07c79178-de34-42c2-81d4-bb4fce915b4f
 langcode: en
 status: true
 dependencies:
   config:
     - group.type.restricted_content
+    - user.role.authenticated
 id: restricted_content-outsider
 label: Outsider
 weight: -101
-group_type: restricted_content
-permissions: {  }
 admin: false
 scope: outsider
 global_role: authenticated
+group_type: restricted_content
+permissions: {  }

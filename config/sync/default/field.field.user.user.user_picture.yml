@@ -1,19 +1,12 @@
-uuid: bfefe0d5-25c2-45db-850e-1e87ce960154
+uuid: 6ff982eb-c084-4e80-834b-c374d9df83aa
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.user.user_picture
   module:
-    - content_translation
     - image
     - user
-third_party_settings:
-  content_translation:
-    translation_sync:
-      alt: alt
-      title: title
-      file: '0'
 _core:
   default_config_hash: Iiq0AttdhgbebJwabSFwQQ1ORn64GoGz0xSZ_eyCJ8A
 id: user.user.user_picture
@@ -39,9 +32,9 @@ settings:
   title_field: false
   title_field_required: false
   default_image:
-    uuid: 7259b56c-1181-4d94-adb7-4ab2c32c7e58
+    uuid: null
     alt: ''
     title: ''
-    width: 400
-    height: 400
+    width: null
+    height: null
 field_type: image

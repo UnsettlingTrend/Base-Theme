@@ -1,14 +1,9 @@
-uuid: 4119356d-6fc8-46f0-bcb1-fe5a16de1503
+uuid: 696c06f7-d82e-450e-a41f-f4b45026c572
 langcode: en
 status: true
-dependencies:
-  module:
-    - crop
-third_party_settings:
-  crop:
-    image_field: field_media_image
+dependencies: {  }
 _core:
-  default_config_hash: RQ75tMARZvKiI0hge9SKZpZFi-dOzZyq0nlouHHBeLM
+  default_config_hash: eJw8n6Tk2tO3ZysuEeGR1gZa1yRffaZzR4t0Q7iNurs
 id: audio
 label: Audio
 description: 'A locally hosted audio file.'

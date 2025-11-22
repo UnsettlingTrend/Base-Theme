@@ -1,0 +1,20 @@
+uuid: 51677f93-7ccd-490d-9420-5caa9bce6152
+langcode: en
+status: true
+dependencies:
+  theme:
+    - ut_material
+_core:
+  default_config_hash: fJhQHSCBeNwLQVSdGuQxKnrMN2ZuwuKmn2ATToTIoh8
+id: ut_material_page_title
+theme: ut_material
+region: content
+weight: -5
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

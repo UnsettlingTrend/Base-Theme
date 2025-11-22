@@ -1,18 +1,20 @@
-uuid: 24cf3337-2e31-457b-a43f-7068d8edf161
+uuid: e3b51ba7-cc66-47b3-a64d-45fa2814e6b1
 langcode: en
 status: true
 dependencies:
   config:
     - filter.format.restricted_html
   module:
+    - book
     - comment
     - contact
     - filter
     - media
+    - node_view_permissions
     - paragraphs_type_permissions
     - system
 _core:
-  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+  default_config_hash: pq_mEIu_B4widZN7Ap81iCJSjShFFdcL0jEiCi8VrDk
 id: anonymous
 label: 'Anonymous user'
 weight: 0
@@ -20,11 +22,17 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
+  - 'access printer-friendly version'
   - 'access site-wide contact form'
-  - 'access user profiles'
   - 'use text format restricted_html'
+  - 'view any article content'
+  - 'view any page content'
+  - 'view any recipe content'
   - 'view media'
+  - 'view paragraph content from_library'
+  - 'view paragraph content ingredient'
   - 'view paragraph content media'
-  - 'view paragraph content rating'
+  - 'view paragraph content record'
   - 'view paragraph content section'
-  - 'view paragraph content text'
+  - 'view paragraph content text_area'
+  - 'view paragraph content view'

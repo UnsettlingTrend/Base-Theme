@@ -1,4 +1,4 @@
-uuid: e04a4dc0-c7a5-4d03-a4a7-801024f53459
+uuid: ce767962-860b-4499-9428-717bb4aabbb0
 langcode: en
 status: true
 dependencies:
@@ -6,16 +6,9 @@ dependencies:
     - block_content.type.basic
     - field.field.block_content.basic.body
   module:
-    - field_layout
-    - layout_discovery
     - text
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 _core:
-  default_config_hash: e1Nu5xXAuF_QplbBUhQBPLnYWvHtDX0MkZnpuCiY8uM
+  default_config_hash: jAps3FCxvKecABS_tgExbhCZrBLQB3bNPWw18WjE3ss
 id: block_content.basic.default
 targetEntityType: block_content
 bundle: basic

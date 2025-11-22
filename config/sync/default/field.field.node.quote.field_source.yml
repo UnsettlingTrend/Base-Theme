@@ -1,9 +1,10 @@
-uuid: 3233e81e-cc8d-46b6-84a1-b714b8ab2f07
+uuid: e02645f8-df8a-4294-9ad8-3359df586277
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_source
+    - filter.format.limited_html
     - node.type.quote
   module:
     - text
@@ -13,9 +14,11 @@ entity_type: node
 bundle: quote
 label: Source
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - limited_html
 field_type: text

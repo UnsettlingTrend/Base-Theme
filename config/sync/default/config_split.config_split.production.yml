@@ -12,7 +12,5 @@ storage: folder
 folder: ../config/sync/prod
 module: {  }
 theme: {  }
-complete_list:
-  - environment_indicator.indicator
-  - maillog.settings
+complete_list: {  }
 partial_list: {  }

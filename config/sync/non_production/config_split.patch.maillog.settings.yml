@@ -1,0 +1,6 @@
+adding:
+  send: false
+  log: true
+removing:
+  send: true
+  log: false

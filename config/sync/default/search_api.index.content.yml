@@ -1,16 +1,24 @@
-uuid: eaf41e85-d256-4d7c-8bed-333aee23f44f
+uuid: e43ce0f2-7afa-4c0c-8a26-12dfedbe5bc4
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.storage.node.body
-    - field.storage.node.field_paragraph
+    - field.storage.node.field_cook_time
+    - field.storage.node.field_image
+    - field.storage.node.field_ingredients
+    - field.storage.node.field_issues
+    - field.storage.node.field_paragraphs
+    - field.storage.node.field_prep_time
+    - field.storage.node.field_servings
     - field.storage.node.field_subtitle
+    - field.storage.node.field_tags
+    - field.storage.node.webform
     - search_api.server.solr
   module:
-    - search_api_solr
     - node
-    - search_api
+    - search_api_solr
 third_party_settings:
   search_api_solr:
     finalize: false
@@ -71,18 +79,82 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.body
+  changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
+  created:
+    label: 'Authored on'
+    datasource_id: 'entity:node'
+    property_path: created
+    type: date
+    dependencies:
+      module:
+        - node
   entity_type:
     label: 'Entity type'
     property_path: search_api_entity_type
     type: string
-  field_paragraph:
-    label: Paragraphs
+  field_cook_time:
+    label: 'Cook Time'
     datasource_id: 'entity:node'
-    property_path: field_paragraph
+    property_path: field_cook_time
     type: integer
     dependencies:
       config:
-        - field.storage.node.field_paragraph
+        - field.storage.node.field_cook_time
+  field_image:
+    label: Image
+    datasource_id: 'entity:node'
+    property_path: field_image
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_image
+  field_ingredients:
+    label: Ingredients
+    datasource_id: 'entity:node'
+    property_path: field_ingredients
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_ingredients
+  field_issues:
+    label: Issues
+    datasource_id: 'entity:node'
+    property_path: field_issues
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_issues
+  field_paragraphs:
+    label: Paragraphs
+    datasource_id: 'entity:node'
+    property_path: field_paragraphs
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_paragraphs
+  field_prep_time:
+    label: 'Prep Time'
+    datasource_id: 'entity:node'
+    property_path: field_prep_time
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_prep_time
+  field_servings:
+    label: Servings
+    datasource_id: 'entity:node'
+    property_path: field_servings
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_servings
   field_subtitle:
     label: Subtitle
     datasource_id: 'entity:node'
@@ -91,6 +163,22 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_subtitle
+  field_tags:
+    label: Tags
+    datasource_id: 'entity:node'
+    property_path: field_tags
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_tags
+  nid:
+    label: ID
+    datasource_id: 'entity:node'
+    property_path: nid
+    type: integer
+    dependencies:
+      module:
+        - node
   node_grants:
     label: 'Node access information'
     property_path: search_api_node_grants
@@ -107,18 +195,12 @@ field_settings:
         - anonymous
       view_mode:
         'entity:node':
-          article: default
-          note: default
-          page: default
-          quote: default
-          webform: default
-  role_access:
-    label: 'Role-based access information'
-    property_path: search_api_role_access
-    type: string
-    indexed_locked: true
-    type_locked: true
-    hidden: true
+          article: full
+          issue: full
+          page: full
+          place: full
+          recipe: full
+          webform: full
   status:
     label: Boolean
     datasource_id: 'entity:node'
@@ -146,7 +228,7 @@ field_settings:
       module:
         - node
   uid:
-    label: 'Entity reference'
+    label: 'Authored by'
     datasource_id: 'entity:node'
     property_path: uid
     type: integer
@@ -155,6 +237,14 @@ field_settings:
     dependencies:
       module:
         - node
+  webform:
+    label: Webform
+    datasource_id: 'entity:node'
+    property_path: webform
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.webform
 datasource_settings:
   'entity:node':
     bundles:
@@ -185,10 +275,6 @@ processor_settings:
     highlight_partial: false
   language_with_fallback: {  }
   rendered_item: {  }
-  reverse_entity_references: {  }
-  role_access:
-    weights:
-      preprocess_query: -30
   solr_boost_more_recent:
     weights:
       preprocess_query: 0
@@ -201,6 +287,7 @@ tracker_settings:
     indexing_order: lifo
 options:
   cron_limit: 50
+  delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
 server: solr

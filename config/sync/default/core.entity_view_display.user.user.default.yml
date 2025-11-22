@@ -1,87 +1,15 @@
-uuid: 83e47ae2-8aa5-46af-9937-7347ba8fbea9
+uuid: 4fa79ac0-2759-49dd-80a8-f225bccaec9d
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_name
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
-    - field_layout
-    - layout_builder
-    - layout_discovery
+    - name
     - svg_image
     - user
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
-  layout_builder:
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          8ea4231a-926a-4584-ba67-86119c5e438a:
-            uuid: 8ea4231a-926a-4584-ba67-86119c5e438a
-            region: content
-            configuration:
-              id: 'field_block:user:user:user_picture'
-              label: Picture
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: content
-                  image_style: user
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          42c9fd69-c3f3-4730-8880-65ab6dde785a:
-            uuid: 42c9fd69-c3f3-4730-8880-65ab6dde785a
-            region: content
-            configuration:
-              id: 'extra_field_block:user:user:member_for'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 1
-            additional: {  }
-          377dda27-0484-4a38-b336-5fcbdac6cc15:
-            uuid: 377dda27-0484-4a38-b336-5fcbdac6cc15
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:user:user:user_picture'
-              formatter:
-                type: image
-                label: hidden
-                settings:
-                  image_link: content
-                  image_style: thumbnail
-                  svg_attributes:
-                    width: null
-                    height: null
-                  svg_render_as_image: true
-                  image_loading:
-                    attribute: lazy
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-        third_party_settings: {  }
 _core:
   default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
 id: user.user.default
@@ -89,9 +17,22 @@ targetEntityType: user
 bundle: user
 mode: default
 content:
-  member_for:
-    settings: {  }
+  field_name:
+    type: name_default
+    label: above
+    settings:
+      format: default
+      markup: none
+      list_format: ''
+      link_target: ''
+      preferred_field_reference: ''
+      preferred_field_reference_separator: ', '
+      alternative_field_reference: ''
+      alternative_field_reference_separator: ', '
     third_party_settings: {  }
+    weight: 6
+    region: content
+  member_for:
     weight: 5
     region: content
   user_picture:
@@ -100,10 +41,6 @@ content:
     settings:
       image_link: content
       image_style: thumbnail
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
       image_loading:
         attribute: lazy
     third_party_settings: {  }

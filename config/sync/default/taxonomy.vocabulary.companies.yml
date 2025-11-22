@@ -1,9 +1,0 @@
-uuid: d2398163-5d95-486f-80cb-746ad7ee130c
-langcode: en
-status: true
-dependencies: {  }
-name: Companies
-vid: companies
-description: 'List of relevant Companies'
-weight: 0
-new_revision: false

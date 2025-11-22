@@ -1,25 +1,15 @@
-uuid: 182fdb2b-8231-44a5-ac72-ba424f740be2
+uuid: bc5e3a1d-26e7-44cf-939d-b1b3d2e9723a
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.media.audio.field_media_audio_file
-    - field.field.media.audio.field_media_image
-    - image.style.thumbnail
     - media.type.audio
   module:
-    - field_layout
     - file
-    - layout_discovery
     - path
-    - svg_image
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 _core:
-  default_config_hash: UFXDqkMaCGpX2ZbXXHWaWbeCNkQjzxB5w0jPpsCoJFI
+  default_config_hash: HGa6EpWJApUec2IS8zsOnJ3NhIhwY2QYNmLY7eS5zLM
 id: media.audio.default
 targetEntityType: media
 bundle: audio
@@ -38,28 +28,12 @@ content:
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
-  field_media_image:
-    type: image_image
-    weight: 101
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 2
     region: content
     settings:
       include_locked: true
-    third_party_settings: {  }
-  name:
-    type: string_textfield
-    weight: -5
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   path:
     type: path
@@ -84,4 +58,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  name: true

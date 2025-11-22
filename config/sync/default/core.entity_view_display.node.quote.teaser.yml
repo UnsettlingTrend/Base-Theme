@@ -1,28 +1,27 @@
-uuid: d704ff21-1bd9-489f-a4b6-06df6da0dde0
+uuid: 02a5b859-7b31-45c0-a19b-f70394f30f99
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.quote.body
+    - field.field.node.quote.field_paragraph
     - field.field.node.quote.field_source
     - field.field.node.quote.field_tags
     - node.type.quote
   module:
-    - text
     - user
 id: node.quote.teaser
 targetEntityType: node
 bundle: quote
 mode: teaser
 content:
-  body:
-    type: text_summary_or_trimmed
-    label: hidden
+  field_tags:
+    type: entity_reference_label
+    label: inline
     settings:
-      trim_length: 600
+      link: true
     third_party_settings: {  }
-    weight: 101
+    weight: 1
     region: content
   links:
     settings: {  }
@@ -30,8 +29,8 @@ content:
     weight: 100
     region: content
 hidden:
+  field_paragraph: true
   field_source: true
-  field_tags: true
   langcode: true
-  published_at: true
+  private_message_link: true
   search_api_excerpt: true

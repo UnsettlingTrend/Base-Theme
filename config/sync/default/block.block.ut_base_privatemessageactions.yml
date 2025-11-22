@@ -1,0 +1,25 @@
+uuid: 5f502644-def9-41b9-a453-18150ef64034
+langcode: en
+status: true
+dependencies:
+  module:
+    - private_message
+    - system
+  theme:
+    - ut_base
+id: ut_base_privatemessageactions
+theme: ut_base
+region: content
+weight: -1
+provider: null
+plugin: private_message_actions_block
+settings:
+  id: private_message_actions_block
+  label: 'Private Message Actions'
+  label_display: visible
+  provider: private_message
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /private-messages

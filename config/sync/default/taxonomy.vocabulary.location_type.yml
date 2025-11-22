@@ -1,0 +1,9 @@
+uuid: 3eb52ecf-f01a-481b-ba85-f9859ccdd6a2
+langcode: en
+status: true
+dependencies: {  }
+name: 'Location Type'
+vid: location_type
+description: 'Types and icons for locations.'
+weight: 0
+new_revision: false

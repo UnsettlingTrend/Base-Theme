@@ -1,0 +1,11 @@
+uuid: d20da388-e596-4818-8c7b-9fc54a0fefe7
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.concise
+label: Concise
+description: ''
+targetEntityType: paragraph
+cache: true

@@ -1,4 +1,4 @@
-uuid: 973d095d-f3b5-4349-a89c-b02443323f42
+uuid: 82b1561a-e929-46ee-b578-19ac2b6d4adb
 langcode: en
 status: true
 dependencies:
@@ -11,9 +11,9 @@ field_name: field_tags
 entity_type: node
 bundle: page
 label: Tags
-description: ''
+description: 'Enter a comma-separated list. For example: Amsterdam, Mexico City, "Cleveland, Ohio"'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -22,7 +22,7 @@ settings:
     target_bundles:
       tags: tags
     sort:
-      field: name
+      field: _none
       direction: asc
     auto_create: true
     auto_create_bundle: ''

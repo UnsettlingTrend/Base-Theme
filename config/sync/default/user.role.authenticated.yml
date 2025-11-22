@@ -1,36 +1,145 @@
-uuid: 73760989-cee2-468d-99b7-ebec3668bbe1
+uuid: 81f3fe1d-d076-4646-8a63-3e275087eda2
 langcode: en
 status: true
 dependencies:
   config:
     - filter.format.basic_html
     - filter.format.webform_default
+    - media.type.audio
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+    - node.type.article
+    - node.type.page
+    - node.type.webform
+    - taxonomy.vocabulary.tags
+    - workflows.workflow.editorial
   module:
+    - ai_ckeditor
+    - ai_content_suggestions
+    - book
+    - captcha
     - comment
     - contact
+    - content_moderation
+    - contextual
     - file
     - filter
     - media
+    - node
+    - node_view_permissions
     - paragraphs_type_permissions
+    - path
+    - private_message
     - system
+    - taxonomy
+    - toolbar
+    - workbench
 _core:
-  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+  default_config_hash: btW6TFHajhy7Eo6YUvdFiPh4TcPggo8GBXYctjV6zag
 id: authenticated
 label: 'Authenticated user'
 weight: 1
 is_admin: false
 permissions:
+  - 'access ai content suggestion tools'
   - 'access comments'
   - 'access content'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access media overview'
+  - 'access printer-friendly version'
   - 'access site-wide contact form'
+  - 'access toolbar'
+  - 'access user contact forms'
   - 'access user profiles'
+  - 'access workbench'
+  - 'change own username'
+  - 'create article content'
+  - 'create audio media'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create paragraph content media'
+  - 'create paragraph content section'
+  - 'create paragraph content text_area'
+  - 'create remote_video media'
+  - 'create terms in tags'
+  - 'create url aliases'
+  - 'create video media'
+  - 'delete media'
+  - 'delete own article content'
+  - 'delete own audio media'
+  - 'delete own document media'
   - 'delete own files'
+  - 'delete own image media'
+  - 'delete own page content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'delete own webform content'
+  - 'delete paragraph content media'
+  - 'delete paragraph content text_area'
+  - 'edit any article content'
+  - 'edit any audio media'
+  - 'edit any document media'
+  - 'edit any image media'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit own article content'
+  - 'edit own audio media'
+  - 'edit own document media'
+  - 'edit own image media'
+  - 'edit own page content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit own webform content'
+  - 'edit terms in tags'
   - 'post comments'
+  - 'revert article revisions'
+  - 'skip CAPTCHA'
   - 'skip comment approval'
+  - 'update any media'
+  - 'update media'
+  - 'update paragraph content media'
+  - 'update paragraph content text_area'
+  - 'use ai ckeditor'
+  - 'use editorial transition archived_draft'
+  - 'use editorial transition archived_published'
+  - 'use editorial transition create_new_draft'
+  - 'use editorial transition publish'
+  - 'use private messaging system'
   - 'use text format basic_html'
   - 'use text format webform_default'
+  - 'view all media revisions'
+  - 'view all revisions'
+  - 'view any article content'
+  - 'view any event content'
+  - 'view any issue content'
+  - 'view any page content'
+  - 'view any place content'
+  - 'view any recipe content'
+  - 'view any unpublished content'
+  - 'view any webform content'
+  - 'view article revisions'
+  - 'view latest version'
   - 'view media'
+  - 'view own article content'
+  - 'view own event content'
+  - 'view own issue content'
+  - 'view own page content'
+  - 'view own place content'
+  - 'view own recipe content'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view own webform content'
+  - 'view page revisions'
+  - 'view paragraph content from_library'
+  - 'view paragraph content ingredient'
   - 'view paragraph content media'
-  - 'view paragraph content rating'
+  - 'view paragraph content record'
   - 'view paragraph content section'
-  - 'view paragraph content text'
+  - 'view paragraph content text_area'
+  - 'view paragraph content view'
+  - 'view user email addresses'
+  - 'view webform revisions'

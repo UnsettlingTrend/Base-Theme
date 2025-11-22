@@ -1,0 +1,40 @@
+uuid: 5b447aae-85b3-4f6a-8364-573594a3978f
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_result
+    - field.field.node.issue.body
+    - field.field.node.issue.field_issues
+    - field.field.node.issue.field_paragraphs
+    - node.type.issue
+  module:
+    - layout_builder
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.issue.search_result
+targetEntityType: node
+bundle: issue
+mode: search_result
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  search_api_excerpt:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_issues: true
+  field_paragraphs: true
+  langcode: true
+  links: true

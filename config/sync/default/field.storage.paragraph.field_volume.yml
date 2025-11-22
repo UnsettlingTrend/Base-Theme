@@ -1,0 +1,20 @@
+uuid: 78906b4c-536b-4dbf-a0a2-50638a86b37e
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - physical
+id: paragraph.field_volume
+field_name: field_volume
+entity_type: paragraph
+type: physical_measurement
+settings:
+  measurement_type: volume
+module: physical
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

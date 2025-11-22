@@ -1,4 +1,4 @@
-uuid: cf8fc788-60d6-4400-959e-0de82e2495c8
+uuid: 25811953-22d5-42ed-933d-2055900c59f8
 langcode: en
 status: true
 dependencies:
@@ -6,27 +6,15 @@ dependencies:
     - core.entity_view_display.comment.comment.default
     - field.field.node.article.field_comments
     - field.field.node.article.field_image
-    - field.field.node.article.field_paragraph
+    - field.field.node.article.field_paragraphs
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
-    - field.field.node.article.field_take_aways
-    - image.style.large
     - node.type.article
   module:
     - comment
     - entity_reference_revisions
-    - field_layout
-    - layout_builder
-    - svg_image
     - text
     - user
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings: {  }
-  layout_builder:
-    enabled: false
-    allow_custom: false
 _core:
   default_config_hash: ChmU3AVqDKU32A_fyChG0W9dTRKmVBR58B6OClCLvZI
 id: node.article.default
@@ -37,7 +25,7 @@ content:
   content_moderation_control:
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: -20
     region: content
   field_comments:
     type: comment_default
@@ -46,35 +34,20 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 7
+    weight: 4
     region: content
-  field_image:
-    type: image
-    label: hidden
-    settings:
-      image_link: ''
-      image_style: large
-      image_loading:
-        attribute: lazy
-      svg_attributes:
-        width: null
-        height: null
-      svg_render_as_image: true
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_paragraph:
+  field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
     settings:
-      view_mode: default
+      view_mode: in_content
       link: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 0
     region: content
   field_subtitle:
     type: text_default
-    label: hidden
+    label: above
     settings: {  }
     third_party_settings: {  }
     weight: 3
@@ -85,14 +58,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 6
-    region: content
-  field_take_aways:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
+    weight: 1
     region: content
   links:
     settings: {  }
@@ -100,6 +66,8 @@ content:
     weight: 2
     region: content
 hidden:
+  book_navigation: true
+  field_image: true
   langcode: true
-  published_at: true
+  private_message_link: true
   search_api_excerpt: true

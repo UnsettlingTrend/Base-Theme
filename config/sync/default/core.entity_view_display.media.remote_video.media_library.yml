@@ -1,4 +1,4 @@
-uuid: 82f49e78-90ca-4320-bf3a-d63c279d313f
+uuid: 1291116e-c7e9-4caf-a918-af56da69b229
 langcode: en
 status: true
 dependencies:
@@ -24,10 +24,6 @@ content:
       image_style: medium
       image_loading:
         attribute: lazy
-      svg_attributes:
-        width: ''
-        height: ''
-      svg_render_as_image: true
     third_party_settings: {  }
     weight: 0
     region: content

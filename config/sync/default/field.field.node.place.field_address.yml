@@ -1,0 +1,30 @@
+uuid: f3d9be96-e46b-44de-8c73-b292b613599f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address
+    - node.type.place
+  module:
+    - address
+id: node.place.field_address
+field_name: field_address
+entity_type: node
+bundle: place
+label: Address
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  available_countries:
+    US: US
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: optional
+    familyName:
+      override: optional
+  fields: {  }
+field_type: address

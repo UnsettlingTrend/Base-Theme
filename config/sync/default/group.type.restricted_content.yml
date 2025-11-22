@@ -1,11 +1,11 @@
-uuid: af823df7-6039-44e4-a4fd-328ac34c27ff
+uuid: eafd8535-f87e-4bae-b436-8651660207b1
 langcode: en
 status: true
 dependencies: {  }
 id: restricted_content
 label: 'Restricted Content'
 description: ''
-new_revision: false
+new_revision: true
 creator_membership: true
 creator_wizard: true
 creator_roles:

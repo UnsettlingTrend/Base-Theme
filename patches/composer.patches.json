@@ -1,10 +1,10 @@
 {
   "patches": {
-    "drupal/adminimal_admin_toolbar": {
-      "Drupal 10 Compatibility Fix": "https://www.drupal.org/files/issues/2022-06-15/adminimal_admin_toolbar.1.x-dev.rector.patch"
+    "drupal/core": {
+      "Ajax error ajax.$form.ajaxSubmit() is not a function": "https://git.drupalcode.org/project/drupal/-/merge_requests/6052.diff"
     },
-    "drupal/disable_html5_validation": {
-      "Drupal 10 Compatibility Fix": "https://www.drupal.org/files/issues/2022-06-15/disable_html5_validation.1.x-dev.rector.patch"
+    "drupal/physical": {
+      "Add additional units": "https://www.drupal.org/files/issues/2019-05-01/additional_kitchen_volume-3037212-5.patch"
     }
   }
 }

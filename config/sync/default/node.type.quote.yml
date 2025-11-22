@@ -1,4 +1,4 @@
-uuid: 3549a44d-37e8-4e4d-b9f2-e50353d0c332
+uuid: 6bc765c7-b9c6-4008-9e3c-6a8ab98a5e15
 langcode: en
 status: true
 dependencies:
@@ -6,13 +6,12 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+    available_menus: {  }
+    parent: ''
 name: Quote
 type: quote
 description: 'An interesting <em>quote</em>.'
 help: null
 new_revision: true
 preview_mode: 1
-display_submitted: false
+display_submitted: true

@@ -1,0 +1,18 @@
+uuid: 493cb7d7-ba3f-420c-bdfd-e212129aa1f5
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Place
+type: place
+description: 'A <em>place</em> is a physical location, such as a business or residence.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

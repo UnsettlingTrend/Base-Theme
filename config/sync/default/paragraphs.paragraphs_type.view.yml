@@ -1,0 +1,10 @@
+uuid: ab57cacf-aa5a-428e-9fff-802a769170d5
+langcode: en
+status: true
+dependencies: {  }
+id: view
+label: View
+icon_uuid: null
+icon_default: null
+description: 'A View Block.'
+behavior_plugins: {  }

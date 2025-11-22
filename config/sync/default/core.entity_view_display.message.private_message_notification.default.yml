@@ -1,0 +1,29 @@
+uuid: 4830b126-cfdd-460b-9aa1-11f093bf654c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.message.private_message_notification.field_message_pm_thread
+    - field.field.message.private_message_notification.field_message_private_message
+    - message.template.private_message_notification
+_core:
+  default_config_hash: DtZQNldlBQMP0n4Amq6SdbR8EFyK5HTSjG_UIyIMlFw
+id: message.private_message_notification.default
+targetEntityType: message
+bundle: private_message_notification
+mode: default
+content:
+  partial_0:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  partial_1:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_message_pm_thread: true
+  field_message_private_message: true
+  search_api_excerpt: true
