@@ -125,7 +125,7 @@ hooks:
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form '<service name>:<endpoint name>'.
 relationships:
-#  database: 'db:production'
+  database: 'db:production'
   search:
     service: search
     endpoint: solr
