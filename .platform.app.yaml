@@ -27,9 +27,9 @@ dependencies:
 # The 'mounts' describe writable, persistent filesystem mounts in the application.
 mounts:
   # The default Drupal files directory.
-#  '/web/sites/default/files':
-#    source: local
-#    source_path: 'files'
+  '/web/sites/default/files':
+    source: local
+    source_path: 'files'
   # Drupal gets its own dedicated tmp directory. The settings.platformsh.php
   # file will automatically configure Drupal to use this directory.
   '/tmp':
@@ -37,22 +37,22 @@ mounts:
     source_path: 'tmp'
   # Private file uploads are stored outside the web root. The settings.platformsh.php
   # file will automatically configure Drupal to use this directory.
-#  '/private':
-#    source: local
-#    source_path: 'private'
+  '/private':
+    source: local
+    source_path: 'private'
   # Storage location for PHP and Twig Template related files.
-#  '/storage':
-#    source: local
-#    source_path: 'storage'
+  '/storage':
+    source: local
+    source_path: 'storage'
   # Drush needs a scratch space for its own caches.
-#  '/.drush':
-#    source: local
-#    source_path: 'drush'
+  '/.drush':
+    source: local
+    source_path: 'drush'
   # Drush will try to save backups to this directory, so it must be
   # writeable even though you will almost never need to use it.
-#  '/drush-backups':
-#    source: local
-#    source_path: 'drush-backups'
+  '/drush-backups':
+    source: local
+    source_path: 'drush-backups'
   # Drupal Console will try to save backups to this directory, so it must be
   # writeable even though you will almost never need to use it.
   '/.console':
