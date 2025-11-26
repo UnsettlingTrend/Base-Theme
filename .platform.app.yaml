@@ -91,6 +91,7 @@ hooks:
     # Activate nvm
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     # Use the specified version
+    nvm install "$NODE_VERSION"
     nvm use "$NODE_VERSION"
     # Prepare the theme files and remove node_modules directories after
     echo "Preparing theme files..."
