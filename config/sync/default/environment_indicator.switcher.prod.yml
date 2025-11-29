@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies: {  }
 machine: prod
-description: null
 name: Prod
 weight: 2
 url: 'https://chrisferagotti.com'
