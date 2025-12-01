@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.limited_html
     - filter.format.restricted_html
   module:
     - book
@@ -24,6 +25,7 @@ permissions:
   - 'access content'
   - 'access printer-friendly version'
   - 'access site-wide contact form'
+  - 'use text format limited_html'
   - 'use text format restricted_html'
   - 'view any article content'
   - 'view any page content'
