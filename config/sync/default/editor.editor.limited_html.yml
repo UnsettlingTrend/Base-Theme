@@ -1,6 +1,6 @@
 uuid: 1bec874f-b514-4f3d-9591-fdb056f84109
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - filter.format.limited_html

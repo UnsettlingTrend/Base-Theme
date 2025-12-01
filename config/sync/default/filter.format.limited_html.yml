@@ -1,6 +1,6 @@
 uuid: ec5f47b7-d395-4f5a-9dba-9e38b982db67
 langcode: en
-status: true
+status: false
 dependencies: {  }
 name: 'Limited HTML'
 format: limited_html

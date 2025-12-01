@@ -27,19 +27,21 @@ settings:
       - blockQuote
       - drupalMedia
       - insertTable
+      - codeBlock
+      - code
       - horizontalLine
       - '|'
       - heading
-      - codeBlock
       - '|'
       - sourceEditing
+      - showBlocks
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
-        - left
         - center
-        - right
         - justify
+        - left
+        - right
     ckeditor5_codeBlock:
       languages:
         -
