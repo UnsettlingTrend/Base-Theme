@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
+    - field.field.node.article.field_take_aways
     - node.type.article
   module:
     - comment
@@ -25,7 +26,7 @@ content:
   content_moderation_control:
     settings: {  }
     third_party_settings: {  }
-    weight: -20
+    weight: 0
     region: content
   field_comments:
     type: comment_default
@@ -34,7 +35,7 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 4
+    weight: 6
     region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -43,14 +44,14 @@ content:
       view_mode: in_content
       link: ''
     third_party_settings: {  }
-    weight: 0
+    weight: 4
     region: content
   field_subtitle:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 1
     region: content
   field_tags:
     type: entity_reference_label
@@ -58,12 +59,21 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 1
+    weight: 2
+    region: content
+  field_take_aways:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 3
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 5
     region: content
 hidden:
   book_navigation: true

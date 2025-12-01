@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
+    - field.field.node.article.field_take_aways
     - node.type.article
   module:
     - user
@@ -28,10 +29,13 @@ content:
     weight: 100
     region: content
 hidden:
+  book_navigation: true
   field_comments: true
   field_image: true
   field_paragraphs: true
   field_subtitle: true
   field_tags: true
+  field_take_aways: true
   langcode: true
+  private_message_link: true
   search_api_excerpt: true

@@ -1,0 +1,52 @@
+uuid: 582e4a41-6e12-4863-9be9-56ee2e8ef223
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_take_aways
+    - node.type.article
+    - paragraphs.paragraphs_type.text_list
+  module:
+    - entity_reference_revisions
+id: node.article.field_take_aways
+field_name: field_take_aways
+entity_type: node
+bundle: article
+label: Take-aways
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      text_list: text_list
+    negate: 0
+    target_bundles_drag_drop:
+      from_library:
+        weight: 9
+        enabled: false
+      ingredient:
+        weight: 10
+        enabled: false
+      media:
+        weight: 11
+        enabled: false
+      record:
+        weight: 12
+        enabled: false
+      section:
+        weight: 13
+        enabled: false
+      text_area:
+        weight: 14
+        enabled: false
+      text_list:
+        weight: 15
+        enabled: true
+      view:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions
