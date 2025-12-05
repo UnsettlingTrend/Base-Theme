@@ -94,6 +94,11 @@ tooling:
     service: node
   gulp:
     service: node
+  build:
+    service: node
+    description: Build theme assets.
+    cmd:
+
   xon:
     service: appserver
     description: Enable Xdebug.

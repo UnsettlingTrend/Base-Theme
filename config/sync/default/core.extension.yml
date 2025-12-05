@@ -113,7 +113,6 @@ module:
   link: 0
   locale: 0
   login_emailusername: 0
-  maillog: 0
   media: 0
   media_library: 0
   menu_link_content: 0
@@ -176,7 +175,6 @@ module:
   update: 0
   user: 0
   uswds_templates: 0
-  variationcache: 0
   views_bulk_operations: 0
   views_dependent_filters: 0
   views_ui: 0
