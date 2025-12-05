@@ -2,7 +2,7 @@ name: 'Recipes'
 type: module
 description: 'Configuration, content type, paragraph types, and tempaltes for recipes.'
 package: UnsettlingTrend
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - paragraphs:paragraphs
   - physical:physical

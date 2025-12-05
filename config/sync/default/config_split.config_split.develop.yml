@@ -15,4 +15,3 @@ theme: {  }
 complete_list: {  }
 partial_list:
   - environment_indicator.indicator
-  - maillog.settings
