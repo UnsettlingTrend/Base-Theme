@@ -17,7 +17,14 @@ class LoadTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['cnc_extras'];
+  protected static $modules = ['cnc_extras'];
+
+  /**
+   * Default theme.
+   *
+   * @var array
+   */
+  protected $defaultTheme = ['ut_material'];
 
   /**
    * A user with permission to administer site configuration.
