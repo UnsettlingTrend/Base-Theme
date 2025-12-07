@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies: {  }
 machine: dev
-description: null
 name: Dev
 weight: 1
 url: 'https://develop-sr3snxi-qgxm6c7nioky2.ca-1.platformsh.site/'
