@@ -24,8 +24,27 @@ third_party_settings:
       -
         layout_id: layout_onecol
         layout_settings:
-          label: ''
+          label: 'Content Header'
+          context_mapping: {  }
         components:
+          d3d59c25-cc2b-4329-bcf4-1d98744b2316:
+            uuid: d3d59c25-cc2b-4329-bcf4-1d98744b2316
+            region: content
+            configuration:
+              id: 'field_block:node:page:field_subtitle'
+              label: Subtitle
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: text_default
+                label: hidden
+                settings: {  }
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
           a7ab8816-43ba-4e4e-a9d0-aed01f879db6:
             uuid: a7ab8816-43ba-4e4e-a9d0-aed01f879db6
             region: content
@@ -34,8 +53,14 @@ third_party_settings:
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
-            weight: 1
+            weight: 2
             additional: {  }
+        third_party_settings: {  }
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
           5d3dc095-a55e-4271-9f6d-023035887a4c:
             uuid: 5d3dc095-a55e-4271-9f6d-023035887a4c
             region: content
@@ -78,24 +103,6 @@ third_party_settings:
               context_mapping:
                 entity: layout_builder.entity
             weight: 5
-            additional: {  }
-          d3d59c25-cc2b-4329-bcf4-1d98744b2316:
-            uuid: d3d59c25-cc2b-4329-bcf4-1d98744b2316
-            region: content
-            configuration:
-              id: 'field_block:node:page:field_subtitle'
-              label: Subtitle
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 0
             additional: {  }
           77878388-154b-4c66-9897-0adcb89b36f5:
             uuid: 77878388-154b-4c66-9897-0adcb89b36f5
