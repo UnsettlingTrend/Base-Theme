@@ -201,6 +201,32 @@ display:
             field_identifier: created
           exposed: true
           granularity: second
+        field_title_value:
+          id: field_title_value
+          table: media__field_title
+          field: field_title_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: 'Title (A-Z)'
+            field_identifier: field_title_value
+          exposed: true
+        field_title_value_1:
+          id: field_title_value_1
+          table: media__field_title
+          field: field_title_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: 'Title (Z-A)'
+            field_identifier: field_title_value_1
+          exposed: true
         name:
           id: name
           table: media_field_data
@@ -213,7 +239,7 @@ display:
           plugin_id: standard
           order: ASC
           expose:
-            label: 'Name (A-Z)'
+            label: 'Filename / URL (A-Z)'
             field_identifier: name
           exposed: true
         name_1:
@@ -228,7 +254,7 @@ display:
           plugin_id: standard
           order: DESC
           expose:
-            label: 'Name (Z-A)'
+            label: 'Filename / URL (Z-A)'
             field_identifier: name_1
           exposed: true
       filters:
@@ -1179,7 +1205,7 @@ display:
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: false
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1463,8 +1489,64 @@ display:
       style:
         type: table
         options:
+          grouping: {  }
           row_class: 'media-library-item media-library-item--table js-media-library-item js-click-to-select'
           default_row_class: true
+          columns:
+            media_library_select_form: media_library_select_form
+            thumbnail__target_id: thumbnail__target_id
+            field_title: field_title
+            name: name
+            uid: uid
+            changed: changed
+          default: '-1'
+          info:
+            media_library_select_form:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            thumbnail__target_id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+            name:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            uid:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            changed:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
           class: ''
       row:
         type: fields
