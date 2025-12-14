@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.media_library
     - field.field.media.remote_video.field_media_oembed_video
+    - field.field.media.remote_video.field_title
     - image.style.medium
     - media.type.remote_video
   module:
@@ -16,6 +17,14 @@ targetEntityType: media
 bundle: remote_video
 mode: media_library
 content:
+  field_title:
+    type: string
+    label: visually_hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
   thumbnail:
     type: image
     label: hidden
@@ -24,8 +33,12 @@ content:
       image_style: medium
       image_loading:
         attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
 hidden:
   created: true

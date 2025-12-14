@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.in_content
     - field.field.media.remote_video.field_media_oembed_video
+    - field.field.media.remote_video.field_title
     - media.type.remote_video
   module:
     - layout_builder
@@ -33,6 +34,7 @@ content:
     region: content
 hidden:
   created: true
+  field_title: true
   langcode: true
   name: true
   search_api_excerpt: true

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.media.image.field_media_image
+    - field.field.media.image.field_title
     - image.style.full_width
     - image.style.large
     - image.style.thumbnail
@@ -34,6 +35,14 @@ content:
         photoswipe_caption: title
         photoswipe_caption_custom: ''
     weight: 1
+    region: content
+  field_title:
+    type: string
+    label: visually_hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   created: true

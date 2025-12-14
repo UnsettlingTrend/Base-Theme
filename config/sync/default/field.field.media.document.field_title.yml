@@ -1,0 +1,19 @@
+uuid: 388c9036-c3bf-4045-b5a3-973069ef7a90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_title
+    - media.type.document
+id: media.document.field_title
+field_name: field_title
+entity_type: media
+bundle: document
+label: Title
+description: 'The title of the file. Mostly used for administrative purposes.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

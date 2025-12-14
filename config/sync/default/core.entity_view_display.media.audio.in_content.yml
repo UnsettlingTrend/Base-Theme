@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.in_content
     - field.field.media.audio.field_media_audio_file
+    - field.field.media.audio.field_title
     - media.type.audio
   module:
     - file
@@ -33,6 +34,7 @@ content:
     region: content
 hidden:
   created: true
+  field_title: true
   langcode: true
   name: true
   search_api_excerpt: true
