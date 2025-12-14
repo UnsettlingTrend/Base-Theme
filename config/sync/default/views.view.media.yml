@@ -683,10 +683,10 @@ display:
           operator: '='
           value: '1'
           group: 1
-          exposed: false
+          exposed: true
           expose:
             operator_id: ''
-            label: 'True'
+            label: Published
             description: null
             use_operator: false
             operator: status_op
@@ -700,14 +700,14 @@ display:
               authenticated: authenticated
           is_grouped: true
           group_info:
-            label: 'Published status'
+            label: Status
             description: ''
             identifier: status
             optional: true
             widget: select
             multiple: false
             remember: false
-            default_group: All
+            default_group: '1'
             default_group_multiple: {  }
             group_items:
               1:
