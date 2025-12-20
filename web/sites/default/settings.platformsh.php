@@ -223,10 +223,11 @@ $settings['hash_salt'] = 'SXGNp9wMkgups2dhCJikKb_56ND4Q05Rz3O6D_oDxwEcpBISgDeYYW
 // Add settings from variables stored in Platforms UI (make sure to check if they exist first...)
 $platform_variables = json_decode(base64_decode(getenv("PLATFORM_VARIABLES")), TRUE);
 // Creds for Google reCAPTCHA
-$config['recaptcha.settings']['site_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SITE_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SITE_KEY'] : '';
-$config['recaptcha.settings']['secret_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SECRET_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SECRET_KEY'] : '';
+$config['recaptcha.settings']['site_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SITE_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SITE_KEY'] : '<environment-varible>';
+$config['recaptcha.settings']['secret_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SECRET_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SECRET_KEY'] : '<environment-varible>';
 // Creds for Google Maps API
-$config['geolocation_google_maps.settings']['google_map_api_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_API_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_API_KEY'] : '';
+$config['geolocation_google_maps.settings']['google_map_api_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY'] : '<environment-varible>';
+$config['geolocation_google_maps.settings']['google_map_api_server_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY'] : '<environment-varible>';
 // Creds for Google Authenticator API
-$config['social_auth_google.settings']['client_id'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_ID']) ? $platform_variables['CREDS_OAUTH_CLIENT_ID'] : '';
-$config['social_auth_google.settings']['client_secret'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_SECRET']) ? $platform_variables['CREDS_OAUTH_CLIENT_SECRET'] : '';
+$config['social_auth_google.settings']['client_id'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_ID']) ? $platform_variables['CREDS_OAUTH_CLIENT_ID'] : '<environment-varible>';
+$config['social_auth_google.settings']['client_secret'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_SECRET']) ? $platform_variables['CREDS_OAUTH_CLIENT_SECRET'] : '<environment-varible>';
