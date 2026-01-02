@@ -1,0 +1,67 @@
+
+/* Mobile Main Nav Menu Styles  */
+#block-ut-material-main-menu {
+  /* (Screen width < 768px) */
+  @media (max-width: 767px) {
+    /* Move the whole nav to the right */
+    margin-left: auto;
+
+    /* 1. Create the Hamburger Toggle Button via CSS if not in HTML */
+    .menu-toggle {
+      display: block;
+      padding: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      background: $theme-primary; /* Material Primary */
+      color: $theme-background;
+      text-align: center;
+      border: none;
+    }
+
+    /* 2. Hide the menu by default and position it */
+    .navbar-menu {
+      display: none; /* Hidden until toggled */
+      position: fixed;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    /* 3. Class to show the menu when JS toggles it */
+    .navbar-menu.is-open {
+      display: block;
+    }
+
+    /* 4. Reset list styles for vertical stack */
+    .menu--level-0 {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .navbar-menu__item {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid $theme-background;
+      text-decoration: none;
+      color: $theme-background;
+      background-color: $theme-primary;
+    }
+  }
+
+  /* Desktop View (Reset) */
+  @media (min-width: 768px) {
+    .menu-toggle {
+      display: none;
+    }
+    .navbar-menu {
+      display: flex !important;
+    }
+    .menu--level-0 {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

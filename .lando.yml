@@ -97,8 +97,7 @@ tooling:
   build:
     service: node
     description: Build theme assets.
-    cmd:
-
+    cmd: bash /app/lando/build_theme.sh
   xon:
     service: appserver
     description: Enable Xdebug.
