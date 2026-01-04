@@ -1,0 +1,25 @@
+uuid: bdfc276e-450b-4c7b-be46-425e867703a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.concise
+    - field.field.node.journal_entry.field_paragraph
+    - node.type.journal_entry
+  module:
+    - user
+id: node.journal_entry.concise
+targetEntityType: node
+bundle: journal_entry
+mode: concise
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_paragraph: true
+  langcode: true
+  private_message_link: true
+  search_api_excerpt: true
