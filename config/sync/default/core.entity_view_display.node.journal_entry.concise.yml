@@ -22,4 +22,5 @@ hidden:
   field_paragraph: true
   langcode: true
   private_message_link: true
+  published_at: true
   search_api_excerpt: true
