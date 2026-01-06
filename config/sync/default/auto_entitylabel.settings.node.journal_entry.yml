@@ -1,0 +1,10 @@
+status: 2
+pattern: 'Journal Entry: [current-date:fallback]'
+escape: false
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - node.type.journal_entry
+new_content_behavior: 0

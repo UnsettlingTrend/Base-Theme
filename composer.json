@@ -45,6 +45,7 @@
         "drupal/admin_toolbar": "^3.0",
         "drupal/ai": "^1.2",
         "drupal/ajax_comments": "^1.0@beta",
+        "drupal/auto_entitylabel": "^3.4",
         "drupal/background_image_formatter": "^2.0",
         "drupal/better_exposed_filters": "^7.1@beta",
         "drupal/block_content_template": "^1.5",
