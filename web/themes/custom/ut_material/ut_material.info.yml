@@ -29,6 +29,10 @@ libraries-override:
       theme:
         ../../dist/css/mdc.css: false
 
+components:
+  namespaces:
+    components: components
+
 regions:
   navbar: 'Navbar'
   header: 'Header'

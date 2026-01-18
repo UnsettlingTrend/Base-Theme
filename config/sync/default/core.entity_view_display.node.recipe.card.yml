@@ -1,0 +1,73 @@
+uuid: 08ecc915-a6c6-481c-a0fb-2619b68e7fbd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.card
+    - field.field.node.recipe.body
+    - field.field.node.recipe.field_cook_time
+    - field.field.node.recipe.field_image
+    - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_paragraphs
+    - field.field.node.recipe.field_prep_time
+    - field.field.node.recipe.field_servings
+    - node.type.recipe
+  module:
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.recipe.card
+targetEntityType: node
+bundle: recipe
+mode: card
+content:
+  field_cook_time:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: card
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_prep_time:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_servings:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  body: true
+  book_navigation: true
+  content_moderation_control: true
+  field_ingredients: true
+  field_paragraphs: true
+  langcode: true
+  links: true
+  private_message_link: true
+  published_at: true
+  search_api_excerpt: true

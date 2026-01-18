@@ -1,0 +1,14 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Card (M3)
+description: A Material Design 3 style card.
+props:
+  type: object
+  properties:
+    title:
+      type: string
+    image:
+      type: string
+    body:
+      type: string
+    url:
+      type: string

@@ -1,0 +1,17 @@
+uuid: 3a4f2cf2-deec-4991-820b-e0e6888480f2
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: card
+label: 'Card (220x220)'
+effects:
+  94392c01-dd98-452b-bd5f-db99e0d0a96b:
+    uuid: 94392c01-dd98-452b-bd5f-db99e0d0a96b
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 220
+      height: 220
+      crop_type: focal_point

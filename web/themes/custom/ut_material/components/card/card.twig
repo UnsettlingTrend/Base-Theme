@@ -1,0 +1,16 @@
+<div class="m3-card m3-card--elevated">
+  {% if image %}
+    <div class="m3-card__media">
+      {{ image }}
+    </div>
+  {% endif %}
+
+  <div class="m3-card__content">
+    <h3 class="m3-card__title">
+      <a href="{{ url }}">{{ title }}</a>
+    </h3>
+    <div class="m3-card__body">
+      {{ body }}
+    </div>
+  </div>
+</div>
