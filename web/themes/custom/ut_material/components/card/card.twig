@@ -1,16 +1,31 @@
-<div class="m3-card m3-card--elevated">
-  {% if image %}
-    <div class="m3-card__media">
-      {{ image }}
-    </div>
-  {% endif %}
+{# mdc Card Container #}
+<article {{ attributes.addClass('mdc-card', 'mdc-card--' ~ variant|default('outlined')) }}>
 
-  <div class="m3-card__content">
-    <h3 class="m3-card__title">
-      <a href="{{ url }}">{{ title }}</a>
-    </h3>
-    <div class="m3-card__body">
-      {{ body }}
+    {# Media Block #}
+    {% if image %}
+        <div class="mdc-card__media">
+            {{ image }}
+        </div>
+    {% endif %}
+
+    {# Content Area #}
+    <div class="mdc-card__content">
+        <header>
+            <h3 class="mdc-card__headline">{{ title }}</h3>
+            {% if subhead %}
+                <p class="mdc-card__subhead">{{ subhead }}</p>
+            {% endif %}
+        </header>
+
+        {% if subhead %}
+            <div class="mdc-card__supporting-text">
+                {{ body }}
+            </div>
+        {% endif %}
+
+        {# Action Area #}
+        <footer class="mdc-card__actions">
+            <a href="{{ url }}" class="mdc-button mdc-button--text">Read More</a>
+        </footer>
     </div>
-  </div>
-</div>
+</article>
