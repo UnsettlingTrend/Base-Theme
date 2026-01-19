@@ -11,7 +11,7 @@
     {# Content Area #}
     <div class="mdc-card__content">
         <header>
-            <h3 class="mdc-card__headline">{{ title }}</h3>
+            <h3 class="mdc-card__title">{{ title }}</h3>
             {% if subhead %}
                 <p class="mdc-card__subhead">{{ subhead }}</p>
             {% endif %}
@@ -25,7 +25,7 @@
 
         {# Action Area #}
         <footer class="mdc-card__actions">
-            <a href="{{ url }}" class="mdc-button mdc-button--text">Read More</a>
+            <a href="{{ url }}" class="mdc-button mdc-button--text">{{ url_text|default('Read More') }}</a>
         </footer>
     </div>
 </article>

@@ -79,10 +79,12 @@
   view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
 ] %}
 
-{% include "@components/card.twig" with {
+{% embed 'ut_material:card' with {
   title: label,
-  image: content.field_image|render,
+  image: content.field_image,
   url: url,
+  url_text: "Go to Recipe",
+  variant: "elevated",
 } %}
 
-
+{% endembed %}

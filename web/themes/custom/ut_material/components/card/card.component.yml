@@ -7,8 +7,12 @@ props:
     title:
       type: string
     image:
-      type: string
+      type: object
     body:
       type: string
     url:
+      type: string
+    url_text:
+      type: string
+    variant:
       type: string

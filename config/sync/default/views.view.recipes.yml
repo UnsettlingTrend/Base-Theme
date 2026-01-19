@@ -233,6 +233,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      css_class: cards
       header: {  }
       footer: {  }
       display_extenders: {  }
