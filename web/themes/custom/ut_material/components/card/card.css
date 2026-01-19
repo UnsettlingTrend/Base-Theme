@@ -21,6 +21,10 @@
   display: flex;
   flex-wrap: wrap;
 
+  > * {
+    width: 100%;
+  }
+
   footer {
     height: min-content;
     margin-top: auto;
@@ -37,6 +41,13 @@
 }
 
 /* Make all the cards in a row in a view the same height */
-div.views-element-container .views-view-responsive-grid__item-inner {
-  height: 100%;
+div.views-element-container .cards {
+
+  .views-view-responsive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  }
+
+  .views-view-responsive-grid__item-inner {
+    height: 100%;
+  }
 }
