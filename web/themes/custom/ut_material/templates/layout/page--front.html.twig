@@ -121,6 +121,11 @@
           {% endif %}
 
           <div class="main-content">
+
+            {% if node.field_image %}
+              <div class="header-image"><img src="{{ node.field_image.entity.field_media_image | file_url }}" /></div>
+            {% endif %}
+
             <div class="main-content__container">
 
               {% if page.content_above %}
@@ -131,10 +136,6 @@
 
               <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
               <div class="main-content__content">
-
-                {% if node.field_image %}
-                  <div class="header-image"><img src="{{ node.field_image.entity.field_media_image | file_url }}" /></div>
-                {% endif %}
 
                 <div class="page-content__wrapper">
                   <div class="page-content-primary">

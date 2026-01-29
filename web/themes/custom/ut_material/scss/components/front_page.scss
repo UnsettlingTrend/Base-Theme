@@ -1,5 +1,15 @@
 body.front {
+
+  div.header-image {
+    max-width: $lg;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 64px;
+  }
+
   main.page-main div.main-content div.main-content__container {
     //margin-top: 0;
   }
 }
+
+
