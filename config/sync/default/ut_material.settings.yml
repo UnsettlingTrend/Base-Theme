@@ -9,7 +9,7 @@ features:
   node_user_picture: true
 logo:
   use_default: true
-navbar_fixed: true
+navbar_fixed: false
 navbar_style: standard
 drawer_style: modal
 drawer_height: below_navbar

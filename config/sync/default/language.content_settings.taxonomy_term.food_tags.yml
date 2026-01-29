@@ -1,0 +1,11 @@
+uuid: 968d1793-fd6f-4641-af14-d80f44561c1c
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.food_tags
+id: taxonomy_term.food_tags
+target_entity_type_id: taxonomy_term
+target_bundle: food_tags
+default_langcode: site_default
+language_alterable: false

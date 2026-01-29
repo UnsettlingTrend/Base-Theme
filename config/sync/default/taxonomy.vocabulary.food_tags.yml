@@ -1,0 +1,9 @@
+uuid: 8bfbe0c2-3048-42c8-95f6-b2b291a1bf4e
+langcode: en
+status: true
+dependencies: {  }
+name: 'Food Tags'
+vid: food_tags
+description: null
+weight: 0
+new_revision: false
