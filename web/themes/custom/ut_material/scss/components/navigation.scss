@@ -65,3 +65,13 @@
     }
   }
 }
+
+div.layout-container--page main div.main-content__container {
+  margin-top: 68px;
+}
+
+@media (min-width: $sm) {
+  div.layout-container--page main div.main-content__container {
+    margin-top: 75px;
+  }
+}
