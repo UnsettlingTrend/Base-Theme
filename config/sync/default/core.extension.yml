@@ -120,6 +120,7 @@ module:
   menu_ui: 0
   message: 0
   message_notify: 0
+  metatag: 0
   module_filter: 0
   mysql: 0
   name: 0
