@@ -7,9 +7,12 @@ body.front {
     margin-top: 64px;
   }
 
-  main.page-main div.main-content div.main-content__container {
-    //margin-top: 0;
+  @media only screen and (max-width: $sm) {
+    div.header-image {
+      margin-top: 56px;
+    }
   }
 }
+
 
 

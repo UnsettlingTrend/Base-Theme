@@ -1,9 +1,9 @@
 
-.toolbar-horizontal header.mdc-top-app-bar--not-fixed {
+.toolbar-horizontal header.region-navbar.mdc-top-app-bar--not-fixed {
   margin-top: 60px;
 }
 
-.toolbar-vertical header.mdc-top-app-bar--not-fixed {
+.toolbar-vertical header.region-navbar.mdc-top-app-bar--not-fixed {
   margin-top: 87px;
 }
 
@@ -30,16 +30,16 @@
 }
 @media only screen and (min-width: $xs) {
   .spacing-my-standard, .layout-container--page .main-content__container {
-    margin-top: 64px;
+    margin-top: 56px;
   }
 }
 @media only screen and (min-width: $ms) {
   .spacing-my-standard, .layout-container--page .main-content__container {
-    margin-top: 64px;
+    margin-top: 56px;
   }
 }
 @media only screen and (min-width: $ss) {
   .spacing-my-standard, .layout-container--page .main-content__container {
-    margin-top: 64px;
+    margin-top: 56px;
   }
 }
