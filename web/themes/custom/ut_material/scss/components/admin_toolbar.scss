@@ -1,0 +1,45 @@
+
+.toolbar-horizontal header.mdc-top-app-bar--not-fixed {
+  margin-top: 60px;
+}
+
+.toolbar-vertical header.mdc-top-app-bar--not-fixed {
+  margin-top: 87px;
+}
+
+// Deal with the weird spacing issues around the gin toolbar and how it affects the fixed navbar
+@media only screen and (min-width: $xl) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $lg) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $md) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $sm) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $xs) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $ms) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
+@media only screen and (min-width: $ss) {
+  .spacing-my-standard, .layout-container--page .main-content__container {
+    margin-top: 64px;
+  }
+}
