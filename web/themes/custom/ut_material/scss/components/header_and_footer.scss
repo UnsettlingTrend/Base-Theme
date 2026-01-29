@@ -1,0 +1,10 @@
+.site-logo > img {
+  max-height: 50px;
+}
+
+header.region-navbar .navbar__section,
+footer.region-footer .footer__section {
+  max-width: $lg;
+  margin-left: auto;
+  margin-right: auto;
+}

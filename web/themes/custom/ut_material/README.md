@@ -1,0 +1,1 @@
+# UT Material Theme&#10## A sub-theme of Material Base&#10&#10## Components&#10&#10To create a new component:&#101. Create a template in the /templates/components folder to override the Drupal template&#10looking to replace.&#102. In that template, you'll need to embed the corresponding template in the&#10/components directory.&#10&#10

@@ -97,7 +97,7 @@
         "drupal/login_emailusername": "^3.0",
         "drupal/material_base": "^3.1",
         "drupal/migrate_plus": "^6.0",
-        "drupal/migrate_tools": "^6.0",
+        "drupal/migrate_tools": "^6.1",
         "drupal/module_filter": "^5.0",
         "drupal/name": "^1.0@RC",
         "drupal/node_view_permissions": "^2.0",

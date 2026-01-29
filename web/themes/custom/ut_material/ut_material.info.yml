@@ -5,6 +5,7 @@ name: UT Material
 type: theme
 description: Custom theme based on Material Base theme.
 core_version_requirement: ^9 || ^10 || ^11
+logo: logo.png
 
 base theme: material_base_mdc                     # Default. Subtheme of Material Base with the MDC library related stuff.
 # base theme: material_base                        # Pure base theme without MDC library related stuff.
