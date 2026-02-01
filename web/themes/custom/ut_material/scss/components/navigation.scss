@@ -3,8 +3,11 @@
 #block-ut-material-main-menu {
   /* (Screen width < 768px) */
   @media (max-width: 767px) {
+
     /* Move the whole nav to the right */
     margin-left: auto;
+    /* Prepare for the dropdown going full screen beneath */
+    position: static;
 
     /* 1. Create the Hamburger Toggle Button via CSS if not in HTML */
     .menu-toggle {
@@ -21,9 +24,10 @@
     /* 2. Hide the menu by default and position it */
     .navbar-menu {
       display: none; /* Hidden until toggled */
-      position: fixed;
       flex-direction: column;
-      width: 100%;
+      width: 100vw;
+      position: absolute;
+      left: 0;
     }
 
     /* 3. Class to show the menu when JS toggles it */
