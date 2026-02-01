@@ -79,3 +79,14 @@ div.layout-container--page main div.main-content__container {
     margin-top: 75px;
   }
 }
+
+/* Make children items show properly in the structure */
+.mdc-menu-surface--anchor .mdc-menu-surface--open {
+  position: relative;
+  overflow: unset;
+
+  .mdc-deprecated-list {
+    padding: 0;
+    width: 100vw;
+  }
+}
