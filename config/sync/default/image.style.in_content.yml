@@ -1,0 +1,15 @@
+uuid: 819a1c29-5fb6-4313-86e7-19704fb8f48d
+langcode: en
+status: true
+dependencies: {  }
+name: in_content
+label: 'In Content (max 1200px width)'
+effects:
+  68de85fe-e27c-4e2b-bfba-91151e1738c2:
+    uuid: 68de85fe-e27c-4e2b-bfba-91151e1738c2
+    id: image_scale
+    weight: 1
+    data:
+      width: 1200
+      height: null
+      upscale: false

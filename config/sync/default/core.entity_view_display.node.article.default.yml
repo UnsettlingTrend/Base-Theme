@@ -12,6 +12,7 @@ dependencies:
     - node.type.article
     - views.view.node_revisions
   module:
+    - book
     - layout_builder
     - layout_discovery
     - user
@@ -98,7 +99,7 @@ third_party_settings:
               views_label: ''
               items_per_page: null
               exposed: {  }
-            weight: 1
+            weight: 2
             additional: {  }
           8dd874c0-9865-4ed7-ba9c-abc9d371177b:
             uuid: 8dd874c0-9865-4ed7-ba9c-abc9d371177b
@@ -132,6 +133,20 @@ third_party_settings:
                   link: ''
                 third_party_settings: {  }
             weight: 0
+            additional: {  }
+          686a1dd0-fab6-416a-aa09-52e2430f595e:
+            uuid: 686a1dd0-fab6-416a-aa09-52e2430f595e
+            region: second
+            configuration:
+              id: book_navigation
+              label: 'Book navigation'
+              label_display: '0'
+              provider: book
+              context_mapping: {  }
+              block_mode: 'book pages'
+              show_top_item: true
+              use_top_level_title: true
+            weight: 1
             additional: {  }
         third_party_settings: {  }
       -
