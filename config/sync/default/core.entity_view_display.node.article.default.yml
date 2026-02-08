@@ -140,7 +140,7 @@ third_party_settings:
             configuration:
               id: book_navigation
               label: 'Book navigation'
-              label_display: '0'
+              label_display: visible
               provider: book
               context_mapping: {  }
               block_mode: 'book pages'
