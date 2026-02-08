@@ -1,1 +1,9 @@
 // Place your extends here.
+
+.page-title-standard {
+  font-size: $font-size-h1;
+  line-height: $line-height-h1;
+  font-weight: $font-weight-h1;
+  font-family: $font-family-heading;
+  color: $color-heading;
+}
