@@ -67,7 +67,7 @@ services:
       - appserver
     portforward: true
   search:
-    type: solr:9
+    type: solr:9.4
     portforward: true
     core: collection1
     config:
