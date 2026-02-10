@@ -9,6 +9,7 @@ $color-bg-body: #fff;
 $theme-primary: $color-primary-base;
 $theme-secondary: $color-secondary-base;
 $theme-background: $color-bg-body;
+$theme-background-gray: #b9b9b9;
 $color-text-base: #000;
 $color-text: color.adjust($color-text-base, $lightness: 26%); // #424242
 $color-heading: color.adjust($color-text-base, $lightness: 13%); // #212121

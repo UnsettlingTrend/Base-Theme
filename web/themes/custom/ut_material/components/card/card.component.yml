@@ -12,7 +12,5 @@ props:
       type: string
     url:
       type: string
-    url_text:
-      type: string
     variant:
       type: string
