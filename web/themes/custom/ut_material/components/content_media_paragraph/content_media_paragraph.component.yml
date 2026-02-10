@@ -1,0 +1,10 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Content-Image-Paragraph (M3)
+description: A Material Design 3 styled piece of media in a paragraph.
+props:
+  type: object
+  properties:
+    caption:
+      type: object
+    media:
+      type: object
