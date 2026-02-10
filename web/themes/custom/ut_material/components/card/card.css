@@ -49,7 +49,7 @@ a:link, a:hover, a:visited, a:active, a:focus {
   flex-direction: column;  /* Keeps content stacking correctly */
   justify-content: center; /* Centers vertically */
   align-items: center;     /* Centers horizontally (since you asked for that too!) */
-  min-height: 100px;        /* Adjust this height based on your card design */
+  min-height: 6rem;        /* Adjust this height based on your card design */
 }
 
 /* Make all the cards in a row in a view the same height */
