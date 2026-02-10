@@ -41,8 +41,8 @@ a:link, a:hover, a:visited, a:active, a:focus {
   padding-left: 10px;
   padding-right: 10px;
   font-size: 1.5rem;
+  text-align: center;
   line-height: var(--mdc-typography-headline3-line-height, 2rem);
-
 }
 
 /* Make all the cards in a row in a view the same height */
