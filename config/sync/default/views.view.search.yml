@@ -5,10 +5,10 @@ dependencies:
   config:
     - field.storage.node.body
     - search_api.index.content
-    - system.menu.main
   module:
     - better_exposed_filters
     - facets_exposed_filters
+    - facets_summary
     - search_api
     - text
 id: search
@@ -150,7 +150,12 @@ display:
           preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
-      header: {  }
+      header:
+        facets_summary:
+          id: facets_summary
+          table: search_api_index_content
+          field: facets_summary
+          plugin_id: facets_summary_area
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -164,10 +169,10 @@ display:
         - 'config:field.storage.node.body'
         - 'config:search_api.index.content'
         - 'search_api_list:content'
-  page_recipes:
-    id: page_recipes
-    display_title: 'Page - Recipes'
-    display_plugin: page
+  block_recipes:
+    id: block_recipes
+    display_title: 'Block - Recipes'
+    display_plugin: block
     position: 2
     display_options:
       title: Recipes
@@ -198,6 +203,20 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
+              search_api_fulltext:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  sort_options_unsupported: ''
               facets_field_ingredient:
                 plugin_id: bef_links
                 advanced:
@@ -257,6 +276,52 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_content
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: and
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: Search
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search_api_fulltext
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            expose_fields: false
+            placeholder: ''
+            searched_fields_id: search_api_fulltext_searched_fields
+            value_maxlength: 128
+            value_max_words: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: terms
+          min_length: null
+          fields: {  }
         facets_field_ingredient:
           id: facets_field_ingredient
           table: search_api_index_content
@@ -308,6 +373,11 @@ display:
                 weights:
                   build: 5
                 settings: {  }
+              hide_active_items_processor:
+                processor_id: hide_active_items_processor
+                weights:
+                  build: 25
+                settings: {  }
               list_item:
                 processor_id: list_item
                 weights:
@@ -356,17 +426,8 @@ display:
         filters: false
         filter_groups: false
       display_description: ''
+      exposed_block: true
       display_extenders: {  }
-      path: recipes
-      menu:
-        type: normal
-        title: Recipes
-        description: 'Some of my favorite food and how to make it.'
-        weight: 0
-        expanded: false
-        menu_name: main
-        parent: ''
-        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
@@ -379,15 +440,14 @@ display:
         - 'config:field.storage.node.body'
         - 'config:search_api.index.content'
         - 'search_api_list:content'
-  page_search:
-    id: page_search
-    display_title: 'Page - Search'
-    display_plugin: page
+  block_search:
+    id: block_search
+    display_title: 'Block - Search'
+    display_plugin: block
     position: 1
     display_options:
       display_description: ''
       display_extenders: {  }
-      path: search
     cache_metadata:
       max-age: -1
       contexts:

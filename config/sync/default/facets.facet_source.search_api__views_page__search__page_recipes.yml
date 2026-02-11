@@ -1,9 +1,0 @@
-uuid: f46a8902-d3a8-42e1-9b63-1b94139fe291
-langcode: en
-status: true
-dependencies: {  }
-id: search_api__views_page__search__page_recipes
-name: 'search_api:views_page__search__page_recipes'
-filter_key: null
-url_processor: query_string
-breadcrumb: {  }

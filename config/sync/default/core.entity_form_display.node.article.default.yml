@@ -9,14 +9,15 @@ dependencies:
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
     - field.field.node.article.field_take_aways
+    - field.field.node.article.layout_builder__layout
     - node.type.article
-    - workflows.workflow.editorial
   module:
     - comment
     - content_moderation
     - media_library
     - paragraphs
     - path
+    - publication_date
     - text
 _core:
   default_config_hash: 6VUXB1jTUjK5zjkfMa2Kd2WW4sFUlgfBlfJSx01qLpU
@@ -127,6 +128,12 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 13
@@ -164,4 +171,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  layout_builder__layout: true
