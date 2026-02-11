@@ -150,12 +150,7 @@ display:
           preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
-      header:
-        facets_summary:
-          id: facets_summary
-          table: search_api_index_content
-          field: facets_summary
-          plugin_id: facets_summary_area
+      header: {  }
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -390,11 +385,6 @@ display:
                 weights:
                   build: 5
                 settings: {  }
-              hide_active_items_processor:
-                processor_id: hide_active_items_processor
-                weights:
-                  build: 25
-                settings: {  }
               list_item:
                 processor_id: list_item
                 weights:
@@ -463,11 +453,6 @@ display:
                 weights:
                   build: 5
                 settings: {  }
-              hide_active_items_processor:
-                processor_id: hide_active_items_processor
-                weights:
-                  build: 25
-                settings: {  }
               list_item:
                 processor_id: list_item
                 weights:
@@ -516,8 +501,15 @@ display:
         row: false
         filters: false
         filter_groups: false
+        header: false
       css_class: cards-view-block
       display_description: ''
+      header:
+        facets_summary:
+          id: facets_summary
+          table: search_api_index_content
+          field: facets_summary
+          plugin_id: facets_summary_area
       exposed_block: true
       display_extenders: {  }
     cache_metadata:

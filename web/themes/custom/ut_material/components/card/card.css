@@ -67,4 +67,8 @@ div.views-element-container .cards-view-block {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   grid-gap: 15px;
+
+  .views-row {
+    max-width: 15rem;
+  }
 }
