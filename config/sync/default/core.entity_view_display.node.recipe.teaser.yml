@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
     - text
@@ -28,12 +29,26 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
     weight: 100
     region: content
 hidden:
+  book_navigation: true
   field_cook_time: true
   field_image: true
   field_ingredients: true
@@ -41,4 +56,6 @@ hidden:
   field_prep_time: true
   field_servings: true
   langcode: true
+  private_message_link: true
+  published_at: true
   search_api_excerpt: true

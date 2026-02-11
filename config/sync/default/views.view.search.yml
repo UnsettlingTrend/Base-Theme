@@ -217,6 +217,23 @@ display:
                   hide_label: false
                   field_classes: ''
                   sort_options_unsupported: ''
+              facets_field_tags:
+                plugin_id: bef_links
+                advanced:
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+                  sort_options_unsupported: ''
+                select_all_none: false
+                soft_limit: 10
+                soft_limit_label_less: 'Show less'
+                soft_limit_label_more: 'Show more'
               facets_field_ingredient:
                 plugin_id: bef_links
                 advanced:
@@ -322,6 +339,79 @@ display:
           parse_mode: terms
           min_length: null
           fields: {  }
+        facets_field_tags:
+          id: facets_field_tags
+          table: search_api_index_content
+          field: facets_field_tags
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: facets_filter
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: Tags
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_tags
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          hierarchy: false
+          label_display: visible
+          facet:
+            query_operator: and
+            hard_limit: 0
+            min_count: 1
+            show_numbers: true
+            processor_configs:
+              translate_entity:
+                processor_id: translate_entity
+                weights:
+                  build: 5
+                settings: {  }
+              hide_active_items_processor:
+                processor_id: hide_active_items_processor
+                weights:
+                  build: 25
+                settings: {  }
+              list_item:
+                processor_id: list_item
+                weights:
+                  build: 5
+                settings: {  }
+              active_widget_order:
+                processor_id: active_widget_order
+                weights:
+                  sort: 20
+                settings:
+                  sort: DESC
+              count_widget_order:
+                processor_id: count_widget_order
+                weights:
+                  sort: 30
+                settings:
+                  sort: DESC
         facets_field_ingredient:
           id: facets_field_ingredient
           table: search_api_index_content
@@ -420,11 +510,13 @@ display:
               webform: ':default'
       defaults:
         title: false
+        css_class: false
         exposed_form: false
         style: false
         row: false
         filters: false
         filter_groups: false
+      css_class: cards-view-block
       display_description: ''
       exposed_block: true
       display_extenders: {  }

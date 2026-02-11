@@ -52,9 +52,8 @@ a:link, a:hover, a:visited, a:active, a:focus {
   min-height: 6rem;        /* Adjust this height based on your card design */
 }
 
-/* Make all the cards in a row in a view the same height */
+/* Make all the cards in a row in a view the same height, and set grid */
 div.views-element-container .cards {
-
   .views-view-responsive-grid {
     grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   }
@@ -62,4 +61,10 @@ div.views-element-container .cards {
   .views-view-responsive-grid__item-inner {
     height: 100%;
   }
+}
+
+div.views-element-container .cards-view-block {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  grid-gap: 15px;
 }

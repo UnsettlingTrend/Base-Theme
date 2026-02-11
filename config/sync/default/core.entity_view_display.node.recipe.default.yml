@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
     - entity_reference_revisions
@@ -86,11 +87,22 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  book_navigation: true
   langcode: true
+  private_message_link: true
+  published_at: true
   search_api_excerpt: true

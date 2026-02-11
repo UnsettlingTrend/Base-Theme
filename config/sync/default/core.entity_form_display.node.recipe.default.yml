@@ -11,11 +11,16 @@ dependencies:
     - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_tags
     - node.type.recipe
+    - workflows.workflow.editorial
   module:
+    - chosen_field
+    - content_moderation
     - entity_browser
     - paragraphs
     - path
+    - publication_date
     - text
 id: node.recipe.default
 targetEntityType: node
@@ -113,12 +118,24 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_tags:
+    type: chosen_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 5
     region: content
     settings:
       include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -132,6 +149,12 @@ content:
     region: content
     settings:
       display_label: true
+    third_party_settings: {  }
+  published_at:
+    type: publication_date_timestamp
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
