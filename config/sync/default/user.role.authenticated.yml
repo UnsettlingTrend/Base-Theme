@@ -12,6 +12,7 @@ dependencies:
     - media.type.remote_video
     - media.type.video
     - node.type.article
+    - node.type.landing_page
     - node.type.page
     - node.type.webform
     - taxonomy.vocabulary.tags
@@ -44,6 +45,7 @@ label: 'Authenticated user'
 weight: 1
 is_admin: false
 permissions:
+  - 'access administration pages'
   - 'access ai content suggestion tools'
   - 'access comments'
   - 'access content'
@@ -61,7 +63,9 @@ permissions:
   - 'create audio media'
   - 'create document media'
   - 'create image media'
+  - 'create landing_page content'
   - 'create media'
+  - 'create page content'
   - 'create paragraph content media'
   - 'create paragraph content section'
   - 'create paragraph content text_area'
@@ -69,12 +73,15 @@ permissions:
   - 'create terms in tags'
   - 'create url aliases'
   - 'create video media'
+  - 'delete any landing_page content'
+  - 'delete any page content'
   - 'delete media'
   - 'delete own article content'
   - 'delete own audio media'
   - 'delete own document media'
   - 'delete own files'
   - 'delete own image media'
+  - 'delete own landing_page content'
   - 'delete own page content'
   - 'delete own remote_video media'
   - 'delete own video media'
@@ -91,6 +98,7 @@ permissions:
   - 'edit own audio media'
   - 'edit own document media'
   - 'edit own image media'
+  - 'edit own landing_page content'
   - 'edit own page content'
   - 'edit own remote_video media'
   - 'edit own video media'
@@ -98,6 +106,8 @@ permissions:
   - 'edit terms in tags'
   - 'post comments'
   - 'revert article revisions'
+  - 'revert landing_page revisions'
+  - 'revert page revisions'
   - 'skip CAPTCHA'
   - 'skip comment approval'
   - 'update any media'
@@ -124,6 +134,7 @@ permissions:
   - 'view any unpublished content'
   - 'view any webform content'
   - 'view article revisions'
+  - 'view landing_page revisions'
   - 'view latest version'
   - 'view media'
   - 'view own article content'
@@ -143,5 +154,6 @@ permissions:
   - 'view paragraph content section'
   - 'view paragraph content text_area'
   - 'view paragraph content view'
+  - 'view the administration theme'
   - 'view user email addresses'
   - 'view webform revisions'
