@@ -1,5 +1,8 @@
 {
   "patches": {
+    "drupal/better_exposed_filters": {
+      "Missing config schema for advanced.sort_options_unsupported causes SchemaIncompleteException with Facets exposed filters": "https://www.drupal.org/files/issues/2025-12-15/better_exposed_filters-missing_sort_options_unsupported_schema-3563157_4.patch"
+    },
     "drupal/core": {
       "Ajax error ajax.$form.ajaxSubmit() is not a function": "https://git.drupalcode.org/project/drupal/-/merge_requests/6052.diff"
     },
