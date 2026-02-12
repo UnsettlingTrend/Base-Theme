@@ -1,0 +1,37 @@
+uuid: 97031806-9cc3-4860-ae86-f335b20a8f84
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.field.node.landing_page.field_image
+    - field.field.node.landing_page.field_paragraphs
+    - node.type.landing_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.landing_page.search_index
+targetEntityType: node
+bundle: landing_page
+mode: search_index
+content:
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_image: true
+  langcode: true
+  private_message_link: true
+  published_at: true
+  search_api_excerpt: true
