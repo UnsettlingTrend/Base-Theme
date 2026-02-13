@@ -6,6 +6,11 @@ dependencies:
     - field.storage.node.field_paragraphs
     - node.type.landing_page
     - paragraphs.paragraphs_type.layout
+    - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.section
+    - paragraphs.paragraphs_type.text_area
+    - paragraphs.paragraphs_type.text_list
+    - paragraphs.paragraphs_type.view
   module:
     - entity_reference_revisions
 id: node.landing_page.field_paragraphs
@@ -22,7 +27,12 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      section: section
+      text_area: text_area
+      media: media
+      view: view
       layout: layout
+      text_list: text_list
     negate: 0
     target_bundles_drag_drop:
       from_library:
@@ -36,20 +46,20 @@ settings:
         enabled: true
       media:
         weight: -12
-        enabled: false
+        enabled: true
       record:
         weight: -10
         enabled: false
       section:
         weight: -14
-        enabled: false
+        enabled: true
       text_area:
         weight: -13
-        enabled: false
+        enabled: true
       text_list:
         weight: 15
-        enabled: false
+        enabled: true
       view:
         weight: -9
-        enabled: false
+        enabled: true
 field_type: entity_reference_revisions

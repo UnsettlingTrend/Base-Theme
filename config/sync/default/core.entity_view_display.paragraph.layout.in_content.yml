@@ -4,23 +4,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.in_content
-    - field.field.paragraph.layout.field_paragraphs
     - paragraphs.paragraphs_type.layout
-  module:
-    - entity_reference_revisions
 id: paragraph.layout.in_content
 targetEntityType: paragraph
 bundle: layout
 mode: in_content
-content:
-  field_paragraphs:
-    type: entity_reference_revisions_entity_view
-    label: hidden
-    settings:
-      view_mode: in_content
-      link: ''
-    third_party_settings: {  }
-    weight: 1
-    region: content
+content: {  }
 hidden:
   search_api_excerpt: true
