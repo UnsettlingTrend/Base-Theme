@@ -20,7 +20,7 @@ dependencies:
 third_party_settings:
   layout_builder:
     enabled: true
-    allow_custom: true
+    allow_custom: false
     sections:
       -
         layout_id: layout_onecol
@@ -190,6 +190,7 @@ hidden:
   field_tags: true
   field_take_aways: true
   langcode: true
+  layout_builder__layout: true
   links: true
   private_message_link: true
   published_at: true
