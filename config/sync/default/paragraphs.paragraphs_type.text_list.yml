@@ -6,5 +6,5 @@ id: text_list
 label: 'Text List'
 icon_uuid: null
 icon_default: null
-description: ''
+description: 'A <em>list</em> of <em>text</em> entries.'
 behavior_plugins: {  }

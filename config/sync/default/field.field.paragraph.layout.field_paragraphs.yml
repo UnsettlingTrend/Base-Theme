@@ -1,20 +1,23 @@
-uuid: 5e0ef4b4-d8b3-4fe8-9f05-4c06cb0a0d16
+uuid: 7172d841-f31e-4cf2-91f3-d785ddac99d5
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_paragraphs
-    - node.type.landing_page
+    - field.storage.paragraph.field_paragraphs
     - paragraphs.paragraphs_type.layout
+    - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.section
+    - paragraphs.paragraphs_type.text_area
+    - paragraphs.paragraphs_type.view
   module:
     - entity_reference_revisions
-id: node.landing_page.field_paragraphs
+id: paragraph.layout.field_paragraphs
 field_name: field_paragraphs
-entity_type: node
-bundle: landing_page
+entity_type: paragraph
+bundle: layout
 label: Paragraphs
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -22,34 +25,37 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
-      layout: layout
+      text_area: text_area
+      media: media
+      section: section
+      view: view
     negate: 0
     target_bundles_drag_drop:
       from_library:
         weight: -15
         enabled: false
       ingredient:
-        weight: -11
-        enabled: false
-      layout:
-        weight: 12
-        enabled: true
-      media:
-        weight: -12
-        enabled: false
-      record:
-        weight: -10
-        enabled: false
-      section:
-        weight: -14
-        enabled: false
-      text_area:
         weight: -13
         enabled: false
+      layout:
+        weight: -12
+        enabled: false
+      media:
+        weight: -18
+        enabled: true
+      record:
+        weight: -14
+        enabled: false
+      section:
+        weight: -17
+        enabled: true
+      text_area:
+        weight: -19
+        enabled: true
       text_list:
-        weight: 15
+        weight: -11
         enabled: false
       view:
-        weight: -9
-        enabled: false
+        weight: -16
+        enabled: true
 field_type: entity_reference_revisions

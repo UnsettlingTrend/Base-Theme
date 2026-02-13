@@ -4,20 +4,9 @@ status: true
 dependencies:
   content:
     - 'file:file:fb2eaba5-62a7-4399-ac66-7646721861b0'
-  module:
-    - layout_paragraphs
 id: section
 label: Section
 icon_uuid: fb2eaba5-62a7-4399-ac66-7646721861b0
 icon_default: 'data:image/svg+xml;base64,'
-description: ''
-behavior_plugins:
-  layout_paragraphs:
-    enabled: true
-    available_layouts:
-      layout_onecol: 'One column'
-      layout_twocol_section: 'Two column'
-      layout_twocol: 'Two column'
-      layout_twocol_bricks: 'Two column bricks'
-      layout_threecol_25_50_25: 'Three column 25/50/25'
-      layout_threecol_33_34_33: 'Three column 33/34/33'
+description: 'A <em>section</em> is an organized collection of several other paragraph type instances.'
+behavior_plugins: {  }
