@@ -1,0 +1,10 @@
+uuid: 3cf02ee3-3ce8-4da6-9731-b3571cf0f8b8
+langcode: en
+status: true
+dependencies: {  }
+id: block
+label: Block
+icon_uuid: null
+icon_default: null
+description: 'A <em>block</em> block.'
+behavior_plugins: {  }

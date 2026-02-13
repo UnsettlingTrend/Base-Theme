@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_paragraphs
     - node.type.landing_page
+    - paragraphs.paragraphs_type.block
     - paragraphs.paragraphs_type.layout
     - paragraphs.paragraphs_type.media
     - paragraphs.paragraphs_type.section
@@ -27,39 +28,43 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     target_bundles:
+      layout: layout
       section: section
       text_area: text_area
+      text_list: text_list
       media: media
       view: view
-      layout: layout
-      text_list: text_list
+      block: block
     negate: 0
     target_bundles_drag_drop:
-      from_library:
-        weight: -15
-        enabled: false
-      ingredient:
-        weight: -11
-        enabled: false
-      layout:
-        weight: 12
-        enabled: true
-      media:
+      block:
         weight: -12
         enabled: true
+      from_library:
+        weight: -20
+        enabled: false
+      ingredient:
+        weight: -15
+        enabled: false
+      layout:
+        weight: -21
+        enabled: true
+      media:
+        weight: -16
+        enabled: true
       record:
-        weight: -10
+        weight: -14
         enabled: false
       section:
-        weight: -14
+        weight: -19
         enabled: true
       text_area:
-        weight: -13
+        weight: -18
         enabled: true
       text_list:
-        weight: 15
+        weight: -17
         enabled: true
       view:
-        weight: -9
+        weight: -13
         enabled: true
 field_type: entity_reference_revisions

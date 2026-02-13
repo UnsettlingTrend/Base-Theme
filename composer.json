@@ -49,6 +49,7 @@
         "drupal/background_image_formatter": "^2.0",
         "drupal/better_exposed_filters": "^7.1@beta",
         "drupal/block_content_template": "^1.5",
+        "drupal/block_field": "^1.0@RC",
         "drupal/book": "^2.0@alpha",
         "drupal/chosen": "^5.0",
         "drupal/clientside_validation": "^4.0",

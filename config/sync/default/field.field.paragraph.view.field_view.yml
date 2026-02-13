@@ -25,6 +25,7 @@ settings:
   plugin_types:
     block: block
   preselect_views:
+    search: search
     search_content: search_content
   enabled_settings:
     title: title
