@@ -17,7 +17,7 @@ entity_type: paragraph
 bundle: layout
 label: Paragraphs
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
