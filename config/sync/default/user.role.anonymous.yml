@@ -11,6 +11,7 @@ dependencies:
     - contact
     - filter
     - media
+    - node
     - node_view_permissions
     - paragraphs_type_permissions
     - system
@@ -28,12 +29,25 @@ permissions:
   - 'use text format limited_html'
   - 'use text format restricted_html'
   - 'view any article content'
+  - 'view any event content'
   - 'view any landing_page content'
   - 'view any page content'
+  - 'view any place content'
+  - 'view any quote content'
   - 'view any recipe content'
+  - 'view any webform content'
   - 'view media'
+  - 'view own article content'
+  - 'view own event content'
+  - 'view own issue content'
+  - 'view own journal_entry content'
   - 'view own landing_page content'
   - 'view own page content'
+  - 'view own place content'
+  - 'view own quote content'
+  - 'view own recipe content'
+  - 'view own unpublished content'
+  - 'view own webform content'
   - 'view paragraph content block'
   - 'view paragraph content from_library'
   - 'view paragraph content ingredient'

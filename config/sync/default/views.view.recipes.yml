@@ -1,4 +1,4 @@
-uuid: 120fb6c0-3698-4158-85de-a4410a7ce6c1
+uuid: e65f981f-4cd3-46f9-98f6-6adeaf474d06
 langcode: en
 status: true
 dependencies:
@@ -10,8 +10,8 @@ dependencies:
     - facets_exposed_filters
     - search_api
     - text
-id: search
-label: Search
+id: recipes
+label: Recipes
 module: views
 description: ''
 tag: ''
@@ -550,25 +550,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
-        - 'user.node_grants:view'
-      tags:
-        - 'config:field.storage.node.body'
-        - 'config:search_api.index.content'
-        - 'search_api_list:content'
-  block_search:
-    id: block_search
-    display_title: 'Block - Search'
-    display_plugin: block
-    position: 1
-    display_options:
-      display_description: ''
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
       tags:
