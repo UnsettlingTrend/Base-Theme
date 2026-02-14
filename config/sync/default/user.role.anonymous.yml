@@ -11,7 +11,6 @@ dependencies:
     - contact
     - filter
     - media
-    - node
     - node_view_permissions
     - paragraphs_type_permissions
     - system
@@ -46,7 +45,6 @@ permissions:
   - 'view own place content'
   - 'view own quote content'
   - 'view own recipe content'
-  - 'view own unpublished content'
   - 'view own webform content'
   - 'view paragraph content block'
   - 'view paragraph content from_library'

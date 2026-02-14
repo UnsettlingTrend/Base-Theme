@@ -134,7 +134,6 @@ permissions:
   - 'view any place content'
   - 'view any quote content'
   - 'view any recipe content'
-  - 'view any unpublished content'
   - 'view any webform content'
   - 'view article revisions'
   - 'view landing_page revisions'
