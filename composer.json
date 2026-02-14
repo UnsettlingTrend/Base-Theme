@@ -219,6 +219,9 @@
             ],
             "web/themes/custom/{$name}": [
                 "type:drupal-custom-theme"
+            ],
+            "recipes/{$name}": [
+                "type:drupal-recipe"
             ]
         },
         "installer-types": ["bower-asset", "npm-asset"],
