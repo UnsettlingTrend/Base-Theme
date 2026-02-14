@@ -1,8 +1,12 @@
 name: 'Recipes'
 type: module
-description: 'Configuration, content type, paragraph types, and tempaltes for recipes.'
+description: 'Configuration, content type, paragraph types, and templates for recipes.'
 package: UnsettlingTrend
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11
 dependencies:
+  - drupal:node
+  - drupal:field
+  - drupal:image
+  - drupal:text
   - paragraphs:paragraphs
   - physical:physical
