@@ -1,4 +1,4 @@
-// Place your extends here.
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
 
 .page-title-standard {
   font-size: $font-size-h1;
@@ -6,4 +6,63 @@
   font-weight: $font-weight-h1;
   font-family: $font-family-heading;
   color: $color-heading;
+}
+
+// Code for the added pre-footer region
+div.region.region-pre-footer {
+  width: 100%;
+  background-color: $color-primary-alt;
+  color: $color-bg-body;
+
+  [region="pre_footer"] {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 20px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+// Styling for blockquotes on the pre-footer
+div.region.region-pre-footer {
+  .node--type-quote {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Special Elite', cursive;
+    text-align: center;
+
+    .paragraph--type--text-area {
+      font-weight: 100;
+      font-size: 2rem;
+      line-height: 1.4;
+      position: relative;
+      margin: 0;
+      padding: .5rem;
+
+      &:before,
+      &:after {
+        position: absolute;
+        color: #f1efe6;
+        font-size: 8rem;
+        width: 4rem;
+        height: 4rem;
+      }
+      &:before {
+        content: '“';
+        left: -3rem;
+        top: -2rem;
+      }
+      &:after {
+        content: '”';
+        right: -3rem;
+        bottom: 1rem;
+      }
+
+        }
+  }
+
 }

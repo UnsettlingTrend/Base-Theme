@@ -189,9 +189,13 @@
         {% endif %}
       </main>
 
-      {% if page.footer %}
-        {{ page.footer }}
-      {% endif %}
+        {% if page.pre_footer %}
+          {{ page.pre_footer }}
+        {% endif %}
+
+        {% if page.footer %}
+          {{ page.footer }}
+        {% endif %}
 
     </div>
   </div>

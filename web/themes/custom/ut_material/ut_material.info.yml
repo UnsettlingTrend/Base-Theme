@@ -50,6 +50,7 @@ regions:
   sidebar_second: 'Sidebar second'
   content_below: 'Content below'
   main_bottom: 'Main bottom'
+  pre_footer: 'Pre-Footer'
   footer: 'Footer'
   drawer: 'Drawer'
   overlay: 'Overlay'
