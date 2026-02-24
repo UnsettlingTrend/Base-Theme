@@ -110,3 +110,16 @@ div.region.region-pre-footer {
     }
   }
 }
+
+// Theme media items in content
+.paragraph.paragraph--type--media.paragraph--view-mode--in-content.media-remote_video {
+
+  iframe.media-oembed-content {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+
