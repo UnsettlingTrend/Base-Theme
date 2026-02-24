@@ -41,7 +41,7 @@ div.region.region-pre-footer {
       line-height: 1.4;
       position: relative;
       margin: 0;
-      padding: .5rem;
+      padding: 2rem;
 
       &:before,
       &:after {
@@ -51,18 +51,62 @@ div.region.region-pre-footer {
         width: 4rem;
         height: 4rem;
       }
+
       &:before {
         content: '“';
         left: -1rem;
         top: -2rem;
       }
+
       &:after {
         content: '”';
         right: -1rem;
         bottom: 1rem;
       }
 
-        }
-  }
+      @media screen and (max-width: $md) {
+        .paragraph--type--text-area {
+          font-weight: 100;
+          font-size: 1.7rem;
 
+          &:before,
+          &:after {
+            font-size: 6rem;
+          }
+
+          &:before {
+            left: -1rem;
+            top: -2rem;
+          }
+
+          &:after {
+            right: -1rem;
+            bottom: 1rem;
+          }
+        }
+      }
+
+      @media screen and (max-width: $sm) {
+        .paragraph--type--text-area {
+          font-weight: 100;
+          font-size: 1.5rem;
+
+          &:before,
+          &:after {
+            font-size: 6rem;
+          }
+
+          &:before {
+            left: -1rem;
+            top: -2rem;
+          }
+
+          &:after {
+            right: -1rem;
+            bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
 }

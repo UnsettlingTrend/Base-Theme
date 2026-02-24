@@ -15,4 +15,4 @@ description: "A <em>Landing Page</em> is used for aggregating other pieces of co
 help: null
 new_revision: true
 preview_mode: 1
-display_submitted: true
+display_submitted: false

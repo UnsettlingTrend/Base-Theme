@@ -1,0 +1,8 @@
+uuid: bddf8440-258c-4ee3-bb46-0a734a746fd3
+langcode: en
+status: true
+dependencies: {  }
+id: article_date
+label: 'Article Date'
+locked: false
+pattern: 'M d, Y'

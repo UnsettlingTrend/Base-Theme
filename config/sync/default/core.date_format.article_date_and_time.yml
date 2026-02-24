@@ -1,0 +1,8 @@
+uuid: fbb5e664-c2c9-4dd2-8ef3-c3f09eec1b0c
+langcode: en
+status: true
+dependencies: {  }
+id: article_date_and_time
+label: 'Article Date and Time'
+locked: false
+pattern: 'M d, Y \a\t g:ia T'
