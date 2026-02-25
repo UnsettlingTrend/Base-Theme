@@ -23,7 +23,7 @@
 }
 
 // Code for the added pre-footer region
-div.region.region-pre-footer {
+section.region.region-pre-footer {
   width: 100%;
   background-color: $color-primary-alt;
   color: $color-bg-body;
@@ -41,7 +41,7 @@ div.region.region-pre-footer {
 }
 
 // Styling for blockquotes on the pre-footer
-div.region.region-pre-footer {
+section.region.region-pre-footer {
   .node--type-quote {
     max-width: 800px;
     margin-left: auto;
