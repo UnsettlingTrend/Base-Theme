@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_subtitle
     - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
@@ -55,6 +56,7 @@ hidden:
   field_paragraphs: true
   field_prep_time: true
   field_servings: true
+  field_subtitle: true
   langcode: true
   private_message_link: true
   published_at: true

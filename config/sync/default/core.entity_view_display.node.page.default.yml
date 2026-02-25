@@ -12,7 +12,6 @@ dependencies:
   module:
     - entity_reference_revisions
     - layout_builder
-    - text
     - user
 third_party_settings:
   layout_builder:
@@ -36,7 +35,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -45,14 +44,7 @@ content:
       view_mode: in_content
       link: ''
     third_party_settings: {  }
-    weight: 5
-    region: content
-  field_subtitle:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
+    weight: 4
     region: content
   field_tags:
     type: entity_reference_label
@@ -60,15 +52,16 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: content
 hidden:
   book_navigation: true
+  field_subtitle: true
   langcode: true
   layout_builder__layout: true
   private_message_link: true

@@ -12,6 +12,7 @@ $theme-secondary: $color-secondary-base;
 $theme-background: $color-bg-body;
 $theme-background-gray: #b9b9b9;
 $color-text-base: #000;
+$color-text-base-light: #a7a6a6;
 $color-text: color.adjust($color-text-base, $lightness: 26%); // #424242
 $color-heading: color.adjust($color-text-base, $lightness: 13%); // #212121
 
@@ -92,11 +93,13 @@ $font-weight-text: 400;
 $font-size-text-small: .875rem;
 $line-height-text-small: 1.25rem;
 $font-weight-text-small: 400;
+*/
 
-$font-size-caption: .75rem;
+$font-size-caption: .95rem;
 $line-height-caption: 1.25rem;
 $font-weight-caption: 400;
 
+/*
 $font-size-button: .875rem;
 $line-height-button: 2.25rem;
 $font-weight-button: 500;

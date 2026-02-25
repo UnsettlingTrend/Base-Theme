@@ -27,24 +27,6 @@ third_party_settings:
           label: 'Content Header'
           context_mapping: {  }
         components:
-          d3d59c25-cc2b-4329-bcf4-1d98744b2316:
-            uuid: d3d59c25-cc2b-4329-bcf4-1d98744b2316
-            region: content
-            configuration:
-              id: 'field_block:node:page:field_subtitle'
-              label: Subtitle
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
           a7ab8816-43ba-4e4e-a9d0-aed01f879db6:
             uuid: a7ab8816-43ba-4e4e-a9d0-aed01f879db6
             region: content

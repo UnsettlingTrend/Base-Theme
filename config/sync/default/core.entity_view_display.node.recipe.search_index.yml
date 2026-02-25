@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_subtitle
     - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
@@ -87,6 +88,13 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_subtitle:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_tags:
     type: entity_reference_label

@@ -1,0 +1,28 @@
+uuid: 45275d45-fcc9-4f02-9be2-b1ee16c5f59a
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools_block
+  theme:
+    - ut_material
+id: ut_material_subtitle
+theme: ut_material
+region: content
+weight: -5
+provider: null
+plugin: 'entity_field:node:field_subtitle'
+settings:
+  id: 'entity_field:node:field_subtitle'
+  label: Subtitle
+  label_display: '0'
+  provider: ctools_block
+  context_mapping:
+    entity: '@node.node_route_context:node'
+  formatter:
+    type: text_default
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+visibility: {  }
