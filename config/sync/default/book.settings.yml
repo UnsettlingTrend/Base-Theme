@@ -6,5 +6,5 @@ allowed_types:
   - place
   - recipe
   - webform
-child_type: page
+child_type: article
 book_sort: weight

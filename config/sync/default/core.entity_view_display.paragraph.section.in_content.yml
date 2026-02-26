@@ -21,6 +21,16 @@ targetEntityType: paragraph
 bundle: section
 mode: in_content
 content:
+  field_hide_title:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -28,7 +38,7 @@ content:
       view_mode: in_content
       link: ''
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   field_section_title:
     type: text_default
@@ -38,5 +48,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_hide_title: true
   search_api_excerpt: true
