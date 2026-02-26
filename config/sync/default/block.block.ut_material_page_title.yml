@@ -2,8 +2,6 @@ uuid: 51677f93-7ccd-490d-9420-5caa9bce6152
 langcode: en
 status: true
 dependencies:
-  module:
-    - system
   theme:
     - ut_material
 _core:
@@ -19,8 +17,4 @@ settings:
   label: 'Page title'
   label_display: '0'
   provider: core
-visibility:
-  request_path:
-    id: request_path
-    negate: true
-    pages: '<front>'
+visibility: {  }
