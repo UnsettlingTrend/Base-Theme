@@ -81,20 +81,7 @@ field_settings:
     type: string
     configuration:
       type: union
-      separator: |+
-
-
-
-
-
-
-
-
-
-
-
-
-
+      separator: |
 
       fields: {  }
   body:
