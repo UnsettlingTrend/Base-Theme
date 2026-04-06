@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.recipe.body
     - field.field.node.recipe.field_cook_time
+    - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
     - field.field.node.recipe.field_paragraphs
@@ -42,6 +43,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_directions:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 9
     region: content
   field_image:
     type: entity_reference_entity_view
