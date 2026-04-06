@@ -1,0 +1,10 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Directions (M3)
+description: A Material Design 3 style directions for recipes.
+props:
+  type: object
+  properties:
+    directions:
+      type:
+        - array
+        - "null"

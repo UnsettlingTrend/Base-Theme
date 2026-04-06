@@ -1,0 +1,28 @@
+#recipe-directions {
+  counter-reset: paragraph-counter;
+
+
+  .paragraph--type--text-area {
+    counter-increment: paragraph-counter;
+    padding-left: 2.5em;
+    position: relative;
+
+
+    &::before {
+      content: counter(paragraph-counter);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      font-weight: bold;
+      background: #333;
+      color: #fff;
+      width: 1.75em;
+      height: 1.75em;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85em;
+    }
+  }
+}

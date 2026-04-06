@@ -6,18 +6,6 @@
  */
 
 /**
- * Implements hook_theme_suggestions_alter().
- */
-function recipes_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
-  // Use switch so we can easily add another hook in the future.
-  switch ($hook) {
-    case 'paragraph':
-      $suggestions[] = $hook . '__ingredient_default';
-      break;
-  }
-}
-
-/**
  * Implements hook_theme().
  */
 function recipes_theme($existing, $type, $theme, $path) {
@@ -28,6 +16,10 @@ function recipes_theme($existing, $type, $theme, $path) {
     ],
     'node__recipe__full' => [
       'base hook' => 'node',
+      'path' => $path . '/templates',
+    ],
+    'field__node__field_paragraphs__recipe' => [
+      'base hook' => 'field',
       'path' => $path . '/templates',
     ],
   ];

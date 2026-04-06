@@ -1,0 +1,13 @@
+
+{% if multiple %}
+  <div{{ attributes.addClass(classes) }}>
+    {% for direction in directions %}
+      <div{{ direction.attributes }}>{{ direction.content }}</div>
+    {% endfor %}
+  </div>
+{% else %}
+  {% for direction in directions %}
+    <div{{ attributes.addClass(classes) }}>{{ direction.content }}</div>
+  {% endfor %}
+{% endif %}
+
