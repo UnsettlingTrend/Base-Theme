@@ -8,92 +8,92 @@
 /**
  * Migrates recipe directions from field_paragraphs to field_directions.
  */
-function recipes_update_10001(array &$sandbox) {
-  $field_manager = \Drupal::service('entity_field.manager');
-  $field_definitions = $field_manager->getFieldDefinitions('node', 'recipe');
-
-  if (!isset($field_definitions['field_paragraphs']) || !isset($field_definitions['field_directions'])) {
-    throw new \Drupal\Core\Utility\UpdateException('Required fields are missing on recipe nodes. Ensure field_paragraphs and field_directions exist before running this update.');
-  }
-
-  if (!isset($sandbox['initialized'])) {
-    $sandbox['initialized'] = TRUE;
-    $sandbox['last_nid'] = 0;
-    $sandbox['processed'] = 0;
-    $sandbox['migrated'] = 0;
-    $sandbox['skipped'] = 0;
-    $sandbox['failed'] = 0;
-    $sandbox['total'] = \Drupal::entityQuery('node')
-      ->accessCheck(FALSE)
-      ->condition('type', 'recipe')
-      ->count()
-      ->execute();
-
-    if (empty($sandbox['total'])) {
-      $sandbox['#finished'] = 1;
-      return t('No recipe nodes were found.');
-    }
-  }
-
-  $limit = 25;
-  $nids = \Drupal::entityQuery('node')
-    ->accessCheck(FALSE)
-    ->condition('type', 'recipe')
-    ->condition('nid', $sandbox['last_nid'], '>')
-    ->sort('nid', 'ASC')
-    ->range(0, $limit)
-    ->execute();
-
-  if (empty($nids)) {
-    $sandbox['#finished'] = 1;
-    return t('Recipe directions migration complete. Processed @processed recipes, migrated @migrated, skipped @skipped, failed @failed.', [
-      '@processed' => $sandbox['processed'],
-      '@migrated' => $sandbox['migrated'],
-      '@skipped' => $sandbox['skipped'],
-      '@failed' => $sandbox['failed'],
-    ]);
-  }
-
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $nodes = $node_storage->loadMultiple($nids);
-
-  foreach ($nids as $nid) {
-    $sandbox['processed']++;
-    $sandbox['last_nid'] = $nid;
-
-    if (empty($nodes[$nid])) {
-      $sandbox['failed']++;
-      continue;
-    }
-
-    $node = $nodes[$nid];
-    $source_items = $node->get('field_paragraphs')->getValue();
-    $target_items = $node->get('field_directions')->getValue();
-
-    if (empty($source_items) || !empty($target_items)) {
-      $sandbox['skipped']++;
-      continue;
-    }
-
-    try {
-      // Copy paragraph references as-is to preserve revision IDs.
-      $node->set('field_directions', $source_items);
-      $node->save();
-      $sandbox['migrated']++;
-    }
-    catch (\Exception $exception) {
-      \Drupal::logger('recipes')->error('Failed migrating recipe @nid: @message', [
-        '@nid' => $nid,
-        '@message' => $exception->getMessage(),
-      ]);
-      $sandbox['failed']++;
-    }
-  }
-
-  $sandbox['#finished'] = min($sandbox['processed'] / $sandbox['total'], 1);
-
-  return t('Migrating recipe directions: @processed/@total processed.', [
-    '@processed' => $sandbox['processed'],
-    '@total' => $sandbox['total'],
-  ]);
-}
+//function recipes_update_10001(array &$sandbox) {
+//  $field_manager = \Drupal::service('entity_field.manager');
+//  $field_definitions = $field_manager->getFieldDefinitions('node', 'recipe');
+//
+//  if (!isset($field_definitions['field_paragraphs']) || !isset($field_definitions['field_directions'])) {
+//    throw new \Drupal\Core\Utility\UpdateException('Required fields are missing on recipe nodes. Ensure field_paragraphs and field_directions exist before running this update.');
+//  }
+//
+//  if (!isset($sandbox['initialized'])) {
+//    $sandbox['initialized'] = TRUE;
+//    $sandbox['last_nid'] = 0;
+//    $sandbox['processed'] = 0;
+//    $sandbox['migrated'] = 0;
+//    $sandbox['skipped'] = 0;
+//    $sandbox['failed'] = 0;
+//    $sandbox['total'] = \Drupal::entityQuery('node')
+//      ->accessCheck(FALSE)
+//      ->condition('type', 'recipe')
+//      ->count()
+//      ->execute();
+//
+//    if (empty($sandbox['total'])) {
+//      $sandbox['#finished'] = 1;
+//      return t('No recipe nodes were found.');
+//    }
+//  }
+//
+//  $limit = 25;
+//  $nids = \Drupal::entityQuery('node')
+//    ->accessCheck(FALSE)
+//    ->condition('type', 'recipe')
+//    ->condition('nid', $sandbox['last_nid'], '>')
+//    ->sort('nid', 'ASC')
+//    ->range(0, $limit)
+//    ->execute();
+//
+//  if (empty($nids)) {
+//    $sandbox['#finished'] = 1;
+//    return t('Recipe directions migration complete. Processed @processed recipes, migrated @migrated, skipped @skipped, failed @failed.', [
+//      '@processed' => $sandbox['processed'],
+//      '@migrated' => $sandbox['migrated'],
+//      '@skipped' => $sandbox['skipped'],
+//      '@failed' => $sandbox['failed'],
+//    ]);
+//  }
+//
+//  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+//  $nodes = $node_storage->loadMultiple($nids);
+//
+//  foreach ($nids as $nid) {
+//    $sandbox['processed']++;
+//    $sandbox['last_nid'] = $nid;
+//
+//    if (empty($nodes[$nid])) {
+//      $sandbox['failed']++;
+//      continue;
+//    }
+//
+//    $node = $nodes[$nid];
+//    $source_items = $node->get('field_paragraphs')->getValue();
+//    $target_items = $node->get('field_directions')->getValue();
+//
+//    if (empty($source_items) || !empty($target_items)) {
+//      $sandbox['skipped']++;
+//      continue;
+//    }
+//
+//    try {
+//      // Copy paragraph references as-is to preserve revision IDs.
+//      $node->set('field_directions', $source_items);
+//      $node->save();
+//      $sandbox['migrated']++;
+//    }
+//    catch (\Exception $exception) {
+//      \Drupal::logger('recipes')->error('Failed migrating recipe @nid: @message', [
+//        '@nid' => $nid,
+//        '@message' => $exception->getMessage(),
+//      ]);
+//      $sandbox['failed']++;
+//    }
+//  }
+//
+//  $sandbox['#finished'] = min($sandbox['processed'] / $sandbox['total'], 1);
+//
+//  return t('Migrating recipe directions: @processed/@total processed.', [
+//    '@processed' => $sandbox['processed'],
+//    '@total' => $sandbox['total'],
+//  ]);
+//}
