@@ -1,12 +1,10 @@
 #recipe-directions {
   counter-reset: paragraph-counter;
 
-
   .paragraph--type--text-area {
     counter-increment: paragraph-counter;
     padding-left: 2.5em;
     position: relative;
-
 
     &::before {
       content: counter(paragraph-counter);
