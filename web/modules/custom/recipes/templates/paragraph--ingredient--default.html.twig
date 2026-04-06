@@ -47,15 +47,13 @@
   not paragraph.isPublished() ? 'paragraph--unpublished'
 ]
 %}
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-    {% block content %}
-      {{ content.field_number }}
-      {{ content.field_weight }}
-      {{ content.field_volume }}
-      {{ content.field_denomination }}
-      {{ content.field_ingredient }}
-      {{ content.field_note }}
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+
+{% embed 'recipes:ingredient' with {
+  number: content.field_number,
+  weight: content.field_weight,
+  volume: content.field_volume,
+  denomination: content.field_denomination,
+  ingredient: content.field_ingredient,
+  note: content.field_note,
+} %}
+{% endembed %}

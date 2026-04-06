@@ -1,0 +1,32 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Ingredient (M3)
+description: A Material Design 3 style ingredient for recipes.
+props:
+  type: object
+  properties:
+    ingredient:
+      type: object
+    number:
+      type:
+        - object
+        - "null"
+    volume:
+      type:
+        - object
+        - "null"
+    weight:
+      type:
+        - object
+        - "null"
+    denomination:
+      type:
+        - object
+        - "null"
+    note:
+      type:
+        - object
+        - "null"
+    variant:
+      type:
+        - string
+        - "null"

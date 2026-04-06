@@ -1,0 +1,15 @@
+services:
+  recipes.fraction_service:
+    class: Drupal\recipes\Service\FractionService
+  Drupal\recipes\Service\FractionService:
+    alias: recipes.fraction_service
+  recipes.twig_extension:
+    class: Drupal\recipes\TwigExtension\FractionFilter
+    arguments: ['@recipes.fraction_service']
+    tags:
+      - { name: twig.extension }
+  recipes.hooks:
+    class: Drupal\recipes\Hook\RecipesHooks
+    arguments: ['@recipes.fraction_service']
+    tags:
+      - { name: drupal.hook }

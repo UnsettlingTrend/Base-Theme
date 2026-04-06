@@ -10,3 +10,7 @@ dependencies:
   - drupal:text
   - paragraphs:paragraphs
   - physical:physical
+
+components:
+  namespaces:
+    components: components
