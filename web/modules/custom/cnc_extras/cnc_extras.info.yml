@@ -1,5 +1,0 @@
-name: 'CNC Extras'
-type: module
-description: 'Extra things for the Chris & Cammy website.'
-core_version_requirement: ^10 || ^11
-package: 'Custom'
