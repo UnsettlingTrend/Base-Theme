@@ -1,3 +1,4 @@
+uuid: 4dd68039-c0bc-4f99-bcef-9cbc55d90f4f
 langcode: en
 status: true
 dependencies:
@@ -49,4 +50,3 @@ settings:
         weight: -6
         enabled: true
 field_type: entity_reference_revisions
-

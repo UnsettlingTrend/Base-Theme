@@ -1,3 +1,4 @@
+uuid: 584a1559-3c50-4011-a881-f7cf45c4b604
 langcode: en
 status: true
 dependencies:
@@ -8,9 +9,9 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
-    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_subtitle
     - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
@@ -53,9 +54,9 @@ hidden:
   field_directions: true
   field_image: true
   field_ingredients: true
-  field_paragraphs: true
   field_prep_time: true
   field_servings: true
+  field_subtitle: true
   langcode: true
   private_message_link: true
   published_at: true

@@ -1,3 +1,4 @@
+uuid: 8c3d146a-a5da-42db-b79a-e68b8f08b772
 langcode: en
 status: true
 dependencies:
@@ -8,9 +9,9 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
-    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
+    - field.field.node.recipe.field_subtitle
     - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
@@ -70,15 +71,6 @@ content:
     third_party_settings: {  }
     weight: 5
     region: content
-  field_paragraphs:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 6
-    region: content
   field_prep_time:
     type: number_integer
     label: inline
@@ -96,6 +88,13 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_subtitle:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_tags:
     type: entity_reference_label

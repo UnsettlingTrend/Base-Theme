@@ -1,4 +1,4 @@
-uuid: eea8daff-2a2e-4f8a-9a28-8ef9a0f9d1b1
+uuid: 9dab7d5e-9801-4871-85f4-946a019ce41a
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,8 @@ dependencies:
     - entity_reference_revisions
     - node
     - paragraphs
-id: node.field_directions
-field_name: field_directions
+id: node.field_ingredients
+field_name: field_ingredients
 entity_type: node
 type: entity_reference_revisions
 settings:
