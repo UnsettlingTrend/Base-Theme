@@ -50,7 +50,7 @@ section.region.region-pre-footer {
 
     .paragraph--type--text-area {
       font-weight: 100;
-      font-size: 2rem;
+      font-size: 1.5rem;
       line-height: 1.4;
       position: relative;
       margin: 0;
@@ -60,7 +60,7 @@ section.region.region-pre-footer {
       &:after {
         position: absolute;
         color: #f1efe6;
-        font-size: 8rem;
+        font-size: 6rem;
         width: 4rem;
         height: 4rem;
       }
@@ -68,13 +68,13 @@ section.region.region-pre-footer {
       &:before {
         content: '“';
         left: -1rem;
-        top: -2rem;
+        top: 0rem;
       }
 
       &:after {
         content: '”';
         right: -1rem;
-        bottom: 1rem;
+        bottom: 2rem;
       }
 
       @media screen and (max-width: $md) {
@@ -115,11 +115,20 @@ section.region.region-pre-footer {
           }
 
           &:after {
-            right: -1rem;
+            right: -1.5rem;
             bottom: 1rem;
           }
         }
       }
+    }
+  }
+
+  .field_source {
+    position: relative;
+    left: 50px;
+
+    &::before {
+      content: '- ';
     }
   }
 }
