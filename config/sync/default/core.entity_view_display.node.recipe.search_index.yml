@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
-    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
     - field.field.node.recipe.field_subtitle
@@ -71,15 +70,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 5
-    region: content
-  field_paragraphs:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 6
     region: content
   field_prep_time:
     type: number_integer
