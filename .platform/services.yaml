@@ -33,13 +33,13 @@ db:
   # The disk attribute is the size of the persistent disk (in MB) allocated to the service.
 #  disk: 512
 
-#search:
-#  type: solr:9.4
-#  disk: 256
-#  configuration:
-#    cores:
-#      collection1:
-#        conf_dir: !archive "solr-conf"
-#    endpoints:
-#      solr:
-#        core: collection1
+search:
+  type: solr:9.4
+  disk: 256
+  configuration:
+    cores:
+      collection1:
+        conf_dir: !archive "solr-conf"
+    endpoints:
+      solr:
+        core: collection1
