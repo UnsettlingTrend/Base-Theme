@@ -136,10 +136,11 @@ web:
       root: "web"
       passthru: "/index.php"
 
-workers:
-  queue:
-    commands:
-      start: 'cd /app ; vendor/bin/drush queue:worker --time-limit=60'
+# Workers require a medium plan on upsun
+#workers:
+#  queue:
+#    commands:
+#      start: 'cd /app ; vendor/bin/drush queue:worker --time-limit=60'
 
 crons:
   # Run Drupal's cron tasks every 19 minutes.
