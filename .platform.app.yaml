@@ -87,9 +87,13 @@ hooks:
       bash "${NVM_INSTALL_FILE}"
     fi
 
-    . "${NVM_DIR}/nvm.sh"
-    nvm install "${NODE_VERSION}"
-    nvm use "${NODE_VERSION}"
+    # nvm.sh is not consistently nounset-safe under /bin/dash with set -u.
+    # Run nvm activation and version selection in bash with -e only.
+    bash -ec '
+      . "${NVM_DIR}/nvm.sh"
+      nvm install "${NODE_VERSION}"
+      nvm use "${NODE_VERSION}"
+    '
 
     build_theme() {
       theme_dir="$1"
