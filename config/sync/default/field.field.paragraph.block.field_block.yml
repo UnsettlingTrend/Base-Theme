@@ -22,6 +22,7 @@ settings:
   selection_settings:
     plugin_ids:
       'views_block:blog-block_blog_recent': 'views_block:blog-block_blog_recent'
+      book_navigation: book_navigation
       'views_exposed_filter_block:recipes-block_recipes': 'views_exposed_filter_block:recipes-block_recipes'
       'views_exposed_filter_block:search_content-full_site_search': 'views_exposed_filter_block:search_content-full_site_search'
 field_type: block_field
