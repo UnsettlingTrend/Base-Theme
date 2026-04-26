@@ -70,7 +70,7 @@ build:
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
   build: |
-    set -eu
+    set -e
     unset NPM_CONFIG_PREFIX
 
     export NVM_DIR="${PLATFORM_APP_DIR}/.nvm"
