@@ -12,8 +12,8 @@ type: 'php:8.3'
 variables:
   env:
     # Update these for your desired NVM and Node versions.
-    NVM_VERSION: v0.40.3
-    NODE_VERSION: v22.11.0
+    NVM_VERSION: v0.40.4
+    NODE_VERSION: v22.22.2
 
 dependencies:
   php:
