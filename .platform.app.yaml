@@ -110,8 +110,10 @@ hooks:
       )
     }
 
-    echo "Preparing theme files..."
+    echo "Preparing theme files."
+    echo "Compiling material_base..."
     build_theme "${PLATFORM_APP_DIR}/web/themes/contrib/material_base"
+    echo "Compiling ut_material..."
     build_theme "${PLATFORM_APP_DIR}/web/themes/custom/ut_material"
     echo "Finished compiling all theme assets."
 
