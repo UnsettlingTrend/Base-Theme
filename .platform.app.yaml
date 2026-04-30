@@ -101,12 +101,11 @@ hooks:
       (
         cd "${theme_dir}"
         if [ -f package-lock.json ]; then
-          npm ci --no-audit --no-fund
+        npm ci --no-audit --no-fund
         else
-          npm install --no-audit --no-fund
+        npm install --no-audit --no-fund
         fi
         npm run build --if-present
-        rm -rf node_modules
       )
     }
 
@@ -115,6 +114,12 @@ hooks:
     build_theme "${PLATFORM_APP_DIR}/web/themes/contrib/material_base"
     echo "Compiling ut_material..."
     build_theme "${PLATFORM_APP_DIR}/web/themes/custom/ut_material"
+
+    # Clean up node_modules from both themes after all builds are done
+    echo "Cleaning up node_modules..."
+    rm -rf "${PLATFORM_APP_DIR}/web/themes/contrib/material_base/node_modules"
+    rm -rf "${PLATFORM_APP_DIR}/web/themes/custom/ut_material/node_modules"
+
     echo "Finished compiling all theme assets."
 
 
