@@ -12,8 +12,8 @@ type: 'php:8.3'
 variables:
   env:
     # Update these for your desired NVM and Node versions.
-    NVM_VERSION: v21.0.0
-    NODE_VERSION: v22.11.0
+    NVM_VERSION: v0.40.4
+    NODE_VERSION: v22.22.2
 
 dependencies:
   php:
@@ -72,42 +72,56 @@ hooks:
   build: |
     set -e
     unset NPM_CONFIG_PREFIX
-    export NVM_DIR="$PLATFORM_APP_DIR/.nvm"
-    # Link cache with app
-    if [ ! -d "$PLATFORM_CACHE_DIR/.nvm" ]; then
-        mkdir -p $PLATFORM_CACHE_DIR/.nvm
+
+    export NVM_DIR="${PLATFORM_APP_DIR}/.nvm"
+    NVM_INSTALL_FILE="/tmp/nvm_${NVM_VERSION}_install.sh"
+    NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh"
+
+    # Install nvm in app dir (no cache/symlink logic).
+    if [ ! -s "${NVM_DIR}/nvm.sh" ]; then
+      if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "${NVM_URL}" -o "${NVM_INSTALL_FILE}"
+      else
+        wget -q -O "${NVM_INSTALL_FILE}" "${NVM_URL}"
+      fi
+      bash "${NVM_INSTALL_FILE}"
     fi
-    ln -s $PLATFORM_CACHE_DIR/.nvm $NVM_DIR
-    # Check for Node.js version and install if not present
-    if [ ! -d "$PLATFORM_CACHE_DIR/.nvm/versions/node/$NODE_VERSION" ]; then
-        # Get nvm install script if correct version not present
-        export NVM_INSTALL_FILE="${PLATFORM_CACHE_DIR}/nvm_${NVM_VERSION}_install.sh"
-        if [ ! -f "$NVM_INSTALL_FILE" ]; then
-            wget -nc -O "$NVM_INSTALL_FILE" "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh"
+
+    # nvm.sh is not consistently nounset-safe under /bin/dash with set -u.
+    # Run nvm activation and version selection in bash with -e only.
+    bash -ec '
+      . "${NVM_DIR}/nvm.sh"
+      nvm install "${NODE_VERSION}"
+      nvm use "${NODE_VERSION}"
+    '
+
+    build_theme() {
+      theme_dir="$1"
+      echo "Compiling assets in ${theme_dir}..."
+      (
+        cd "${theme_dir}"
+        if [ -f package-lock.json ]; then
+        npm ci --no-audit --no-fund
+        else
+        npm install --no-audit --no-fund
         fi
-        # Install, automatically using NODE_VERSION
-        bash $NVM_INSTALL_FILE
-    fi
-    # Activate nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    # Use the specified version
-    nvm install "$NODE_VERSION"
-    nvm use "$NODE_VERSION"
-    # Prepare the theme files and remove node_modules directories after
-    echo "Preparing theme files..."
-    echo "Compiling base theme assets..."
-    cd /app/web/themes/contrib/material_base
-    npm install
-    npm run build
-    # TODO: For now, this is "custom", but will be moved to contrib eventually
-    echo "Compiling sub theme assets..."
-    cd /app/web/themes/custom/ut_material
-    npm install
-    npm run build
-    # Delete node_modules files
-    rm -rf /app/web/themes/custom/ut_material/node_modules /app/web/themes/contrib/material_base/node_modules
+        npm run build --if-present
+      )
+    }
+
+    echo "Preparing theme files."
+    echo "Compiling material_base..."
+    build_theme "${PLATFORM_APP_DIR}/web/themes/contrib/material_base"
+    echo "Compiling ut_material..."
+    build_theme "${PLATFORM_APP_DIR}/web/themes/custom/ut_material"
+
+    # Clean up node_modules from both themes after all builds are done
+    echo "Cleaning up node_modules..."
+    rm -rf "${PLATFORM_APP_DIR}/web/themes/contrib/material_base/node_modules"
+    rm -rf "${PLATFORM_APP_DIR}/web/themes/custom/ut_material/node_modules"
+
     echo "Finished compiling all theme assets."
-    cd /app
+
 
   # The deploy hook runs after your application has been deployed and started.
   # Code cannot be modified at this point but the database is available.
