@@ -40,6 +40,11 @@ services:
     type: php:8.3
     build:
       - composer install
+    build_as_root:
+      - apt-get update -y && apt-get install -y python3 python3-pip
+      - mkdir -p /root/.config/pip && echo "[global]\nbreak-system-packages = true" > /root/.config/pip/pip.conf
+      - echo "source /opt/venv/bin/activate" >> /root/.bashrc
+      - pip install robin_stocks pyotp
     overrides:
       environment:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
@@ -94,6 +99,10 @@ tooling:
     service: node
   nvm:
     service: node
+  pip:
+    service: appserver
+    description: run pip commands
+    cmd: pip
   gulp:
     service: node
   build:

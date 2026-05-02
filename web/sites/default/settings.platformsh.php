@@ -231,3 +231,10 @@ $config['geolocation_google_maps.settings']['google_map_api_server_key'] = !empt
 // Creds for Google Authenticator API
 $config['social_auth_google.settings']['client_id'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_ID']) ? $platform_variables['CREDS_OAUTH_CLIENT_ID'] : '<environment-varible>';
 $config['social_auth_google.settings']['client_secret'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_SECRET']) ? $platform_variables['CREDS_OAUTH_CLIENT_SECRET'] : '<environment-varible>';
+
+// Authentication for Robinhood
+// UT Robinhood module credentials.
+$settings['ut_robinhood_username']   = !empty($platform_variables['CREDS_ROBINHOOD_USERNAME']) ? $platform_variables['CREDS_ROBINHOOD_USERNAME'] : '<environment-varible>';
+$settings['ut_robinhood_password']   = !empty($platform_variables['CREDS_ROBINHOOD_PASSWORD']) ? $platform_variables['CREDS_ROBINHOOD_PASSWORD'] : '<environment-varible>';
+#$settings['ut_robinhood_mfa_code']   = '';
+$settings['ut_robinhood_python_bin'] = '/usr/bin/python3';
