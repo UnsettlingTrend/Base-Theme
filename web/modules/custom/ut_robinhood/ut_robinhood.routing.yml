@@ -1,0 +1,50 @@
+entity.robinhood_order.collection:
+  path: '/admin/content/robinhood-orders'
+  defaults:
+    _entity_list: 'robinhood_order'
+    _title: 'Robinhood Orders'
+  requirements:
+    _permission: 'view ut_robinhood orders'
+
+entity.robinhood_order.canonical:
+  path: '/robinhood-order/{robinhood_order}'
+  defaults:
+    _entity_view: 'robinhood_order'
+    _title_callback: '\Drupal\ut_robinhood\Controller\RobinhoodOrderController::title'
+  requirements:
+    _entity_access: 'robinhood_order.view'
+    robinhood_order: \d+
+
+entity.robinhood_order.add_form:
+  path: '/admin/content/robinhood-orders/add'
+  defaults:
+    _entity_form: 'robinhood_order.add'
+    _title: 'Add Robinhood Order'
+  requirements:
+    _permission: 'administer ut_robinhood'
+
+entity.robinhood_order.edit_form:
+  path: '/admin/content/robinhood-orders/{robinhood_order}/edit'
+  defaults:
+    _entity_form: 'robinhood_order.edit'
+    _title: 'Edit Robinhood Order'
+  requirements:
+    _entity_access: 'robinhood_order.update'
+    robinhood_order: \d+
+
+entity.robinhood_order.delete_form:
+  path: '/admin/content/robinhood-orders/{robinhood_order}/delete'
+  defaults:
+    _entity_form: 'robinhood_order.delete'
+    _title: 'Delete Robinhood Order'
+  requirements:
+    _entity_access: 'robinhood_order.delete'
+    robinhood_order: \d+
+
+ut_robinhood.settings:
+  path: '/admin/config/content/ut-robinhood'
+  defaults:
+    _form: '\Drupal\ut_robinhood\Form\SettingsForm'
+    _title: 'UT Robinhood Settings'
+  requirements:
+    _permission: 'administer ut_robinhood'

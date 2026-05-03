@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for UT Robinhood.
+ */
+
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_cron().
+ *
+ * Queues a Robinhood stock order import. The heavy lifting is done inside
+ * the QueueWorker plugin so that timeouts do not affect the cron run itself.
+ */
+function ut_robinhood_cron(): void {
+  $config = \Drupal::config('ut_robinhood.settings');
+  $interval = $config->get('cron_interval') ?: 3600;
+  $last_run = \Drupal::state()->get('ut_robinhood.last_run', 0);
+
+  if (\Drupal::time()->getRequestTime() - $last_run < $interval) {
+    return;
+  }
+
+  /** @var \Drupal\Core\Queue\QueueFactory $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  $queue = $queue_factory->get('ut_robinhood_import');
+  $queue->createItem(['triggered_by' => 'cron']);
+
+  \Drupal::state()->set('ut_robinhood.last_run', \Drupal::time()->getRequestTime());
+  \Drupal::logger('ut_robinhood')->info('Robinhood import job queued by cron.');
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ut_robinhood_theme(): array {
+  return [
+    'robinhood_order' => [
+      'render element' => 'elements',
+      'template' => 'robinhood-order',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for robinhood_order templates.
+ *
+ * Default template: templates/robinhood-order.html.twig
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the entity and any fields.
+ */
+function template_preprocess_robinhood_order(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['robinhood_order'] = $variables['elements']['#robinhood_order'];
+
+  // Helpful flag for templates.
+  $variables['page'] = $variables['view_mode'] === 'full'
+    && robinhood_order_is_page($variables['robinhood_order']);
+
+  // Collect all renderable field elements.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Checks whether the given entity is being displayed as a full page.
+ *
+ * @param \Drupal\ut_robinhood\Entity\RobinhoodOrder $order
+ *   The order entity.
+ *
+ * @return bool
+ *   TRUE if this entity is the page's main content object.
+ */
+function robinhood_order_is_page(\Drupal\ut_robinhood\Entity\RobinhoodOrder $order): bool {
+  $route_match = \Drupal::routeMatch();
+  if ($route_match->getRouteName() === 'entity.robinhood_order.canonical') {
+    $page_order = $route_match->getParameter('robinhood_order');
+    return $page_order instanceof \Drupal\ut_robinhood\Entity\RobinhoodOrder
+      && $page_order->id() === $order->id();
+  }
+  return FALSE;
+}

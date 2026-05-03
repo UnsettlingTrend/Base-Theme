@@ -1,0 +1,8 @@
+name: 'UT Robinhood'
+type: module
+description: 'Imports Robinhood stock orders as fieldable content entities via cron, using a Python/robin_stocks bridge script.'
+package: 'Custom'
+core_version_requirement: ^11
+dependencies:
+  - drupal:user
+  - drupal:views

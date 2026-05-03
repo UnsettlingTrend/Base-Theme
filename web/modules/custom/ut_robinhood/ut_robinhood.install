@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the UT Robinhood module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the base table for the RobinhoodOrder entity. Drupal's entity API
+ * will manage this table automatically once the entity type is registered,
+ * but we declare it here explicitly for documentation clarity. The entity
+ * annotation's base_table key points to 'robinhood_order'.
+ */
+function ut_robinhood_schema(): array {
+  // The entity API auto-creates the table from the entity's baseFieldDefinitions,
+  // so we only need to declare additional non-entity tables here.
+  // We store the raw JSON of the last successful import for debugging.
+  $schema['ut_robinhood_import_log'] = [
+    'description' => 'Stores a log of each cron import run for UT Robinhood.',
+    'fields' => [
+      'lid' => [
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'imported' => [
+        'description' => 'Unix timestamp of the import run.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'orders_found' => [
+        'description' => 'Total orders returned by the bridge script.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'orders_created' => [
+        'description' => 'New order entities created during this run.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'orders_updated' => [
+        'description' => 'Existing order entities updated during this run.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'status' => [
+        'description' => 'Result status: "success" or "error".',
+        'type' => 'varchar',
+        'length' => 16,
+        'not null' => TRUE,
+        'default' => 'success',
+      ],
+      'message' => [
+        'description' => 'Any error message or notes from the run.',
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['lid'],
+    'indexes' => [
+      'imported' => ['imported'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ut_robinhood_uninstall(): void {
+  // Clean up state variables set by cron.
+  \Drupal::state()->deleteMultiple([
+    'ut_robinhood.last_run',
+    'ut_robinhood.last_order_id',
+  ]);
+}
