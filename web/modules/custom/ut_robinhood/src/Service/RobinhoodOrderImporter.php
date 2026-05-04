@@ -149,6 +149,7 @@ class RobinhoodOrderImporter {
       'RH_MFA_CODE'    => $this->getSetting('ut_robinhood_mfa_code', 'UT_ROBINHOOD_MFA_CODE') ?? '',
       'RH_PICKLE_DIR'  => $pickle_dir,
       'RH_ACCOUNT_IDS' => $this->getSetting('ut_robinhood_account_ids', 'UT_ROBINHOOD_ACCOUNT_IDS') ?? '',
+      'RH_START_DATE'  => $this->resolveStartDate(),
     ]);
 
     // Build the env string for proc_open.
@@ -246,6 +247,7 @@ class RobinhoodOrderImporter {
     $mutable_fields = [
       'order_state', 'quantity', 'price', 'average_price',
       'total_notional_value', 'fees', 'updated_at_robinhood',
+      'account_name',
     ];
     foreach ($mutable_fields as $field) {
       if (isset($values[$field])) {
@@ -339,6 +341,7 @@ class RobinhoodOrderImporter {
       'extended_hours'       => (bool) ($raw['extended_hours'] ?? FALSE),
       'instrument_id'        => $instrument_id,
       'account_id'           => $account_id,
+      'account_name'         => $raw['account_name'] ?? '',
     ];
   }
 
@@ -468,6 +471,41 @@ class RobinhoodOrderImporter {
     }
     $env = getenv($env_var);
     return ($env !== FALSE && $env !== '') ? $env : NULL;
+  }
+
+  /**
+   * Resolves the start date for incremental imports.
+   *
+   * Looks up the last successful import timestamp from the import log. If
+   * found, returns a date 24 hours before that timestamp (to catch any orders
+   * that may have been updated in the overlap window). On the very first
+   * import (no log entries), returns an empty string so all orders are fetched.
+   *
+   * @return string
+   *   A date string in 'Y-m-d' format, or '' for a full import.
+   */
+  protected function resolveStartDate(): string {
+    try {
+      $last_success = $this->database->select('ut_robinhood_import_log', 'l')
+        ->fields('l', ['imported'])
+        ->condition('status', 'success')
+        ->orderBy('imported', 'DESC')
+        ->range(0, 1)
+        ->execute()
+        ->fetchField();
+
+      if ($last_success) {
+        // Subtract 24 hours for a safety overlap window.
+        $start = (int) $last_success - 86400;
+        return date('Y-m-d', $start);
+      }
+    }
+    catch (\Exception $e) {
+      $this->logger->warning('Could not query import log for start date: @msg', ['@msg' => $e->getMessage()]);
+    }
+
+    // First import or query failed — fetch everything.
+    return '';
   }
 
   /**

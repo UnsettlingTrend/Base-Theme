@@ -876,16 +876,15 @@ display:
             fees: fees
             average_price: average_price
             extended_hours_1: extended_hours_1
-            fees_1: fees_1
             price: price
             order_state: order_state
             order_type: order_type
             quantity: quantity
             order_side: order_side
-            symbol_1: symbol_1
             time_in_force: time_in_force
             total_notional_value: total_notional_value
             trigger: trigger
+            account_id: account_id
           default: '-1'
           info:
             symbol:
@@ -917,13 +916,6 @@ display:
               empty_column: false
               responsive: ''
             extended_hours_1:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            fees_1:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -965,13 +957,6 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            symbol_1:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             time_in_force:
               sortable: true
               default_sort_order: asc
@@ -987,6 +972,13 @@ display:
               empty_column: false
               responsive: ''
             trigger:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            account_id:
               sortable: true
               default_sort_order: asc
               align: ''

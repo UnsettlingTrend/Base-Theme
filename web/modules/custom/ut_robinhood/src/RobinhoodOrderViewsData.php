@@ -214,6 +214,17 @@ class RobinhoodOrderViewsData extends EntityViewsData {
     $data['robinhood_order']['account_id']['argument']['id'] = 'string';
 
     // ------------------------------------------------------------------ //
+    // account_name                                                         //
+    // ------------------------------------------------------------------ //
+
+    $data['robinhood_order']['account_name']['title'] = $this->t('Account Name');
+    $data['robinhood_order']['account_name']['help']  = $this->t('Human-readable Robinhood account name (type + ID).');
+    $data['robinhood_order']['account_name']['field']['id']    = 'standard';
+    $data['robinhood_order']['account_name']['filter']['id']   = 'string';
+    $data['robinhood_order']['account_name']['sort']['id']     = 'standard';
+    $data['robinhood_order']['account_name']['argument']['id'] = 'string';
+
+    // ------------------------------------------------------------------ //
     // uid — relationship to users table                                    //
     // ------------------------------------------------------------------ //
 

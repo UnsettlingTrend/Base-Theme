@@ -389,6 +389,22 @@ class RobinhoodOrder extends ContentEntityBase implements EntityOwnerInterface, 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['account_name'] = BaseFieldDefinition::create('string')
+      ->setLabel(new TranslatableMarkup('Account Name'))
+      ->setDescription(new TranslatableMarkup('Human-readable account name, e.g. "Individual (ABC123)" or "Roth Ira (DEF456)".'))
+      ->setSetting('max_length', 128)
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'string',
+        'weight' => -3,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -3,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['trigger'] = BaseFieldDefinition::create('list_string')
       ->setLabel(new TranslatableMarkup('Trigger'))
       ->setDescription(new TranslatableMarkup('Immediate or stop trigger.'))

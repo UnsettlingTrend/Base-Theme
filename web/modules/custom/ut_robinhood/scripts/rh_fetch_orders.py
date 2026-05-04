@@ -19,6 +19,10 @@ so they never appear in the process table or script arguments:
   RH_ACCOUNT_IDS Comma-separated list of Robinhood account IDs. If set,
                  orders are fetched per-account instead of the default.
                  Example: "ABC123,DEF456"
+  RH_START_DATE  Optional start date (YYYY-MM-DD) to limit the fetch to
+                 orders from that date onward. If empty, all orders are
+                 fetched. Set automatically by the Drupal importer based
+                 on the last successful import.
 
 Exit codes:
   0  Success — valid JSON array written to STDOUT
@@ -46,6 +50,7 @@ mfa_secret = os.environ.get("RH_MFA_CODE", "").strip() or None
 pickle_dir = os.environ.get("RH_PICKLE_DIR", "").strip() or None
 account_ids_raw = os.environ.get("RH_ACCOUNT_IDS", "").strip()
 account_ids = [aid.strip() for aid in account_ids_raw.split(",") if aid.strip()] if account_ids_raw else []
+start_date = os.environ.get("RH_START_DATE", "").strip() or None
 
 # Generate a live TOTP code from the secret if one is configured.
 # RH_MFA_CODE should hold the *secret* shown during Robinhood's authenticator
@@ -125,42 +130,24 @@ except Exception as exc:
 # Fetch stock orders                                                   #
 # ------------------------------------------------------------------ #
 
-def fetch_orders_for_account(account_id: str) -> list[dict]:
-    """Fetch all stock orders for a specific Robinhood account ID.
-
-    Uses the Robinhood orders endpoint filtered by account URL.
-    Paginates through all result pages automatically.
-    """
-    from robin_stocks.robinhood.helper import request_get
-
-    account_url = f"https://api.robinhood.com/accounts/{account_id}/"
-    url = f"https://api.robinhood.com/orders/?account={account_url}"
-    all_orders = []
-
-    while url:
-        response = request_get(url, dataType="regular")
-        if response is None:
-            break
-        results = response.get("results", [])
-        all_orders.extend(results)
-        url = response.get("next")
-        if url:
-            print(f"Loading next page for account {account_id} ...", file=sys.stderr)
-
-    return all_orders
-
 try:
+    if start_date:
+        print(f"Incremental import: fetching orders from {start_date} onward.", file=sys.stderr)
+    else:
+        print("Full import: fetching all orders.", file=sys.stderr)
+
     if account_ids:
         # Fetch orders for each specified account ID and merge them.
         orders = []
         for aid in account_ids:
             print(f"Fetching orders for account {aid} ...", file=sys.stderr)
-            account_orders = fetch_orders_for_account(aid)
-            orders.extend(account_orders)
+            account_orders = rh.get_all_stock_orders(account_number=aid, start_date=start_date)
+            if account_orders:
+                orders.extend(account_orders)
         print(f"Fetched {len(orders)} total orders across {len(account_ids)} account(s).", file=sys.stderr)
     else:
         # Default: fetch all orders from the primary account.
-        orders = rh.get_all_stock_orders()
+        orders = rh.get_all_stock_orders(start_date=start_date)
 
     if orders is None:
         print("ERROR: order fetch returned None.", file=sys.stderr)
@@ -172,7 +159,7 @@ except Exception as exc:
     sys.exit(3)
 
 # ------------------------------------------------------------------ #
-# Resolve ticker symbols                                               #
+# Resolve ticker symbols and account names                             #
 # ------------------------------------------------------------------ #
 # robin_stocks does not include the ticker symbol in the order object.
 # We resolve each instrument URL once (cached in a dict) using
@@ -192,10 +179,43 @@ def resolve_symbol(instrument_url: str) -> str:
             symbol_cache[instrument_url] = ""
     return symbol_cache[instrument_url]
 
+# Account name cache — maps account URL → human-readable name.
+# The account URL in order data looks like:
+# https://api.robinhood.com/accounts/XXXXXXXX/
+# We extract the account number from the URL and call
+# load_account_profile() to get the account type.
+
+account_cache: dict[str, str] = {}
+
+def resolve_account_name(account_url: str) -> str:
+    """Return a human-readable account name for a Robinhood account URL."""
+    if not account_url:
+        return ""
+    if account_url not in account_cache:
+        # Extract account number from URL.
+        parts = [p for p in account_url.rstrip("/").split("/") if p]
+        account_number = parts[-1] if parts else ""
+        try:
+            profile = rh.load_account_profile(account_number=account_number)
+            acct_type = (profile.get("type") or "").replace("_", " ").title()
+            # Build a readable name like "Individual (ABC123)" or "Roth IRA (DEF456)".
+            if acct_type:
+                name = f"{acct_type} ({account_number})"
+            else:
+                name = account_number
+            account_cache[account_url] = name
+            print(f"Resolved account {account_number} → {name}", file=sys.stderr)
+        except Exception as exc:
+            print(f"Could not resolve account {account_number}: {exc}", file=sys.stderr)
+            account_cache[account_url] = account_number
+    return account_cache[account_url]
+
 
 for order in orders:
     instrument_url = order.get("instrument", "")
     order["symbol"] = resolve_symbol(instrument_url)
+    account_url = order.get("account", "")
+    order["account_name"] = resolve_account_name(account_url)
 
 # ------------------------------------------------------------------ #
 # Output                                                               #
