@@ -18,6 +18,8 @@ variables:
 dependencies:
   php:
     composer/composer: '^2.1'
+  python3:
+    pip: '*'
 
 # The following block defines a single writable directory, 'web/uploads'
 # The 'source' specifies where the writable mount is. The 'local' source
