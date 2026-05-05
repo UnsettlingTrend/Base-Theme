@@ -90,12 +90,18 @@ if not username or not password:
 
 try:
     import robin_stocks.robinhood as rh
+    from robin_stocks.robinhood.helper import set_output
+    # Redirect robin_stocks' internal print() calls (e.g. error messages from
+    # request_post) to stderr so they don't contaminate the JSON on stdout.
+    set_output(sys.stderr)
 except ImportError:
     print(
         "ERROR: robin_stocks is not installed. Run: pip install robin_stocks",
         file=sys.stderr,
     )
     sys.exit(4)
+
+print(f"robin_stocks version: {getattr(rh, '__version__', 'unknown')}", file=sys.stderr)
 
 # ------------------------------------------------------------------ #
 # Headless MFA / challenge support                                     #
@@ -140,6 +146,15 @@ try:
     # Robinhood accounts can coexist on the same server.
     pickle_name = f"ut_robinhood_{username.replace('@', '_').replace('.', '_')}"
 
+    # Log the authentication attempt for diagnostics.
+    pickle_path_check = os.path.join(
+        pickle_dir or os.path.join(os.path.expanduser("~"), ".tokens"),
+        "robinhood" + pickle_name + ".pickle",
+    )
+    print(f"Pickle path: {pickle_path_check}", file=sys.stderr)
+    print(f"Pickle exists: {os.path.isfile(pickle_path_check)}", file=sys.stderr)
+    print(f"MFA code provided: {bool(mfa_code)}", file=sys.stderr)
+    print(f"MFA wait: {mfa_wait}s", file=sys.stderr)
 
     login_result = rh.login(
         username=username,
@@ -155,10 +170,22 @@ try:
     )
 
     if not login_result or "access_token" not in login_result:
-        print(
-            f"ERROR: Login did not return an access token. Response: {login_result}",
-            file=sys.stderr,
-        )
+        # Provide actionable diagnostics depending on the response.
+        if login_result is None:
+            msg = (
+                "ERROR: Login returned None. This usually means the HTTP "
+                "request to Robinhood failed entirely (network/firewall "
+                "issue or robin_stocks could not reach the API)."
+            )
+        elif isinstance(login_result, dict):
+            msg = (
+                f"ERROR: Login response missing access_token. "
+                f"Keys present: {list(login_result.keys())}. "
+                f"Detail: {login_result.get('detail', 'N/A')}"
+            )
+        else:
+            msg = f"ERROR: Login returned unexpected type {type(login_result).__name__}: {login_result}"
+        print(msg, file=sys.stderr)
         sys.exit(2)
 
 except Exception as exc:

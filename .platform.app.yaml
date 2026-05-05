@@ -97,8 +97,8 @@ hooks:
       nvm use "${NODE_VERSION}"
     '
 
-    # Install the robin_stocks library
-    pip install robin_stocks
+    # Install the robin_stocks library and pyotp for TOTP-based MFA.
+    pip install robin_stocks pyotp
 
     build_theme() {
       theme_dir="$1"

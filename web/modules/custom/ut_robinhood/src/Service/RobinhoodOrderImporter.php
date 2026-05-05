@@ -193,6 +193,11 @@ class RobinhoodOrderImporter {
     fclose($pipes[2]);
     $exit_code = proc_close($process);
 
+    // Log stderr from the bridge script for diagnostics (even on success).
+    if (!empty(trim($stderr))) {
+      $this->logger->info('Bridge script STDERR: @stderr', ['@stderr' => trim($stderr)]);
+    }
+
     if ($exit_code !== 0) {
       throw new \RuntimeException(
         "Bridge script exited with code $exit_code. STDERR: " . trim($stderr)
