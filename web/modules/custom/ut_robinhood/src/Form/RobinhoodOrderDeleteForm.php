@@ -15,6 +15,9 @@ class RobinhoodOrderDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
+   *
+   * Returns a confirmation question that includes the order's ticker symbol
+   * and Robinhood order ID so the admin can verify the correct order.
    */
   public function getQuestion(): \Drupal\Core\StringTranslation\TranslatableMarkup {
     /** @var \Drupal\ut_robinhood\Entity\RobinhoodOrder $entity */
@@ -30,6 +33,8 @@ class RobinhoodOrderDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
+   *
+   * Redirects the cancel link back to the orders collection page.
    */
   public function getCancelUrl(): Url {
     return $this->getEntity()->toUrl('collection');
@@ -37,6 +42,8 @@ class RobinhoodOrderDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
+   *
+   * Returns the label for the confirmation button.
    */
   public function getConfirmText(): \Drupal\Core\StringTranslation\TranslatableMarkup {
     return $this->t('Delete');
@@ -44,6 +51,8 @@ class RobinhoodOrderDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
+   *
+   * After deletion, redirects the user back to the orders collection page.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);

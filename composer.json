@@ -91,6 +91,7 @@
         "drupal/jquery_ui_datepicker": "^2.1",
         "drupal/jquery_ui_slider": "^2.1",
         "drupal/jquery_ui_touch_punch": "^1.1",
+        "drupal/json_field": "^1.7",
         "drupal/layout_paragraphs": "^3.0@alpha",
         "drupal/leaflet": "^10.0",
         "drupal/leaflet_more_maps": "^2.1",

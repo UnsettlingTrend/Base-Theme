@@ -27,6 +27,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class RobinhoodImportWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
+  /**
+   * Constructs a new RobinhoodImportWorker.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the queue worker.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\ut_robinhood\Service\RobinhoodOrderImporter $importer
+   *   The order importer service that performs the actual import logic.
+   */
   public function __construct(
     array $configuration,
     string $plugin_id,
@@ -38,6 +50,8 @@ class RobinhoodImportWorker extends QueueWorkerBase implements ContainerFactoryP
 
   /**
    * {@inheritdoc}
+   *
+   * Creates a new instance with the order importer service injected.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     return new static(
@@ -50,6 +64,9 @@ class RobinhoodImportWorker extends QueueWorkerBase implements ContainerFactoryP
 
   /**
    * {@inheritdoc}
+   *
+   * Processes a single queue item by delegating to the order importer service.
+   * Each item triggers a full import run; the importer handles deduplication.
    *
    * @param array{triggered_by: string} $data
    *   The queue item payload created in hook_cron().

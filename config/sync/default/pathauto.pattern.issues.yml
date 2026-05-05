@@ -2,17 +2,18 @@ uuid: 1ee57ba7-bbce-4193-a509-591c2ffdf085
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.issue
   module:
     - node
 id: issues
 label: Issues
 type: 'canonical_entities:node'
-pattern: 'issues/[node:title]'
+pattern: '/issues/[node:title]'
 selection_criteria:
   0692e21c-8e5c-4113-bed6-a7c55587fe9f:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 0692e21c-8e5c-4113-bed6-a7c55587fe9f
     context_mapping:
       node: node
     bundles:

@@ -21,9 +21,16 @@ class RobinhoodOrderViewsData extends EntityViewsData {
 
   /**
    * {@inheritdoc}
+   *
+   * Customises the auto-generated Views data for every base field on the
+   * Robinhood Order entity. Sets human-readable titles/help text and assigns
+   * appropriate Views handler plugins (field, filter, sort, argument) for each
+   * column. Also registers virtual fields for bulk operations and entity links.
    */
   public function getViewsData(): array {
     $data = parent::getViewsData();
+    // Namespace prefix used to reference standalone options callback functions
+    // at the bottom of this file (required by Views' in_operator filter).
     $cb_prefix = __NAMESPACE__ . '\\\\';
 
     // ------------------------------------------------------------------ //

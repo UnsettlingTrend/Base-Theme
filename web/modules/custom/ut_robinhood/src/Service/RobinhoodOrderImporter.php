@@ -36,8 +36,27 @@ use Drupal\ut_robinhood\Entity\RobinhoodOrder;
  */
 class RobinhoodOrderImporter {
 
+  /**
+   * The logger channel for the ut_robinhood module.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
+   */
   protected LoggerChannelInterface $logger;
 
+  /**
+   * Constructs a new RobinhoodOrderImporter.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager, used to load and create RobinhoodOrder entities.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory, used to read 'ut_robinhood.settings'.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
+   *   The logger channel factory, used to create the 'ut_robinhood' logger.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database connection, used for the import log table and start date queries.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service, used for timestamping import log entries.
+   */
   public function __construct(
     protected readonly EntityTypeManagerInterface $entityTypeManager,
     protected readonly ConfigFactoryInterface $configFactory,

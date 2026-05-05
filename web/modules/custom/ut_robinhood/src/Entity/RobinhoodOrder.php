@@ -71,6 +71,9 @@ class RobinhoodOrder extends ContentEntityBase implements EntityOwnerInterface, 
 
   /**
    * {@inheritdoc}
+   *
+   * Ensures every order has an owner UID before saving. If no owner has been
+   * set (e.g. during automated cron imports), defaults to the anonymous user.
    */
   public function preSave(EntityStorageInterface $storage): void {
     parent::preSave($storage);
@@ -81,9 +84,20 @@ class RobinhoodOrder extends ContentEntityBase implements EntityOwnerInterface, 
 
   /**
    * {@inheritdoc}
+   *
+   * Defines all base fields for the Robinhood Order entity. Fields are grouped
+   * into logical sections:
+   * - Robinhood-native identifiers (robinhood_order_id)
+   * - Core order fields (symbol, side, type, state)
+   * - Price / quantity fields (quantity, price, average_price, total, fees)
+   * - Time-related fields (time_in_force, timestamps)
+   * - Extended / instrument fields (instrument_id, account_id, trigger, etc.)
+   * - Drupal bookkeeping fields (uid, created, changed)
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
+    // Inherit id, uuid, and langcode from ContentEntityBase.
     $fields = parent::baseFieldDefinitions($entity_type);
+    // Add the uid (owner) base field from EntityOwnerTrait.
     $fields += static::ownerBaseFieldDefinitions($entity_type);
 
     // ------------------------------------------------------------------ //

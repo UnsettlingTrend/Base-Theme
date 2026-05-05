@@ -19,6 +19,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class RobinhoodOrderListBuilder extends EntityListBuilder {
 
+  /**
+   * Constructs a new RobinhoodOrderListBuilder.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type definition.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage handler.
+   * @param \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter
+   *   The date formatter service, used to render Robinhood timestamps.
+   */
   public function __construct(
     EntityTypeInterface $entity_type,
     EntityStorageInterface $storage,
@@ -29,6 +39,8 @@ class RobinhoodOrderListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
+   *
+   * Instantiates the list builder with the date formatter service injected.
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type): static {
     return new static(
@@ -40,6 +52,8 @@ class RobinhoodOrderListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
+   *
+   * Builds the header row for the admin order listing table.
    */
   public function buildHeader(): array {
     $header = [
@@ -57,10 +71,15 @@ class RobinhoodOrderListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
+   *
+   * Builds a single table row for a Robinhood Order entity, displaying the
+   * ticker symbol (linked to the canonical page), side, type, state, quantity,
+   * average fill price, total value, and Robinhood order date.
    */
   public function buildRow(EntityInterface $entity): array {
     /** @var \Drupal\ut_robinhood\Entity\RobinhoodOrder $entity */
 
+    // Extract numeric values for formatting.
     $avg_price = $entity->get('average_price')->value;
     $total     = $entity->get('total_notional_value')->value;
 
@@ -71,6 +90,7 @@ class RobinhoodOrderListBuilder extends EntityListBuilder {
       : $this->t('—');
 
     $row = [
+      // Link the symbol to the entity's canonical route.
       'symbol'     => Link::createFromRoute(
         $entity->get('symbol')->value ?? '—',
         'entity.robinhood_order.canonical',
@@ -80,18 +100,22 @@ class RobinhoodOrderListBuilder extends EntityListBuilder {
       'type'       => $entity->get('order_type')->value ?? '—',
       'state'      => $entity->get('order_state')->value ?? '—',
       'quantity'   => $entity->get('quantity')->value ?? '—',
+      // Format currency values with dollar sign; show em dash if null.
       'avg_price'  => $avg_price !== NULL ? '$' . number_format((float) $avg_price, 4) : '—',
       'total'      => $total !== NULL ? '$' . number_format((float) $total, 2) : '—',
       'rh_created' => $rh_created,
     ];
 
+    // Merge with parent row to include operation links (edit/delete).
     return $row + parent::buildRow($entity);
   }
 
   /**
    * {@inheritdoc}
    *
-   * Order the list by most-recently placed orders first.
+   * Overrides the default entity ID query to sort orders by most-recently
+   * placed first (descending Robinhood created timestamp), with a secondary
+   * sort on entity ID for deterministic ordering of same-timestamp orders.
    */
   protected function getEntityIds(): array {
     $query = $this->getStorage()->getQuery()

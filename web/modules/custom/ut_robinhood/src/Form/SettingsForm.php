@@ -33,11 +33,15 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * The Robinhood order importer service.
+   *
+   * @var \Drupal\ut_robinhood\Service\RobinhoodOrderImporter
    */
   protected RobinhoodOrderImporter $importer;
 
   /**
    * {@inheritdoc}
+   *
+   * Injects the RobinhoodOrderImporter service for the "Import Now" button.
    */
   public static function create(ContainerInterface $container): static {
     $instance = parent::create($container);
@@ -47,6 +51,8 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Returns the unique form ID for the settings form.
    */
   public function getFormId(): string {
     return 'ut_robinhood_settings';
@@ -54,6 +60,8 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Declares 'ut_robinhood.settings' as the editable config object.
    */
   protected function getEditableConfigNames(): array {
     return ['ut_robinhood.settings'];
@@ -61,6 +69,12 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Builds the settings form with sections for:
+   * - Credential status (read-only display of whether credentials are configured)
+   * - Import settings (cron interval, state filtering, update behaviour, limits)
+   * - Python bridge settings (script path, pickle directory)
+   * - Import Now button (triggers an immediate Batch API import)
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('ut_robinhood.settings');
@@ -215,6 +229,8 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * Persists all import and Python bridge settings to 'ut_robinhood.settings'.
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('ut_robinhood.settings')

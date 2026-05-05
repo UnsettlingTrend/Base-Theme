@@ -2,17 +2,18 @@ uuid: 0995dcd0-e9d8-4902-8211-565046ec5670
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.recipe
   module:
     - node
 id: recipes
 label: Recipes
 type: 'canonical_entities:node'
-pattern: 'recipes/[node:title]'
+pattern: '/recipes/[node:title]'
 selection_criteria:
   dc4d06fd-63d2-4819-9b26-af064188f8f6:
     id: 'entity_bundle:node'
     negate: false
-    uuid: dc4d06fd-63d2-4819-9b26-af064188f8f6
     context_mapping:
       node: node
     bundles:
