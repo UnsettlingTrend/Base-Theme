@@ -91,23 +91,30 @@ if not username or not password:
 try:
     import robin_stocks.robinhood as rh
     from robin_stocks.robinhood.helper import set_output
-    from robin_stocks.robinhood.globals import SESSION
     # Redirect robin_stocks' internal print() calls (e.g. error messages from
     # request_post) to stderr so they don't contaminate the JSON on stdout.
     set_output(sys.stderr)
-    # Override the default User-Agent header. robin_stocks ships with
-    # User-Agent: * which Robinhood's CDN / WAF rejects with a 502.
-    SESSION.headers["User-Agent"] = (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/136.0.0.0 Safari/537.36"
-    )
+    # robin_stocks 3.4.0 also prints directly via print() in authentication.py.
+    # Redirect all stdout prints from the login flow to stderr by temporarily
+    # reassigning sys.stdout during import/login.
 except ImportError:
     print(
         "ERROR: robin_stocks is not installed. Run: pip install robin_stocks",
         file=sys.stderr,
     )
     sys.exit(4)
+
+# Override the default User-Agent header. robin_stocks ships with
+# User-Agent: * which Robinhood's CDN / WAF rejects with a 502.
+try:
+    from robin_stocks.robinhood.globals import SESSION
+    SESSION.headers["User-Agent"] = (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/136.0.0.0 Safari/537.36"
+    )
+except Exception as exc:
+    print(f"Warning: Could not set User-Agent: {exc}", file=sys.stderr)
 
 print(f"robin_stocks version: {getattr(rh, '__version__', 'unknown')}", file=sys.stderr)
 
@@ -146,6 +153,110 @@ import builtins
 builtins.input = _headless_input
 
 # ------------------------------------------------------------------ #
+# Stable device token                                                  #
+# ------------------------------------------------------------------ #
+# robin_stocks generates a random device_token on every login call.
+# Robinhood associates device tokens with verified devices — using a new
+# random token each time forces a fresh device-verification challenge and
+# may cause "Unable to log in with provided credentials" rejections.
+#
+# We monkey-patch generate_device_token() to return a stable token that
+# is derived from the username and persisted alongside the pickle file.
+# Once Robinhood recognises this device token, subsequent logins reuse it.
+
+import robin_stocks.robinhood.authentication as _rh_auth
+import hashlib, uuid
+
+def _stable_device_token() -> str:
+    """Return a stable device token, persisted to a file next to the pickle."""
+    token_dir = pickle_dir or os.path.join(os.path.expanduser("~"), ".tokens")
+    os.makedirs(token_dir, exist_ok=True)
+    token_file = os.path.join(token_dir, f"device_token_{username}.txt")
+    if os.path.isfile(token_file):
+        token = open(token_file).read().strip()
+        if token:
+            print(f"Using persisted device token from {token_file}", file=sys.stderr)
+            return token
+    # Derive a deterministic UUID from the username so the same account
+    # always gets the same device token even if the file is lost.
+    token = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"robinhood-{username}"))
+    with open(token_file, "w") as f:
+        f.write(token)
+    print(f"Generated and saved new device token to {token_file}", file=sys.stderr)
+    return token
+
+_rh_auth.generate_device_token = _stable_device_token
+
+# ------------------------------------------------------------------ #
+# Patch robin_stocks 3.4.0 login bug                                   #
+# ------------------------------------------------------------------ #
+# robin_stocks 3.4.0 has a bug where it tries to pickle data['token_type']
+# unconditionally after the verification workflow, even when the response
+# doesn't contain an access_token. We wrap the login function to catch
+# this and also add diagnostic logging.
+
+_original_login = rh.login
+
+def _patched_login(**kwargs):
+    """Wrap rh.login() to fix 3.4.0 pickle bug and add diagnostics."""
+    import robin_stocks.robinhood.helper as _helper
+    from robin_stocks.robinhood.urls import login_url
+    import robin_stocks.robinhood.authentication as _auth
+    import pickle as _pickle
+
+    # Call the original but intercept request_post to capture responses.
+    _orig_request_post = _helper.request_post
+    _last_responses = []
+
+    def _logging_request_post(url, payload=None, timeout=16, json=False, jsonify_data=True):
+        result = _orig_request_post(url, payload, timeout, json, jsonify_data)
+        print(f"[DEBUG] request_post {url} → {result if isinstance(result, dict) else type(result).__name__}", file=sys.stderr)
+        _last_responses.append(result)
+        return result
+
+    _helper.request_post = _logging_request_post
+    # Also patch in the authentication module's namespace.
+    _auth.request_post = _logging_request_post
+
+    try:
+        result = _original_login(**kwargs)
+    except KeyError as e:
+        # robin_stocks 3.4.0 bug: KeyError('token_type') when response
+        # doesn't contain access_token after verification workflow.
+        print(f"[DEBUG] Caught KeyError in login: {e}", file=sys.stderr)
+        print(f"[DEBUG] Last responses: {[list(r.keys()) if isinstance(r, dict) else r for r in _last_responses]}", file=sys.stderr)
+        # Check if any response had access_token.
+        for resp in reversed(_last_responses):
+            if isinstance(resp, dict) and 'access_token' in resp:
+                print("[DEBUG] Found access_token in a prior response, saving session.", file=sys.stderr)
+                from robin_stocks.robinhood.helper import update_session, set_login_state
+                token = f"{resp['token_type']} {resp['access_token']}"
+                update_session('Authorization', token)
+                set_login_state(True)
+                # Save pickle manually.
+                p_dir = kwargs.get('pickle_path') or os.path.join(os.path.expanduser("~"), ".tokens")
+                p_name = "robinhood" + kwargs.get('pickle_name', '') + ".pickle"
+                p_path = os.path.join(p_dir, p_name)
+                with open(p_path, 'wb') as f:
+                    _pickle.dump({
+                        'token_type': resp['token_type'],
+                        'access_token': resp['access_token'],
+                        'refresh_token': resp.get('refresh_token', ''),
+                        'device_token': _stable_device_token(),
+                    }, f)
+                result = resp
+                break
+        else:
+            result = None
+    finally:
+        _helper.request_post = _orig_request_post
+        _auth.request_post = _orig_request_post
+
+    return result
+
+rh.login = _patched_login
+
+# ------------------------------------------------------------------ #
 # Authenticate                                                         #
 # ------------------------------------------------------------------ #
 
@@ -164,18 +275,26 @@ try:
     print(f"MFA code provided: {bool(mfa_code)}", file=sys.stderr)
     print(f"MFA wait: {mfa_wait}s", file=sys.stderr)
 
+    # robin_stocks 3.4.0 uses bare print() in authentication.py for status
+    # messages. Temporarily redirect stdout → stderr so those messages don't
+    # contaminate the JSON output on stdout.
+    _real_stdout = sys.stdout
+    sys.stdout = sys.stderr
+
     login_result = rh.login(
         username=username,
         password=password,
         expiresIn=86400,        # 24 hours
         scope="internal",
-        #by_sms=True,            # prefer SMS for MFA challenge
         store_session=True,     # persist the session pickle
         mfa_code=mfa_code,
         pickle_name=pickle_name,
         # Override the default pickle storage path if configured.
         **({"pickle_path": pickle_dir} if pickle_dir else {}),
     )
+
+    # Restore stdout so our JSON output goes to the right place.
+    sys.stdout = _real_stdout
 
     if not login_result or "access_token" not in login_result:
         # Provide actionable diagnostics depending on the response.
@@ -197,6 +316,7 @@ try:
         sys.exit(2)
 
 except Exception as exc:
+    sys.stdout = _real_stdout
     print(f"ERROR: Authentication failed: {exc}", file=sys.stderr)
     traceback.print_exc(file=sys.stderr)
     sys.exit(2)
