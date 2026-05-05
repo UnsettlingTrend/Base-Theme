@@ -1,0 +1,15 @@
+uuid: e1b0c161-7cd7-43bc-9eca-91299c2199b8
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ut_data_visualization
+_core:
+  default_config_hash: UMsmhEgS2LBjOUoZplzNJnZCyRr6YONvB6hs4LQA7cQ
+id: data_visualization
+label: 'Data Visualization'
+icon_uuid: null
+icon_default: ''
+description: 'An interactive data visualization powered by the CDC COVE tool. Supports charts, maps, dashboards, and more.'
+behavior_plugins: {  }

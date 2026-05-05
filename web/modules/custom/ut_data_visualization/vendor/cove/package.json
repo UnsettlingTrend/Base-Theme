@@ -1,0 +1,26 @@
+{
+  "name": "cove-drupal-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Builds CDC COVE packages into standalone IIFE bundles for the Drupal ut_data_visualization module.",
+  "scripts": {
+    "build": "COVE_TARGET=editor vite build && COVE_TARGET=renderer vite build",
+    "build:editor": "COVE_TARGET=editor vite build",
+    "build:renderer": "COVE_TARGET=renderer vite build"
+  },
+  "dependencies": {
+    "@cdc/chart": "^4.26.4",
+    "@cdc/dashboard": "^4.26.4",
+    "@cdc/data-bite": "^4.26.4",
+    "@cdc/editor": "^4.26.4",
+    "@cdc/map": "^4.26.4",
+    "@cdc/markup-include": "^4.26.4",
+    "@cdc/waffle-chart": "^4.26.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "@vitejs/plugin-react": "^4.3.0"
+  }
+}

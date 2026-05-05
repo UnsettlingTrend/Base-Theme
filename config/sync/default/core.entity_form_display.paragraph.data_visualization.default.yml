@@ -1,0 +1,28 @@
+uuid: c172d488-2ecb-415e-9c0a-8e5bf6e2ed94
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.data_visualization.field_json
+    - paragraphs.paragraphs_type.data_visualization
+  module:
+    - ut_data_visualization
+  enforced:
+    module:
+      - ut_data_visualization
+_core:
+  default_config_hash: lVpKH-wBs-bzJ3425xTLUgP3PsAPuRbAHERHqlUpsXc
+id: paragraph.data_visualization.default
+targetEntityType: paragraph
+bundle: data_visualization
+mode: default
+content:
+  field_json:
+    type: cove_editor
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

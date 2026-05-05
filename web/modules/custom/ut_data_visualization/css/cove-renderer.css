@@ -1,0 +1,53 @@
+/**
+ * @file
+ * Styles for rendered COVE visualizations on the front end.
+ */
+
+/* --------------------------------------------------------------------------
+ * Visualization container
+ * -------------------------------------------------------------------------- */
+
+.cove-visualization {
+  position: relative;
+  min-height: 200px;
+  margin: 1em 0;
+}
+
+/* --------------------------------------------------------------------------
+ * Loading indicator (shown before React hydrates)
+ * -------------------------------------------------------------------------- */
+
+.cove-visualization__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #757575;
+  font-style: italic;
+  font-size: 0.95em;
+}
+
+/* --------------------------------------------------------------------------
+ * Empty / error states
+ * -------------------------------------------------------------------------- */
+
+.cove-visualization--empty,
+.cove-visualization--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 1em;
+  color: #757575;
+  font-style: italic;
+  background: #fafafa;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+}
+
+.cove-visualization--error {
+  color: #c62828;
+  background: #fce4ec;
+  border-color: #ef9a9a;
+}
+
