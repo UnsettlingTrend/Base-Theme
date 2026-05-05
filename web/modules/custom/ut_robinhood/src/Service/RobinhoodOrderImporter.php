@@ -169,6 +169,7 @@ class RobinhoodOrderImporter {
       'RH_PICKLE_DIR'  => $pickle_dir,
       'RH_ACCOUNT_IDS' => $this->getSetting('ut_robinhood_account_ids', 'UT_ROBINHOOD_ACCOUNT_IDS') ?? '',
       'RH_START_DATE'  => $this->resolveStartDate(),
+      'RH_MFA_WAIT'    => $this->getSetting('ut_robinhood_mfa_wait', 'UT_ROBINHOOD_MFA_WAIT') ?? '15',
     ]);
 
     // Build the env string for proc_open.

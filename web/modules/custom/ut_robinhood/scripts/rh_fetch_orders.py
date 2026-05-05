@@ -19,10 +19,13 @@ so they never appear in the process table or script arguments:
   RH_ACCOUNT_IDS Comma-separated list of Robinhood account IDs. If set,
                  orders are fetched per-account instead of the default.
                  Example: "ABC123,DEF456"
-  RH_START_DATE  Optional start date (YYYY-MM-DD) to limit the fetch to
-                 orders from that date onward. If empty, all orders are
-                 fetched. Set automatically by the Drupal importer based
-                 on the last successful import.
+   RH_START_DATE  Optional start date (YYYY-MM-DD) to limit the fetch to
+                  orders from that date onward. If empty, all orders are
+                  fetched. Set automatically by the Drupal importer based
+                  on the last successful import.
+   RH_MFA_WAIT    Seconds to wait for the user to approve a push-notification
+                  MFA challenge on their phone. Defaults to 15. Set to 0 to
+                  skip the wait (useful when a valid session pickle exists).
 
 Exit codes:
   0  Success — valid JSON array written to STDOUT
@@ -38,6 +41,7 @@ Usage (called by Drupal via proc_open — do not call manually in production):
 import json
 import os
 import sys
+import time
 import traceback
 
 # ------------------------------------------------------------------ #
@@ -51,6 +55,7 @@ pickle_dir = os.environ.get("RH_PICKLE_DIR", "").strip() or None
 account_ids_raw = os.environ.get("RH_ACCOUNT_IDS", "").strip()
 account_ids = [aid.strip() for aid in account_ids_raw.split(",") if aid.strip()] if account_ids_raw else []
 start_date = os.environ.get("RH_START_DATE", "").strip() or None
+mfa_wait   = int(os.environ.get("RH_MFA_WAIT", "15"))
 
 # Generate a live TOTP code from the secret if one is configured.
 # RH_MFA_CODE should hold the *secret* shown during Robinhood's authenticator
@@ -93,6 +98,40 @@ except ImportError:
     sys.exit(4)
 
 # ------------------------------------------------------------------ #
+# Headless MFA / challenge support                                     #
+# ------------------------------------------------------------------ #
+# robin_stocks calls Python's built-in input() when Robinhood sends a
+# device-verification challenge (SMS/email code) or requests an MFA
+# code interactively.  In a headless subprocess (proc_open with stdin
+# closed) input() would raise EOFError immediately.
+#
+# We monkey-patch input() so that when robin_stocks prompts for a code
+# we pause for RH_MFA_WAIT seconds, giving the user time to approve
+# the push notification on their phone, then return the TOTP code (if
+# available) or an empty string (for push-style challenges that only
+# need approval, not a typed code).
+
+_original_input = input
+
+def _headless_input(prompt=""):
+    """Replacement for input() that waits for MFA push approval."""
+    print(f"[MFA] Prompt intercepted: {prompt}", file=sys.stderr)
+    if mfa_wait > 0:
+        print(
+            f"[MFA] Waiting {mfa_wait}s for push-notification approval ...",
+            file=sys.stderr,
+        )
+        time.sleep(mfa_wait)
+    # If a TOTP code is available, supply it; otherwise send empty
+    # string (acceptable for push-only challenges).
+    code = mfa_code or ""
+    print(f"[MFA] Responding with {'TOTP code' if mfa_code else 'empty string'}.", file=sys.stderr)
+    return code
+
+import builtins
+builtins.input = _headless_input
+
+# ------------------------------------------------------------------ #
 # Authenticate                                                         #
 # ------------------------------------------------------------------ #
 
@@ -100,6 +139,7 @@ try:
     # pickle_name scopes the session file to this account so multiple
     # Robinhood accounts can coexist on the same server.
     pickle_name = f"ut_robinhood_{username.replace('@', '_').replace('.', '_')}"
+
 
     login_result = rh.login(
         username=username,
