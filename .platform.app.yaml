@@ -97,6 +97,9 @@ hooks:
       nvm use "${NODE_VERSION}"
     '
 
+    # Install the robin_stocks library
+    pip install robin_stocks
+
     build_theme() {
       theme_dir="$1"
       echo "Compiling assets in ${theme_dir}..."
