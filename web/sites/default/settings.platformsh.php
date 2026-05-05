@@ -236,5 +236,6 @@ $config['social_auth_google.settings']['client_secret'] = !empty($platform_varia
 // UT Robinhood module credentials.
 $settings['ut_robinhood_username']   = !empty($platform_variables['CREDS_ROBINHOOD_USERNAME']) ? $platform_variables['CREDS_ROBINHOOD_USERNAME'] : '<environment-varible>';
 $settings['ut_robinhood_password']   = !empty($platform_variables['CREDS_ROBINHOOD_PASSWORD']) ? $platform_variables['CREDS_ROBINHOOD_PASSWORD'] : '<environment-varible>';
+$settings['ut_robinhood_account_ids']   = !empty($platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS']) ? $platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS'] : '<environment-varible>';
 #$settings['ut_robinhood_mfa_code']   = '';
 $settings['ut_robinhood_python_bin'] = '/usr/bin/python3';

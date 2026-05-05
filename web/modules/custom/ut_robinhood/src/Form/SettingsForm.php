@@ -7,6 +7,7 @@ namespace Drupal\ut_robinhood\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\ut_robinhood\Service\RobinhoodOrderImporter;
 
@@ -230,25 +231,65 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * Submit handler for the "Import Now" button.
+   *
+   * Sets up a Batch API operation that shows a progress page, then redirects
+   * back to this settings form on completion.
    */
   public function importNowSubmit(array &$form, FormStateInterface $form_state): void {
+    $batch = [
+      'title' => $this->t('Importing Robinhood Orders'),
+      'operations' => [
+        [[static::class, 'batchImport'], []],
+      ],
+      'finished' => [static::class, 'batchFinished'],
+      'progress_message' => $this->t('Running import…'),
+    ];
+    batch_set($batch);
+    $form_state->setRedirectUrl(Url::fromRoute('ut_robinhood.settings'));
+  }
+
+  /**
+   * Batch operation callback: runs the import.
+   */
+  public static function batchImport(array &$context): void {
+    /** @var \Drupal\ut_robinhood\Service\RobinhoodOrderImporter $importer */
+    $importer = \Drupal::service('ut_robinhood.order_importer');
     try {
-      $stats = $this->importer->import();
-      $this->messenger()->addStatus($this->t(
-        'Import complete. Created: @created | Updated: @updated | Skipped: @skipped | Errors: @errors',
-        [
-          '@created' => $stats['created'],
-          '@updated' => $stats['updated'],
-          '@skipped' => $stats['skipped'],
-          '@errors'  => $stats['errors'],
-        ]
-      ));
-      if ($stats['errors'] > 0) {
-        $this->messenger()->addWarning($this->t('Some orders had errors. Check the log for details.'));
-      }
+      $stats = $importer->import();
+      $context['results']['stats'] = $stats;
+      $context['results']['success'] = TRUE;
+      $context['message'] = t('Processing orders…');
     }
     catch (\Exception $e) {
-      $this->messenger()->addError($this->t('Import failed: @message', ['@message' => $e->getMessage()]));
+      $context['results']['success'] = FALSE;
+      $context['results']['error'] = $e->getMessage();
+    }
+  }
+
+  /**
+   * Batch finished callback: shows result messages.
+   */
+  public static function batchFinished(bool $success, array $results, array $operations): void {
+    $messenger = \Drupal::messenger();
+
+    if (!$success || empty($results['success'])) {
+      $error = $results['error'] ?? t('Unknown error');
+      $messenger->addError(t('Import failed: @message', ['@message' => $error]));
+      return;
+    }
+
+    $stats = $results['stats'];
+    $messenger->addStatus(t(
+      'Import complete. Created: @created | Updated: @updated | Skipped: @skipped | Errors: @errors',
+      [
+        '@created' => $stats['created'],
+        '@updated' => $stats['updated'],
+        '@skipped' => $stats['skipped'],
+        '@errors'  => $stats['errors'],
+      ]
+    ));
+    if ($stats['errors'] > 0) {
+      $messenger->addWarning(t('Some orders had errors. Check the log for details.'));
     }
   }
 

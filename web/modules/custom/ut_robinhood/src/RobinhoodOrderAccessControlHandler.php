@@ -18,7 +18,7 @@ class RobinhoodOrderAccessControlHandler extends EntityAccessControlHandler {
   /**
    * {@inheritdoc}
    */
-  protected function checkAccess(EntityInterface $entity, string $operation, AccountInterface $account): AccessResultInterface {
+  protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account): AccessResultInterface {
     return match ($operation) {
       'view' => AccessResult::allowedIfHasPermissions(
         $account,

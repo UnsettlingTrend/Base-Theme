@@ -137,6 +137,10 @@ class RobinhoodOrderViewsData extends EntityViewsData {
     // ------------------------------------------------------------------ //
     // Datetime fields                                                      //
     // ------------------------------------------------------------------ //
+    // The datetime module only auto-configures Views handlers for
+    // configurable (Field UI) fields, not base fields. We must explicitly
+    // set the correct plugin IDs. The 'field' display handler (EntityField)
+    // handles rendering; filter/sort/argument use datetime-specific plugins.
 
     foreach ([
       'created_at_robinhood' => [$this->t('Order Date (Robinhood)'), $this->t('When the order was placed in Robinhood.')],
@@ -144,10 +148,10 @@ class RobinhoodOrderViewsData extends EntityViewsData {
     ] as $field => [$title, $help]) {
       $data['robinhood_order'][$field]['title'] = $title;
       $data['robinhood_order'][$field]['help']  = $help;
-      $data['robinhood_order'][$field]['field']['id']    = 'date';
-      $data['robinhood_order'][$field]['filter']['id']   = 'date';
-      $data['robinhood_order'][$field]['sort']['id']     = 'date';
-      $data['robinhood_order'][$field]['argument']['id'] = 'date';
+      $data['robinhood_order'][$field]['field']['id']    = 'field';
+      $data['robinhood_order'][$field]['filter']['id']   = 'datetime';
+      $data['robinhood_order'][$field]['sort']['id']     = 'datetime';
+      $data['robinhood_order'][$field]['argument']['id'] = 'datetime';
     }
 
     // ------------------------------------------------------------------ //
@@ -220,7 +224,8 @@ class RobinhoodOrderViewsData extends EntityViewsData {
     $data['robinhood_order']['account_name']['title'] = $this->t('Account Name');
     $data['robinhood_order']['account_name']['help']  = $this->t('Human-readable Robinhood account name (type + ID).');
     $data['robinhood_order']['account_name']['field']['id']    = 'standard';
-    $data['robinhood_order']['account_name']['filter']['id']   = 'string';
+    $data['robinhood_order']['account_name']['filter']['id']   = 'in_operator';
+    $data['robinhood_order']['account_name']['filter']['options callback'] = $cb_prefix . '_ut_robinhood_views_account_name_options';
     $data['robinhood_order']['account_name']['sort']['id']     = 'standard';
     $data['robinhood_order']['account_name']['argument']['id'] = 'string';
 
@@ -357,3 +362,28 @@ function _ut_robinhood_views_trigger_options(): array {
     'stop'      => t('Stop'),
   ];
 }
+
+/**
+ * Returns available account names for the Views filter.
+ *
+ * Queries the robinhood_order table for distinct account_name values so the
+ * dropdown always reflects the accounts that actually have imported orders.
+ */
+function _ut_robinhood_views_account_name_options(): array {
+  $names = \Drupal::database()
+    ->select('robinhood_order', 'ro')
+    ->fields('ro', ['account_name'])
+    ->isNotNull('account_name')
+    ->condition('account_name', '', '<>')
+    ->distinct()
+    ->orderBy('account_name')
+    ->execute()
+    ->fetchCol();
+
+  $options = [];
+  foreach ($names as $name) {
+    $options[$name] = $name;
+  }
+  return $options;
+}
+

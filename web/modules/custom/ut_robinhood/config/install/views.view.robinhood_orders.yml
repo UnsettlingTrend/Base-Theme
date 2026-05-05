@@ -3,9 +3,11 @@ langcode: en
 status: true
 dependencies:
   module:
+    - better_exposed_filters
+    - datetime
     - ut_robinhood
 _core:
-  default_config_hash: M0CcF373WZvZNR2RcVbrCAY2lYZOqXTWtA1jwVK3AMM
+  default_config_hash: KKu7UkZDLkLhf8f7V4e_3D8GJeX-NclLUdjTTBum6M4
 id: robinhood_orders
 label: 'Robinhood Orders'
 module: views
@@ -370,7 +372,7 @@ display:
           entity_type: robinhood_order
           entity_field: order_state
           plugin_id: standard
-          label: 'Order State'
+          label: State
           exclude: false
           alter:
             alter_text: false
@@ -421,7 +423,7 @@ display:
           entity_type: robinhood_order
           entity_field: order_type
           plugin_id: standard
-          label: 'Order Type'
+          label: Type
           exclude: false
           alter:
             alter_text: false
@@ -733,17 +735,17 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-        account_id:
-          id: account_id
+        account_name:
+          id: account_name
           table: robinhood_order
-          field: account_id
+          field: account_name
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: robinhood_order
-          entity_field: account_id
+          entity_field: account_name
           plugin_id: standard
-          label: 'Account ID'
+          label: 'Account Name'
           exclude: false
           alter:
             alter_text: false
@@ -784,6 +786,138 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+        updated_at_robinhood:
+          id: updated_at_robinhood
+          table: robinhood_order
+          field: updated_at_robinhood
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: robinhood_order
+          entity_field: updated_at_robinhood
+          plugin_id: field
+          label: 'Last Updated'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: medium
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        created_at_robinhood:
+          id: created_at_robinhood
+          table: robinhood_order
+          field: created_at_robinhood
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: robinhood_order
+          entity_field: created_at_robinhood
+          plugin_id: field
+          label: 'Order Date'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: medium
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       pager:
         type: mini
         options:
@@ -804,7 +938,7 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
           reset_button: false
@@ -813,6 +947,45 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: basic_html
+          bef:
+            general:
+              autosubmit: false
+              auto_submit_sort_only: false
+              autosubmit_breakpoint: ''
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_textfield_minimum_length: 3
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              symbol:
+                plugin_id: default
+                advanced:
+                  sort_options_unsupported: ''
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
+              account_name:
+                plugin_id: default
+                advanced:
+                  sort_options_unsupported: ''
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  open_by_default: false
+                  is_secondary: false
+                  hide_label: false
+                  field_classes: ''
       access:
         type: none
         options: {  }
@@ -884,7 +1057,9 @@ display:
             time_in_force: time_in_force
             total_notional_value: total_notional_value
             trigger: trigger
-            account_id: account_id
+            account_name: account_name
+            updated_at_robinhood: updated_at_robinhood
+            created_at_robinhood: created_at_robinhood
           default: '-1'
           info:
             symbol:
@@ -978,7 +1153,21 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            account_id:
+            account_name:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            updated_at_robinhood:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            created_at_robinhood:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -1003,12 +1192,23 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      header: {  }
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: 'Displaying @start - @end of @total'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args
@@ -1024,6 +1224,7 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
+        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - url.query_args

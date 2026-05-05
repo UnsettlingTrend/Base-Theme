@@ -4,5 +4,6 @@ description: 'Imports Robinhood stock orders as fieldable content entities via c
 package: 'Custom'
 core_version_requirement: ^11
 dependencies:
+  - drupal:datetime
   - drupal:user
   - drupal:views

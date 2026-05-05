@@ -13,14 +13,12 @@ config:
     php: lando/config/php.ini
     mysql: lando/config/my.cnf
     database: lando/config/custom.cnf
-  xdebug: true
+  xdebug: 'develop,debug'
 
 excludes:
   - node_modules
 
 proxy:
-#  search:
-#    - search.tf.lndo.site
   pma:
     - db.cf.lndo.site
   mailhog:
@@ -50,13 +48,14 @@ services:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
         # Allows path mapping in PhpStorm and CLI debugging.
         # https://docs.lando.dev/guides/lando-phpstorm.html#debugging-cli-commands.
-        PHP_IDE_CONFIG: "serverName=tf"
+        PHP_IDE_CONFIG: "serverName=cf"
         # Set debug mode here, instead of in config: xdebug so it can be toggled off and on.
         # Develop allows additional features, like html in var_dump.
         # https://xdebug.org/docs/develop.
         # Debug allows step debugging.
         # https://xdebug.org/docs/remote.
         XDEBUG_MODE: 'debug,develop'
+        XDEBUG_SESSION_START: lando
         # Causes Xdebug to trigger on every request, no need to do XDEBUG_SESSION in the URL.
         XDEBUG_SESSION: 1
   node:
