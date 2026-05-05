@@ -91,9 +91,17 @@ if not username or not password:
 try:
     import robin_stocks.robinhood as rh
     from robin_stocks.robinhood.helper import set_output
+    from robin_stocks.robinhood.globals import SESSION
     # Redirect robin_stocks' internal print() calls (e.g. error messages from
     # request_post) to stderr so they don't contaminate the JSON on stdout.
     set_output(sys.stderr)
+    # Override the default User-Agent header. robin_stocks ships with
+    # User-Agent: * which Robinhood's CDN / WAF rejects with a 502.
+    SESSION.headers["User-Agent"] = (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/136.0.0.0 Safari/537.36"
+    )
 except ImportError:
     print(
         "ERROR: robin_stocks is not installed. Run: pip install robin_stocks",
