@@ -1,0 +1,9 @@
+name: 'UT Data Visualization'
+type: module
+description: 'Provides a Data Visualization paragraph type powered by the CDC COVE tool. Stores visualization configuration as JSON and renders interactive charts, maps, and dashboards.'
+package: 'UT Custom'
+core_version_requirement: ^11
+dependencies:
+  - drupal:field
+  - paragraphs:paragraphs
+  - json_field:json_field

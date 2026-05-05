@@ -1,0 +1,45 @@
+# Libraries for the UT Data Visualization module.
+#
+# cove_react:   Shared React/ReactDOM bundle. Must load before the editor or
+#               renderer bundles so that window.React and window.ReactDOM are
+#               available when their IIFE wrappers execute.
+#
+# cove_editor:  Attached by the CoveEditorWidget; loads the COVE editor React
+#               app and the custom JS that manages the modal lifecycle.
+#
+# cove_renderer: Attached by the CoveVisualizationFormatter; loads the COVE
+#                rendering components and mounts visualizations on the page.
+
+cove_react:
+  version: VERSION
+  js:
+    js/vendor/cove-react-shared-bundle.js: { minified: true, preprocess: false }
+
+cove_editor:
+  version: VERSION
+  css:
+    component:
+      css/cove-editor.css: {}
+  js:
+    js/vendor/cove-editor-bundle.js: { minified: true, preprocess: false }
+    js/cove-editor.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - core/jquery
+    - ut_data_visualization/cove_react
+
+cove_renderer:
+  version: VERSION
+  css:
+    component:
+      css/cove-renderer.css: {}
+  js:
+    js/vendor/cove-renderer-bundle.js: { minified: true, preprocess: false }
+    js/cove-renderer.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - ut_data_visualization/cove_react
+

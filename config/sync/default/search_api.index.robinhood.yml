@@ -1,0 +1,177 @@
+uuid: d461e4bb-c18f-4e25-9a8b-82cd48f497bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.solr
+  module:
+    - search_api_solr
+    - ut_robinhood
+third_party_settings:
+  search_api_solr:
+    finalize: false
+    commit_before_finalize: false
+    commit_after_finalize: false
+    debug_finalize: false
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    mlt:
+      mintf: 1
+      mindf: 1
+      maxdf: 0
+      maxdfpct: 0
+      minwl: 0
+      maxwl: 0
+      maxqt: 100
+      maxntp: 2000
+      boost: false
+      interestingTerms: none
+    term_modifiers:
+      slop: 3
+      fuzzy: 1
+      fuzzy_analyzer: true
+    advanced:
+      index_prefix: ''
+      collection: ''
+      timezone: ''
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+      use_language_undefined_as_fallback_language: false
+      specific_languages:
+        en: '0'
+      use_universal_collation: false
+id: robinhood
+name: Robinhood
+description: ''
+read_only: false
+field_settings:
+  account_name:
+    label: 'Account Name'
+    datasource_id: 'entity:robinhood_order'
+    property_path: account_name
+    type: string
+    dependencies:
+      module:
+        - ut_robinhood
+  average_price:
+    label: 'Average Fill Price'
+    datasource_id: 'entity:robinhood_order'
+    property_path: average_price
+    type: decimal
+    dependencies:
+      module:
+        - ut_robinhood
+  created_at_robinhood:
+    label: 'Order Created (Robinhood)'
+    datasource_id: 'entity:robinhood_order'
+    property_path: created_at_robinhood
+    type: date
+    dependencies:
+      module:
+        - ut_robinhood
+  extended_hours:
+    label: 'Extended Hours'
+    datasource_id: 'entity:robinhood_order'
+    property_path: extended_hours
+    type: boolean
+    dependencies:
+      module:
+        - ut_robinhood
+  fees:
+    label: Fees
+    datasource_id: 'entity:robinhood_order'
+    property_path: fees
+    type: decimal
+    dependencies:
+      module:
+        - ut_robinhood
+  order_side:
+    label: Side
+    datasource_id: 'entity:robinhood_order'
+    property_path: order_side
+    type: string
+    dependencies:
+      module:
+        - ut_robinhood
+  order_state:
+    label: State
+    datasource_id: 'entity:robinhood_order'
+    property_path: order_state
+    type: string
+    dependencies:
+      module:
+        - ut_robinhood
+  order_type:
+    label: 'Order Type'
+    datasource_id: 'entity:robinhood_order'
+    property_path: order_type
+    type: string
+    dependencies:
+      module:
+        - ut_robinhood
+  price:
+    label: 'Limit / Stop Price'
+    datasource_id: 'entity:robinhood_order'
+    property_path: price
+    type: decimal
+    dependencies:
+      module:
+        - ut_robinhood
+  quantity:
+    label: Quantity
+    datasource_id: 'entity:robinhood_order'
+    property_path: quantity
+    type: decimal
+    dependencies:
+      module:
+        - ut_robinhood
+  symbol:
+    label: 'Ticker Symbol'
+    datasource_id: 'entity:robinhood_order'
+    property_path: symbol
+    type: string
+    dependencies:
+      module:
+        - ut_robinhood
+  updated_at_robinhood:
+    label: 'Order Last Updated (Robinhood)'
+    datasource_id: 'entity:robinhood_order'
+    property_path: updated_at_robinhood
+    type: date
+    dependencies:
+      module:
+        - ut_robinhood
+datasource_settings:
+  'entity:robinhood_order': {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+  solr_date_range: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  delete_on_fail: true
+  index_directly: true
+  track_changes_in_references: true
+server: solr

@@ -1,0 +1,19 @@
+robinhood_order.collection:
+  title: 'List'
+  route_name: entity.robinhood_order.collection
+  base_route: entity.robinhood_order.collection
+
+robinhood_order.canonical:
+  title: 'View'
+  route_name: entity.robinhood_order.canonical
+  base_route: entity.robinhood_order.canonical
+
+robinhood_order.edit_form:
+  title: 'Edit'
+  route_name: entity.robinhood_order.edit_form
+  base_route: entity.robinhood_order.canonical
+
+robinhood_order.delete_form:
+  title: 'Delete'
+  route_name: entity.robinhood_order.delete_form
+  base_route: entity.robinhood_order.canonical

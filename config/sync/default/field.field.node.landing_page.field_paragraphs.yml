@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_paragraphs
     - node.type.landing_page
     - paragraphs.paragraphs_type.block
+    - paragraphs.paragraphs_type.data_visualization
     - paragraphs.paragraphs_type.layout
     - paragraphs.paragraphs_type.media
     - paragraphs.paragraphs_type.section
@@ -35,10 +36,14 @@ settings:
       media: media
       view: view
       block: block
+      data_visualization: data_visualization
     negate: 0
     target_bundles_drag_drop:
       block:
         weight: -12
+        enabled: true
+      data_visualization:
+        weight: 12
         enabled: true
       from_library:
         weight: -20

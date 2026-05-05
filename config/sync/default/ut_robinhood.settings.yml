@@ -1,0 +1,12 @@
+_core:
+  default_config_hash: fRbkURNogRNxCMmcoN7puomAHUOKMWIA2YCwBmHYkZY
+cron_interval: 3600
+order_states:
+  filled: filled
+  partially_filled: partially_filled
+  confirmed: confirmed
+  queued: queued
+update_existing: true
+import_limit: 0
+bridge_script_path: ''
+pickle_dir: ''

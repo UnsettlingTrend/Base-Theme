@@ -1,0 +1,25 @@
+uuid: d89c44c4-0c30-4b9c-9416-07e10e9b3da3
+langcode: en
+status: true
+dependencies:
+  module:
+    - json_field
+    - paragraphs
+  enforced:
+    module:
+      - ut_data_visualization
+_core:
+  default_config_hash: Wtv9rbHB_45TPLJ3Yw0IkdagR7BhfiqBCnEoySibDqg
+id: paragraph.field_json
+field_name: field_json
+entity_type: paragraph
+type: json
+settings:
+  size: 4294967296
+module: json_field
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
