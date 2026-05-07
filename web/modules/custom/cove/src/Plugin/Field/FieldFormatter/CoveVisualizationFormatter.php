@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\ut_data_visualization\Plugin\Field\FieldFormatter;
+namespace Drupal\cove\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -85,7 +85,7 @@ class CoveVisualizationFormatter extends FormatterBase {
           . $this->t('Loading visualization…')
           . '</div>',
         '#attached' => [
-          'library' => ['ut_data_visualization/cove_renderer'],
+          'library' => ['cove/cove_renderer'],
         ],
       ];
     }

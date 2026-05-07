@@ -4,7 +4,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - ut_data_visualization
+      - cove
 id: data_visualization
 label: 'Data Visualization'
 icon_uuid: null

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\ut_data_visualization\Plugin\Field\FieldWidget;
+namespace Drupal\cove\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -20,7 +20,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * into a hidden textarea so Drupal's form system captures it on submit.
  *
  * The COVE editor bundles are loaded from CDN via the `cove_editor`
- * library defined in ut_data_visualization.libraries.yml.
+ * library defined in cove.libraries.yml.
  */
 #[FieldWidget(
   id: 'cove_editor',
@@ -109,9 +109,9 @@ class CoveEditorWidget extends WidgetBase {
     ];
 
     // Attach the COVE editor library which contains the modal JS and CSS.
-    $element['#attached']['library'][] = 'ut_data_visualization/cove_editor';
+    $element['#attached']['library'][] = 'cove/cove_editor';
     // Also attach the renderer library for the in-widget preview.
-    $element['#attached']['library'][] = 'ut_data_visualization/cove_renderer';
+    $element['#attached']['library'][] = 'cove/cove_renderer';
 
     return $element;
   }

@@ -6,10 +6,10 @@ dependencies:
     - field.field.paragraph.data_visualization.field_json
     - paragraphs.paragraphs_type.data_visualization
   module:
-    - ut_data_visualization
+    - cove
   enforced:
     module:
-      - ut_data_visualization
+      - cove
 id: paragraph.data_visualization.default
 targetEntityType: paragraph
 bundle: data_visualization

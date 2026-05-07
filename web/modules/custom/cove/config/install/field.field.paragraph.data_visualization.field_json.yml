@@ -9,7 +9,7 @@ dependencies:
     - json_field
   enforced:
     module:
-      - ut_data_visualization
+      - cove
 id: paragraph.data_visualization.field_json
 field_name: field_json
 entity_type: paragraph

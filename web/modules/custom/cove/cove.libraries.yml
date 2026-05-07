@@ -28,7 +28,7 @@ cove_editor:
     - core/drupalSettings
     - core/once
     - core/jquery
-    - ut_data_visualization/cove_react
+    - cove/cove_react
 
 cove_renderer:
   version: VERSION
@@ -41,5 +41,5 @@ cove_renderer:
   dependencies:
     - core/drupal
     - core/once
-    - ut_data_visualization/cove_react
+    - cove/cove_react
 

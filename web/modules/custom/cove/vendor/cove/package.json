@@ -2,7 +2,7 @@
   "name": "cove-drupal-build",
   "version": "1.0.0",
   "private": true,
-  "description": "Builds CDC COVE packages into standalone IIFE bundles for the Drupal ut_data_visualization module.",
+  "description": "Builds CDC COVE packages into standalone IIFE bundles for the Drupal cove module.",
   "scripts": {
     "build": "COVE_TARGET=editor vite build && COVE_TARGET=renderer vite build",
     "build:editor": "COVE_TARGET=editor vite build",
