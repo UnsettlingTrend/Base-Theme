@@ -1,7 +1,7 @@
 name: 'COVE (CDC Data Visualization Editor)'
 type: module
 description: 'Provides a Data Visualization paragraph type powered by the CDC COVE tool. Stores visualization configuration as JSON and renders interactive charts, maps, and dashboards.'
-package: 'UT Custom'
+package: 'Paragraphs'
 core_version_requirement: ^11
 dependencies:
   - drupal:field
