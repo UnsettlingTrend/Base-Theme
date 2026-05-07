@@ -57,7 +57,6 @@ Credentials are **never stored in the Drupal config system**. Set them in
 // web/sites/default/settings.php
 $settings['ut_robinhood_username']   = 'you@example.com';
 $settings['ut_robinhood_password']   = 'your-password';
-$settings['ut_robinhood_mfa_code']   = '';   // leave empty; MFA handled by pickle
 $settings['ut_robinhood_python_bin'] = '/usr/bin/python3';
 ```
 
@@ -66,12 +65,11 @@ $settings['ut_robinhood_python_bin'] = '/usr/bin/python3';
 ```bash
 export UT_ROBINHOOD_USERNAME="you@example.com"
 export UT_ROBINHOOD_PASSWORD="your-password"
-export UT_ROBINHOOD_MFA_CODE=""
 export UT_ROBINHOOD_PYTHON_BIN="/usr/bin/python3"
 ```
 
-> **MFA note:** The first run will trigger an MFA challenge (SMS or
-> authenticator app). After you approve it, robin_stocks stores the session
+> **MFA note:** The first run will trigger a verification challenge (push
+> notification, SMS, or email). After you approve it, robin_stocks stores the session
 > in a pickle file and subsequent runs reuse it without re-triggering MFA.
 > The pickle file lives in `private://ut_robinhood/` by default.
 

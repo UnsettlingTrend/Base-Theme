@@ -33,7 +33,6 @@ final class RobinhoodCommands extends DrushCommands {
       $stats = $this->importer->import();
     }
     catch (\Exception $e) {
-      $this->io()->error($e->getMessage());
       throw $e;
     }
     $this->io()->definitionList(

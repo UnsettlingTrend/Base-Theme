@@ -86,7 +86,11 @@ class RobinhoodOrderImporter {
     catch (\RuntimeException $e) {
       $this->logger->error('Bridge script failed: @msg', ['@msg' => $e->getMessage()]);
       $this->logRun(0, 0, 0, 'error', $e->getMessage());
-      return $stats;
+      // Set a Drupal status message with line breaks preserved for the UI.
+      \Drupal::messenger()->addError(
+        \Drupal\Core\Render\Markup::create(nl2br(htmlspecialchars($e->getMessage())))
+      );
+      throw $e;
     }
 
     $config       = $this->configFactory->get('ut_robinhood.settings');
@@ -165,7 +169,6 @@ class RobinhoodOrderImporter {
     $env = array_merge(getenv() ?: [], [
       'RH_USERNAME'    => $this->getSetting('ut_robinhood_username', 'UT_ROBINHOOD_USERNAME'),
       'RH_PASSWORD'    => $this->getSetting('ut_robinhood_password', 'UT_ROBINHOOD_PASSWORD'),
-      'RH_MFA_CODE'    => $this->getSetting('ut_robinhood_mfa_code', 'UT_ROBINHOOD_MFA_CODE') ?? '',
       'RH_PICKLE_DIR'  => $pickle_dir,
       'RH_ACCOUNT_IDS' => $this->getSetting('ut_robinhood_account_ids', 'UT_ROBINHOOD_ACCOUNT_IDS') ?? '',
       'RH_START_DATE'  => $this->resolveStartDate(),
@@ -199,8 +202,10 @@ class RobinhoodOrderImporter {
     }
 
     if ($exit_code !== 0) {
+      // Preserve line breaks in stderr for readable error messages.
+      $stderr_clean = trim($stderr);
       throw new \RuntimeException(
-        "Bridge script exited with code $exit_code. STDERR: " . trim($stderr)
+        "Bridge script exited with code $exit_code.\nSTDERR:\n" . $stderr_clean
       );
     }
 

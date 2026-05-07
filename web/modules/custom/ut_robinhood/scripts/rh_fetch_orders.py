@@ -11,21 +11,19 @@ so they never appear in the process table or script arguments:
 
   RH_USERNAME    Robinhood account email
   RH_PASSWORD    Robinhood account password
-  RH_MFA_CODE    Your TOTP *secret* (not a generated code) from Robinhood's
-                 authenticator setup screen. If set, pyotp generates a fresh
-                 6-digit code on every run. Leave empty to rely on an existing
-                 valid pickle session instead.
   RH_PICKLE_DIR  Directory to store the auth session pickle file
   RH_ACCOUNT_IDS Comma-separated list of Robinhood account IDs. If set,
                  orders are fetched per-account instead of the default.
                  Example: "ABC123,DEF456"
-   RH_START_DATE  Optional start date (YYYY-MM-DD) to limit the fetch to
-                  orders from that date onward. If empty, all orders are
-                  fetched. Set automatically by the Drupal importer based
-                  on the last successful import.
-   RH_MFA_WAIT    Seconds to wait for the user to approve a push-notification
-                  MFA challenge on their phone. Defaults to 15. Set to 0 to
-                  skip the wait (useful when a valid session pickle exists).
+  RH_START_DATE  Optional start date (YYYY-MM-DD) to limit the fetch to
+                 orders from that date onward. If empty, all orders are
+                 fetched. Set automatically by the Drupal importer based
+                 on the last successful import.
+  RH_MFA_WAIT   Seconds to wait for the user to approve a push-notification
+                 or SMS/email verification challenge. Defaults to 15.
+                 robin_stocks 3.4.0 handles the verification workflow
+                 natively (polling for up to 2 minutes), so this only
+                 affects the monkey-patched input() fallback.
 
 Exit codes:
   0  Success — valid JSON array written to STDOUT
@@ -50,31 +48,11 @@ import traceback
 
 username   = os.environ.get("RH_USERNAME", "").strip()
 password   = os.environ.get("RH_PASSWORD", "").strip()
-mfa_secret = os.environ.get("RH_MFA_CODE", "").strip() or None
 pickle_dir = os.environ.get("RH_PICKLE_DIR", "").strip() or None
 account_ids_raw = os.environ.get("RH_ACCOUNT_IDS", "").strip()
 account_ids = [aid.strip() for aid in account_ids_raw.split(",") if aid.strip()] if account_ids_raw else []
 start_date = os.environ.get("RH_START_DATE", "").strip() or None
 mfa_wait   = int(os.environ.get("RH_MFA_WAIT", "15"))
-
-# Generate a live TOTP code from the secret if one is configured.
-# RH_MFA_CODE should hold the *secret* shown during Robinhood's authenticator
-# setup (e.g. "JBSWY3DPEHPK3PXP"), not a pre-generated 6-digit code.
-mfa_code = None
-if mfa_secret:
-    try:
-        import pyotp
-        mfa_code = pyotp.TOTP(mfa_secret).now()
-    except ImportError:
-        print(
-            "ERROR: RH_MFA_CODE is set but pyotp is not installed. "
-            "Run: pip install pyotp",
-            file=sys.stderr,
-        )
-        sys.exit(4)
-    except Exception as exc:
-        print(f"ERROR: Failed to generate TOTP code: {exc}", file=sys.stderr)
-        sys.exit(4)
 
 if not username or not password:
     print(
@@ -83,10 +61,13 @@ if not username or not password:
     )
     sys.exit(1)
 
+# Log credential diagnostics (lengths only, never values).
+print(f"Username: {username} (len={len(username)})", file=sys.stderr)
+print(f"Password length: {len(password)}", file=sys.stderr)
+
 # ------------------------------------------------------------------ #
 # Import robin_stocks                                                  #
 # ------------------------------------------------------------------ #
-
 
 try:
     import robin_stocks.robinhood as rh
@@ -94,9 +75,6 @@ try:
     # Redirect robin_stocks' internal print() calls (e.g. error messages from
     # request_post) to stderr so they don't contaminate the JSON on stdout.
     set_output(sys.stderr)
-    # robin_stocks 3.4.0 also prints directly via print() in authentication.py.
-    # Redirect all stdout prints from the login flow to stderr by temporarily
-    # reassigning sys.stdout during import/login.
 except ImportError:
     print(
         "ERROR: robin_stocks is not installed. Run: pip install robin_stocks",
@@ -116,38 +94,36 @@ try:
 except Exception as exc:
     print(f"Warning: Could not set User-Agent: {exc}", file=sys.stderr)
 
-print(f"robin_stocks version: {getattr(rh, '__version__', 'unknown')}", file=sys.stderr)
+try:
+    from importlib.metadata import version as _pkg_version
+    _rs_version = _pkg_version('robin_stocks')
+except Exception:
+    _rs_version = getattr(rh, '__version__', 'unknown')
+print(f"robin_stocks version: {_rs_version}", file=sys.stderr)
 
 # ------------------------------------------------------------------ #
-# Headless MFA / challenge support                                     #
+# Headless input() support                                             #
 # ------------------------------------------------------------------ #
-# robin_stocks calls Python's built-in input() when Robinhood sends a
-# device-verification challenge (SMS/email code) or requests an MFA
-# code interactively.  In a headless subprocess (proc_open with stdin
-# closed) input() would raise EOFError immediately.
-#
-# We monkey-patch input() so that when robin_stocks prompts for a code
-# we pause for RH_MFA_WAIT seconds, giving the user time to approve
-# the push notification on their phone, then return the TOTP code (if
-# available) or an empty string (for push-style challenges that only
-# need approval, not a typed code).
+# robin_stocks may call input() for SMS/email verification codes.
+# In a headless subprocess (proc_open with stdin closed) input() would
+# raise EOFError immediately. We monkey-patch it to wait for the
+# configured MFA_WAIT period then return an empty string. The primary
+# verification path in robin_stocks 3.4.0 uses the push-notification
+# workflow (no input() needed), but this is a safety net for edge cases.
 
 _original_input = input
 
 def _headless_input(prompt=""):
-    """Replacement for input() that waits for MFA push approval."""
+    """Replacement for input() that waits then returns empty string."""
     print(f"[MFA] Prompt intercepted: {prompt}", file=sys.stderr)
     if mfa_wait > 0:
         print(
-            f"[MFA] Waiting {mfa_wait}s for push-notification approval ...",
+            f"[MFA] Waiting {mfa_wait}s for verification ...",
             file=sys.stderr,
         )
         time.sleep(mfa_wait)
-    # If a TOTP code is available, supply it; otherwise send empty
-    # string (acceptable for push-only challenges).
-    code = mfa_code or ""
-    print(f"[MFA] Responding with {'TOTP code' if mfa_code else 'empty string'}.", file=sys.stderr)
-    return code
+    print("[MFA] Responding with empty string.", file=sys.stderr)
+    return ""
 
 import builtins
 builtins.input = _headless_input
@@ -157,15 +133,14 @@ builtins.input = _headless_input
 # ------------------------------------------------------------------ #
 # robin_stocks generates a random device_token on every login call.
 # Robinhood associates device tokens with verified devices — using a new
-# random token each time forces a fresh device-verification challenge and
-# may cause "Unable to log in with provided credentials" rejections.
+# random token each time forces a fresh device-verification challenge.
 #
 # We monkey-patch generate_device_token() to return a stable token that
 # is derived from the username and persisted alongside the pickle file.
 # Once Robinhood recognises this device token, subsequent logins reuse it.
 
 import robin_stocks.robinhood.authentication as _rh_auth
-import hashlib, uuid
+import uuid
 
 def _stable_device_token() -> str:
     """Return a stable device token, persisted to a file next to the pickle."""
@@ -200,7 +175,6 @@ _original_login = rh.login
 def _patched_login(**kwargs):
     """Wrap rh.login() to fix 3.4.0 pickle bug and add diagnostics."""
     import robin_stocks.robinhood.helper as _helper
-    from robin_stocks.robinhood.urls import login_url
     import robin_stocks.robinhood.authentication as _auth
     import pickle as _pickle
 
@@ -209,13 +183,23 @@ def _patched_login(**kwargs):
     _last_responses = []
 
     def _logging_request_post(url, payload=None, timeout=16, json=False, jsonify_data=True):
+        if payload and isinstance(payload, dict) and 'grant_type' in payload:
+            # Ensure challenge_type is present for the login endpoint.
+            if 'challenge_type' not in payload:
+                payload['challenge_type'] = 'sms'
+            print(f"[DEBUG] Login payload keys: {list(payload.keys())}", file=sys.stderr)
         result = _orig_request_post(url, payload, timeout, json, jsonify_data)
-        print(f"[DEBUG] request_post {url} → {result if isinstance(result, dict) else type(result).__name__}", file=sys.stderr)
+        # Log response detail for diagnostics.
+        if isinstance(result, dict):
+            keys = list(result.keys())
+            detail = result.get('detail', '')
+            print(f"[DEBUG] request_post {url} → keys={keys} detail={detail}", file=sys.stderr)
+        else:
+            print(f"[DEBUG] request_post {url} → {type(result).__name__}", file=sys.stderr)
         _last_responses.append(result)
         return result
 
     _helper.request_post = _logging_request_post
-    # Also patch in the authentication module's namespace.
     _auth.request_post = _logging_request_post
 
     try:
@@ -224,7 +208,7 @@ def _patched_login(**kwargs):
         # robin_stocks 3.4.0 bug: KeyError('token_type') when response
         # doesn't contain access_token after verification workflow.
         print(f"[DEBUG] Caught KeyError in login: {e}", file=sys.stderr)
-        print(f"[DEBUG] Last responses: {[list(r.keys()) if isinstance(r, dict) else r for r in _last_responses]}", file=sys.stderr)
+        print(f"[DEBUG] Last response keys: {[list(r.keys()) if isinstance(r, dict) else r for r in _last_responses]}", file=sys.stderr)
         # Check if any response had access_token.
         for resp in reversed(_last_responses):
             if isinstance(resp, dict) and 'access_token' in resp:
@@ -272,7 +256,13 @@ try:
     )
     print(f"Pickle path: {pickle_path_check}", file=sys.stderr)
     print(f"Pickle exists: {os.path.isfile(pickle_path_check)}", file=sys.stderr)
-    print(f"MFA code provided: {bool(mfa_code)}", file=sys.stderr)
+
+    # Delete empty/corrupt pickle files so robin_stocks doesn't waste time
+    # trying to load them only to fail and fall through.
+    if os.path.isfile(pickle_path_check) and os.path.getsize(pickle_path_check) == 0:
+        os.remove(pickle_path_check)
+        print("Deleted empty pickle file.", file=sys.stderr)
+
     print(f"MFA wait: {mfa_wait}s", file=sys.stderr)
 
     # robin_stocks 3.4.0 uses bare print() in authentication.py for status
@@ -284,10 +274,9 @@ try:
     login_result = rh.login(
         username=username,
         password=password,
-        expiresIn=86400,        # 24 hours
+        expiresIn=2592000,      # 30 days
         scope="internal",
         store_session=True,     # persist the session pickle
-        mfa_code=mfa_code,
         pickle_name=pickle_name,
         # Override the default pickle storage path if configured.
         **({"pickle_path": pickle_dir} if pickle_dir else {}),
