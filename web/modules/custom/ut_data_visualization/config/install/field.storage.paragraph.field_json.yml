@@ -1,4 +1,4 @@
-uuid: 5d0b2479-67af-4a19-b3e4-a96f719e82d8
+uuid: null
 langcode: en
 status: true
 dependencies:
@@ -7,15 +7,12 @@ dependencies:
     - paragraphs
   enforced:
     module:
-      - cove
-_core:
-  default_config_hash: CKbGohFjbbMxHI-smQh9XtZ11rEUHuN38wSi33bUtFo
+      - ut_data_visualization
 id: paragraph.field_json
 field_name: field_json
 entity_type: paragraph
 type: json
-settings:
-  size: 4294967296
+settings: {  }
 module: json_field
 locked: false
 cardinality: 1
@@ -23,3 +20,4 @@ translatable: false
 indexes: {  }
 persist_with_no_fields: false
 custom_storage: false
+

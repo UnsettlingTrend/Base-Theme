@@ -1,4 +1,4 @@
-uuid: c172d488-2ecb-415e-9c0a-8e5bf6e2ed94
+uuid: 45ddae34-a230-4d1c-9dcf-ea68e1d9588c
 langcode: en
 status: true
 dependencies:
@@ -6,12 +6,12 @@ dependencies:
     - field.field.paragraph.data_visualization.field_json
     - paragraphs.paragraphs_type.data_visualization
   module:
-    - ut_data_visualization
+    - cove
   enforced:
     module:
-      - ut_data_visualization
+      - cove
 _core:
-  default_config_hash: lVpKH-wBs-bzJ3425xTLUgP3PsAPuRbAHERHqlUpsXc
+  default_config_hash: Z2bqNwsnDGX1IA_mGfl1u6HzlwB7Ko4aKWVCjuOl4uc
 id: paragraph.data_visualization.default
 targetEntityType: paragraph
 bundle: data_visualization

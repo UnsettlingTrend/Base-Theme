@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_paragraphs
     - node.type.page
-    - paragraphs.paragraphs_type.data_visualization
     - paragraphs.paragraphs_type.media
     - paragraphs.paragraphs_type.text_area
     - paragraphs.paragraphs_type.view
@@ -27,7 +26,6 @@ settings:
     target_bundles:
       text_area: text_area
       media: media
-      data_visualization: data_visualization
       view: view
     negate: 0
     target_bundles_drag_drop:

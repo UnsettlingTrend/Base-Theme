@@ -1,4 +1,4 @@
-uuid: 9b813d47-45bc-4501-8011-56d934c1b1c8
+uuid: null
 langcode: en
 status: true
 dependencies:
@@ -9,9 +9,7 @@ dependencies:
     - json_field
   enforced:
     module:
-      - cove
-_core:
-  default_config_hash: DfX7KMvEU5FFAZtUJPiKYA9BOPlMkV7ewhFyMm8hPJ4
+      - ut_data_visualization
 id: paragraph.data_visualization.field_json
 field_name: field_json
 entity_type: paragraph
@@ -24,3 +22,4 @@ default_value: {  }
 default_value_callback: ''
 settings: {  }
 field_type: json
+
