@@ -967,7 +967,6 @@ display:
               symbol:
                 plugin_id: default
                 advanced:
-                  sort_options_unsupported: ''
                   placeholder_text: ''
                   collapsible: false
                   collapsible_disable_automatic_open: false
@@ -978,7 +977,6 @@ display:
               account_name:
                 plugin_id: default
                 advanced:
-                  sort_options_unsupported: ''
                   placeholder_text: ''
                   collapsible: false
                   collapsible_disable_automatic_open: false

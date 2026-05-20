@@ -200,7 +200,6 @@ display:
               search_api_fulltext:
                 plugin_id: default
                 advanced:
-                  sort_options_unsupported: ''
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
@@ -214,7 +213,6 @@ display:
               facets_field_tags:
                 plugin_id: bef_links
                 advanced:
-                  sort_options_unsupported: ''
                   rewrite:
                     filter_rewrite_values: ''
                     filter_rewrite_values_key: false
@@ -228,10 +226,11 @@ display:
                 soft_limit: 10
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               facets_field_ingredient:
                 plugin_id: bef_links
                 advanced:
-                  sort_options_unsupported: ''
                   rewrite:
                     filter_rewrite_values: ''
                     filter_rewrite_values_key: false
@@ -245,6 +244,8 @@ display:
                 soft_limit: 15
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
       filters:
         type:
           id: type
