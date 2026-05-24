@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Upsun settings.
+ * Platform.sh settings.
  */
 
 $config['system.logging']['error_level']='verbose';
@@ -25,9 +25,11 @@ if ($platformsh->hasRelationship('database')) {
 }
 
 // Enable verbose error messages on development branches, but not on the production branch.
+// You may add more debug-centric settings here if desired to have them automatically enable
+// on development but not production.
 if (isset($platformsh->branch)) {
   // Production type environment.
-  if ($platformsh->branch == 'master' || $platformsh->branch == 'main' || $platformsh->onDedicated()) {
+  if ($platformsh->branch == 'master' || $platformsh->onDedicated()) {
     $config['system.logging']['error_level'] = 'hide';
   } // Development type environment.
   else {
@@ -45,6 +47,10 @@ if ($platformsh->hasRelationship('redis') && !InstallerKernel::installationAttem
   $settings['redis.connection']['port'] = $redis['port'];
 
   // Apply changes to the container configuration to better leverage Redis.
+  // This includes using Redis for the lock and flood control systems, as well
+  // as the cache tag checksum. Alternatively, copy the contents of that file
+  // to your project-specific services.yml file, modify as appropriate, and
+  // remove this line.
   $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
 
   // Allow the services to work before the Redis module itself is enabled.
@@ -55,6 +61,10 @@ if ($platformsh->hasRelationship('redis') && !InstallerKernel::installationAttem
   $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
 
   // Use redis for container cache.
+  // The container cache is used to load the container definition itself, and
+  // thus any configuration stored in the container itself is not available
+  // yet. These lines force the container cache to use Redis rather than the
+  // default SQL cache.
   $settings['bootstrap_container_definition'] = [
     'parameters' => [],
     'services' => [
@@ -98,7 +108,12 @@ if ($platformsh->inRuntime()) {
   $settings['deployment_identifier'] = $settings['deployment_identifier'] ?? $platformsh->treeId;
 }
 
-// Upsun manages the Host header so all values are guaranteed safe.
+// The 'trusted_hosts_pattern' setting allows an admin to restrict the Host header values
+// that are considered trusted.  If an attacker sends a request with a custom-crafted Host
+// header then it can be an injection vector, depending on how the Host header is used.
+// However, Platform.sh already replaces the Host header with the route that was used to reach
+// Platform.sh, so it is guaranteed to be safe.  The following line explicitly allows all
+// Host headers, as the only possible Host header is already guaranteed safe.
 $settings['trusted_host_patterns'] = ['.*'];
 
 // Import variables prefixed with 'drupalsettings:' into $settings
@@ -107,10 +122,26 @@ foreach ($platformsh->variables() as $name => $value) {
   $parts = explode(':', $name);
   list($prefix, $key) = array_pad($parts, 3, null);
   switch ($prefix) {
+    // Variables that begin with `d8settings` or `drupal` get mapped
+    // to the $settings array verbatim, even if the value is an array.
+    // For example, a variable named d8settings:example-setting' with
+    // value 'foo' becomes $settings['example-setting'] = 'foo';
     case 'drupalsettings':
     case 'drupal':
       $settings[$key] = $value;
       break;
+    // Variables that begin with `d8config` get mapped to the $config
+    // array.  Deeply nested variable names, with colon delimiters,
+    // get mapped to deeply nested array elements. Array values
+    // get added to the end just like a scalar. Variables without
+    // both a config object name and property are skipped.
+    // Example: Variable `d8config:conf_file:prop` with value `foo` becomes
+    // $config['conf_file']['prop'] = 'foo';
+    // Example: Variable `d8config:conf_file:prop:subprop` with value `foo` becomes
+    // $config['conf_file']['prop']['subprop'] = 'foo';
+    // Example: Variable `d8config:conf_file:prop:subprop` with value ['foo' => 'bar'] becomes
+    // $config['conf_file']['prop']['subprop']['foo'] = 'bar';
+    // Example: Variable `d8config:prop` is ignored.
     case 'drupalconfig':
       if (count($parts) > 2) {
         $temp = &$config[$key];
@@ -126,6 +157,7 @@ foreach ($platformsh->variables() as $name => $value) {
 
 // Configure solr search
 $platformsh->registerFormatter('drupal-solr', function($solr) {
+  // Default the solr core name to `collection1` for pre-Solr-6.x instances.
   return [
     'core' => substr($solr['path'], 5) ? : 'collection1',
     'path' => '',
@@ -134,14 +166,19 @@ $platformsh->registerFormatter('drupal-solr', function($solr) {
   ];
 });
 
+// Update these values to the relationship name (from .platform.app.yaml)
+// and the machine name of the server from your Drupal configuration.
 $relationship_name = 'search';
 $solr_server_name = 'solr';
 if ($platformsh->hasRelationship($relationship_name)) {
+  // Set the connector configuration to the appropriate value, as defined by the formatter above.
   $config['search_api.server.' . $solr_server_name]['backend_config']['connector_config'] = $platformsh->formattedCredentials($relationship_name, 'drupal-solr');
 }
 
 $settings["config_sync_directory"] = '../config/sync/default';
 $settings['file_private_path'] = '../private';
+// Config split settings.
+//$config['config_split.config_split.config_platformsh']['status'] = TRUE;
 
 // Make sure all configs are disabled....
 $config['config_split.config_split.local']['status'] = FALSE;
@@ -149,7 +186,7 @@ $config['config_split.config_split.non_production']['status'] = FALSE;
 $config['config_split.config_split.production']['status'] = FALSE;
 // ... then turn on the ones needed for the environment.
 if (isset($platformsh->branch)) {
-  // If this is an Upsun environment, set according to branch/environment
+  // If this is a Platform.sh environment, set according to branch/environment
   switch ($platformsh->branch) {
     case 'main':
       $config['config_split.config_split.production']['status'] = TRUE;
@@ -169,31 +206,36 @@ else {
   $config['config_split.config_split.local']['status'] = TRUE;
 }
 // Add non_production configuration directory if needed.
-if (getenv('UPSUN_ENVIRONMENT_TYPE') !== 'production') {
+if (getenv('PLATFORM_ENVIRONMENT_TYPE') !== 'production') {
   $config['config_split.config_split.non_production']['status'] = TRUE;
 }
 
+//$config['smtp.settings']['smtp_host'] = getenv('PLATFORM_SMTP_HOST');
 $config['swiftmailer.transport'] = [
   'transport' => 'sendmail',
-  'smtp_host' => getenv('UPSUN_SMTP_HOST'),
+  'smtp_host' => getenv('PLATFORM_SMTP_HOST'),
+  //'smtp_port' => '1025',
+  //'smtp_encryption' => '0',
+  //'smtp_credential_provider' => 'swiftmailer'
 ];
 $settings['hash_salt'] = 'SXGNp9wMkgups2dhCJikKb_56ND4Q05Rz3O6D_oDxwEcpBISgDeYYWW_9Wm2e36wCeDADtSd2';
 
-// Add settings from variables stored in Upsun console (check existence first)
-$upsun_variables = json_decode(base64_decode(getenv("UPSUN_VARIABLES")), TRUE);
+// Add settings from variables stored in Platforms UI (make sure to check if they exist first...)
+$platform_variables = json_decode(base64_decode(getenv("PLATFORM_VARIABLES")), TRUE);
 // Creds for Google reCAPTCHA
-$config['recaptcha.settings']['site_key'] = !empty($upsun_variables['CREDS_RECAPTCHA_SITE_KEY']) ? $upsun_variables['CREDS_RECAPTCHA_SITE_KEY'] : '<environment-variable>';
-$config['recaptcha.settings']['secret_key'] = !empty($upsun_variables['CREDS_RECAPTCHA_API_KEY']) ? $upsun_variables['CREDS_RECAPTCHA_API_KEY'] : '<environment-variable>';
+$config['recaptcha.settings']['site_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SITE_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SITE_KEY'] : '<environment-varible>';
+$config['recaptcha.settings']['secret_key'] = !empty($platform_variables['CREDS_RECAPTCHA_API_KEY']) ? $platform_variables['CREDS_RECAPTCHA_API_KEY'] : '<environment-varible>';
 // Creds for Google Maps API
-$config['geolocation_google_maps.settings']['google_map_api_key'] = !empty($upsun_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY']) ? $upsun_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY'] : '<environment-variable>';
-$config['geolocation_google_maps.settings']['google_map_api_server_key'] = !empty($upsun_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY']) ? $upsun_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY'] : '<environment-variable>';
+$config['geolocation_google_maps.settings']['google_map_api_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY'] : '<environment-varible>';
+$config['geolocation_google_maps.settings']['google_map_api_server_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY'] : '<environment-varible>';
 // Creds for Google Authenticator API
-$config['social_auth_google.settings']['client_id'] = !empty($upsun_variables['CREDS_OAUTH_CLIENT_ID']) ? $upsun_variables['CREDS_OAUTH_CLIENT_ID'] : '<environment-variable>';
-$config['social_auth_google.settings']['client_secret'] = !empty($upsun_variables['CREDS_OAUTH_CLIENT_SECRET']) ? $upsun_variables['CREDS_OAUTH_CLIENT_SECRET'] : '<environment-variable>';
+$config['social_auth_google.settings']['client_id'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_ID']) ? $platform_variables['CREDS_OAUTH_CLIENT_ID'] : '<environment-varible>';
+$config['social_auth_google.settings']['client_secret'] = !empty($platform_variables['CREDS_OAUTH_CLIENT_SECRET']) ? $platform_variables['CREDS_OAUTH_CLIENT_SECRET'] : '<environment-varible>';
 
 // Authentication for Robinhood
-$settings['ut_robinhood_username']   = !empty($upsun_variables['CREDS_ROBINHOOD_USERNAME']) ? $upsun_variables['CREDS_ROBINHOOD_USERNAME'] : '<environment-variable>';
-$settings['ut_robinhood_password']   = !empty($upsun_variables['CREDS_ROBINHOOD_PASSWORD']) ? $upsun_variables['CREDS_ROBINHOOD_PASSWORD'] : '<environment-variable>';
-$settings['ut_robinhood_account_ids']   = !empty($upsun_variables['CREDS_ROBINHOOD_ACCOUNT_IDS']) ? $upsun_variables['CREDS_ROBINHOOD_ACCOUNT_IDS'] : '<environment-variable>';
+// UT Robinhood module credentials.
+$settings['ut_robinhood_username']   = !empty($platform_variables['CREDS_ROBINHOOD_USERNAME']) ? $platform_variables['CREDS_ROBINHOOD_USERNAME'] : '<environment-varible>';
+$settings['ut_robinhood_password']   = !empty($platform_variables['CREDS_ROBINHOOD_PASSWORD']) ? $platform_variables['CREDS_ROBINHOOD_PASSWORD'] : '<environment-varible>';
+$settings['ut_robinhood_account_ids']   = !empty($platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS']) ? $platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS'] : '<environment-varible>';
 $settings['ut_robinhood_python_bin'] = '/usr/bin/python3';
 $settings['ut_robinhood_pickle_dir'] = '/app/private/ut_robinhood';

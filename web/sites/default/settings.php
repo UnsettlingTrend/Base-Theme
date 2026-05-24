@@ -807,7 +807,7 @@ $settings['config_sync_directory'] = '../config/sync/default';
 $settings['trusted_host_patterns'] = [
   '^chrisferagotti\.com$',
   '^www\.chrisferagotti\.com$',
-  '^.*\.upsun\.app$',
+  '^.*\.us\.platformsh\.site$'
 ];
 
 // Configure file  directories.
@@ -819,8 +819,8 @@ $settings['php_storage']['default']['directory'] = '../storage/php';
 $settings['php_storage']['twig']['directory'] = '../storage/php';
 
 
-if (file_exists($app_root . '/' . $site_path . '/settings.upsun.php')) {
-  include $app_root . '/' . $site_path . '/settings.upsun.php';
+if (file_exists($app_root . '/' . $site_path . '/settings.platformsh.php')) {
+  include $app_root . '/' . $site_path . '/settings.platformsh.php';
 }
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
