@@ -1,0 +1,170 @@
+applications:
+  cf:
+    type: 'php:8.3'
+
+    variables:
+      env:
+        NVM_VERSION: v0.40.4
+        NODE_VERSION: v22.22.2
+
+    dependencies:
+      php:
+        composer/composer: '^2.1'
+      python3:
+        pip: '*'
+
+    mounts:
+      '/web/sites/default/files':
+        source: storage
+        source_path: 'files'
+      '/tmp':
+        source: storage
+        source_path: 'tmp'
+      '/private':
+        source: storage
+        source_path: 'private'
+      '/storage':
+        source: storage
+        source_path: 'storage'
+      '/.drush':
+        source: storage
+        source_path: 'drush'
+      '/drush-backups':
+        source: storage
+        source_path: 'drush-backups'
+      '/.console':
+        source: storage
+        source_path: 'console'
+
+    disk: 512
+
+    build:
+      flavor: composer
+
+    hooks:
+      build: |
+        set -e
+        unset NPM_CONFIG_PREFIX
+
+        export NVM_DIR="${UPSUN_APP_DIR}/.nvm"
+        NVM_INSTALL_FILE="/tmp/nvm_${NVM_VERSION}_install.sh"
+        NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh"
+
+        # Install nvm in app dir (no cache/symlink logic).
+        if [ ! -s "${NVM_DIR}/nvm.sh" ]; then
+          if command -v curl >/dev/null 2>&1; then
+            curl -fsSL "${NVM_URL}" -o "${NVM_INSTALL_FILE}"
+          else
+            wget -q -O "${NVM_INSTALL_FILE}" "${NVM_URL}"
+          fi
+          bash "${NVM_INSTALL_FILE}"
+        fi
+
+        # nvm.sh is not consistently nounset-safe under /bin/dash with set -u.
+        # Run nvm activation and version selection in bash with -e only.
+        bash -ec '
+          . "${NVM_DIR}/nvm.sh"
+          nvm install "${NODE_VERSION}"
+          nvm use "${NODE_VERSION}"
+        '
+
+        # Install the robin_stocks library and pyotp for TOTP-based MFA.
+        pip install robin_stocks pyotp
+
+        build_theme() {
+          theme_dir="$1"
+          echo "Compiling assets in ${theme_dir}..."
+          (
+            cd "${theme_dir}"
+            if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+            else
+            npm install --no-audit --no-fund
+            fi
+            npm run build --if-present
+          )
+        }
+
+        echo "Preparing theme files."
+        echo "Compiling material_base..."
+        build_theme "${UPSUN_APP_DIR}/web/themes/contrib/material_base"
+        echo "Compiling ut_material..."
+        build_theme "${UPSUN_APP_DIR}/web/themes/custom/ut_material"
+
+        # Clean up node_modules from both themes after all builds are done
+        echo "Cleaning up node_modules..."
+        rm -rf "${UPSUN_APP_DIR}/web/themes/contrib/material_base/node_modules"
+        rm -rf "${UPSUN_APP_DIR}/web/themes/custom/ut_material/node_modules"
+
+        echo "Finished compiling all theme assets."
+
+      deploy: |
+        set -e
+        cd web
+        ../vendor/bin/drush -y cache-rebuild
+        ../vendor/bin/drush -y deploy
+
+    relationships:
+      database: 'db:production'
+      search: 'search:solr'
+
+    web:
+      locations:
+        '/':
+          root: "web"
+          passthru: "/index.php"
+
+    crons:
+      drupal:
+        spec: '*/19 * * * *'
+        commands:
+          start: 'cd /app ; vendor/bin/drush core-cron'
+
+services:
+  db:
+    type: mariadb:11.2
+    disk: 2048
+    configuration:
+      schemas:
+        - production
+        - develop
+      endpoints:
+        production:
+          default_schema: production
+          privileges:
+            production: admin
+        develop:
+          default_schema: develop
+          privileges:
+            develop: admin
+
+  search:
+    type: solr:9.4
+    disk: 256
+    configuration:
+      cores:
+        collection1:
+          conf_dir: !archive "solr-conf"
+      endpoints:
+        solr:
+          core: collection1
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "cf:http"
+    cache:
+      enabled: true
+      cookies: ['/^SS?ESS/', '/^Drupal.visitor/']
+
+  "https://www.{default}/":
+    type: redirect
+    to: "https://{default}/"
+
+  "http://{default}/":
+    type: redirect
+    to: "https://{default}/"
+
+  "http://www.{default}/":
+    type: redirect
+    to: "https://{default}/"
