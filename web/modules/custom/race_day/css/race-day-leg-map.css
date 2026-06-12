@@ -1,0 +1,45 @@
+.race-leg-map {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.race-leg-map__canvas {
+  height: 500px;
+  width: 100%;
+}
+
+.race-leg-map__no-routes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.race-leg-map__legend {
+  padding: 8px 12px;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.85em;
+}
+
+.race-leg-map__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.race-leg-map__legend-swatch {
+  display: inline-block;
+  width: 24px;
+  height: 4px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}

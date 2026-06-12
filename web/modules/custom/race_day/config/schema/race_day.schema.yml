@@ -1,0 +1,14 @@
+race_day.settings:
+  type: config_object
+  label: 'Race Day settings'
+  mapping:
+    location_update_interval:
+      type: integer
+      label: 'Location update interval in seconds'
+    map_provider:
+      type: string
+      label: 'Map tile provider URL'
+    allow_public_registration:
+      type: boolean
+      label: 'Allow public team registration'
+

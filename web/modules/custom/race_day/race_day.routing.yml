@@ -1,0 +1,169 @@
+# --------------------------------------------------------------------------
+# Top-level admin page
+# --------------------------------------------------------------------------
+
+race_day.admin:
+  path: '/admin/race-day'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Races'
+  requirements:
+    _permission: 'view race_day content'
+
+# --------------------------------------------------------------------------
+# Race entity routes
+# --------------------------------------------------------------------------
+
+# Race collection is provided by views.view.race_admin (page_1 display).
+
+entity.race.canonical:
+  path: '/race/{race}'
+  defaults:
+    _entity_view: 'race'
+    _title_callback: '\Drupal\race_day\Controller\RaceController::raceTitle'
+  requirements:
+    _entity_access: 'race.view'
+    race: \d+
+
+entity.race.add_form:
+  path: '/admin/race-day/races/add'
+  defaults:
+    _entity_form: 'race.add'
+    _title: 'Add Race'
+  requirements:
+    _permission: 'manage race_day races'
+
+entity.race.edit_form:
+  path: '/admin/race-day/races/{race}/edit'
+  defaults:
+    _entity_form: 'race.edit'
+    _title: 'Edit Race'
+  requirements:
+    _entity_access: 'race.update'
+    race: \d+
+
+entity.race.delete_form:
+  path: '/admin/race-day/races/{race}/delete'
+  defaults:
+    _entity_form: 'race.delete'
+    _title: 'Delete Race'
+  requirements:
+    _entity_access: 'race.delete'
+    race: \d+
+
+# Per-entity settings route for Field UI (Manage fields / Manage display).
+race_day.race_settings:
+  path: '/admin/race-day/races/settings'
+  defaults:
+    _form: '\Drupal\race_day\Form\SettingsForm'
+    _title: 'Race Settings'
+  requirements:
+    _permission: 'administer race_day'
+
+# --------------------------------------------------------------------------
+# Race Leg entity routes
+# --------------------------------------------------------------------------
+
+# Race Leg collection is provided by views.view.race_legs_admin (page_1 display).
+
+entity.race_leg.add_form:
+  path: '/admin/race-day/legs/add'
+  defaults:
+    _entity_form: 'race_leg.add'
+    _title: 'Add Leg'
+  requirements:
+    _permission: 'manage race_day races'
+
+entity.race_leg.edit_form:
+  path: '/admin/race-day/legs/{race_leg}/edit'
+  defaults:
+    _entity_form: 'race_leg.edit'
+    _title: 'Edit Leg'
+  requirements:
+    _entity_access: 'race_leg.update'
+    race_leg: \d+
+
+entity.race_leg.delete_form:
+  path: '/admin/race-day/legs/{race_leg}/delete'
+  defaults:
+    _entity_form: 'race_leg.delete'
+    _title: 'Delete Leg'
+  requirements:
+    _entity_access: 'race_leg.delete'
+    race_leg: \d+
+
+# Per-entity settings route for Field UI.
+race_day.race_leg_settings:
+  path: '/admin/race-day/legs/settings'
+  defaults:
+    _form: '\Drupal\race_day\Form\SettingsForm'
+    _title: 'Race Leg Settings'
+  requirements:
+    _permission: 'administer race_day'
+
+# --------------------------------------------------------------------------
+# Race Assignment entity routes
+# --------------------------------------------------------------------------
+
+# Race Assignment collection is provided by views.view.race_assignments_admin (page_1 display).
+
+entity.race_assignment.add_form:
+  path: '/admin/race-day/assignments/add'
+  defaults:
+    _entity_form: 'race_assignment.add'
+    _title: 'Assign Runner'
+  requirements:
+    _permission: 'manage race_day races'
+
+entity.race_assignment.edit_form:
+  path: '/admin/race-day/assignments/{race_assignment}/edit'
+  defaults:
+    _entity_form: 'race_assignment.edit'
+    _title: 'Edit Assignment'
+  requirements:
+    _entity_access: 'race_assignment.update'
+    race_assignment: \d+
+
+entity.race_assignment.delete_form:
+  path: '/admin/race-day/assignments/{race_assignment}/delete'
+  defaults:
+    _entity_form: 'race_assignment.delete'
+    _title: 'Delete Assignment'
+  requirements:
+    _entity_access: 'race_assignment.delete'
+    race_assignment: \d+
+
+# Per-entity settings route for Field UI.
+race_day.race_assignment_settings:
+  path: '/admin/race-day/assignments/settings'
+  defaults:
+    _form: '\Drupal\race_day\Form\SettingsForm'
+    _title: 'Assignment Settings'
+  requirements:
+    _permission: 'administer race_day'
+
+# --------------------------------------------------------------------------
+# Global settings
+# --------------------------------------------------------------------------
+
+race_day.settings:
+  path: '/admin/race-day/settings'
+  defaults:
+    _form: '\Drupal\race_day\Form\SettingsForm'
+    _title: 'Race Day Settings'
+  requirements:
+    _permission: 'administer race_day'
+
+# --------------------------------------------------------------------------
+# Location update API endpoint
+# --------------------------------------------------------------------------
+
+race_day.location_update:
+  path: '/api/race-day/location'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\LocationController::update'
+  requirements:
+    _permission: 'update race_day location'
+  methods: [POST]
+  options:
+    _format: json

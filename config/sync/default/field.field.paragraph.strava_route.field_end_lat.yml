@@ -1,0 +1,28 @@
+uuid: 08cdc5ac-b91f-45b9-a791-0ae3b9be3869
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_end_lat
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: kX1YlfkYdYnXfp-zcLjPCVE24MqHd0dnBnyOOOb_ZcU
+id: paragraph.strava_route.field_end_lat
+field_name: field_end_lat
+entity_type: paragraph
+bundle: strava_route
+label: 'End Latitude'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

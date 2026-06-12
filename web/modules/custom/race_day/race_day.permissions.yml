@@ -1,0 +1,16 @@
+administer race_day:
+  title: 'Administer Race Day'
+  description: 'Create, edit, and delete races, legs, and assignments. Full administrative access.'
+  restrict access: true
+
+manage race_day races:
+  title: 'Manage Races'
+  description: 'Create, edit, and delete race entities.'
+
+view race_day content:
+  title: 'View Race Day Content'
+  description: 'View races, legs, and runner assignments.'
+
+update race_day location:
+  title: 'Update Runner Location'
+  description: 'Submit GPS location updates during a race.'

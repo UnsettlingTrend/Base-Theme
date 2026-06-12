@@ -1,0 +1,18 @@
+uuid: null
+langcode: en
+status: true
+dependencies: {}
+id: paragraph.field_start_lat
+field_name: field_start_lat
+entity_type: paragraph
+type: decimal
+settings:
+  precision: 10
+  scale: 7
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {}
+persist_with_no_fields: false
+custom_storage: false

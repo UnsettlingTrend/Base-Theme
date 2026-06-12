@@ -1,0 +1,15 @@
+uuid: 0107b5c4-219d-4061-baf3-2bcd2658fe34
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: Yw_kruFIV9J7AQSWzCCmkfvf3unR-VnMoXNwYBS_6-c
+id: strava_route
+label: Route
+icon_uuid: null
+icon_default: ''
+description: 'Embeds a Strava route map showing the route polyline, distance, and elevation profile.'
+behavior_plugins: {  }

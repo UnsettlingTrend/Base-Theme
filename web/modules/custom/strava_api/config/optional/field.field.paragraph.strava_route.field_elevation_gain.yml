@@ -1,0 +1,26 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_elevation_gain
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+id: paragraph.strava_route.field_elevation_gain
+field_name: field_elevation_gain
+entity_type: paragraph
+bundle: strava_route
+label: 'Elevation Gain'
+description: 'Total elevation gain imported from Strava, in feet.'
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

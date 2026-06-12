@@ -1,0 +1,28 @@
+uuid: e0d8e145-6533-48a9-b3a9-ea8ca4e54217
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_end_lng
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: 6mlCVLw0oe8_RX3ydBnhUP4fAXWlKi-2d1eTjFQjkDU
+id: paragraph.strava_route.field_end_lng
+field_name: field_end_lng
+entity_type: paragraph
+bundle: strava_route
+label: 'End Longitude'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

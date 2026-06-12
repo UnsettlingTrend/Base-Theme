@@ -1,0 +1,14 @@
+name: 'Race Day'
+type: module
+description: 'Relay race management module. Create races with mapped legs, allow team sign-ups, assign runners to legs, and track live runner locations on race day.'
+package: 'Custom'
+core_version_requirement: ^11
+dependencies:
+  - drupal:datetime
+  - drupal:field_ui
+  - group:group
+  - drupal:user
+  - drupal:views
+  - entity_reference_revisions:entity_reference_revisions
+  - paragraphs:paragraphs
+  - strava_api:strava_api

@@ -1,0 +1,17 @@
+race.add:
+  title: 'Add Race'
+  route_name: entity.race.add_form
+  appears_on:
+    - entity.race.collection
+
+race_leg.add:
+  title: 'Add Leg'
+  route_name: entity.race_leg.add_form
+  appears_on:
+    - entity.race_leg.collection
+
+race_assignment.add:
+  title: 'Assign Runner'
+  route_name: entity.race_assignment.add_form
+  appears_on:
+    - entity.race_assignment.collection

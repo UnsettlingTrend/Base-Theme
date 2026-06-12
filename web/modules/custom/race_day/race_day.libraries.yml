@@ -1,0 +1,11 @@
+race_leg_map:
+  version: VERSION
+  css:
+    component:
+      css/race-day-leg-map.css: {}
+  js:
+    js/race-day-leg-map.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - leaflet/leaflet

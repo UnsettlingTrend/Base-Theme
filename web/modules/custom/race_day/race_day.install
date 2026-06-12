@@ -1,0 +1,237 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Race Day module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Additional non-entity tables. Entity tables (race, race_leg, race_assignment)
+ * are auto-created by the entity API from baseFieldDefinitions.
+ */
+function race_day_schema(): array {
+  $schema['race_day_location_log'] = [
+    'description' => 'Stores a historical log of runner GPS pings for replay and analysis.',
+    'fields' => [
+      'lid' => [
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'assignment_id' => [
+        'description' => 'The race_assignment entity ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'lat' => [
+        'description' => 'Latitude.',
+        'type' => 'numeric',
+        'precision' => 10,
+        'scale' => 7,
+        'not null' => TRUE,
+      ],
+      'lng' => [
+        'description' => 'Longitude.',
+        'type' => 'numeric',
+        'precision' => 10,
+        'scale' => 7,
+        'not null' => TRUE,
+      ],
+      'speed' => [
+        'description' => 'Speed in mph.',
+        'type' => 'numeric',
+        'precision' => 6,
+        'scale' => 2,
+        'not null' => FALSE,
+      ],
+      'recorded' => [
+        'description' => 'Unix timestamp of this GPS ping.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['lid'],
+    'indexes' => [
+      'assignment' => ['assignment_id'],
+      'recorded' => ['recorded'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function race_day_uninstall(): void {
+  \Drupal::state()->deleteMultiple([
+    'race_day.last_cleanup',
+  ]);
+}
+
+/**
+ * Add the 'route' paragraph reference field to the race_leg entity.
+ */
+function race_day_update_10001(): void {
+  $field_definition = \Drupal\Core\Field\BaseFieldDefinition::create('entity_reference_revisions')
+    ->setLabel(t('Route'))
+    ->setDescription(t('An embedded Strava route map for this leg.'))
+    ->setSetting('target_type', 'paragraph')
+    ->setSetting('handler', 'default:paragraph')
+    ->setSetting('handler_settings', [
+      'target_bundles' => [
+        'strava_route' => 'strava_route',
+      ],
+      'negate' => 0,
+    ])
+    ->setCardinality(1)
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'entity_reference_revisions_entity_view',
+      'weight' => -4,
+      'settings' => [
+        'view_mode' => 'default',
+      ],
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'paragraphs',
+      'weight' => -4,
+      'settings' => [
+        'title' => 'Route',
+        'title_plural' => 'Routes',
+        'edit_mode' => 'open',
+        'closed_mode' => 'summary',
+        'autocollapse' => 'none',
+        'closed_mode_threshold' => 0,
+        'add_mode' => 'button',
+        'form_display_mode' => 'default',
+        'default_paragraph_type' => 'strava_route',
+        'features' => [
+          'add_above' => '0',
+          'collapse_edit_all' => 'collapse_edit_all',
+          'duplicate' => 'duplicate',
+        ],
+      ],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('route', 'race_leg', 'race_day', $field_definition);
+}
+
+/**
+ * Provision the Race Team group type for existing installs.
+ */
+function race_day_update_10002(): void {
+  if (!\Drupal::moduleHandler()->moduleExists('group')) {
+    return;
+  }
+
+  $group_type_storage = \Drupal::entityTypeManager()->getStorage('group_type');
+  if (!$group_type_storage->load('race_team')) {
+    $group_type_storage->create([
+      'id' => 'race_team',
+      'label' => 'Race Team',
+      'description' => 'A relay team represented as a Group entity.',
+      'new_revision' => TRUE,
+      'creator_membership' => TRUE,
+      'creator_wizard' => TRUE,
+      'creator_roles' => ['race_team-admin'],
+    ])->save();
+  }
+
+  \Drupal::state()->set('race_day.keep_race_team_group_type', TRUE);
+}
+
+/**
+ * Add Strava polyline storage fields to race legs.
+ */
+function race_day_update_10003(): void {
+  $existing = \Drupal::service('entity_field.manager')->getFieldStorageDefinitions('race_leg');
+
+  $polyline_field = \Drupal\Core\Field\BaseFieldDefinition::create('string_long')
+    ->setLabel(t('Strava Polyline'))
+    ->setDescription(t('Full encoded polyline from the saved Strava route map payload.'))
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => -5,
+      'settings' => ['rows' => 3],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  $summary_polyline_field = \Drupal\Core\Field\BaseFieldDefinition::create('string_long')
+    ->setLabel(t('Strava Summary Polyline'))
+    ->setDescription(t('Simplified encoded polyline (summary_polyline) from the saved Strava route map payload.'))
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => -4,
+      'settings' => ['rows' => 3],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  if (!isset($existing['strava_polyline'])) {
+    $update_manager->installFieldStorageDefinition('strava_polyline', 'race_leg', 'race_day', $polyline_field);
+  }
+
+  if (!isset($existing['strava_summary_polyline'])) {
+    $update_manager->installFieldStorageDefinition('strava_summary_polyline', 'race_leg', 'race_day', $summary_polyline_field);
+  }
+}
+
+/**
+ * Remove team integration so it can be rebuilt from scratch.
+ */
+function race_day_update_10004(): void {
+  if (\Drupal::state()->get('race_day.keep_race_team_group_type', FALSE)) {
+    return;
+  }
+
+  $field_manager = \Drupal::service('entity_field.manager');
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $assignment_fields = $field_manager->getFieldStorageDefinitions('race_assignment');
+  if (isset($assignment_fields['team_id'])) {
+    $update_manager->uninstallFieldStorageDefinition($assignment_fields['team_id']);
+  }
+
+  if (!\Drupal::moduleHandler()->moduleExists('group')) {
+    return;
+  }
+
+  $group_storage = \Drupal::entityTypeManager()->getStorage('group');
+  $group_ids = $group_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('type', 'race_team')
+    ->execute();
+  if (!empty($group_ids)) {
+    $groups = $group_storage->loadMultiple($group_ids);
+    $group_storage->delete($groups);
+  }
+
+  $field = \Drupal\field\Entity\FieldConfig::loadByName('group', 'race_team', 'field_race');
+  if ($field) {
+    $field->delete();
+  }
+
+  $field_storage = \Drupal\field\Entity\FieldStorageConfig::loadByName('group', 'field_race');
+  if ($field_storage) {
+    $field_storage->delete();
+  }
+
+  $group_type = \Drupal::entityTypeManager()->getStorage('group_type')->load('race_team');
+  if ($group_type) {
+    $group_type->delete();
+  }
+}
+

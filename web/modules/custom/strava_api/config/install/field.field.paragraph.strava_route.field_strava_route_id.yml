@@ -1,0 +1,22 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_strava_route_id
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+id: paragraph.strava_route.field_strava_route_id
+field_name: field_strava_route_id
+entity_type: paragraph
+bundle: strava_route
+label: 'Strava Route ID'
+description: 'The numeric Strava route ID or full URL (e.g. 123456789 or https://www.strava.com/routes/123456789).'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,5 @@
+_core:
+  default_config_hash: uBE8c73DqsOIK_GD2AOL-7RPRtHVr9BNvJLat0hmibA
+location_update_interval: 10
+map_provider: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+allow_public_registration: false

@@ -1,0 +1,26 @@
+uuid: 06f88159-d127-4653-8faf-0a36f3bb7674
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: Wyie54fEzP0KT4eK4aZwz1hEv7UTD8OSvbzGK9xEMss
+id: paragraph.field_strava_route_id
+field_name: field_strava_route_id
+entity_type: paragraph
+type: string
+settings:
+  max_length: 64
+  is_ascii: true
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

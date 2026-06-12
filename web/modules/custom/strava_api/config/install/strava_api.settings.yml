@@ -1,0 +1,6 @@
+client_id: ''
+client_secret: ''
+access_token: ''
+map_height: '500px'
+map_style: 'outdoor'
+show_elevation: true

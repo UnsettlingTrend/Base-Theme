@@ -1,0 +1,24 @@
+uuid: 2bc156dc-065e-4597-9de3-f694ba612415
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_strava_summary_polyline
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: FQGjzofMWB2TlKANStjlCxQDzs5hcFobcr224cBSLmk
+id: paragraph.strava_route.field_strava_summary_polyline
+field_name: field_strava_summary_polyline
+entity_type: paragraph
+bundle: strava_route
+label: 'Strava Summary Polyline'
+description: 'Simplified encoded polyline (summary_polyline) from the Strava route payload.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

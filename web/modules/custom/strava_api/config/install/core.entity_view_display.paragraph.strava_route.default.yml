@@ -1,0 +1,26 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.strava_route.field_strava_route_id
+    - paragraphs.paragraphs_type.strava_route
+  module:
+    - strava_api
+  enforced:
+    module:
+      - strava_api
+id: paragraph.strava_route.default
+targetEntityType: paragraph
+bundle: strava_route
+mode: default
+content:
+  field_strava_route_id:
+    type: strava_route_map
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

@@ -1,0 +1,228 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * When a strava_route paragraph is saved with a valid route ID and the Strava
+ * data fields are not yet populated (or the route ID has changed), fetch the
+ * route from the Strava API and populate all "Imported from Strava" fields.
+ *
+ * This fires for every save path (inline paragraph in a parent form, or any
+ * future standalone paragraph save). When RaceLegForm::populateFromStravaPayload()
+ * already set the fields in memory, the polyline will be non-empty here and the
+ * hook will exit early without a second API call.
+ */
+function strava_api_entity_presave(EntityInterface $entity): void {
+  if ($entity->getEntityTypeId() !== 'paragraph' || $entity->bundle() !== 'strava_route') {
+    return;
+  }
+
+  $route_id = trim((string) ($entity->get('field_strava_route_id')->value ?? ''));
+  if (!ctype_digit($route_id) || $route_id === '') {
+    return;
+  }
+
+  // Determine whether the cached data is still valid for this route_id.
+  $raw = trim((string) ($entity->get('field_route_data')->value ?? ''));
+  $payload = _strava_api_decode_payload($raw);
+  $cached_id = is_array($payload) ? (string) ($payload['id'] ?? '') : '';
+  $polyline = trim((string) ($entity->get('field_strava_polyline')->value ?? ''));
+
+  // Skip if already up-to-date (e.g. RaceLegForm pre-populated in memory).
+  if ($cached_id === $route_id && $polyline !== '') {
+    return;
+  }
+
+  if (!\Drupal::hasService('strava_api.route_client')) {
+    return;
+  }
+
+  try {
+    $payload = \Drupal::service('strava_api.route_client')->fetchRoute($route_id);
+  }
+  catch (\Throwable $e) {
+    \Drupal::logger('strava_api')->warning('Failed to fetch Strava route @id: @message', [
+      '@id' => $route_id,
+      '@message' => $e->getMessage(),
+    ]);
+    return;
+  }
+
+  if (!is_array($payload)) {
+    return;
+  }
+
+  // Cache the full payload.
+  $encoded = json_encode($payload, JSON_UNESCAPED_SLASHES);
+  if (is_string($encoded)) {
+    $entity->set('field_route_data', $encoded);
+  }
+
+  $map = is_array($payload['map'] ?? NULL) ? $payload['map'] : [];
+  $polyline = (string) ($map['polyline'] ?? '');
+  $summary_polyline = (string) ($map['summary_polyline'] ?? '');
+
+  if ($polyline !== '') {
+    $entity->set('field_strava_polyline', $polyline);
+  }
+  if ($summary_polyline !== '') {
+    $entity->set('field_strava_summary_polyline', $summary_polyline);
+  }
+
+  if (isset($payload['elevation_gain']) && is_numeric($payload['elevation_gain'])) {
+    $feet = (int) round(((float) $payload['elevation_gain']) * 3.28084);
+    $entity->set('field_elevation_gain', max(0, $feet));
+  }
+
+  $start = _strava_api_extract_latlng(
+    $payload['start_latlng']
+    ?? [$payload['start_latitude'] ?? NULL, $payload['start_longitude'] ?? NULL]
+  );
+  $end = _strava_api_extract_latlng(
+    $payload['end_latlng']
+    ?? [$payload['end_latitude'] ?? NULL, $payload['end_longitude'] ?? NULL]
+  );
+
+  // Strava's Routes endpoint omits discrete lat/lng fields; decode the polyline
+  // and use the first and last points instead.
+  if ($start === NULL || $end === NULL) {
+    $points = _strava_api_decode_polyline($polyline !== '' ? $polyline : $summary_polyline);
+    if (count($points) >= 2) {
+      $start ??= $points[0];
+      $end ??= $points[count($points) - 1];
+    }
+  }
+
+  if ($start !== NULL) {
+    $entity->set('field_start_lat', round($start[0], 7));
+    $entity->set('field_start_lng', round($start[1], 7));
+  }
+  if ($end !== NULL) {
+    $entity->set('field_end_lat', round($end[0], 7));
+    $entity->set('field_end_lng', round($end[1], 7));
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ *
+ * When a strava_route paragraph appears inline in any entity form, move the
+ * Strava-imported data fields into a collapsed, disabled "Imported from Strava"
+ * details group so editors can see the values but cannot change them.
+ */
+function strava_api_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  // The subform key is present only when a paragraph widget is in edit mode.
+  if (!isset($element['subform']['field_strava_route_id'])) {
+    return;
+  }
+
+  $strava_fields = [
+    'field_elevation_gain',
+    'field_start_lat',
+    'field_start_lng',
+    'field_end_lat',
+    'field_end_lng',
+    'field_route_data',
+    'field_strava_polyline',
+    'field_strava_summary_polyline',
+  ];
+
+  $subform = &$element['subform'];
+
+  $subform['group_strava_imported'] = [
+    '#type' => 'details',
+    '#title' => t('Imported from Strava'),
+    '#open' => FALSE,
+    '#weight' => 50,
+  ];
+
+  foreach ($strava_fields as $field_name) {
+    if (!isset($subform[$field_name])) {
+      continue;
+    }
+    $subform['group_strava_imported'][$field_name] = _strava_api_disable_element($subform[$field_name]);
+    unset($subform[$field_name]);
+  }
+}
+
+/**
+ * Recursively sets #disabled on a form element and all its children.
+ */
+function _strava_api_disable_element(array $element): array {
+  $element['#disabled'] = TRUE;
+  foreach (Element::children($element) as $key) {
+    $element[$key] = _strava_api_disable_element($element[$key]);
+  }
+  return $element;
+}
+
+/**
+ * Decodes stored route_data JSON, unwrapping nested payloads when present.
+ */
+function _strava_api_decode_payload(string $raw): ?array {
+  if ($raw === '') {
+    return NULL;
+  }
+  $payload = json_decode($raw, TRUE);
+  if (!is_array($payload)) {
+    return NULL;
+  }
+  if (isset($payload['route']) && is_array($payload['route'])) {
+    return $payload['route'];
+  }
+  return $payload;
+}
+
+/**
+ * Returns [lat, lng] when $value is a valid Strava coordinate pair.
+ *
+ * @return array{0: float, 1: float}|null
+ */
+function _strava_api_extract_latlng(mixed $value): ?array {
+  if (!is_array($value) || !isset($value[0], $value[1])) {
+    return NULL;
+  }
+  if (!is_numeric($value[0]) || !is_numeric($value[1])) {
+    return NULL;
+  }
+  return [(float) $value[0], (float) $value[1]];
+}
+
+/**
+ * Decodes a Google-encoded polyline string into an array of [lat, lng] pairs.
+ *
+ * @return array<int, array{0: float, 1: float}>
+ */
+function _strava_api_decode_polyline(string $encoded): array {
+  $points = [];
+  $index = 0;
+  $len = strlen($encoded);
+  $lat = 0;
+  $lng = 0;
+
+  while ($index < $len) {
+    foreach ([&$lat, &$lng] as &$coord) {
+      $result = 0;
+      $shift = 0;
+      do {
+        if ($index >= $len) {
+          return $points;
+        }
+        $b = ord($encoded[$index++]) - 63;
+        $result |= ($b & 0x1F) << $shift;
+        $shift += 5;
+      } while ($b >= 0x20);
+      $coord += ($result & 1) ? ~($result >> 1) : ($result >> 1);
+    }
+    unset($coord);
+    $points[] = [$lat / 1e5, $lng / 1e5];
+  }
+
+  return $points;
+}

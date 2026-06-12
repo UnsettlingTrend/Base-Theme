@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a Race entity.
+ *
+ * Available variables:
+ * - content: All field items.
+ * - race: The Race entity object.
+ * - view_mode: View mode, e.g. 'full', 'teaser'.
+ */
+#}
+<article{{ attributes.addClass('race') }}>
+  {% if content %}
+    {{ content }}
+  {% endif %}
+</article>
+

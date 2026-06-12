@@ -1,0 +1,22 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_route_data
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+id: paragraph.strava_route.field_route_data
+field_name: field_route_data
+entity_type: paragraph
+bundle: strava_route
+label: 'Route Data'
+description: 'Full Strava route API payload (JSON).'
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings: {}
+field_type: string_long

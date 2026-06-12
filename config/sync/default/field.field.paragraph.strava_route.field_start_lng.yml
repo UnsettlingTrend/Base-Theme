@@ -1,0 +1,28 @@
+uuid: c730aa4e-ece9-49e0-b7ad-72c7f2e3ccb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_start_lng
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: NQBDgaKiWod8jnYh_7d2mTFauuf-fccgXeJ8gT5PeZk
+id: paragraph.strava_route.field_start_lng
+field_name: field_start_lng
+entity_type: paragraph
+bundle: strava_route
+label: 'Start Longitude'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

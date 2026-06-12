@@ -1,0 +1,26 @@
+uuid: null
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_start_lat
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+id: paragraph.strava_route.field_start_lat
+field_name: field_start_lat
+entity_type: paragraph
+bundle: strava_route
+label: 'Start Latitude'
+description: ''
+required: false
+translatable: false
+default_value: {}
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

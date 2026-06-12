@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Race Day.
+ */
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+use Drupal\race_day\Entity\Race;
+use Drupal\race_day\Entity\RaceLeg;
+
+/**
+ * Implements hook_theme().
+ */
+function race_day_theme(): array {
+  return [
+    'race' => [
+      'render element' => 'elements',
+      'template' => 'race',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function race_day_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityFormInterface) {
+    return;
+  }
+  $entity = $form_object->getEntity();
+  if (!$entity instanceof Race) {
+    return;
+  }
+  if (isset($form['total_distance']['widget'][0]['value'])) {
+    $form['total_distance']['widget'][0]['value']['#disabled'] = TRUE;
+    $form['total_distance']['widget'][0]['value']['#description'] = t('Automatically calculated from the sum of all race leg distances.');
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for race_leg.
+ */
+function race_day_race_leg_insert(RaceLeg $leg): void {
+  $race_id = $leg->get('race_id')->target_id;
+  if ($race_id) {
+    _race_day_recalculate_total_distance((int) $race_id);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for race_leg.
+ */
+function race_day_race_leg_update(RaceLeg $leg): void {
+  $race_id = $leg->get('race_id')->target_id;
+  if ($race_id) {
+    _race_day_recalculate_total_distance((int) $race_id);
+  }
+  // Recalculate the old race too if the leg was moved to a different race.
+  $original_race_id = $leg->original?->get('race_id')->target_id;
+  if ($original_race_id && $original_race_id !== $race_id) {
+    _race_day_recalculate_total_distance((int) $original_race_id);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for race_leg.
+ */
+function race_day_race_leg_delete(RaceLeg $leg): void {
+  $race_id = $leg->get('race_id')->target_id;
+  if ($race_id) {
+    _race_day_recalculate_total_distance((int) $race_id);
+  }
+}
+
+/**
+ * Sums all race leg distances for the given race and saves the total.
+ */
+function _race_day_recalculate_total_distance(int $race_id): void {
+  $storage = \Drupal::entityTypeManager()->getStorage('race');
+  $race = $storage->load($race_id);
+  if (!$race instanceof Race) {
+    return;
+  }
+
+  $leg_ids = \Drupal::entityQuery('race_leg')
+    ->condition('race_id', $race_id)
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $total = 0.0;
+  if ($leg_ids) {
+    $legs = \Drupal::entityTypeManager()->getStorage('race_leg')->loadMultiple($leg_ids);
+    foreach ($legs as $leg) {
+      $total += (float) ($leg->get('distance')->value ?? 0);
+    }
+  }
+
+  $race->set('total_distance', round($total, 2));
+  $race->save();
+}
+
+/**
+ * Prepares variables for Race templates.
+ */
+function template_preprocess_race(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['race'] = $variables['elements']['#race'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}

@@ -1,0 +1,22 @@
+uuid: 3d6e608b-e739-446a-989d-8e47340bdaec
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+_core:
+  default_config_hash: z9idX-Za8yxKkWZhCKY1vZLK9GQUNihG3EVBTQrNSrI
+id: paragraph.field_start_lng
+field_name: field_start_lng
+entity_type: paragraph
+type: decimal
+settings:
+  precision: 10
+  scale: 7
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

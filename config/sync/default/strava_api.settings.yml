@@ -1,0 +1,8 @@
+_core:
+  default_config_hash: lSCp6I7E1N56J5m2yQcFYmNxrS-hksA2MP4A8iROoGg
+client_id: ''
+client_secret: ''
+access_token: ''
+map_height: 500px
+map_style: outdoor
+show_elevation: true

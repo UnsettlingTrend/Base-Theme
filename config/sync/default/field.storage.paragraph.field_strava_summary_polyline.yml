@@ -1,0 +1,21 @@
+uuid: c84ca001-bdd5-4ced-a648-91b414493e98
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+_core:
+  default_config_hash: kYxnJZIr5HpQ7iOkVEWer7ADVrrrFZPxnH6qEAfnYwk
+id: paragraph.field_strava_summary_polyline
+field_name: field_strava_summary_polyline
+entity_type: paragraph
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

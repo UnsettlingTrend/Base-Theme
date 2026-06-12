@@ -1,0 +1,44 @@
+uuid: c8f0aee2-0cfb-4164-8bbe-7a3c31d9bd33
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.strava_route.field_elevation_gain
+    - field.field.paragraph.strava_route.field_end_lat
+    - field.field.paragraph.strava_route.field_end_lng
+    - field.field.paragraph.strava_route.field_route_data
+    - field.field.paragraph.strava_route.field_start_lat
+    - field.field.paragraph.strava_route.field_start_lng
+    - field.field.paragraph.strava_route.field_strava_polyline
+    - field.field.paragraph.strava_route.field_strava_route_id
+    - field.field.paragraph.strava_route.field_strava_summary_polyline
+    - paragraphs.paragraphs_type.strava_route
+  module:
+    - strava_api
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: nVayL07RRASH4wJdupSgkps36rHb8AvOp7sOjj-5HPo
+id: paragraph.strava_route.default
+targetEntityType: paragraph
+bundle: strava_route
+mode: default
+content:
+  field_strava_route_id:
+    type: strava_route_map
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_elevation_gain: true
+  field_end_lat: true
+  field_end_lng: true
+  field_route_data: true
+  field_start_lat: true
+  field_start_lng: true
+  field_strava_polyline: true
+  field_strava_summary_polyline: true
+  search_api_excerpt: true

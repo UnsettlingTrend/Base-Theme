@@ -1,0 +1,24 @@
+uuid: 9b0dc894-f3db-407d-aba5-22afd118b758
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_strava_polyline
+    - paragraphs.paragraphs_type.strava_route
+  enforced:
+    module:
+      - strava_api
+_core:
+  default_config_hash: GOnJKMdneYtV5WhTUhHViO_MZ-VfSNQ2XGmbO9eZr0Q
+id: paragraph.strava_route.field_strava_polyline
+field_name: field_strava_polyline
+entity_type: paragraph
+bundle: strava_route
+label: 'Strava Polyline'
+description: 'Full encoded polyline from the Strava route payload.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

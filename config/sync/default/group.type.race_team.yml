@@ -1,0 +1,14 @@
+uuid: ed174e4f-8cd3-4016-bb68-3d2eb6c38740
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: n85VyXhVbaC82NotMPAQ-EtW0KMcXhk6VEDRnB4OCfE
+id: race_team
+label: 'Race Team'
+description: 'A relay team for Race Day.'
+new_revision: true
+creator_membership: true
+creator_wizard: true
+creator_roles:
+  - race_team-admin
