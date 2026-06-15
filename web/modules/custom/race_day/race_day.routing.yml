@@ -155,6 +155,26 @@ race_day.settings:
     _permission: 'administer race_day'
 
 # --------------------------------------------------------------------------
+# Race Leg CSV import / export forms
+# --------------------------------------------------------------------------
+
+race_day.legs.export:
+  path: '/admin/race-day/legs/export'
+  defaults:
+    _form: '\Drupal\race_day\Form\RaceLegExportForm'
+    _title: 'Export Race Legs'
+  requirements:
+    _permission: 'manage race_day races'
+
+race_day.legs.import:
+  path: '/admin/race-day/legs/import'
+  defaults:
+    _form: '\Drupal\race_day\Form\RaceLegImportForm'
+    _title: 'Import Race Legs'
+  requirements:
+    _permission: 'manage race_day races'
+
+# --------------------------------------------------------------------------
 # Location update API endpoint
 # --------------------------------------------------------------------------
 

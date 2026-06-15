@@ -22,6 +22,20 @@ race_day.legs:
   weight: 5
 
 
+race_day.legs.export:
+  title: 'Export Legs (CSV)'
+  description: 'Download all race legs as a CSV file.'
+  route_name: race_day.legs.export
+  parent: race_day.legs
+  weight: 10
+
+race_day.legs.import:
+  title: 'Import Legs (CSV)'
+  description: 'Upload a CSV file to create or update race legs.'
+  route_name: race_day.legs.import
+  parent: race_day.legs
+  weight: 11
+
 race_day.assignments:
   title: 'Runner Assignments'
   description: 'View and manage runner-to-leg assignments.'

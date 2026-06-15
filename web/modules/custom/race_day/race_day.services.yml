@@ -1,0 +1,12 @@
+services:
+  race_day.csv_service:
+    class: Drupal\race_day\Service\RaceLegCsvService
+    arguments:
+      - '@entity_type.manager'
+
+  race_day.drush_commands:
+    class: Drupal\race_day\Drush\Commands\RaceDayCommands
+    arguments:
+      - '@race_day.csv_service'
+    tags:
+      - { name: drush.command }

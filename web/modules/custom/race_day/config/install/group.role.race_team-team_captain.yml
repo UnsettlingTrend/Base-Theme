@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+_core:
+  default_config_hash: Y03BfaqAI00QFOaEOlqEnKoo7iHI0DHFbKKqr6KGHAM
+id: race_team-team_captain
+label: 'Team Captain'
+weight: 0
+admin: false
+scope: individual
+global_role: null
+group_type: race_team
+permissions: {  }

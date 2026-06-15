@@ -1,9 +1,9 @@
-uuid: ed174e4f-8cd3-4016-bb68-3d2eb6c38740
+uuid: 8c954103-d921-4a4c-a1c7-bedbc729c1ca
 langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: n85VyXhVbaC82NotMPAQ-EtW0KMcXhk6VEDRnB4OCfE
+  default_config_hash: unHYNhyVhYwgsps5Nb4sTBL81rLJMyNWISdsMCpK9ok
 id: race_team
 label: 'Race Team'
 description: 'A relay team for Race Day.'

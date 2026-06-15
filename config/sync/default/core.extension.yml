@@ -142,6 +142,7 @@ module:
   physical: 0
   private_message: 0
   private_message_notify: 0
+  race_day: 0
   recaptcha: 0
   recipes: 0
   redirect: 0
@@ -168,6 +169,7 @@ module:
   social_api: 0
   social_auth: 0
   social_auth_google: 0
+  strava_api: 0
   svg_image: 0
   svg_image_responsive: 0
   symfony_mailer: 0
@@ -183,7 +185,6 @@ module:
   update: 0
   user: 0
   uswds_templates: 0
-  ut_robinhood: 0
   views_bulk_operations: 0
   views_dependent_filters: 0
   views_ui: 0

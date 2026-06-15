@@ -1,0 +1,69 @@
+uuid: 487bfe79-336c-46bb-9faf-1421a995d96c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.race.field_paragraphs
+    - paragraphs.paragraphs_type.block
+    - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.strava_route
+    - paragraphs.paragraphs_type.text_area
+  module:
+    - entity_reference_revisions
+    - race_day
+_core:
+  default_config_hash: AVuQ1WzPRNuxEMAgbDmjUnx7G53qsVY1fuDJOLDSxPc
+id: race.race.field_paragraphs
+field_name: field_paragraphs
+entity_type: race
+bundle: race
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      block: block
+      media: media
+      strava_route: strava_route
+      text_area: text_area
+    negate: 0
+    target_bundles_drag_drop:
+      block:
+        weight: 12
+        enabled: true
+      from_library:
+        weight: 13
+        enabled: false
+      ingredient:
+        weight: 14
+        enabled: false
+      layout:
+        weight: 15
+        enabled: false
+      media:
+        weight: 16
+        enabled: true
+      record:
+        weight: 17
+        enabled: false
+      section:
+        weight: 18
+        enabled: false
+      strava_route:
+        weight: 19
+        enabled: true
+      text_area:
+        weight: 20
+        enabled: true
+      text_list:
+        weight: 21
+        enabled: false
+      view:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions

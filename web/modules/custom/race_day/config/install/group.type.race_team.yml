@@ -1,8 +1,8 @@
 langcode: en
 status: true
-dependencies:
-  module:
-    - group
+dependencies: {  }
+_core:
+  default_config_hash: n85VyXhVbaC82NotMPAQ-EtW0KMcXhk6VEDRnB4OCfE
 id: race_team
 label: 'Race Team'
 description: 'A relay team for Race Day.'

@@ -5,11 +5,30 @@
  * Primary module hooks for Race Day.
  */
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
+
+/**
+ * Implements hook_entity_access().
+ *
+ * Group 3.x's access handler only checks group-level role permissions and
+ * never consults the Drupal-level "administer group" permission, so even
+ * is_admin users are blocked from viewing groups they're not a member of.
+ * This hook adds that bypass.
+ */
+function race_day_entity_access(EntityInterface $entity, string $operation, AccountInterface $account): AccessResult {
+  if ($entity->getEntityTypeId() === 'group' && $operation === 'view') {
+    return AccessResult::allowedIfHasPermission($account, 'administer group')
+      ->cachePerPermissions();
+  }
+  return AccessResult::neutral();
+}
 
 /**
  * Implements hook_theme().

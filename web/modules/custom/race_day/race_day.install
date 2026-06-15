@@ -191,47 +191,15 @@ function race_day_update_10003(): void {
 
 /**
  * Remove team integration so it can be rebuilt from scratch.
+ *
+ * This hook previously deleted the race_team group type and its associated
+ * field storage. That cleanup is now handled by reinstall-race-modules.sh.
+ * Running it here was unsafe: deleting a group type in Group 3.x can trigger
+ * schema operations that affect all groups, and the state guard was fragile
+ * against DB restores. Kept as a no-op so the schema version advances
+ * correctly on sites that haven't run it yet.
  */
 function race_day_update_10004(): void {
-  if (\Drupal::state()->get('race_day.keep_race_team_group_type', FALSE)) {
-    return;
-  }
-
-  $field_manager = \Drupal::service('entity_field.manager');
-  $update_manager = \Drupal::entityDefinitionUpdateManager();
-
-  $assignment_fields = $field_manager->getFieldStorageDefinitions('race_assignment');
-  if (isset($assignment_fields['team_id'])) {
-    $update_manager->uninstallFieldStorageDefinition($assignment_fields['team_id']);
-  }
-
-  if (!\Drupal::moduleHandler()->moduleExists('group')) {
-    return;
-  }
-
-  $group_storage = \Drupal::entityTypeManager()->getStorage('group');
-  $group_ids = $group_storage->getQuery()
-    ->accessCheck(FALSE)
-    ->condition('type', 'race_team')
-    ->execute();
-  if (!empty($group_ids)) {
-    $groups = $group_storage->loadMultiple($group_ids);
-    $group_storage->delete($groups);
-  }
-
-  $field = \Drupal\field\Entity\FieldConfig::loadByName('group', 'race_team', 'field_race');
-  if ($field) {
-    $field->delete();
-  }
-
-  $field_storage = \Drupal\field\Entity\FieldStorageConfig::loadByName('group', 'field_race');
-  if ($field_storage) {
-    $field_storage->delete();
-  }
-
-  $group_type = \Drupal::entityTypeManager()->getStorage('group_type')->load('race_team');
-  if ($group_type) {
-    $group_type->delete();
-  }
+  // No-op. See docblock above.
 }
 

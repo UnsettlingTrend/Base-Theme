@@ -133,7 +133,18 @@ function strava_api_field_widget_single_element_form_alter(array &$element, Form
     'field_strava_summary_polyline',
   ];
 
+  // Decimal fields that are NULL in the DB render as '' in the number widget.
+  // Drupal's entity constraint validator rejects '' as "not a valid number", so
+  // we attach a validator that converts '' back to NULL before entity validation.
+  $decimal_fields = ['field_elevation_gain', 'field_start_lat', 'field_start_lng', 'field_end_lat', 'field_end_lng'];
+
   $subform = &$element['subform'];
+
+  foreach ($decimal_fields as $field_name) {
+    if (isset($subform[$field_name]['widget'][0]['value'])) {
+      $subform[$field_name]['widget'][0]['value']['#element_validate'][] = '_strava_api_empty_decimal_to_null';
+    }
+  }
 
   $subform['group_strava_imported'] = [
     '#type' => 'details',
@@ -148,6 +159,19 @@ function strava_api_field_widget_single_element_form_alter(array &$element, Form
     }
     $subform['group_strava_imported'][$field_name] = _strava_api_disable_element($subform[$field_name]);
     unset($subform[$field_name]);
+  }
+}
+
+/**
+ * Element validator: converts an empty string to NULL for decimal inputs.
+ *
+ * Disabled number widgets submit '' when the stored value is NULL. Drupal's
+ * entity constraint validator rejects '' on decimal fields, so we normalise
+ * it back to NULL here, before entity validation runs.
+ */
+function _strava_api_empty_decimal_to_null(array &$element, FormStateInterface $form_state, array &$complete_form): void {
+  if ($element['#value'] === '') {
+    $form_state->setValueForElement($element, NULL);
   }
 }
 

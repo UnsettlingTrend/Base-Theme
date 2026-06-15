@@ -76,6 +76,39 @@ drush cr
 
 ---
 
+## Drush Commands
+
+### Export race legs to CSV
+
+```bash
+# Export all legs to web/exports/race_legs.csv (default)
+lando drush race-day:legs:export
+
+# Export only legs for a specific race
+lando drush race-day:legs:export --race-id=1
+
+# Export to a custom path (must be resolvable inside the Lando container)
+lando drush race-day:legs:export /tmp/my_legs.csv
+```
+
+### Import race legs from CSV
+
+```bash
+# Create new legs and update existing ones (matched on race_id + leg_number)
+lando drush race-day:legs:import /app/web/exports/race_legs.csv
+
+# Also delete any legs not present in the CSV (scoped per race_id in the file)
+lando drush race-day:legs:import /app/web/exports/race_legs.csv --delete-missing
+```
+
+**CSV columns:** `race_id`, `leg_number`, `label`, `distance`, `difficulty`, `description`, `strava_route_id`
+
+The `strava_route` paragraph for each leg is managed automatically — the Strava route ID is read on export and created/updated on import.
+
+> **Note:** File paths passed to `legs:import` must be accessible inside the Lando container. The Drupal root inside Lando is `/app/web`, so `web/exports/race_legs.csv` on the host becomes `/app/web/exports/race_legs.csv` in the container.
+
+---
+
 ## Settings
 
 **Admin → Configuration → Content authoring → Race Day Settings**

@@ -1,0 +1,136 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.race.race.field_paragraphs
+  module:
+    - layout_builder
+    - race_day
+third_party_settings:
+  layout_builder:
+    enabled: true
+    allow_custom: false
+    sections:
+      -
+        layout_id: layout_twocol_section
+        layout_settings:
+          label: ''
+          context_mapping: {  }
+          column_widths: 67-33
+        components:
+          3525051c-cb89-4709-ac9c-e3233ad6350b:
+            uuid: 3525051c-cb89-4709-ac9c-e3233ad6350b
+            region: first
+            configuration:
+              id: 'field_block:race:race:field_paragraphs'
+              label: Paragraphs
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
+          285f6c55-156f-4162-8bbd-7cd7e3adae49:
+            uuid: 285f6c55-156f-4162-8bbd-7cd7e3adae49
+            region: second
+            configuration:
+              id: 'field_block:race:race:race_date'
+              label: 'Race Date'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: datetime_default
+                label: hidden
+                settings:
+                  timezone_override: ''
+                  format_type: article_date
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
+          dd0c279a-defb-4e39-b38d-eddd2491581a:
+            uuid: dd0c279a-defb-4e39-b38d-eddd2491581a
+            region: second
+            configuration:
+              id: 'field_block:race:race:total_distance'
+              label: 'Total Distance'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: number_decimal
+                label: hidden
+                settings:
+                  thousand_separator: ''
+                  decimal_separator: .
+                  scale: 2
+                  prefix_suffix: true
+                third_party_settings: {  }
+            weight: 1
+            additional: {  }
+          c95cf7e9-8d92-46f5-a908-3eb39b09a3a7:
+            uuid: c95cf7e9-8d92-46f5-a908-3eb39b09a3a7
+            region: second
+            configuration:
+              id: 'field_block:race:race:status'
+              label: 'Race Status'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: list_default
+                label: hidden
+                settings: {  }
+                third_party_settings: {  }
+            weight: 2
+            additional: {  }
+          3e51e5ec-25aa-47f0-b991-dbd40f62d694:
+            uuid: 3e51e5ec-25aa-47f0-b991-dbd40f62d694
+            region: first
+            configuration:
+              id: 'field_block:race:race:description'
+              label: Description
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: text_default
+                label: hidden
+                settings: {  }
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
+        third_party_settings: {  }
+id: race.race.default
+targetEntityType: race
+bundle: race
+mode: default
+content: {  }
+hidden:
+  changed: true
+  created: true
+  description: true
+  field_paragraphs: true
+  map_data: true
+  max_teams: true
+  name: true
+  race_date: true
+  search_api_excerpt: true
+  status: true
+  total_distance: true
+  uid: true
