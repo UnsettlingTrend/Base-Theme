@@ -8,6 +8,14 @@ block.settings.entity_view:*:
       type: string
       label: 'View mode'
 
+views.style.race_leg_map:
+  type: views_style
+  label: 'Race Leg Map style options'
+  mapping:
+    hide_leg_legend:
+      type: boolean
+      label: 'Hide leg legend'
+
 race_day.settings:
   type: config_object
   label: 'Race Day settings'
