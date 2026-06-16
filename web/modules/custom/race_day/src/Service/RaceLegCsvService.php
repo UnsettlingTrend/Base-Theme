@@ -106,7 +106,7 @@ class RaceLegCsvService {
    *   Summary stats plus human-readable error messages.
    */
   public function import(string $csv, bool $delete_missing = FALSE): array {
-    $stats = ['created' => 0, 'updated' => 0, 'skipped' => 0, 'errors' => 0, 'messages' => []];
+    $stats = ['created' => 0, 'updated' => 0, 'skipped' => 0, 'errors' => 0, 'messages' => [], 'info' => []];
 
     $fh = fopen('php://temp', 'r+');
     fwrite($fh, $csv);
@@ -208,7 +208,7 @@ class RaceLegCsvService {
     if ($delete_missing && !empty($seen)) {
       $deleted = $this->deleteMissing($leg_storage, $para_storage, $seen);
       if ($deleted > 0) {
-        $stats['messages'][] = "Deleted $deleted leg(s) not present in CSV.";
+        $stats['info'][] = "Deleted $deleted leg(s) not present in CSV.";
       }
     }
 

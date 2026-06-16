@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RaceLegExportForm extends FormBase {
 
   public function __construct(
-    protected readonly RaceLegCsvService $csvService,
+    protected RaceLegCsvService $csvService,
   ) {}
 
   public static function create(ContainerInterface $container): static {

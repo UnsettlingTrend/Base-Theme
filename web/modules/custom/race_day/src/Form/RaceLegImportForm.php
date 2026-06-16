@@ -16,8 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RaceLegImportForm extends FormBase {
 
   public function __construct(
-    protected readonly RaceLegCsvService $csvService,
-    protected readonly FileSystemInterface $fileSystem,
+    protected RaceLegCsvService $csvService,
+    protected FileSystemInterface $fileSystem,
   ) {}
 
   public static function create(ContainerInterface $container): static {
@@ -102,12 +102,10 @@ class RaceLegImportForm extends FormBase {
     ));
 
     foreach ($stats['messages'] as $msg) {
-      if ($stats['errors'] > 0) {
-        $this->messenger()->addWarning($msg);
-      }
-      else {
-        $this->messenger()->addStatus($msg);
-      }
+      $this->messenger()->addWarning($msg);
+    }
+    foreach ($stats['info'] as $msg) {
+      $this->messenger()->addStatus($msg);
     }
   }
 
