@@ -106,6 +106,21 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
     return;
   }
   $entity = $form_object->getEntity();
+
+  // Adjustments for the race_team group add form.
+  if ($entity->getEntityTypeId() === 'group' && $entity->bundle() === 'race_team' && $entity->isNew()) {
+    // Pre-populate field_race when arriving via the "Register a Team" button.
+    $race_id = \Drupal::request()->query->get('race_id');
+    if ($race_id && isset($form['field_race'])) {
+      $form['field_race']['widget'][0]['target_id']['#default_value'] =
+        \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+    }
+
+    // Users don't need to manage revisions or URL aliases when registering.
+    $form['revision_information']['#access'] = FALSE;
+    $form['path']['#access'] = FALSE;
+  }
+
   if (!$entity instanceof Race) {
     return;
   }
@@ -185,5 +200,18 @@ function template_preprocess_race(array &$variables): void {
   $variables['race'] = $variables['elements']['#race'];
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  $variables['register_team_url'] = NULL;
+  if ($variables['view_mode'] === 'full' && $variables['race']->get('status')->value === 'registration_open') {
+    $group_type_storage = \Drupal::entityTypeManager()->getStorage('group_type');
+    if ($group_type_storage->load('race_team')) {
+      $add_url = \Drupal\Core\Url::fromRoute('entity.group.add_form', ['group_type' => 'race_team'], [
+        'query' => ['race_id' => $variables['race']->id()],
+      ]);
+      if ($add_url->access()) {
+        $variables['register_team_url'] = $add_url;
+      }
+    }
   }
 }

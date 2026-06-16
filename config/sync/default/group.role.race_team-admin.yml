@@ -1,0 +1,14 @@
+uuid: 2bcc14cf-a3eb-44fb-ad36-fdb905c32dff
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+id: race_team-admin
+label: Admin
+weight: 1
+admin: true
+scope: individual
+global_role: null
+group_type: race_team
+permissions: {  }

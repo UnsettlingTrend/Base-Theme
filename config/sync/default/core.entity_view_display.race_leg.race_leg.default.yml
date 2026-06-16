@@ -136,7 +136,7 @@ third_party_settings:
                 view_mode: view_mode
               formatter:
                 type: strava_route_link
-                label: inline
+                label: hidden
                 settings: {  }
                 third_party_settings: {  }
             weight: 8

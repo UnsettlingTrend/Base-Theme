@@ -7,9 +7,18 @@
  * - content: All field items.
  * - race: The Race entity object.
  * - view_mode: View mode, e.g. 'full', 'teaser'.
+ * - register_team_url: Url object for the "Register a Team" button, or null.
  */
 #}
 <article{{ attributes.addClass('race') }}>
+  {% if register_team_url %}
+    <div class="race__register-action">
+      <a href="{{ register_team_url }}" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
+      </a>
+    </div>
+  {% endif %}
   {% if content %}
     {{ content }}
   {% endif %}

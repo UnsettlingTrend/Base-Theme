@@ -1,0 +1,18 @@
+uuid: 3695b394-efc9-42de-ba52-ca929ecdf11b
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+id: group.race_team.label
+field_name: label
+entity_type: group
+bundle: race_team
+label: 'Team Name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
