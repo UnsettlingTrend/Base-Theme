@@ -239,3 +239,9 @@ $settings['ut_robinhood_password']   = !empty($platform_variables['CREDS_ROBINHO
 $settings['ut_robinhood_account_ids']   = !empty($platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS']) ? $platform_variables['CREDS_ROBINHOOD_ACCOUNT_IDS'] : '<environment-varible>';
 $settings['ut_robinhood_python_bin'] = '/usr/bin/python3';
 $settings['ut_robinhood_pickle_dir'] = '/app/private/ut_robinhood';
+
+// Authentication for Strava
+// Strava API module credentials.
+$config['strava_api.settings']['client_id'] = !empty($platform_variables['CREDS_STRAVA_CLIENT_ID']) ? $platform_variables['CREDS_STRAVA_CLIENT_ID'] : '<environment-varible>';
+$config['strava_api.settings']['client_secret'] = !empty($platform_variables['CREDS_STRAVA_CLIENT_SECRET']) ? $platform_variables['CREDS_STRAVA_CLIENT_SECRET'] : '<environment-varible>';
+$config['strava_api.settings']['access_token'] = !empty($platform_variables['CREDS_STRAVA_ACCESS_TOKEN']) ? $platform_variables['CREDS_STRAVA_ACCESS_TOKEN'] : '<environment-varible>';
