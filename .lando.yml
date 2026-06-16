@@ -77,6 +77,10 @@ services:
     config:
       dir: .platform/solr-conf
 
+events:
+  post-start:
+    - appserver: cd $LANDO_WEBROOT && drush status --field=bootstrap 2>/dev/null | grep -qi 'successful' && drush updatedb -y || true
+
 tooling:
   bash:
     service: appserver

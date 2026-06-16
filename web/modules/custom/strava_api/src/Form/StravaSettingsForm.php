@@ -46,8 +46,15 @@ class StravaSettingsForm extends ConfigFormBase {
     $form['credentials']['access_token'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Access Token'),
-      '#description' => $this->t('OAuth access token used to fetch route details from the Strava API.'),
+      '#description' => $this->t('OAuth access token. Refreshed automatically when expired if a Refresh Token is set.'),
       '#default_value' => $config->get('access_token') ?: '',
+      '#maxlength' => 255,
+    ];
+    $form['credentials']['refresh_token'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Refresh Token'),
+      '#description' => $this->t('Long-lived OAuth refresh token used to obtain new access tokens automatically.'),
+      '#default_value' => $config->get('refresh_token') ?: '',
       '#maxlength' => 255,
     ];
     $form['display'] = [
@@ -88,6 +95,7 @@ class StravaSettingsForm extends ConfigFormBase {
       ->set('client_id', $form_state->getValue('client_id'))
       ->set('client_secret', $form_state->getValue('client_secret'))
       ->set('access_token', $form_state->getValue('access_token'))
+      ->set('refresh_token', $form_state->getValue('refresh_token'))
       ->set('map_height', $form_state->getValue('map_height'))
       ->set('map_style', $form_state->getValue('map_style'))
       ->set('show_elevation', (bool) $form_state->getValue('show_elevation'))

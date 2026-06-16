@@ -1,6 +1,8 @@
 client_id: ''
 client_secret: ''
 access_token: ''
+refresh_token: ''
+token_expires: 0
 map_height: '500px'
 map_style: 'outdoor'
 show_elevation: true

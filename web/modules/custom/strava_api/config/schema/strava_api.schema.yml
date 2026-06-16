@@ -10,6 +10,12 @@ strava_api.settings:
     access_token:
       type: string
       label: 'Strava API access token'
+    refresh_token:
+      type: string
+      label: 'Strava OAuth refresh token'
+    token_expires:
+      type: integer
+      label: 'Access token expiry (Unix timestamp)'
     client_id:
       type: string
       label: 'Strava OAuth Client ID'

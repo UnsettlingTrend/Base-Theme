@@ -245,3 +245,4 @@ $settings['ut_robinhood_pickle_dir'] = '/app/private/ut_robinhood';
 $config['strava_api.settings']['client_id'] = !empty($platform_variables['CREDS_STRAVA_CLIENT_ID']) ? $platform_variables['CREDS_STRAVA_CLIENT_ID'] : '<environment-varible>';
 $config['strava_api.settings']['client_secret'] = !empty($platform_variables['CREDS_STRAVA_CLIENT_SECRET']) ? $platform_variables['CREDS_STRAVA_CLIENT_SECRET'] : '<environment-varible>';
 $config['strava_api.settings']['access_token'] = !empty($platform_variables['CREDS_STRAVA_ACCESS_TOKEN']) ? $platform_variables['CREDS_STRAVA_ACCESS_TOKEN'] : '<environment-varible>';
+$config['strava_api.settings']['refresh_token'] = !empty($platform_variables['CREDS_STRAVA_REFRESH_TOKEN']) ? $platform_variables['CREDS_STRAVA_REFRESH_TOKEN'] : '<environment-varible>';
