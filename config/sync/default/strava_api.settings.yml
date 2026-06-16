@@ -1,8 +1,10 @@
 _core:
   default_config_hash: lSCp6I7E1N56J5m2yQcFYmNxrS-hksA2MP4A8iROoGg
+access_token: a5d5a1ae62d1c80dc5d197c9d72fc487ad891d5d
+refresh_token: 1c7b720155fc05b79028b43112fbd69d93f2aca3
+token_expires: 1781651473
 client_id: ''
 client_secret: ''
-access_token: ''
 map_height: 500px
 map_style: outdoor
 show_elevation: true

@@ -78,31 +78,6 @@ display:
           settings:
             timezone_override: ''
             format_type: medium
-        status:
-          id: status
-          table: race
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: race
-          entity_field: status
-          plugin_id: field
-          label: Status
-          exclude: false
-          alter:
-            alter_text: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          type: list_default
-          settings: {  }
         total_distance:
           id: total_distance
           table: race
@@ -132,6 +107,31 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
+        status:
+          id: status
+          table: race
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race
+          entity_field: status
+          plugin_id: field
+          label: Status
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: list_default
+          settings: {  }
       pager:
         type: full
         options:
@@ -180,37 +180,10 @@ display:
             field_identifier: ''
           exposed: false
       arguments: {  }
-      filters:
-        status:
-          id: status
-          table: race
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: race
-          entity_field: status
-          plugin_id: in_operator
-          operator: in
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: status_op
-            label: Status
-            description: ''
-            use_operator: false
-            operator: status_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: status
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
+      filters: {  }
+      filter_groups:
+        operator: AND
+        groups: {  }
       style:
         type: table
         options:
@@ -220,8 +193,8 @@ display:
           columns:
             name: name
             race_date: race_date
-            status: status
             total_distance: total_distance
+            status: status
           default: race_date
           info:
             name:
@@ -238,13 +211,6 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            status:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             total_distance:
               sortable: true
               default_sort_order: asc
@@ -252,7 +218,20 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-low
+            status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
           empty_table: true
+          caption: ''
+          description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -264,6 +243,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -272,22 +252,19 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
       tags: {  }
-  page_1:
-    id: page_1
-    display_title: Page
-    display_plugin: page
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
     position: 1
     display_options:
       display_extenders: {  }
-      path: races
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
       tags: {  }
