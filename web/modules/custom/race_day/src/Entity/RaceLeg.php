@@ -50,6 +50,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  *     "uuid" = "uuid",
  *   },
  *   links = {
+ *     "canonical" = "/race-leg/{race_leg}",
  *     "add-form" = "/admin/race-day/legs/add",
  *     "edit-form" = "/admin/race-day/legs/{race_leg}/edit",
  *     "delete-form" = "/admin/race-day/legs/{race_leg}/delete",

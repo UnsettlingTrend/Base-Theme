@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+  module:
+    - group
+    - pathauto
+    - race_day
+id: race_teams
+label: 'Race Teams'
+type: 'canonical_entities:group'
+pattern: '/[group:field_race:entity]/team/[group:title]'
+selection_criteria:
+  eea1b952-9c4c-4a6e-b0f8-843a3a386549:
+    id: 'entity_bundle:group'
+    negate: false
+    context_mapping:
+      group: group
+    bundles:
+      race_team: race_team
+selection_logic: and
+weight: -5
+relationships: {  }

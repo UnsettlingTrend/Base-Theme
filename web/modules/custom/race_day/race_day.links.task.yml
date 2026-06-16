@@ -46,6 +46,21 @@ race_leg.settings.overview:
   base_route: race_day.race_leg_settings
   weight: -10
 
+race_leg.canonical:
+  title: 'View'
+  route_name: entity.race_leg.canonical
+  base_route: entity.race_leg.canonical
+
+race_leg.edit_form:
+  title: 'Edit'
+  route_name: entity.race_leg.edit_form
+  base_route: entity.race_leg.canonical
+
+race_leg.delete_form:
+  title: 'Delete'
+  route_name: entity.race_leg.delete_form
+  base_route: entity.race_leg.canonical
+
 # --------------------------------------------------------------------------
 # Race Assignment entity tabs
 # --------------------------------------------------------------------------

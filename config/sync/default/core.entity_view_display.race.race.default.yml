@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.race.race.field_paragraphs
+    - views.view.race_leg
     - views.view.race_map
   module:
     - layout_builder
@@ -131,6 +132,20 @@ third_party_settings:
               items_per_page: null
               exposed: {  }
             weight: 1
+            additional: {  }
+          7a49f5c7-eced-4e70-98f6-20d3d0bf2797:
+            uuid: 7a49f5c7-eced-4e70-98f6-20d3d0bf2797
+            region: second
+            configuration:
+              id: 'views_block:race_leg-block_1'
+              label: ''
+              label_display: visible
+              provider: views
+              context_mapping: {  }
+              views_label: ''
+              items_per_page: null
+              exposed: {  }
+            weight: 3
             additional: {  }
         third_party_settings: {  }
 id: race.race.default

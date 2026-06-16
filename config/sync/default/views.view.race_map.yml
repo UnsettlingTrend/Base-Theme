@@ -155,7 +155,7 @@ display:
         type: race_leg_map
         options:
           uses_fields: false
-          hide_leg_legend: 1
+          hide_leg_legend: true
       row:
         type: fields
       query:

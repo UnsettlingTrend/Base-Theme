@@ -17,6 +17,24 @@ use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
 
 /**
+ * Implements hook_views_data_alter().
+ *
+ * Adds a race_team_membership relationship to the groups base table so Views
+ * can join group_relationship_field_data directly on groups.id = gid without
+ * routing through the virtual groups_field_data.group_relationship_id key.
+ */
+function race_day_views_data_alter(array &$data): void {
+  $data['groups_field_data']['race_team_member_name'] = [
+    'title' => t('Race Team member name'),
+    'help' => t('Filter race_team groups by member username (subquery, no virtual-key join).'),
+    'filter' => [
+      'title' => t('Member name'),
+      'id' => 'race_team_member_name',
+    ],
+  ];
+}
+
+/**
  * Implements hook_views_query_alter().
  *
  * Group 3.x moves itself to the end of the views_query_alter list and skips
@@ -27,6 +45,9 @@ use Drupal\race_day\Entity\RaceLeg;
 function race_day_views_query_alter(ViewExecutable $view, QueryPluginBase $query): void {
   if ($view->id() === 'race_teams' && \Drupal::currentUser()->hasPermission('manage race day groups')) {
     $query->options['disable_sql_rewrite'] = TRUE;
+    // Restrict to race_team bundle — enforced here so the view has no
+    // schema-problematic bundle filter that breaks on UI save.
+    $query->addWhere(0, 'groups_field_data.type', 'race_team', '=');
   }
 }
 
