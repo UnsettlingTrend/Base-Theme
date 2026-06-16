@@ -36,6 +36,13 @@ race_day.legs.import:
   parent: race_day.legs
   weight: 11
 
+race_day.teams:
+  title: 'Race Teams'
+  description: 'View and manage race teams.'
+  route_name: view.race_teams.page_1
+  parent: race_day.admin
+  weight: 10
+
 race_day.assignments:
   title: 'Runner Assignments'
   description: 'View and manage runner-to-leg assignments.'

@@ -1,4 +1,3 @@
-uuid: e1c54be2-9d87-4c3e-87b0-fad0410b3c45
 langcode: en
 status: true
 dependencies:
@@ -7,10 +6,8 @@ dependencies:
   enforced:
     module:
       - race_day
-_core:
-  default_config_hash: EovpNloz2BQeQowJID4s1MN5zLj_LpL3KqazHjtKsrM
-id: race_leg_map
-label: 'Race Leg Map'
+id: race_map
+label: 'Race Map'
 module: views
 description: 'Displays all race leg routes on a single Leaflet map, filterable by race.'
 tag: race_day
@@ -155,7 +152,9 @@ display:
           is_grouped: false
       style:
         type: race_leg_map
-        options: {  }
+        options:
+          uses_fields: false
+          hide_leg_legend: 1
       row:
         type: fields
       query:
@@ -184,10 +183,66 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
+      tags: {  }
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
+    position: 1
+    display_options:
+      arguments:
+        race_id:
+          id: race_id
+          table: race_leg
+          field: race_id
+          relationship: none
+          group_type: group
+          admin_label: Race
+          entity_type: race_leg
+          entity_field: race_id
+          plugin_id: entity_target_id
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: race
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          target_entity_type_id: race
+      filters: {  }
+      filter_groups:
+        operator: AND
+        groups: {  }
+      defaults:
+        arguments: false
+        filters: false
+        filter_groups: false
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
       tags: {  }
   page_1:
     id: page_1
@@ -200,8 +255,6 @@ display:
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
       tags: {  }

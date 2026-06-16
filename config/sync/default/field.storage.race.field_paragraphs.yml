@@ -6,8 +6,6 @@ dependencies:
     - entity_reference_revisions
     - paragraphs
     - race_day
-_core:
-  default_config_hash: fruSpdKFRDoETi4n2rsxQFM1VN0i_O1BuLrzDD9yvC0
 id: race.field_paragraphs
 field_name: field_paragraphs
 entity_type: race

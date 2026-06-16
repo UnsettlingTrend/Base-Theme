@@ -1,16 +1,25 @@
-administer race_day:
+'view race_day content':
+  title: 'View Race Day content'
+  description: 'Allows the user to view races and race legs.'
+
+'manage race_day races':
+  title: 'Manage Race Day races'
+  description: 'Allows the user to create, edit, and delete races and race legs.'
+
+'administer race_day':
   title: 'Administer Race Day'
-  description: 'Create, edit, and delete races, legs, and assignments. Full administrative access.'
+  description: 'Allows full administration of the Race Day module, including settings and all content.'
   restrict access: true
 
-manage race_day races:
-  title: 'Manage Races'
-  description: 'Create, edit, and delete race entities.'
+'update race_day location':
+  title: 'Update Race Day location'
+  description: 'Allows the user to submit GPS location updates during a race.'
 
-view race_day content:
-  title: 'View Race Day Content'
-  description: 'View races, legs, and runner assignments.'
+'view all race day groups':
+  title: 'View all Race Day groups'
+  description: 'Allows the user to view all race_team group entities regardless of membership.'
 
-update race_day location:
-  title: 'Update Runner Location'
-  description: 'Submit GPS location updates during a race.'
+'manage race day groups':
+  title: 'Manage Race Day groups'
+  description: 'Allows the user to edit and delete race_team group entities regardless of membership.'
+  restrict access: true

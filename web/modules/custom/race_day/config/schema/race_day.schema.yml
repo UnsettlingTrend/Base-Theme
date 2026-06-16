@@ -1,3 +1,13 @@
+# ctools entity_view block does not declare view_mode in its schema; fill the
+# gap here so layout_builder config validation passes cleanly.
+block.settings.entity_view:*:
+  type: block_settings
+  label: 'Entity view block settings'
+  mapping:
+    view_mode:
+      type: string
+      label: 'View mode'
+
 race_day.settings:
   type: config_object
   label: 'Race Day settings'

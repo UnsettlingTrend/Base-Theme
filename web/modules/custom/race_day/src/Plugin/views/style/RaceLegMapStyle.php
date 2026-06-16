@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\race_day\Plugin\views\style;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
 /**
@@ -37,7 +38,29 @@ class RaceLegMapStyle extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  protected $usesOptions = FALSE;
+  protected $usesOptions = TRUE;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions(): array {
+    $options = parent::defineOptions();
+    $options['hide_leg_legend'] = ['default' => FALSE];
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
+    parent::buildOptionsForm($form, $form_state);
+    $form['hide_leg_legend'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide leg legend'),
+      '#description' => $this->t('When checked, the legend listing each leg and its colour is hidden beneath the map.'),
+      '#default_value' => $this->options['hide_leg_legend'],
+    ];
+  }
 
   /**
    * {@inheritdoc}
@@ -84,13 +107,19 @@ class RaceLegMapStyle extends StylePluginBase {
       ];
     }
 
+    $attributes = [
+      'class' => ['race-leg-map'],
+      'data-legs' => json_encode($legs),
+    ];
+
+    if (!empty($this->options['hide_leg_legend'])) {
+      $attributes['data-hide-legend'] = 'true';
+    }
+
     return [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#attributes' => [
-        'class' => ['race-leg-map'],
-        'data-legs' => json_encode($legs),
-      ],
+      '#attributes' => $attributes,
       '#value' => '<div class="race-leg-map__canvas"></div>',
       '#attached' => [
         'library' => ['race_day/race_leg_map'],

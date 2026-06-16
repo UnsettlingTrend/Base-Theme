@@ -9,8 +9,6 @@ dependencies:
     - paragraphs
     - race_day
     - text
-_core:
-  default_config_hash: 0FM5NGKiE_f7YPJlTvatF_tvOe41n5ZxN5CWjOBMO6A
 id: race.race.default
 targetEntityType: race
 bundle: race

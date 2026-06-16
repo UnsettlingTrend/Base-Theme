@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - race_day
+id: race_coordinator
+label: 'Race Coordinator'
+weight: 3
+is_admin: false
+permissions:
+  - 'administer race_day'
+  - 'manage race day groups'
+  - 'manage race_day races'
+  - 'update race_day location'
+  - 'view all race day groups'
+  - 'view race_day content'

@@ -13,6 +13,7 @@ dependencies:
     - media
     - node_view_permissions
     - paragraphs_type_permissions
+    - race_day
     - system
 _core:
   default_config_hash: pq_mEIu_B4widZN7Ap81iCJSjShFFdcL0jEiCi8VrDk
@@ -56,3 +57,4 @@ permissions:
   - 'view paragraph content text_area'
   - 'view paragraph content text_list'
   - 'view paragraph content view'
+  - 'view race_day content'

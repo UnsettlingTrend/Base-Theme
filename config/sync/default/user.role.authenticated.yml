@@ -34,6 +34,7 @@ dependencies:
     - paragraphs_type_permissions
     - path
     - private_message
+    - race_day
     - system
     - taxonomy
     - toolbar
@@ -162,6 +163,7 @@ permissions:
   - 'view paragraph content text_area'
   - 'view paragraph content text_list'
   - 'view paragraph content view'
+  - 'view race_day content'
   - 'view the administration theme'
   - 'view user email addresses'
   - 'view webform revisions'

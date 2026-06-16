@@ -8,8 +8,6 @@ dependencies:
   enforced:
     module:
       - race_day
-_core:
-  default_config_hash: pcPyuAcWn0-jTSG8temmBiftznHFFpM3KodxbD9z0Fc
 id: race_leg_admin
 label: 'Race Legs - Admin'
 module: views

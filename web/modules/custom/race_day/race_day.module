@@ -7,6 +7,8 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -15,16 +17,48 @@ use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
 
 /**
+ * Implements hook_views_query_alter().
+ *
+ * Group 3.x moves itself to the end of the views_query_alter list and skips
+ * its membership restriction when disable_sql_rewrite is set. By setting that
+ * flag here (race_day runs before Group), users with 'manage race day groups'
+ * see all race_team groups in the race_teams view.
+ */
+function race_day_views_query_alter(ViewExecutable $view, QueryPluginBase $query): void {
+  if ($view->id() === 'race_teams' && \Drupal::currentUser()->hasPermission('manage race day groups')) {
+    $query->options['disable_sql_rewrite'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ *
+ * Replaces Group's list builder with our own so that users with
+ * 'view all race day groups' can bypass Group's membership-only query filter.
+ */
+function race_day_entity_type_alter(array &$entity_types): void {
+  if (isset($entity_types['group'])) {
+    $entity_types['group']->setListBuilderClass(\Drupal\race_day\Entity\Controller\RaceDayGroupListBuilder::class);
+  }
+}
+
+/**
  * Implements hook_entity_access().
  *
  * Group 3.x's access handler only checks group-level role permissions and
- * never consults the Drupal-level "administer group" permission, so even
- * is_admin users are blocked from viewing groups they're not a member of.
- * This hook adds that bypass.
+ * ignores Drupal-level permissions entirely. This hook grants view/manage
+ * access to race_team groups based on race_day's own permissions.
  */
 function race_day_entity_access(EntityInterface $entity, string $operation, AccountInterface $account): AccessResult {
-  if ($entity->getEntityTypeId() === 'group' && $operation === 'view') {
-    return AccessResult::allowedIfHasPermission($account, 'administer group')
+  if ($entity->getEntityTypeId() !== 'group' || $entity->bundle() !== 'race_team') {
+    return AccessResult::neutral();
+  }
+  if ($operation === 'view') {
+    return AccessResult::allowedIfHasPermission($account, 'view all race day groups')
+      ->cachePerPermissions();
+  }
+  if (in_array($operation, ['update', 'delete'], TRUE)) {
+    return AccessResult::allowedIfHasPermission($account, 'manage race day groups')
       ->cachePerPermissions();
   }
   return AccessResult::neutral();

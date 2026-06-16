@@ -132,19 +132,20 @@
           map.fitBounds(combined, { padding: [20, 20] });
         }
 
-        // Build legend below the map canvas.
-        var legendEl = document.createElement('div');
-        legendEl.className = 'race-leg-map__legend';
-        legsWithPolylines.forEach(function (leg, i) {
-          var color = LEG_COLORS[i % LEG_COLORS.length];
-          var item = document.createElement('span');
-          item.className = 'race-leg-map__legend-item';
-          item.innerHTML =
-            '<span class="race-leg-map__legend-swatch" style="background:' + color + '"></span>' +
-            'Leg ' + leg.leg_number + ': ' + leg.label;
-          legendEl.appendChild(item);
-        });
-        el.appendChild(legendEl);
+        if (el.getAttribute('data-hide-legend') !== 'true') {
+          var legendEl = document.createElement('div');
+          legendEl.className = 'race-leg-map__legend';
+          legsWithPolylines.forEach(function (leg, i) {
+            var color = LEG_COLORS[i % LEG_COLORS.length];
+            var item = document.createElement('span');
+            item.className = 'race-leg-map__legend-item';
+            item.innerHTML =
+              '<span class="race-leg-map__legend-swatch" style="background:' + color + '"></span>' +
+              'Leg ' + leg.leg_number + ': ' + leg.label;
+            legendEl.appendChild(item);
+          });
+          el.appendChild(legendEl);
+        }
       });
     }
   };

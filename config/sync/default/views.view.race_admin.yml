@@ -9,8 +9,6 @@ dependencies:
   enforced:
     module:
       - race_day
-_core:
-  default_config_hash: ey_ejFxofbq6Sllsdc-ffAknm7wPthNvQJZ2l4aXFBM
 id: race_admin
 label: 'Races - Admin'
 module: views

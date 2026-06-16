@@ -284,7 +284,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: 'race/%/legs'
+      path: race/%/legs
     cache_metadata:
       max-age: -1
       contexts:

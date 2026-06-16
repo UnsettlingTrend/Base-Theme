@@ -5,7 +5,7 @@ dependencies:
   config:
     - group.type.race_team
 _core:
-  default_config_hash: '-355G3mI3AV54cnXSF7xB7dA1G8LCy4nqdTJWVlFRWU'
+  default_config_hash: Y03BfaqAI00QFOaEOlqEnKoo7iHI0DHFbKKqr6KGHAM
 id: race_team-team_captain
 label: 'Team Captain'
 weight: 0
