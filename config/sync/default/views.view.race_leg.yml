@@ -278,7 +278,6 @@ display:
           entity_field: race_id
           plugin_id: standard
           required: false
-      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -417,6 +416,7 @@ display:
           not: false
           target_entity_type_id: race
       defaults:
+        relationships: true
         fields: false
         arguments: false
       display_extenders: {  }

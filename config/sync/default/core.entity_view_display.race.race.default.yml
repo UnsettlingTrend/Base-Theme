@@ -133,8 +133,8 @@ third_party_settings:
               exposed: {  }
             weight: 1
             additional: {  }
-          7a49f5c7-eced-4e70-98f6-20d3d0bf2797:
-            uuid: 7a49f5c7-eced-4e70-98f6-20d3d0bf2797
+          ebed3753-c1c8-4503-96bc-221dc17b24b7:
+            uuid: ebed3753-c1c8-4503-96bc-221dc17b24b7
             region: second
             configuration:
               id: 'views_block:race_leg-block_1'

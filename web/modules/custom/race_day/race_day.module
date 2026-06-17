@@ -195,6 +195,31 @@ function _race_day_recalculate_total_distance(int $race_id): void {
 /**
  * Prepares variables for Race templates.
  */
+/**
+ * Implements hook_page_attachments().
+ */
+function race_day_page_attachments(array &$attachments): void {
+  if (!\Drupal::service('module_handler')->moduleExists('gin')) {
+    return;
+  }
+  try {
+    $gin_path = \Drupal::service('extension.list.theme')->getPath('gin');
+  }
+  catch (\Exception $e) {
+    return;
+  }
+  $sprite_url = base_path() . $gin_path . '/dist/media/sprite.svg';
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'style',
+      '#value' => '.toolbar .toolbar-bar .toolbar-icon-race-day-admin::before { --icon: url("' . $sprite_url . '#calendar-view"); }',
+      '#attributes' => ['data-race-day-toolbar' => ''],
+    ],
+    'race_day_toolbar_icon',
+  ];
+}
+
 function template_preprocess_race(array &$variables): void {
   $variables['view_mode'] = $variables['elements']['#view_mode'];
   $variables['race'] = $variables['elements']['#race'];

@@ -228,6 +228,12 @@ class RaceLeg extends ContentEntityBase implements EntityChangedInterface {
       ->setLabel(new TranslatableMarkup('Changed'))
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['path'] = BaseFieldDefinition::create('path')
+      ->setLabel(new TranslatableMarkup('URL alias'))
+      ->setDisplayOptions('form', ['type' => 'path', 'weight' => 30])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setComputed(TRUE);
+
     return $fields;
   }
 

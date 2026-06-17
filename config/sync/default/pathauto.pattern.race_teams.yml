@@ -6,6 +6,8 @@ dependencies:
     - group.type.race_team
   module:
     - group
+    - pathauto
+    - race_day
 id: race_teams
 label: 'Race Teams'
 type: 'canonical_entities:group'

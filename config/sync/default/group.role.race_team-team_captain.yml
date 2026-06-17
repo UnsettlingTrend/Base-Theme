@@ -13,9 +13,4 @@ admin: false
 scope: individual
 global_role: null
 group_type: race_team
-permissions:
-  - 'administer members'
-  - 'edit group'
-  - 'leave group'
-  - 'update own group_membership relationship'
-  - 'view group_membership relationship'
+permissions: {  }

@@ -1,3 +1,9 @@
+admin_toolbar:
+  version: VERSION
+  css:
+    theme:
+      css/admin-toolbar.css: {}
+
 race_leg_map:
   version: VERSION
   css:

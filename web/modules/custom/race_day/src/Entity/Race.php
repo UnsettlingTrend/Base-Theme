@@ -232,6 +232,12 @@ class Race extends ContentEntityBase implements EntityOwnerInterface, EntityChan
       ->setDescription(new TranslatableMarkup('When this race was last updated.'))
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['path'] = BaseFieldDefinition::create('path')
+      ->setLabel(new TranslatableMarkup('URL alias'))
+      ->setDisplayOptions('form', ['type' => 'path', 'weight' => 30])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setComputed(TRUE);
+
     return $fields;
   }
 

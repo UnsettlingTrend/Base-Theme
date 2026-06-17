@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group.race_team.field_race
     - group.type.race_team
+  module:
+    - path
 id: group.race_team.default
 targetEntityType: group
 bundle: race_team
@@ -12,7 +14,7 @@ mode: default
 content:
   field_race:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 121
     region: content
     settings:
       match_operator: CONTAINS
@@ -22,7 +24,7 @@ content:
     third_party_settings: {  }
   label:
     type: string_textfield
-    weight: 0
+    weight: -5
     region: content
     settings:
       size: 60
@@ -30,18 +32,23 @@ content:
     third_party_settings: {  }
   langcode:
     type: language_select
-    weight: 3
+    weight: 2
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 1
+    weight: 120
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
 hidden:
-  path: true
   uid: true

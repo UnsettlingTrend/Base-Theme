@@ -1,0 +1,16 @@
+uuid: 8fd0d8b0-3ca7-482a-be98-8af70a24a118
+langcode: en
+status: true
+dependencies:
+  module:
+    - pathauto
+    - race_day
+    - token
+id: race_legs
+label: 'Race Legs'
+type: 'canonical_entities:race_leg'
+pattern: '/races/[race_leg:race_id:entity:name]/leg-[race_leg:leg_number]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

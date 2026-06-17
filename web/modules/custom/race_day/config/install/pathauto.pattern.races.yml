@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pathauto
+    - race_day
+    - token
+id: races
+label: Races
+type: 'canonical_entities:race'
+pattern: '/races/[race:name]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

@@ -25,6 +25,10 @@ settings:
   plugin_types:
     block: block
   preselect_views:
+    race_leg: race_leg
+    race_leg_map: race_leg_map
+    race_map: race_map
+    race_teams: race_teams
     search_content: search_content
   enabled_settings:
     title: title

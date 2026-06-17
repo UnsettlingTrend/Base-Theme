@@ -12,3 +12,6 @@ dependencies:
   - entity_reference_revisions:entity_reference_revisions
   - paragraphs:paragraphs
   - strava_api:strava_api
+  - drupal:path
+  - pathauto:pathauto
+  - token:token
