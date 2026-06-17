@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - race_day
-id: race_coordinator
-label: 'Race Coordinator'
+id: race_day_coordinator
+label: 'Race Day Coordinator'
 weight: 3
 is_admin: false
 permissions:

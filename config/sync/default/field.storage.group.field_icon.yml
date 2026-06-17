@@ -1,18 +1,16 @@
-uuid: dfe96468-4af4-4423-89bf-85292f4885c3
+uuid: 4b27ce6c-7431-4362-889b-89e1c93bb7ac
 langcode: en
 status: true
 dependencies:
   module:
     - group
-    - race_day
-_core:
-  default_config_hash: YdL5qUPPUguyKt9aftGvnKMRPJHRagqxBcmz1HAVWgM
-id: group.field_race
-field_name: field_race
+    - media
+id: group.field_icon
+field_name: field_icon
 entity_type: group
 type: entity_reference
 settings:
-  target_type: race
+  target_type: media
 module: core
 locked: false
 cardinality: 1

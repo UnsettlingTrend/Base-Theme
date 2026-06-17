@@ -6,6 +6,8 @@ dependencies:
     - group.type.race_team
   module:
     - user
+_core:
+  default_config_hash: 1Yt2EHJp7xf31zb7yrUmVfru5GbUjWRoAZWQBs9XSjs
 id: race_team-group_membership
 group_type: race_team
 content_plugin: group_membership

@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - race_day
+id: race_day_user
+label: 'Race Day User'
+weight: 4
+is_admin: false
+permissions:
+  - 'view race_day content'

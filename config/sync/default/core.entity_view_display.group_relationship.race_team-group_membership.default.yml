@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.group_relationship.race_team-group_membership.group_roles
     - group.relationship_type.race_team-group_membership
+_core:
+  default_config_hash: EB9edpMFFknOf8DqCXZYqi6fbtp-ENAULsL_pXr2x38
 id: group_relationship.race_team-group_membership.default
 targetEntityType: group_relationship
 bundle: race_team-group_membership

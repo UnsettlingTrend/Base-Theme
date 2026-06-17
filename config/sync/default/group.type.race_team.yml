@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: n85VyXhVbaC82NotMPAQ-EtW0KMcXhk6VEDRnB4OCfE
+  default_config_hash: Jr0mPOBY8beQxLjOsZHjMCGNOuVO999UV7tPcqII3m0
 id: race_team
 label: 'Race Team'
 description: 'A relay team for Race Day.'
@@ -12,3 +12,4 @@ creator_membership: true
 creator_wizard: false
 creator_roles:
   - race_team-admin
+  - race_team-team_captain

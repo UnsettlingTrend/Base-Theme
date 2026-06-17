@@ -7,6 +7,8 @@ dependencies:
     - group.relationship_type.race_team-group_membership
   module:
     - path
+_core:
+  default_config_hash: P5Zvnvi-hLhyZSTQuSZJzoTEoZds8pZDIkwdL4W6lnM
 id: group_relationship.race_team-group_membership.default
 targetEntityType: group_relationship
 bundle: race_team-group_membership

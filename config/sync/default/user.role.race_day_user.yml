@@ -1,0 +1,14 @@
+uuid: 7634aa34-81a2-4e30-bddd-5b3b65e2eab6
+langcode: en
+status: true
+dependencies:
+  module:
+    - race_day
+_core:
+  default_config_hash: a-tCT5YDYpWVpwwnkdDwMq2_Pc9iZSNlXdZN7aYr0r8
+id: race_day_user
+label: 'Race Day User'
+weight: 4
+is_admin: false
+permissions:
+  - 'view race_day content'

@@ -3,13 +3,25 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group.race_team.field_icon
     - field.field.group.race_team.field_race
     - group.type.race_team
+_core:
+  default_config_hash: sRfPYoeo2C2HmpjOr1eJmvAnhUU0xYTy2RpQbpGHLyU
 id: group.race_team.default
 targetEntityType: group
 bundle: race_team
 mode: default
 content:
+  field_icon:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: -3
+    region: content
   field_race:
     type: entity_reference_label
     label: above

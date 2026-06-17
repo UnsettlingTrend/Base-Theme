@@ -6,12 +6,12 @@ dependencies:
     - group.type.race_team
   module:
     - group
-    - pathauto
-    - race_day
+_core:
+  default_config_hash: BmtrrIr_Jyox0e0sizMHiIJu1Chzh1vMbZLXVjq9NMs
 id: race_teams
 label: 'Race Teams'
 type: 'canonical_entities:group'
-pattern: '/[group:field_race:entity]/team/[group:title]'
+pattern: '/[group:field_race:entity:url]/team/[group:title]'
 selection_criteria:
   eea1b952-9c4c-4a6e-b0f8-843a3a386549:
     id: 'entity_bundle:group'
@@ -21,5 +21,5 @@ selection_criteria:
     bundles:
       race_team: race_team
 selection_logic: and
-weight: -5
+weight: -4
 relationships: {  }

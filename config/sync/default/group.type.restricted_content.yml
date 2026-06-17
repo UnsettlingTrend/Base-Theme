@@ -4,7 +4,7 @@ status: true
 dependencies: {  }
 id: restricted_content
 label: 'Restricted Content'
-description: ''
+description: 'General group type for restricting content added to only members of that group.'
 new_revision: true
 creator_membership: true
 creator_wizard: true

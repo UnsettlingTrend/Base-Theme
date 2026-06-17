@@ -3,14 +3,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - pathauto
     - race_day
-    - token
+_core:
+  default_config_hash: vmD7G22lymaLKgguaWbl4iCIRbb2xKOR_LnKFxSX8f8
 id: race_legs
 label: 'Race Legs'
 type: 'canonical_entities:race_leg'
-pattern: '/races/[race_leg:race_id:entity:name]/leg-[race_leg:leg_number]'
+pattern: '/[race_leg:race_id:entity:url]/leg-[race_leg:leg_number]'
 selection_criteria: {  }
 selection_logic: and
-weight: 0
+weight: -1
 relationships: {  }

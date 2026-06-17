@@ -11,6 +11,8 @@ dependencies:
   module:
     - entity_reference_revisions
     - race_day
+_core:
+  default_config_hash: AVuQ1WzPRNuxEMAgbDmjUnx7G53qsVY1fuDJOLDSxPc
 id: race.race.field_paragraphs
 field_name: field_paragraphs
 entity_type: race

@@ -7,6 +7,8 @@ dependencies:
   enforced:
     module:
       - race_day
+_core:
+  default_config_hash: Z8V3kchFoCCXjTon6GBW3xtQkmW-ucrm3ILaTO-QWJA
 id: race_map
 label: 'Race Map'
 module: views
@@ -155,7 +157,7 @@ display:
         type: race_leg_map
         options:
           uses_fields: false
-          hide_leg_legend: true
+          hide_leg_legend: 1
       row:
         type: fields
       query:

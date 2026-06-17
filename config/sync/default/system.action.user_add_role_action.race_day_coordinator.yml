@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.race_day_coordinator
+  module:
+    - user
+id: user_add_role_action.race_day_coordinator
+label: 'Add the Race Day Coordinator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: race_day_coordinator

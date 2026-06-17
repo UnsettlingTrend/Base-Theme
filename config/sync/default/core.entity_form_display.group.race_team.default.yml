@@ -3,15 +3,26 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group.race_team.field_icon
     - field.field.group.race_team.field_race
     - group.type.race_team
   module:
+    - media_library
     - path
+_core:
+  default_config_hash: L1c99KLgsAgUuIvkJiyUvTTLDO4gD3rzVZD79FAaF9M
 id: group.race_team.default
 targetEntityType: group
 bundle: race_team
 mode: default
 content:
+  field_icon:
+    type: media_library_widget
+    weight: 122
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
   field_race:
     type: entity_reference_autocomplete
     weight: 121

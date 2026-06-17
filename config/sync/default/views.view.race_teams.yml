@@ -4,10 +4,12 @@ status: true
 dependencies:
   module:
     - group
-    - user
+    - race_day
   enforced:
     module:
       - race_day
+_core:
+  default_config_hash: G5VZ-YL6V2CjmZPZrjtU0qRfU5EhIdBBmx7CPpHX6Lk
 id: race_teams
 label: 'Race Teams'
 module: views
