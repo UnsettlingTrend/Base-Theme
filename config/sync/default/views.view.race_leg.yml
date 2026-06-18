@@ -280,6 +280,107 @@ display:
         - url
         - url.query_args
       tags: {  }
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
+    position: 1
+    display_options:
+      fields:
+        leg_number:
+          id: leg_number
+          table: race_leg
+          field: leg_number
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race_leg
+          entity_field: leg_number
+          plugin_id: field
+          label: '#'
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+        label:
+          id: label
+          table: race_leg
+          field: label
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race_leg
+          entity_field: label
+          plugin_id: field
+          label: 'Leg Name'
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: string
+          settings:
+            link_to_entity: true
+        distance:
+          id: distance
+          table: race_leg
+          field: distance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race_leg
+          entity_field: distance
+          plugin_id: field
+          label: Distance
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: number_decimal
+          settings:
+            thousand_separator: ''
+            decimal_separator: .
+            scale: 2
+            prefix_suffix: true
+      defaults:
+        fields: false
+      exposed_block: true
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags: {  }
   page_1:
     id: page_1
     display_title: Page
