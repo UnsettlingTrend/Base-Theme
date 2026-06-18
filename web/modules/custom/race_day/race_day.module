@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
@@ -96,6 +97,82 @@ function race_day_theme(): array {
       'template' => 'race',
     ],
   ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ *
+ * Registers the "Race Info" pseudo-field so it appears as a placeable block
+ * in Layout Builder for race entities.
+ */
+function race_day_entity_extra_field_info(): array {
+  return [
+    'race' => [
+      'race' => [
+        'display' => [
+          'race_info_group' => [
+            'label' => t('Race Info'),
+            'description' => t('Race Date, Total Distance, and Race Status grouped together.'),
+            'weight' => 10,
+            'visible' => FALSE,
+          ],
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for race_leg.
+ */
+function race_day_race_leg_view(array &$build, RaceLeg $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  $build['#attached']['library'][] = 'race_day/race_leg_fields';
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for race.
+ *
+ * Renders the "Race Info" pseudo-field when it is present in the display.
+ */
+function race_day_race_view(array &$build, Race $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  if (!$display->getComponent('race_info_group')) {
+    return;
+  }
+
+  $view_builder = \Drupal::entityTypeManager()->getViewBuilder('race');
+
+  $field_labels = [
+    'race_date' => t('Date'),
+    'total_distance' => t('Total Distance'),
+    'status' => t('Status'),
+  ];
+
+  $group = [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['race-info-group']],
+    '#attached' => ['library' => ['race_day/race_info_group']],
+  ];
+
+  foreach ($field_labels as $field_name => $label_text) {
+    // Render the value with the label hidden — we output the label ourselves
+    // with a module-owned class so styling stays in the module.
+    $options = $display->getComponent($field_name) ?? [];
+    $options['label'] = 'hidden';
+
+    $group[$field_name] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['race-info-field']],
+      'label' => [
+        '#type' => 'html_tag',
+        '#tag' => 'span',
+        '#value' => $label_text,
+        '#attributes' => ['class' => ['race-info-field__label']],
+      ],
+      'value' => $view_builder->viewField($entity->get($field_name), $options),
+    ];
+  }
+
+  $build['race_info_group'] = $group;
 }
 
 /**

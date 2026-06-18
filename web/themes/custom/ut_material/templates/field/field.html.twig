@@ -43,8 +43,9 @@
 %}
 {%
   set classes = [
-  field_name,
-]
+    field_name,
+    label_display == 'inline' ? 'field--label-inline',
+  ]
 %}
 
 {% if label_hidden %}

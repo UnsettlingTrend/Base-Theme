@@ -87,7 +87,7 @@ class Race extends ContentEntityBase implements EntityOwnerInterface, EntityChan
     $fields += static::ownerBaseFieldDefinitions($entity_type);
 
     $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Race Name'))
+      ->setLabel(new TranslatableMarkup('Name'))
       ->setDescription(new TranslatableMarkup('The name of the relay race.'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 255)
@@ -120,7 +120,7 @@ class Race extends ContentEntityBase implements EntityOwnerInterface, EntityChan
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['race_date'] = BaseFieldDefinition::create('datetime')
-      ->setLabel(new TranslatableMarkup('Race Date'))
+      ->setLabel(new TranslatableMarkup('Date'))
       ->setDescription(new TranslatableMarkup('The date and start time of the race.'))
       ->setRequired(TRUE)
       ->setSetting('datetime_type', 'datetime')
@@ -137,7 +137,7 @@ class Race extends ContentEntityBase implements EntityOwnerInterface, EntityChan
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Race Status'))
+      ->setLabel(new TranslatableMarkup('Status'))
       ->setDescription(new TranslatableMarkup('Current status of the race.'))
       ->setRequired(TRUE)
       ->setDefaultValue('draft')

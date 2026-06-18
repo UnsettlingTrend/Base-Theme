@@ -7,6 +7,7 @@ dependencies:
     - views.view.race_leg
     - views.view.race_map
   module:
+    - field_group
     - layout_builder
     - race_day
     - views
@@ -38,66 +39,6 @@ third_party_settings:
                 label: hidden
                 settings:
                   view_mode: default
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-          285f6c55-156f-4162-8bbd-7cd7e3adae49:
-            uuid: 285f6c55-156f-4162-8bbd-7cd7e3adae49
-            region: second
-            configuration:
-              id: 'field_block:race:race:race_date'
-              label: 'Race Date'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: datetime_default
-                label: hidden
-                settings:
-                  timezone_override: ''
-                  format_type: article_date
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          dd0c279a-defb-4e39-b38d-eddd2491581a:
-            uuid: dd0c279a-defb-4e39-b38d-eddd2491581a
-            region: second
-            configuration:
-              id: 'field_block:race:race:total_distance'
-              label: 'Total Distance'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: number_decimal
-                label: hidden
-                settings:
-                  thousand_separator: ''
-                  decimal_separator: .
-                  scale: 2
-                  prefix_suffix: true
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          c95cf7e9-8d92-46f5-a908-3eb39b09a3a7:
-            uuid: c95cf7e9-8d92-46f5-a908-3eb39b09a3a7
-            region: second
-            configuration:
-              id: 'field_block:race:race:status'
-              label: 'Race Status'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: list_default
-                label: hidden
-                settings: {  }
                 third_party_settings: {  }
             weight: 2
             additional: {  }
@@ -145,9 +86,38 @@ third_party_settings:
               views_label: ''
               items_per_page: null
               exposed: {  }
-            weight: 3
+            weight: 4
+            additional: {  }
+          d1ac8e07-dc58-4b70-b2ab-436f700b7bfa:
+            uuid: d1ac8e07-dc58-4b70-b2ab-436f700b7bfa
+            region: second
+            configuration:
+              id: 'extra_field_block:race:race:race_info_group'
+              label: 'Race Info'
+              label_display: visible
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                settings: {  }
+                third_party_settings: {  }
+            weight: 0
             additional: {  }
         third_party_settings: {  }
+  field_group:
+    group_race_info:
+      children: {  }
+      label: 'Race Info'
+      parent_name: ''
+      region: hidden
+      weight: 20
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
 _core:
   default_config_hash: UEQ6JhZBvK5smL0o-npz2l72KSvi3VQinKxupSUVOl4
 id: race.race.default
@@ -164,6 +134,7 @@ hidden:
   max_teams: true
   name: true
   race_date: true
+  race_info_group: true
   search_api_excerpt: true
   status: true
   total_distance: true

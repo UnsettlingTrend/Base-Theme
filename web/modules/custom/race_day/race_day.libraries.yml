@@ -1,3 +1,15 @@
+race_leg_fields:
+  version: VERSION
+  css:
+    component:
+      css/race-leg-fields.css: {}
+
+race_info_group:
+  version: VERSION
+  css:
+    component:
+      css/race-info-group.css: {}
+
 admin_toolbar:
   version: VERSION
   css:

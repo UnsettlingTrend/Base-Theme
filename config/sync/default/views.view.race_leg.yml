@@ -287,6 +287,7 @@ display:
     display_plugin: block
     position: 1
     display_options:
+      title: Legs
       fields:
         leg_number:
           id: leg_number
@@ -371,6 +372,7 @@ display:
             scale: 2
             prefix_suffix: true
       defaults:
+        title: false
         fields: false
       exposed_block: true
       display_extenders: {  }

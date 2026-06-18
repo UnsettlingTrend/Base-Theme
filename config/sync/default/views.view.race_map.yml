@@ -23,7 +23,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Race Route Map'
+      title: 'Route Map'
       fields: {  }
       pager:
         type: none
@@ -157,7 +157,7 @@ display:
         type: race_leg_map
         options:
           uses_fields: false
-          hide_leg_legend: 1
+          hide_leg_legend: true
       row:
         type: fields
       query:

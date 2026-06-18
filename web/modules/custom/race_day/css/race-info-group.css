@@ -1,0 +1,14 @@
+.race-info-field {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
+.race-info-field__label {
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.race-info-field__label::after {
+  content: ':';
+}

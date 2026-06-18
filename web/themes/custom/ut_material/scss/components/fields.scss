@@ -1,0 +1,10 @@
+// Inline label fields.
+.field--label-inline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+
+  .field__label {
+    flex-shrink: 0;
+  }
+}
