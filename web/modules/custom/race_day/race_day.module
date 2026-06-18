@@ -13,6 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
 
@@ -107,18 +108,40 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
   }
   $entity = $form_object->getEntity();
 
-  // Adjustments for the race_team group add form.
-  if ($entity->getEntityTypeId() === 'group' && $entity->bundle() === 'race_team' && $entity->isNew()) {
-    // Pre-populate field_race when arriving via the "Register a Team" button.
-    $race_id = \Drupal::request()->query->get('race_id');
-    if ($race_id && isset($form['field_race'])) {
-      $form['field_race']['widget'][0]['target_id']['#default_value'] =
-        \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+  if ($entity->getEntityTypeId() === 'group' && $entity->bundle() === 'race_team') {
+    if ($entity->isNew()) {
+      // Pre-populate field_race when arriving via the "Register a Team" button.
+      $race_id = \Drupal::request()->query->get('race_id');
+      if ($race_id && isset($form['field_race'])) {
+        $form['field_race']['widget'][0]['target_id']['#default_value'] =
+          \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+      }
+      $form['revision_information']['#access'] = FALSE;
+      $form['path']['#access'] = FALSE;
+      // Leg assignments are created after save; hide the field on the add form.
+      $form['field_runner_legs']['#access'] = FALSE;
+      // Add our post-save handler to every submit button in the actions group.
+      // The Group form's Save button has its own #submit array, so appending to
+      // $form['#submit'] alone would be ignored.
+      $actions = $form['actions'] ?? [];
+      foreach (Element::children($actions) as $action) {
+        if (($form['actions'][$action]['#type'] ?? '') === 'submit') {
+          $form['actions'][$action]['#submit'][] = 'race_day_race_team_create_submit';
+        }
+      }
     }
-
-    // Users don't need to manage revisions or URL aliases when registering.
-    $form['revision_information']['#access'] = FALSE;
-    $form['path']['#access'] = FALSE;
+    else {
+      // On the edit form, show existing assignments but lock add/remove controls.
+      if (isset($form['field_runner_legs']['widget'])) {
+        $widget = &$form['field_runner_legs']['widget'];
+        $widget['add_more']['#access'] = FALSE;
+        foreach (Element::children($widget) as $delta) {
+          if (is_numeric($delta) && isset($widget[$delta]['top']['links'])) {
+            $widget[$delta]['top']['links']['#access'] = FALSE;
+          }
+        }
+      }
+    }
   }
 
   if (!$entity instanceof Race) {
@@ -193,8 +216,60 @@ function _race_day_recalculate_total_distance(int $race_id): void {
 }
 
 /**
- * Prepares variables for Race templates.
+ * Submit handler for the race_team add form.
+ *
+ * Fires after the new group entity has been saved and has a real ID. Creates
+ * one race_day_leg_assignment paragraph per race leg, fills in field_race_day_leg,
+ * then re-saves the group to attach them via field_runner_legs.
  */
+function race_day_race_team_create_submit(array &$form, FormStateInterface $form_state): void {
+  // Reload the entity from storage so we have clean state after the initial save.
+  $id = $form_state->getFormObject()->getEntity()->id();
+  /** @var \Drupal\group\Entity\GroupInterface $race_team */
+  $race_team = \Drupal::entityTypeManager()->getStorage('group')->load($id);
+  if (!$race_team) {
+    return;
+  }
+
+  $race = $race_team->get('field_race')->entity;
+  if (!$race) {
+    return;
+  }
+
+  $leg_ids = \Drupal::entityQuery('race_leg')
+    ->condition('race_id', $race->id())
+    ->sort('leg_number', 'ASC')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (empty($leg_ids)) {
+    return;
+  }
+
+  // Delete any stray empty paragraphs the widget may have auto-created.
+  foreach ($race_team->get('field_runner_legs')->referencedEntities() as $existing) {
+    $existing->delete();
+  }
+
+  // loadMultiple keys by entity ID; restore the leg_number sort order.
+  $legs_by_id = \Drupal::entityTypeManager()->getStorage('race_leg')->loadMultiple($leg_ids);
+  $legs = array_map(fn($id) => $legs_by_id[$id], $leg_ids);
+
+  $items = $race_team->get('field_runner_legs');
+  $items->setValue([]);
+  foreach ($legs as $leg) {
+    $paragraph = Paragraph::create([
+      'type' => 'race_day_leg_assignment',
+      'field_race_day_leg' => $leg,
+    ]);
+    $paragraph->setParentEntity($race_team, 'field_runner_legs');
+    $paragraph->save();
+    $items->appendItem($paragraph);
+  }
+
+  $race_team->save();
+}
+
 /**
  * Implements hook_page_attachments().
  */

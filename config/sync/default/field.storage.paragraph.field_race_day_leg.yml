@@ -1,0 +1,20 @@
+uuid: 84918c96-d955-4ad1-b724-bfe08845fea1
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - race_day
+id: paragraph.field_race_day_leg
+field_name: field_race_day_leg
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: race_leg
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

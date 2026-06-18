@@ -1,0 +1,10 @@
+uuid: 4fc79b37-d994-417d-a759-8191fa252791
+langcode: en
+status: true
+dependencies: {  }
+id: race_day_leg_assignment
+label: 'Race Day Leg Assignment'
+icon_uuid: null
+icon_default: null
+description: 'The assignment of a Race Day participant to a particular leg, of a particular race, on a particular team.'
+behavior_plugins: {  }
