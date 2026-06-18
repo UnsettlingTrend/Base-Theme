@@ -6,6 +6,8 @@ dependencies:
   enforced:
     module:
       - race_day
+_core:
+  default_config_hash: EovpNloz2BQeQowJID4s1MN5zLj_LpL3KqazHjtKsrM
 id: race_leg_map
 label: 'Race Leg Map'
 module: views

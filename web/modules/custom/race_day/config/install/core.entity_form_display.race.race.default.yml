@@ -6,8 +6,11 @@ dependencies:
   module:
     - datetime
     - paragraphs
+    - path
     - race_day
     - text
+_core:
+  default_config_hash: 0FM5NGKiE_f7YPJlTvatF_tvOe41n5ZxN5CWjOBMO6A
 id: race.race.default
 targetEntityType: race
 bundle: race
@@ -61,6 +64,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
     third_party_settings: {  }
   race_date:
     type: datetime_default

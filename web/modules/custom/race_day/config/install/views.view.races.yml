@@ -8,6 +8,8 @@ dependencies:
   enforced:
     module:
       - race_day
+_core:
+  default_config_hash: n_aeDEo9PUCq5t5f3zRXgD_YoE4pUtp0PCehUQ_U_NQ
 id: races
 label: Races
 module: views
@@ -77,31 +79,6 @@ display:
           settings:
             timezone_override: ''
             format_type: medium
-        status:
-          id: status
-          table: race
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: race
-          entity_field: status
-          plugin_id: field
-          label: Status
-          exclude: false
-          alter:
-            alter_text: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          type: list_default
-          settings: {  }
         total_distance:
           id: total_distance
           table: race
@@ -131,6 +108,31 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
+        status:
+          id: status
+          table: race
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race
+          entity_field: status
+          plugin_id: field
+          label: Status
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: list_default
+          settings: {  }
       pager:
         type: full
         options:
@@ -272,6 +274,28 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
+      tags: {  }
+  block_1:
+    id: block_1
+    display_title: Block
+    display_plugin: block
+    position: 1
+    display_options:
+      filters: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        filters: false
+        filter_groups: false
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
         - url.query_args
       tags: {  }
   page_1:

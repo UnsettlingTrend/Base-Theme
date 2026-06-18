@@ -3,6 +3,8 @@ status: true
 dependencies:
   module:
     - race_day
+_core:
+  default_config_hash: cjEdYc1Umh4g5uk5LTgjiJV2C88cBfei9xYydj3lB7w
 id: race_day_coordinator
 label: 'Race Day Coordinator'
 weight: 3

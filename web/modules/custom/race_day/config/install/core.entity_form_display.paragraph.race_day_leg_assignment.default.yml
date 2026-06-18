@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.race_day_leg_assignment.field_race_day_leg
+    - field.field.paragraph.race_day_leg_assignment.field_race_day_runner
+    - paragraphs.paragraphs_type.race_day_leg_assignment
+id: paragraph.race_day_leg_assignment.default
+targetEntityType: paragraph
+bundle: race_day_leg_assignment
+mode: default
+content:
+  field_race_day_leg:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_race_day_runner:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - group
-    - race_day
-_core:
-  default_config_hash: YdL5qUPPUguyKt9aftGvnKMRPJHRagqxBcmz1HAVWgM
-id: group.field_race
-field_name: field_race
-entity_type: group
+    - paragraphs
+    - user
+id: paragraph.field_race_day_runner
+field_name: field_race_day_runner
+entity_type: paragraph
 type: entity_reference
 settings:
-  target_type: race
+  target_type: user
 module: core
 locked: false
 cardinality: 1

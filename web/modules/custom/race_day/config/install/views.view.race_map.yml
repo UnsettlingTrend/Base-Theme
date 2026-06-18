@@ -6,6 +6,8 @@ dependencies:
   enforced:
     module:
       - race_day
+_core:
+  default_config_hash: Z8V3kchFoCCXjTon6GBW3xtQkmW-ucrm3ILaTO-QWJA
 id: race_map
 label: 'Race Map'
 module: views
