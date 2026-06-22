@@ -18,6 +18,9 @@ admin_toolbar:
 
 runner_assignment:
   version: VERSION
+  css:
+    component:
+      css/runner-assignment.css: {}
   js:
     js/runner-assignment.js: {}
   dependencies:

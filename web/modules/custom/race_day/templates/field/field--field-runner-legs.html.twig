@@ -13,6 +13,7 @@
       <tr>
         <th>#</th>
         <th>Leg Name</th>
+        <th>Distance</th>
         <th>Runner</th>
       </tr>
     </thead>
@@ -20,10 +21,26 @@
       {% for row in runner_assignment_rows %}
         <tr>
           <td>{{ row.leg_number }}</td>
-          <td>{{ row.leg_name }}</td>
+          <td>
+            {% if row.leg_url %}
+              <a href="{{ row.leg_url }}">{{ row.leg_name }}</a>
+            {% else %}
+              {{ row.leg_name }}
+            {% endif %}
+          </td>
+          <td>{{ row.leg_distance }}</td>
           <td>
             {% if row.has_runner %}
               {{ row.runner }}
+              {% if row.can_remove %}
+                <button
+                  class="runner-remove-btn"
+                  aria-label="Remove {{ row.runner }}"
+                  data-paragraph-id="{{ row.paragraph_id }}"
+                  data-url="{{ remove_url }}"
+                  data-csrf-token="{{ remove_csrf_token }}"
+                >✕</button>
+              {% endif %}
             {% elseif is_captain_or_admin %}
               <select
                 class="runner-assign-select"

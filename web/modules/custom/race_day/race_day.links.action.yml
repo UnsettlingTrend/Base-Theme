@@ -15,3 +15,11 @@ race_assignment.add:
   route_name: entity.race_assignment.add_form
   appears_on:
     - entity.race_assignment.collection
+
+race_team.add:
+  title: 'Add Team'
+  route_name: entity.group.add_form
+  route_parameters:
+    group_type: race_team
+  appears_on:
+    - view.race_teams.page_1

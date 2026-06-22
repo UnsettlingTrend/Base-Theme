@@ -9,6 +9,18 @@ block.settings.entity_view:*:
       label: 'View mode'
 
 
+views.filter.race_team_member_name:
+  type: views_filter
+  label: 'Race team member name filter'
+  mapping:
+    expose:
+      type: views_filter_expose
+      label: 'Exposed filter options'
+      mapping:
+        placeholder:
+          type: string
+          label: 'Placeholder'
+
 views.style.race_leg_map:
   type: views_style
   label: 'Race Leg Map style options'

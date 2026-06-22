@@ -178,6 +178,15 @@ race_day.legs.import:
 # Location update API endpoint
 # --------------------------------------------------------------------------
 
+race_day.remove_runner:
+  path: '/race-day/group/{group}/remove-runner'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\AssignRunnerController::remove'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    group: \d+
+  methods: [POST]
+
 race_day.assign_runner:
   path: '/race-day/group/{group}/assign-runner'
   defaults:

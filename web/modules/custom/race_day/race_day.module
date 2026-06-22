@@ -96,6 +96,11 @@ function race_day_theme(): array {
       'render element' => 'elements',
       'template' => 'race',
     ],
+    'field__field_runner_legs' => [
+      'base hook' => 'field',
+      'template' => 'field--field-runner-legs',
+      'path' => \Drupal::service('extension.list.module')->getPath('race_day') . '/templates/field',
+    ],
   ];
 }
 
@@ -125,14 +130,132 @@ function race_day_entity_extra_field_info(): array {
 /**
  * Implements hook_preprocess_field().
  *
- * Attaches inline-label styling for field_race. Uses the base hook rather
- * than a suggestion-specific hook because Drupal's module handler does not
- * reliably discover suggestion-specific preprocess functions in modules.
+ * Uses the base hook rather than suggestion-specific hooks because Drupal's
+ * module handler does not reliably discover suggestion-specific preprocess
+ * functions in modules.
  */
 function race_day_preprocess_field(array &$variables): void {
   if ($variables['field_name'] === 'field_race') {
     $variables['#attached']['library'][] = 'race_day/race_info_group';
   }
+
+  if ($variables['field_name'] === 'field_runner_legs') {
+    _race_day_preprocess_field_runner_legs($variables);
+  }
+}
+
+/**
+ * Preprocess helper for field_runner_legs on race_team group pages.
+ */
+function _race_day_preprocess_field_runner_legs(array &$variables): void {
+  /** @var \Drupal\group\Entity\GroupInterface $group */
+  $group = $variables['element']['#object'];
+
+  $current_user = \Drupal::currentUser();
+  $membership = $group->getMember($current_user);
+
+  $is_member = (bool) $membership;
+  $is_captain_or_admin = FALSE;
+  $members = [];
+
+  if ($membership) {
+    foreach ($membership->getRoles() as $role) {
+      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
+        $is_captain_or_admin = TRUE;
+        break;
+      }
+    }
+
+    if ($is_captain_or_admin) {
+      foreach ($group->getMembers() as $group_membership) {
+        $member = $group_membership->getUser();
+        $members[$member->id()] = $member->getDisplayName();
+      }
+      asort($members);
+    }
+  }
+
+  $assign_url = '';
+  $csrf_token = '';
+  $remove_url = '';
+  $remove_csrf_token = '';
+  if ($is_member) {
+    $assign_url = \Drupal\Core\Url::fromRoute('race_day.assign_runner', ['group' => $group->id()])->toString();
+    $csrf_token = \Drupal::csrfToken()->get('assign-runner-' . $group->id());
+    $remove_url = \Drupal\Core\Url::fromRoute('race_day.remove_runner', ['group' => $group->id()])->toString();
+    $remove_csrf_token = \Drupal::csrfToken()->get('remove-runner-' . $group->id());
+    $variables['#attached']['library'][] = 'race_day/runner_assignment';
+  }
+
+  $rows = [];
+  foreach ($variables['element']['#items'] as $item) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $item->entity;
+    if (!$paragraph) {
+      continue;
+    }
+
+    $leg_number = '';
+    $leg_name = '';
+    $leg_url = '';
+    $leg_distance = '';
+    if ($paragraph->hasField('field_race_day_leg') && !$paragraph->get('field_race_day_leg')->isEmpty()) {
+      /** @var \Drupal\race_day\Entity\RaceLeg $leg */
+      $leg = $paragraph->get('field_race_day_leg')->entity;
+      if ($leg) {
+        $leg_number = $leg->get('leg_number')->value;
+        $leg_name = $leg->label();
+        $leg_url = $leg->toUrl('canonical')->toString();
+        $leg_distance = $leg->get('distance')->value ?? '';
+      }
+    }
+
+    $runner_name = '';
+    $runner_id = NULL;
+    $has_runner = FALSE;
+    if ($paragraph->hasField('field_race_day_runner') && !$paragraph->get('field_race_day_runner')->isEmpty()) {
+      /** @var \Drupal\user\Entity\User $runner */
+      $runner = $paragraph->get('field_race_day_runner')->entity;
+      if ($runner) {
+        $runner_name = $runner->getDisplayName();
+        $runner_id = (int) $runner->id();
+        $has_runner = TRUE;
+      }
+    }
+
+    $can_remove = FALSE;
+    if ($has_runner && $is_captain_or_admin) {
+      $can_remove = TRUE;
+    }
+    elseif ($has_runner && $is_member && $runner_id === (int) $current_user->id()) {
+      $can_remove = TRUE;
+    }
+
+    $rows[] = [
+      'paragraph_id' => $paragraph->id(),
+      'leg_number'   => $leg_number,
+      'leg_name'     => $leg_name,
+      'leg_url'      => $leg_url,
+      'leg_distance' => $leg_distance,
+      'runner'       => $runner_name,
+      'runner_id'    => $runner_id,
+      'has_runner'   => $has_runner,
+      'can_remove'   => $can_remove,
+    ];
+  }
+
+  usort($rows, fn($a, $b) => $a['leg_number'] <=> $b['leg_number']);
+
+  $variables['group_id']              = $group->id();
+  $variables['runner_assignment_rows'] = $rows;
+  $variables['is_member']             = $is_member;
+  $variables['is_captain_or_admin']   = $is_captain_or_admin;
+  $variables['members']               = $members;
+  $variables['current_user_id']       = $current_user->id();
+  $variables['assign_url']            = $assign_url;
+  $variables['csrf_token']            = $csrf_token;
+  $variables['remove_url']            = $remove_url;
+  $variables['remove_csrf_token']     = $remove_csrf_token;
 }
 
 /**
@@ -148,34 +271,39 @@ function race_day_race_leg_view(array &$build, RaceLeg $entity, EntityViewDispla
  * Renders the "Race Info" pseudo-field when it is present in the display.
  */
 function race_day_race_view(array &$build, Race $entity, EntityViewDisplayInterface $display, string $view_mode): void {
-  if (!$display->getComponent('race_info_group')) {
-    return;
-  }
-
   $view_builder = \Drupal::entityTypeManager()->getViewBuilder('race');
 
   $field_labels = [
-    'race_date' => t('Date'),
+    'race_date'      => t('Date'),
     'total_distance' => t('Total Distance'),
-    'status' => t('Status'),
+    'status'         => t('Status'),
+  ];
+
+  // Formatter options per field — mirrors what the Layout Builder blocks used.
+  $formatter_options = [
+    'race_date'      => ['type' => 'datetime_default', 'settings' => ['format_type' => 'article_date']],
+    'total_distance' => ['type' => 'number_decimal', 'settings' => ['scale' => 2, 'prefix_suffix' => TRUE]],
+    'status'         => ['type' => 'list_default', 'settings' => []],
   ];
 
   $group = [
     '#type' => 'container',
     '#attributes' => ['class' => ['race-info-group']],
     '#attached' => ['library' => ['race_day/race_info_group']],
+    'heading' => [
+      '#type' => 'html_tag',
+      '#tag' => 'h2',
+      '#value' => t('Race Info'),
+    ],
   ];
 
   foreach ($field_labels as $field_name => $label_text) {
-    // Render the value with the label hidden — we output the label ourselves
-    // with a module-owned class so styling stays in the module.
-    $options = $display->getComponent($field_name) ?? [];
-    $options['label'] = 'hidden';
+    $options = $formatter_options[$field_name] + ['label' => 'hidden', 'weight' => 0];
 
     $group[$field_name] = [
       '#type' => 'container',
       '#attributes' => ['class' => ['race-info-field']],
-      'label' => [
+      'field_label' => [
         '#type' => 'html_tag',
         '#tag' => 'span',
         '#value' => $label_text,
@@ -200,11 +328,23 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
 
   if ($entity->getEntityTypeId() === 'group' && $entity->bundle() === 'race_team') {
     if ($entity->isNew()) {
-      // Pre-populate field_race when arriving via the "Register a Team" button.
       $race_id = \Drupal::request()->query->get('race_id');
-      if ($race_id && isset($form['field_race'])) {
-        $form['field_race']['widget'][0]['target_id']['#default_value'] =
-          \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+
+      if (isset($form['field_race'])) {
+        // Validate that the chosen race has open registration.
+        $form['field_race']['widget'][0]['target_id']['#element_validate'][] = 'race_day_field_race_validate_open_registration';
+
+        // Pre-populate and lock the field when race_id is in the URL.
+        if ($race_id) {
+          $race = \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+          if ($race) {
+            $form['field_race']['widget'][0]['target_id']['#default_value'] = $race;
+            // Disable the widget so the user cannot change the value.
+            // Drupal's form API keeps #default_value as the submitted value
+            // for disabled elements, so the race is still saved correctly.
+            $form['field_race']['widget'][0]['target_id']['#disabled'] = TRUE;
+          }
+        }
       }
       $form['revision_information']['#access'] = FALSE;
       $form['path']['#access'] = FALSE;
@@ -240,6 +380,25 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
   if (isset($form['total_distance']['widget'][0]['value'])) {
     $form['total_distance']['widget'][0]['value']['#disabled'] = TRUE;
     $form['total_distance']['widget'][0]['value']['#description'] = t('Automatically calculated from the sum of all race leg distances.');
+  }
+}
+
+/**
+ * Element validate callback for field_race on the race_team add form.
+ *
+ * Rejects races whose registration is not open. Runs after
+ * EntityAutocomplete::validateEntityAutocomplete, which resolves the
+ * autocomplete string to an entity ID in form state.
+ */
+function race_day_field_race_validate_open_registration(array &$element, FormStateInterface $form_state): void {
+  $race_id = $form_state->getValue($element['#parents']);
+  if (empty($race_id)) {
+    return;
+  }
+
+  $race = \Drupal::entityTypeManager()->getStorage('race')->load((int) $race_id);
+  if ($race && $race->get('status')->value !== 'registration_open') {
+    $form_state->setError($element, t('Registration for %race is not currently open.', ['%race' => $race->label()]));
   }
 }
 

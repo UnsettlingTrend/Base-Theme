@@ -40,65 +40,17 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 2
             additional: {  }
-          285f6c55-156f-4162-8bbd-7cd7e3adae49:
-            uuid: 285f6c55-156f-4162-8bbd-7cd7e3adae49
+          f8a2e9b1-4c7d-4e5f-a3b2-c1d0e9f82745:
+            uuid: f8a2e9b1-4c7d-4e5f-a3b2-c1d0e9f82745
             region: second
             configuration:
-              id: 'field_block:race:race:race_date'
-              label: 'Race Date'
+              id: 'extra_field_block:race:race:race_info_group'
+              label: 'Race Info'
               label_display: '0'
               provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: datetime_default
-                label: hidden
-                settings:
-                  timezone_override: ''
-                  format_type: article_date
-                third_party_settings: {  }
             weight: 0
-            additional: {  }
-          dd0c279a-defb-4e39-b38d-eddd2491581a:
-            uuid: dd0c279a-defb-4e39-b38d-eddd2491581a
-            region: second
-            configuration:
-              id: 'field_block:race:race:total_distance'
-              label: 'Total Distance'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: number_decimal
-                label: hidden
-                settings:
-                  thousand_separator: ''
-                  decimal_separator: .
-                  scale: 2
-                  prefix_suffix: true
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          c95cf7e9-8d92-46f5-a908-3eb39b09a3a7:
-            uuid: c95cf7e9-8d92-46f5-a908-3eb39b09a3a7
-            region: second
-            configuration:
-              id: 'field_block:race:race:status'
-              label: 'Race Status'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: list_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 2
             additional: {  }
           3e51e5ec-25aa-47f0-b991-dbd40f62d694:
             uuid: 3e51e5ec-25aa-47f0-b991-dbd40f62d694

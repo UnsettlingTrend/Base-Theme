@@ -25,7 +25,6 @@ class AssignRunnerController extends ControllerBase {
   }
 
   public function assign(Request $request, GroupInterface $group): AjaxResponse|JsonResponse {
-    // Validate CSRF token.
     $token = $request->request->get('csrf_token');
     if (!\Drupal::csrfToken()->validate($token, 'assign-runner-' . $group->id())) {
       return new JsonResponse(['error' => 'Invalid token.'], 403);
@@ -84,11 +83,63 @@ class AssignRunnerController extends ControllerBase {
     $paragraph->set('field_race_day_runner', $target_user);
     $paragraph->save();
 
-    // Reload the group to bypass the in-memory entity cache and get fresh
-    // paragraph data. The field is inside a Layout Builder layout so we
-    // cannot use ->view('default') (which looks up the display component
-    // list and returns empty for Layout Builder fields). Instead, pass
-    // the formatter options directly so the field renders regardless.
+    return $this->reRenderTable($group);
+  }
+
+  public function remove(Request $request, GroupInterface $group): AjaxResponse|JsonResponse {
+    $token = $request->request->get('csrf_token');
+    if (!\Drupal::csrfToken()->validate($token, 'remove-runner-' . $group->id())) {
+      return new JsonResponse(['error' => 'Invalid token.'], 403);
+    }
+
+    $paragraph_id = (int) $request->request->get('paragraph_id');
+
+    $current_user = $this->currentUser();
+    $membership = $group->getMember($current_user);
+
+    if (!$membership) {
+      return new JsonResponse(['error' => 'Access denied.'], 403);
+    }
+
+    $is_captain_or_admin = FALSE;
+    foreach ($membership->getRoles() as $role) {
+      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
+        $is_captain_or_admin = TRUE;
+        break;
+      }
+    }
+
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $this->entityTypeManager()->getStorage('paragraph')->load($paragraph_id);
+    if (!$paragraph || $paragraph->bundle() !== 'race_day_leg_assignment') {
+      return new JsonResponse(['error' => 'Invalid assignment.'], 400);
+    }
+
+    if ($paragraph->getParentEntity()?->id() !== $group->id()) {
+      return new JsonResponse(['error' => 'Assignment does not belong to this team.'], 403);
+    }
+
+    // Regular members may only remove themselves.
+    if (!$is_captain_or_admin) {
+      $runner_id = $paragraph->get('field_race_day_runner')->target_id;
+      if ((int) $runner_id !== (int) $current_user->id()) {
+        return new JsonResponse(['error' => 'Access denied.'], 403);
+      }
+    }
+
+    $paragraph->set('field_race_day_runner', NULL);
+    $paragraph->save();
+
+    return $this->reRenderTable($group);
+  }
+
+  /**
+   * Reloads the group and re-renders the runner assignments field.
+   */
+  private function reRenderTable(GroupInterface $group): AjaxResponse {
+    // Reload to bypass the in-memory cache and pick up the saved value.
+    // Pass formatter options directly — the field lives inside a Layout Builder
+    // layout, so ->view('default') returns empty (no top-level component found).
     $group_fresh = $this->entityTypeManager()->getStorage('group')->loadUnchanged($group->id());
     $build = $group_fresh->get('field_runner_legs')->view([
       'type' => 'entity_reference_revisions_entity_view',
