@@ -1,0 +1,56 @@
+{#
+/**
+ * @file
+ * Template for the Runner Assignments field on race_team groups.
+ */
+#}
+<div{{ attributes.setAttribute('id', 'runner-assignments-' ~ group_id) }}>
+  {% if not label_hidden %}
+    <h2 class="field__label">{{ label }}</h2>
+  {% endif %}
+  <table class="runner-assignments">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Leg Name</th>
+        <th>Runner</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in runner_assignment_rows %}
+        <tr>
+          <td>{{ row.leg_number }}</td>
+          <td>{{ row.leg_name }}</td>
+          <td>
+            {% if row.has_runner %}
+              {{ row.runner }}
+            {% elseif is_captain_or_admin %}
+              <select
+                class="runner-assign-select"
+                data-paragraph-id="{{ row.paragraph_id }}"
+                data-url="{{ assign_url }}"
+                data-csrf-token="{{ csrf_token }}"
+              >
+                <option value="">— Assign runner —</option>
+                {% for uid, name in members %}
+                  <option value="{{ uid }}">{{ name }}</option>
+                {% endfor %}
+              </select>
+            {% elseif is_member %}
+              <a
+                href="#"
+                class="runner-assign-me"
+                data-paragraph-id="{{ row.paragraph_id }}"
+                data-user-id="{{ current_user_id }}"
+                data-url="{{ assign_url }}"
+                data-csrf-token="{{ csrf_token }}"
+              >Assign me</a>
+            {% else %}
+              —
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

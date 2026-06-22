@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.base_field_override.group.race_team.label
     - field.field.group.race_team.field_icon
     - field.field.group.race_team.field_race
     - field.field.group.race_team.field_runner_legs
@@ -23,22 +22,6 @@ third_party_settings:
         layout_settings:
           label: ''
         components:
-          e699fb18-4757-447c-a1ca-332f40f97881:
-            uuid: e699fb18-4757-447c-a1ca-332f40f97881
-            region: content
-            configuration:
-              id: 'field_block:group:race_team:label'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: string
-                label: hidden
-                settings:
-                  link_to_entity: false
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
           b606717a-a9fc-4197-a03c-eb77b58a4dc8:
             uuid: b606717a-a9fc-4197-a03c-eb77b58a4dc8
             region: content
@@ -54,23 +37,6 @@ third_party_settings:
                   link: true
                 third_party_settings: {  }
             weight: 1
-            additional: {  }
-          146c9111-009e-4ef7-b764-500049477b39:
-            uuid: 146c9111-009e-4ef7-b764-500049477b39
-            region: content
-            configuration:
-              id: 'field_block:group:race_team:field_icon'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_entity_view
-                label: above
-                settings:
-                  view_mode: default
-                  link: false
-                third_party_settings: {  }
-            weight: 2
             additional: {  }
         third_party_settings: {  }
       -
@@ -92,7 +58,7 @@ third_party_settings:
               views_label: ''
               items_per_page: null
               exposed: {  }
-            weight: 1
+            weight: 2
             additional: {  }
           146bf807-ecf9-4efe-b68c-32dab1a7006f:
             uuid: 146bf807-ecf9-4efe-b68c-32dab1a7006f
@@ -110,6 +76,25 @@ third_party_settings:
                   link: ''
                 third_party_settings: {  }
             weight: 0
+            additional: {  }
+          146c9111-009e-4ef7-b764-500049477b39:
+            uuid: 146c9111-009e-4ef7-b764-500049477b39
+            region: second
+            configuration:
+              id: 'field_block:group:race_team:field_icon'
+              label: Icon
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: icon
+                third_party_settings: {  }
+            weight: 1
             additional: {  }
         third_party_settings: {  }
 _core:

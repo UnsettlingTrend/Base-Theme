@@ -6,6 +6,96 @@
  */
 
 /**
+ * Implements hook_preprocess_field() for field_runner_legs.
+ */
+function ut_material_preprocess_field__field_runner_legs(array &$variables): void {
+  /** @var \Drupal\group\Entity\GroupInterface $group */
+  $group = $variables['element']['#object'];
+
+  $current_user = \Drupal::currentUser();
+  $membership = $group->getMember($current_user);
+
+  $is_member = (bool) $membership;
+  $is_captain_or_admin = FALSE;
+  $members = [];
+
+  if ($membership) {
+    foreach ($membership->getRoles() as $role) {
+      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
+        $is_captain_or_admin = TRUE;
+        break;
+      }
+    }
+
+    if ($is_captain_or_admin) {
+      foreach ($group->getMembers() as $group_membership) {
+        $member = $group_membership->getUser();
+        $members[$member->id()] = $member->getDisplayName();
+      }
+      asort($members);
+    }
+  }
+
+  $assign_url = '';
+  $csrf_token = '';
+  if ($is_member) {
+    $assign_url = \Drupal\Core\Url::fromRoute('race_day.assign_runner', ['group' => $group->id()])->toString();
+    $csrf_token = \Drupal::csrfToken()->get('assign-runner-' . $group->id());
+    $variables['#attached']['library'][] = 'race_day/runner_assignment';
+  }
+
+  $rows = [];
+  foreach ($variables['element']['#items'] as $item) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $item->entity;
+    if (!$paragraph) {
+      continue;
+    }
+
+    $leg_number = '';
+    $leg_name = '';
+    if ($paragraph->hasField('field_race_day_leg') && !$paragraph->get('field_race_day_leg')->isEmpty()) {
+      /** @var \Drupal\race_day\Entity\RaceLeg $leg */
+      $leg = $paragraph->get('field_race_day_leg')->entity;
+      if ($leg) {
+        $leg_number = $leg->get('leg_number')->value;
+        $leg_name = $leg->label();
+      }
+    }
+
+    $runner_name = '';
+    $has_runner = FALSE;
+    if ($paragraph->hasField('field_race_day_runner') && !$paragraph->get('field_race_day_runner')->isEmpty()) {
+      /** @var \Drupal\user\Entity\User $runner */
+      $runner = $paragraph->get('field_race_day_runner')->entity;
+      if ($runner) {
+        $runner_name = $runner->getDisplayName();
+        $has_runner = TRUE;
+      }
+    }
+
+    $rows[] = [
+      'paragraph_id' => $paragraph->id(),
+      'leg_number' => $leg_number,
+      'leg_name' => $leg_name,
+      'runner' => $runner_name,
+      'has_runner' => $has_runner,
+    ];
+  }
+
+  usort($rows, fn($a, $b) => $a['leg_number'] <=> $b['leg_number']);
+
+  $variables['group_id'] = $group->id();
+  $variables['runner_assignment_rows'] = $rows;
+  $variables['is_member'] = $is_member;
+  $variables['is_captain_or_admin'] = $is_captain_or_admin;
+  $variables['members'] = $members;
+  $variables['current_user_id'] = $current_user->id();
+  $variables['assign_url'] = $assign_url;
+  $variables['csrf_token'] = $csrf_token;
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function ut_material_preprocess_html(array &$variables): void {

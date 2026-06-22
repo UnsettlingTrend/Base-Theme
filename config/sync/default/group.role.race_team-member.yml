@@ -1,0 +1,19 @@
+uuid: aead12fa-76d9-44af-917e-0dd0cb2a522a
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+    - user.role.authenticated
+id: race_team-member
+label: Member
+weight: -8
+admin: false
+scope: insider
+global_role: authenticated
+group_type: race_team
+permissions:
+  - 'leave group'
+  - 'update own group_membership relationship'
+  - 'view group'
+  - 'view group_membership relationship'

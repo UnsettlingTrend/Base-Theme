@@ -16,6 +16,15 @@ admin_toolbar:
     theme:
       css/admin-toolbar.css: {}
 
+runner_assignment:
+  version: VERSION
+  js:
+    js/runner-assignment.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.ajax
+
 race_leg_map:
   version: VERSION
   css:

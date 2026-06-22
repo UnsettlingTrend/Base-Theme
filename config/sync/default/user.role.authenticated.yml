@@ -12,8 +12,14 @@ dependencies:
     - media.type.remote_video
     - media.type.video
     - node.type.article
+    - node.type.event
+    - node.type.issue
+    - node.type.journal_entry
     - node.type.landing_page
     - node.type.page
+    - node.type.place
+    - node.type.quote
+    - node.type.recipe
     - node.type.webform
     - taxonomy.vocabulary.tags
     - workflows.workflow.editorial
@@ -68,6 +74,7 @@ permissions:
   - 'create media'
   - 'create page content'
   - 'create paragraph content media'
+  - 'create paragraph content race_day_leg_assignment'
   - 'create paragraph content section'
   - 'create paragraph content text_area'
   - 'create remote_video media'
@@ -88,6 +95,7 @@ permissions:
   - 'delete own video media'
   - 'delete own webform content'
   - 'delete paragraph content media'
+  - 'delete paragraph content race_day_leg_assignment'
   - 'delete paragraph content text_area'
   - 'edit any article content'
   - 'edit any audio media'
@@ -114,6 +122,7 @@ permissions:
   - 'update any media'
   - 'update media'
   - 'update paragraph content media'
+  - 'update paragraph content race_day_leg_assignment'
   - 'update paragraph content text_area'
   - 'use ai ckeditor'
   - 'use editorial transition archived_draft'
@@ -158,6 +167,7 @@ permissions:
   - 'view paragraph content ingredient'
   - 'view paragraph content layout'
   - 'view paragraph content media'
+  - 'view paragraph content race_day_leg_assignment'
   - 'view paragraph content record'
   - 'view paragraph content section'
   - 'view paragraph content text_area'

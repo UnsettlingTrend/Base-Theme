@@ -123,6 +123,19 @@ function race_day_entity_extra_field_info(): array {
 }
 
 /**
+ * Implements hook_preprocess_field().
+ *
+ * Attaches inline-label styling for field_race. Uses the base hook rather
+ * than a suggestion-specific hook because Drupal's module handler does not
+ * reliably discover suggestion-specific preprocess functions in modules.
+ */
+function race_day_preprocess_field(array &$variables): void {
+  if ($variables['field_name'] === 'field_race') {
+    $variables['#attached']['library'][] = 'race_day/race_info_group';
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_view() for race_leg.
  */
 function race_day_race_leg_view(array &$build, RaceLeg $entity, EntityViewDisplayInterface $display, string $view_mode): void {

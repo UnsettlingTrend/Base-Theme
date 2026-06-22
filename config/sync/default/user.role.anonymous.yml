@@ -5,6 +5,16 @@ dependencies:
   config:
     - filter.format.limited_html
     - filter.format.restricted_html
+    - node.type.article
+    - node.type.event
+    - node.type.issue
+    - node.type.journal_entry
+    - node.type.landing_page
+    - node.type.page
+    - node.type.place
+    - node.type.quote
+    - node.type.recipe
+    - node.type.webform
   module:
     - book
     - comment

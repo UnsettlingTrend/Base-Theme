@@ -8,9 +8,19 @@ _core:
   default_config_hash: '-355G3mI3AV54cnXSF7xB7dA1G8LCy4nqdTJWVlFRWU'
 id: race_team-team_captain
 label: 'Team Captain'
-weight: 0
+weight: -9
 admin: false
 scope: individual
 global_role: null
 group_type: race_team
-permissions: {  }
+permissions:
+  - 'administer members'
+  - 'delete group'
+  - 'edit group'
+  - 'leave group'
+  - 'update own group_membership relationship'
+  - 'view all group revisions'
+  - 'view group'
+  - 'view group_membership relationship'
+  - 'view latest group version'
+  - 'view own unpublished group'

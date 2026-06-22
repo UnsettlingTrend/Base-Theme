@@ -6,7 +6,7 @@ dependencies:
     - group.type.race_team
 id: race_team-admin
 label: Admin
-weight: 1
+weight: -10
 admin: true
 scope: individual
 global_role: null

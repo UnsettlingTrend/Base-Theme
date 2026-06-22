@@ -1,5 +1,5 @@
 name: cf
-recipe: drupal10
+recipe: drupal11
 
 env_file:
   - lando/defaults.env
@@ -126,3 +126,7 @@ tooling:
     cmd:
       - rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 $(pgrep -o php-fpm) > /dev/null || /etc/init.d/apache2 reload
       - tput setaf 1 && echo "Xdebug Off" && tput sgr 0 && echo
+  pull-prod:
+    service: appserver
+    description: Pull production database and sync media files.
+    cmd: bash /app/lando/pull_prod.sh

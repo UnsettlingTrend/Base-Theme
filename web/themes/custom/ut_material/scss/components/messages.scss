@@ -1,0 +1,50 @@
+// Styles for messages rendered via Drupal's JS Message API (e.g. AJAX
+// MessageCommand). These lack the .messages--colored class and icon markup
+// added by the Twig template, so they need their own rules.
+
+.messages.messages--status:not(.messages--colored) {
+  padding: 14px 16px 14px 54px;
+  background: #e8f5e9;
+  color: #388e3c;
+  border-radius: 4px;
+  position: relative;
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 20px;
+
+  &::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #388e3c;
+  }
+}
+
+.messages.messages--warning:not(.messages--colored) {
+  padding: 14px 16px 14px 54px;
+  background: #fff7cf;
+  color: #a07800;
+  border-radius: 4px;
+  position: relative;
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 20px;
+
+  &::before {
+    content: '!';
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    font-weight: 700;
+    color: #a07800;
+  }
+
+  a {
+    color: #f57f17;
+  }
+}
