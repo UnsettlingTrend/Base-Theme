@@ -4,6 +4,9 @@ status: true
 dependencies:
   config:
     - field.storage.group_relationship.group_roles
+    - user.role.administrator
+    - user.role.race_day_coordinator
+    - user.role.race_day_user
   module:
     - group
     - user
@@ -167,8 +170,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            administrator: administrator
+            race_day_coordinator: race_day_coordinator
+            race_day_user: race_day_user
       cache:
         type: tag
         options: {  }
@@ -295,6 +302,7 @@ display:
         - route
         - url
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.group_relationship.group_roles'
   block_1:
@@ -312,5 +320,6 @@ display:
         - route
         - url
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.group_relationship.group_roles'

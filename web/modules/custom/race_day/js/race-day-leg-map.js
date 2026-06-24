@@ -1,6 +1,7 @@
 /**
  * @file
- * Renders all race leg polylines on a single shared Leaflet map.
+ * Renders all race leg polylines on a single shared Leaflet map and supports
+ * hover-highlighting from the legs table on the same page.
  */
 (function (Drupal, once) {
   'use strict';
@@ -17,6 +18,12 @@
     '#e53935', // red
     '#5c6bc0', // indigo
   ];
+
+  var NORMAL_WEIGHT  = 4;
+  var NORMAL_OPACITY = 0.9;
+  var HIGHLIGHT_WEIGHT  = 7;
+  var HIGHLIGHT_OPACITY = 1.0;
+  var DIM_OPACITY = 0.25;
 
   function decodePolyline(encoded) {
     var points = [];
@@ -91,6 +98,9 @@
 
         var allBounds = [];
 
+        // Keyed by leg_number — used by the table-row hover behavior.
+        var polylinesByLeg = {};
+
         legsWithPolylines.forEach(function (leg, i) {
           var color = LEG_COLORS[i % LEG_COLORS.length];
           var points;
@@ -108,8 +118,8 @@
 
           var line = window.L.polyline(points, {
             color: color,
-            weight: 4,
-            opacity: 0.9
+            weight: NORMAL_WEIGHT,
+            opacity: NORMAL_OPACITY
           }).addTo(map);
 
           var popupLabel = 'Leg ' + leg.leg_number + ': ' + leg.label;
@@ -121,6 +131,7 @@
           }
           line.bindTooltip(popupLabel, { sticky: true });
 
+          polylinesByLeg[leg.leg_number] = line;
           allBounds.push(line.getBounds());
         });
 
@@ -146,6 +157,64 @@
           });
           el.appendChild(legendEl);
         }
+
+        // Expose the polyline registry on the element so the table-row hover
+        // behavior can reach it without a global variable.
+        el._raceLegPolylines = polylinesByLeg;
+
+        // Listen for highlight/reset events dispatched by the table behavior.
+        el.addEventListener('race-leg-highlight', function (e) {
+          var legNumber = e.detail.legNumber;
+          Object.keys(polylinesByLeg).forEach(function (num) {
+            var line = polylinesByLeg[num];
+            if (String(num) === String(legNumber)) {
+              line.setStyle({ weight: HIGHLIGHT_WEIGHT, opacity: HIGHLIGHT_OPACITY });
+              line.bringToFront();
+            }
+            else {
+              line.setStyle({ opacity: DIM_OPACITY });
+            }
+          });
+        });
+
+        el.addEventListener('race-leg-reset', function () {
+          Object.keys(polylinesByLeg).forEach(function (num) {
+            polylinesByLeg[num].setStyle({ weight: NORMAL_WEIGHT, opacity: NORMAL_OPACITY });
+          });
+        });
+      });
+
+      // Table row hover — find any table on the page that has data-leg-number rows.
+      once('race-leg-table-hover', 'body', context).forEach(function () {
+        var mapEl = document.querySelector('.race-leg-map[data-legs]');
+        if (!mapEl) {
+          return;
+        }
+
+        // Use event delegation on the document so it works regardless of
+        // which wrapper class the view uses or whether it loads via AJAX.
+        document.addEventListener('mouseover', function (e) {
+          var row = e.target.closest('tr[data-leg-number]');
+          if (!row) {
+            return;
+          }
+          mapEl.dispatchEvent(new CustomEvent('race-leg-highlight', {
+            detail: { legNumber: row.getAttribute('data-leg-number') }
+          }));
+        });
+
+        document.addEventListener('mouseout', function (e) {
+          var row = e.target.closest('tr[data-leg-number]');
+          if (!row) {
+            return;
+          }
+          // Only reset when actually leaving the row (not moving between child elements).
+          var related = e.relatedTarget;
+          if (related && row.contains(related)) {
+            return;
+          }
+          mapEl.dispatchEvent(new CustomEvent('race-leg-reset'));
+        });
       });
     }
   };

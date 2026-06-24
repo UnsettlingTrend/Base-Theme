@@ -1,0 +1,5 @@
+name: 'UT Utilities'
+type: module
+description: 'Shared utility features for the Unsettling Trend site.'
+package: Custom
+core_version_requirement: ^10 || ^11

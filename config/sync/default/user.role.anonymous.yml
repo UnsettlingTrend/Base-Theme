@@ -18,7 +18,6 @@ dependencies:
   module:
     - book
     - comment
-    - contact
     - filter
     - media
     - node_view_permissions
@@ -35,7 +34,6 @@ permissions:
   - 'access comments'
   - 'access content'
   - 'access printer-friendly version'
-  - 'access site-wide contact form'
   - 'use text format limited_html'
   - 'use text format restricted_html'
   - 'view any article content'

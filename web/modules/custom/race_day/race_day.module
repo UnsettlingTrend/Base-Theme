@@ -8,8 +8,6 @@
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityFormInterface;
-use Drupal\views\Plugin\views\query\QueryPluginBase;
-use Drupal\views\ViewExecutable;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -17,6 +15,22 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_ut_utilities_areas_of_interest_info().
+ */
+function race_day_ut_utilities_areas_of_interest_info(): array {
+  return [
+    'running' => [
+      'label'       => t('Running'),
+      'description' => t('Sign up for races and other running related activities.'),
+      'roles'       => ['race_day_user'],
+      'weight'      => 0,
+    ],
+  ];
+}
 
 /**
  * Implements hook_views_data_alter().
@@ -263,6 +277,31 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
  */
 function race_day_race_leg_view(array &$build, RaceLeg $entity, EntityViewDisplayInterface $display, string $view_mode): void {
   $build['#attached']['library'][] = 'race_day/race_leg_fields';
+}
+
+/**
+ * Implements hook_preprocess_views_view_table().
+ *
+ * Adds data-leg-number to each row of the race_leg view table so the map
+ * highlight behavior can match rows to polylines.
+ */
+function race_day_preprocess_views_view_table(array &$variables): void {
+  if ($variables['view']->id() !== 'race_leg') {
+    return;
+  }
+
+  foreach ($variables['rows'] as $index => &$row) {
+    $result_row = $variables['view']->result[$index] ?? NULL;
+    if (!$result_row) {
+      continue;
+    }
+    /** @var \Drupal\race_day\Entity\RaceLeg|null $entity */
+    $entity = $result_row->_entity ?? NULL;
+    if (!$entity || !$entity->hasField('leg_number')) {
+      continue;
+    }
+    $row['attributes']->setAttribute('data-leg-number', $entity->get('leg_number')->value);
+  }
 }
 
 /**

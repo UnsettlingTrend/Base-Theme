@@ -1,0 +1,12 @@
+ut_utilities.user.areas_of_interest:
+  path: '/user/{user}/areas-of-interest'
+  defaults:
+    _form: '\Drupal\ut_utilities\Form\AreasOfInterestForm'
+    _title: 'Areas of Interest'
+  requirements:
+    _entity_access: 'user.update'
+    user: \d+
+  options:
+    parameters:
+      user:
+        type: entity:user

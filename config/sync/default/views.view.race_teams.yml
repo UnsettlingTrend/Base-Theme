@@ -4,9 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.group.field_race
+    - user.role.administrator
+    - user.role.race_day_coordinator
+    - user.role.race_day_user
   module:
     - group
     - race_day
+    - user
   enforced:
     module:
       - race_day
@@ -201,6 +205,13 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+      access:
+        type: role
+        options:
+          role:
+            administrator: administrator
+            race_day_coordinator: race_day_coordinator
+            race_day_user: race_day_user
       empty:
         area_text_custom:
           id: area_text_custom
@@ -364,6 +375,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.group.field_race'
   block_1:
@@ -469,6 +481,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -489,5 +502,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.roles
       tags:
         - 'config:field.storage.group.field_race'

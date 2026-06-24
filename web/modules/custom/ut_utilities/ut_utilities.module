@@ -1,0 +1,134 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for UT Utilities.
+ */
+
+/**
+ * Returns all area-of-interest definitions collected from every module.
+ *
+ * Results are sorted by weight then label.
+ *
+ * @return array<string, array{label: string, roles: string[], weight?: int, description?: string}>
+ */
+/**
+ * Implements hook_form_FORM_ID_alter() for user_register_form.
+ *
+ * Injects the Areas of Interest checkboxes during account creation only.
+ * After registration the dedicated tab (/user/{user}/areas-of-interest) is
+ * the canonical place to manage this field.
+ */
+function ut_utilities_form_user_register_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $areas = ut_utilities_get_areas_of_interest();
+  if (empty($areas)) {
+    return;
+  }
+
+  $options = [];
+  foreach ($areas as $key => $info) {
+    $options[$key] = $info['label'];
+  }
+
+  $form['areas_of_interest'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Areas of Interest'),
+    '#options' => $options,
+    '#default_value' => [],
+    '#weight' => 10,
+    '#after_build' => ['\Drupal\ut_utilities\Form\AreasOfInterestForm::addOptionDescriptions'],
+    '#areas' => $areas,
+  ];
+
+  // Runs after the entity is saved so the new account already has an ID.
+  $form['actions']['submit']['#submit'][] = 'ut_utilities_register_form_submit';
+}
+
+/**
+ * Submit handler for the user registration form.
+ */
+function ut_utilities_register_form_submit(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $areas = ut_utilities_get_areas_of_interest();
+
+  /** @var \Drupal\user\UserInterface $account */
+  $account = $form_state->getFormObject()->getEntity();
+  $uid = $account->id();
+
+  $raw = $form_state->getValue('areas_of_interest') ?? [];
+  $new_selections = array_values(array_keys(array_filter($raw)));
+
+  \Drupal::service('user.data')->set('ut_utilities', $uid, 'areas_of_interest', $new_selections);
+
+  $changed = FALSE;
+  foreach ($new_selections as $key) {
+    foreach ($areas[$key]['roles'] ?? [] as $role_id) {
+      if (!$account->hasRole($role_id)) {
+        $account->addRole($role_id);
+        $changed = TRUE;
+      }
+    }
+  }
+
+  if ($changed) {
+    $account->save();
+  }
+}
+
+/**
+ * Returns all area-of-interest definitions collected from every module.
+ *
+ * Results are sorted by weight then label.
+ *
+ * @return array<string, array{label: string, roles: string[], weight?: int, description?: string}>
+ */
+/**
+ * Implements hook_menu_local_tasks_alter().
+ *
+ * Ensures the user profile tabs appear in the desired order:
+ * View → Edit → Areas of Interest → Submissions → Social auth profiles → Devel
+ */
+function ut_utilities_menu_local_tasks_alter(array &$data, string $route_name): void {
+  $user_routes = [
+    'entity.user.canonical',
+    'entity.user.edit_form',
+    'ut_utilities.user.areas_of_interest',
+    'entity.webform_submission.user',
+    'social_auth.user.profiles',
+  ];
+
+  if (!in_array($route_name, $user_routes, TRUE)) {
+    return;
+  }
+
+  // $data['tabs'][0] is keyed by local task plugin ID, which matches the
+  // route name for standard tasks.
+  $weights = [
+    'entity.user.edit_form'               => 1,
+    'ut_utilities.user.areas_of_interest' => 2,
+    'entity.webform_submission.user'      => 3,
+    'social_auth.user.profiles'           => 4,
+  ];
+
+  foreach ($weights as $plugin_id => $weight) {
+    if (isset($data['tabs'][0][$plugin_id])) {
+      $data['tabs'][0][$plugin_id]['#weight'] = $weight;
+    }
+  }
+}
+
+/**
+ * Returns all area-of-interest definitions collected from every module.
+ *
+ * Results are sorted by weight then label.
+ *
+ * @return array<string, array{label: string, roles: string[], weight?: int, description?: string}>
+ */
+function ut_utilities_get_areas_of_interest(): array {
+  $areas = \Drupal::moduleHandler()->invokeAll('ut_utilities_areas_of_interest_info');
+  \Drupal::moduleHandler()->alter('ut_utilities_areas_of_interest_info', $areas);
+  uasort($areas, function (array $a, array $b): int {
+    $w = ($a['weight'] ?? 0) <=> ($b['weight'] ?? 0);
+    return $w !== 0 ? $w : strcmp($a['label'], $b['label']);
+  });
+  return $areas;
+}

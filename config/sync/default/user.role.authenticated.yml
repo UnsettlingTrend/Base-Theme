@@ -29,7 +29,6 @@ dependencies:
     - book
     - captcha
     - comment
-    - contact
     - content_moderation
     - contextual
     - file
@@ -60,9 +59,7 @@ permissions:
   - 'access contextual links'
   - 'access media overview'
   - 'access printer-friendly version'
-  - 'access site-wide contact form'
   - 'access toolbar'
-  - 'access user contact forms'
   - 'access user profiles'
   - 'access workbench'
   - 'change own username'
