@@ -167,6 +167,7 @@ permissions:
   - 'view paragraph content race_day_leg_assignment'
   - 'view paragraph content record'
   - 'view paragraph content section'
+  - 'view paragraph content strava_route'
   - 'view paragraph content text_area'
   - 'view paragraph content text_list'
   - 'view paragraph content view'
