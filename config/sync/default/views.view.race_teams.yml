@@ -211,7 +211,6 @@ display:
           role:
             administrator: administrator
             race_day_coordinator: race_day_coordinator
-            race_day_user: race_day_user
       empty:
         area_text_custom:
           id: area_text_custom
@@ -413,9 +412,12 @@ display:
           settings:
             link_to_entity: true
       access:
-        type: perm
+        type: role
         options:
-          perm: 'view all race day groups'
+          role:
+            administrator: administrator
+            race_day_coordinator: race_day_coordinator
+            race_day_user: race_day_user
       arguments:
         id:
           id: id
@@ -457,6 +459,7 @@ display:
         operator: AND
         groups: {  }
       defaults:
+        access: false
         title: false
         relationships: false
         fields: false

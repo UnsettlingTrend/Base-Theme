@@ -7,6 +7,7 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -371,7 +372,14 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
 
       if (isset($form['field_race'])) {
         // Validate that the chosen race has open registration.
-        $form['field_race']['widget'][0]['target_id']['#element_validate'][] = 'race_day_field_race_validate_open_registration';
+        // NOTE: hook_form_alter runs before doBuildForm applies element info
+        // defaults, so #element_validate doesn't exist yet. Setting it here
+        // (rather than appending) means we must explicitly include the core
+        // EntityAutocomplete validator so it is not skipped.
+        $form['field_race']['widget'][0]['target_id']['#element_validate'] = [
+          [EntityAutocomplete::class, 'validateEntityAutocomplete'],
+          'race_day_field_race_validate_open_registration',
+        ];
 
         // Pre-populate and lock the field when race_id is in the URL.
         if ($race_id) {
@@ -420,6 +428,28 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
     $form['total_distance']['widget'][0]['value']['#disabled'] = TRUE;
     $form['total_distance']['widget'][0]['value']['#description'] = t('Automatically calculated from the sum of all race leg distances.');
   }
+}
+
+/**
+ * Implements hook_query_race_access_alter().
+ *
+ * In entity reference contexts (autocomplete suggestions and ValidReference
+ * constraint), limit the selectable races to those with registration open for
+ * unprivileged users. Without this filter the autocomplete could suggest a
+ * race that is not registration_open, and the subsequent ValidReference check
+ * would reject it with a confusing "does not exist" error.
+ */
+function race_day_query_race_access_alter(\Drupal\Core\Database\Query\AlterableInterface $query): void {
+  // Only restrict in entity reference queries (autocomplete + ValidReference).
+  if (!$query->hasTag('entity_reference')) {
+    return;
+  }
+  // Administrators and coordinators may reference races of any status.
+  $account = \Drupal::currentUser();
+  if ($account->hasPermission('administer race_day') || $account->hasPermission('manage race_day races')) {
+    return;
+  }
+  $query->condition('base_table.status', 'registration_open');
 }
 
 /**

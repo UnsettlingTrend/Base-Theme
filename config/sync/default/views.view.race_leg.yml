@@ -371,9 +371,47 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
+      arguments:
+        race_id:
+          id: race_id
+          table: race_leg
+          field: race_id
+          relationship: none
+          group_type: group
+          admin_label: Race
+          entity_type: race_leg
+          entity_field: race_id
+          plugin_id: entity_target_id
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: race
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          target_entity_type_id: race
       defaults:
         title: false
         fields: false
+        arguments: false
       exposed_block: true
       display_extenders: {  }
     cache_metadata:

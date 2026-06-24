@@ -11,4 +11,5 @@ label: 'Race Day User'
 weight: 4
 is_admin: false
 permissions:
+  - 'view all race day groups'
   - 'view race_day content'
