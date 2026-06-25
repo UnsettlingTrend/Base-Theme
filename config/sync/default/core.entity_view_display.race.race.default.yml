@@ -116,23 +116,6 @@ third_party_settings:
               exposed: {  }
             weight: 3
             additional: {  }
-          4fd4ba3b-6d0c-4725-9586-d45b7d296dad:
-            uuid: 4fd4ba3b-6d0c-4725-9586-d45b7d296dad
-            region: first
-            configuration:
-              id: 'field_block:race:race:field_waiver'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: webform_entity_reference_entity_view
-                label: above
-                settings:
-                  source_entity: true
-                  lazy: false
-                third_party_settings: {  }
-            weight: 4
-            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: UEQ6JhZBvK5smL0o-npz2l72KSvi3VQinKxupSUVOl4
