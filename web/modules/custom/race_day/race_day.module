@@ -621,6 +621,7 @@ function template_preprocess_race(array &$variables): void {
   }
 
   $variables['register_team_url'] = NULL;
+  $variables['waiver_modal_url'] = NULL;
   if ($variables['view_mode'] === 'full' && $variables['race']->get('status')->value === 'registration_open') {
     $group_type_storage = \Drupal::entityTypeManager()->getStorage('group_type');
     if ($group_type_storage->load('race_team')) {
@@ -628,8 +629,97 @@ function template_preprocess_race(array &$variables): void {
         'query' => ['race_id' => $variables['race']->id()],
       ]);
       if ($add_url->access()) {
-        $variables['register_team_url'] = $add_url;
+        $race = $variables['race'];
+        if (_race_day_user_needs_waiver($race)) {
+          $variables['waiver_modal_url'] = \Drupal\Core\Url::fromRoute('race_day.waiver_modal', ['race' => $race->id()]);
+          $variables['#attached']['library'][] = 'race_day/waiver_register';
+        }
+        else {
+          $variables['register_team_url'] = $add_url;
+        }
       }
     }
   }
+}
+
+/**
+ * Returns TRUE if the current user has an outstanding (unsubmitted) waiver on
+ * the given race.
+ */
+function _race_day_user_needs_waiver(Race $race): bool {
+  if ($race->get('field_waiver')->isEmpty()) {
+    return FALSE;
+  }
+  $account = \Drupal::currentUser();
+  if ($account->isAnonymous()) {
+    return TRUE;
+  }
+  $storage = \Drupal::entityTypeManager()->getStorage('webform_submission');
+  foreach ($race->get('field_waiver') as $item) {
+    $webform = $item->entity;
+    if (!$webform) {
+      continue;
+    }
+    $existing = $storage->loadByProperties([
+      'webform_id' => $webform->id(),
+      'uid' => $account->id(),
+    ]);
+    if (empty($existing)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_webform_submission_form_alter().
+ *
+ * When the waiver form is submitted from the race registration modal, override
+ * the webform's configured confirmation redirect so the user lands on the team
+ * registration form instead.
+ */
+function race_day_webform_submission_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $request = \Drupal::request();
+  if ($request->attributes->get('_route') !== 'race_day.waiver_modal') {
+    return;
+  }
+  /** @var \Drupal\race_day\Entity\Race|null $race */
+  $race = $request->attributes->get('race');
+  if (!$race instanceof Race) {
+    return;
+  }
+  $destination = \Drupal\Core\Url::fromRoute('entity.group.add_form', ['group_type' => 'race_team'], [
+    'query' => ['race_id' => $race->id()],
+  ])->toString();
+
+  $form_state->set('race_register_destination', $destination);
+
+  // Append our redirect handler after webform's own submit so it wins.
+  if (!empty($form['actions'])) {
+    foreach (Element::children($form['actions']) as $key) {
+      if (($form['actions'][$key]['#type'] ?? '') === 'submit') {
+        $form['actions'][$key]['#submit'][] = '_race_day_waiver_post_submit';
+      }
+    }
+  }
+}
+
+/**
+ * Submit handler appended to waiver forms opened from the registration modal.
+ *
+ * Overrides webform's confirmation redirect so the user proceeds to the team
+ * registration form after signing the waiver.
+ */
+function _race_day_waiver_post_submit(array &$form, FormStateInterface $form_state): void {
+  $destination = $form_state->get('race_register_destination');
+  if (!$destination) {
+    return;
+  }
+  // Only redirect when the submission was actually saved (not a wizard
+  // page-transition where the entity has no ID yet).
+  $entity = $form_state->getFormObject()->getEntity();
+  if (!$entity->id()) {
+    return;
+  }
+  $form_state->setRedirectUrl(\Drupal\Core\Url::fromUserInput($destination));
 }

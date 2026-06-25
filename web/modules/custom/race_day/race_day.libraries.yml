@@ -28,6 +28,11 @@ runner_assignment:
     - core/once
     - core/drupal.ajax
 
+waiver_register:
+  version: VERSION
+  dependencies:
+    - core/drupal.dialog.ajax
+
 race_leg_map:
   version: VERSION
   css:

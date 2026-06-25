@@ -205,3 +205,12 @@ race_day.location_update:
   methods: [POST]
   options:
     _format: json
+
+race_day.waiver_modal:
+  path: '/race/{race}/waiver-modal'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\WaiverModalController::modal'
+    _title: 'Participant Waiver'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    race: \d+
