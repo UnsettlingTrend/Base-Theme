@@ -4,12 +4,14 @@ status: true
 dependencies:
   config:
     - field.field.race.race.field_paragraphs
+    - field.field.race.race.field_waiver
   module:
     - datetime
     - paragraphs
     - path
     - race_day
     - text
+    - webform
 _core:
   default_config_hash: 0FM5NGKiE_f7YPJlTvatF_tvOe41n5ZxN5CWjOBMO6A
 id: race.race.default
@@ -42,6 +44,14 @@ content:
       features:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
+    third_party_settings: {  }
+  field_waiver:
+    type: webform_entity_reference_select
+    weight: 31
+    region: content
+    settings:
+      default_data: true
+      webforms: {  }
     third_party_settings: {  }
   map_data:
     type: string_textarea
