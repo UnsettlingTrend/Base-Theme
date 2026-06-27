@@ -21,6 +21,7 @@ elements: |-
     '#title': Signature
     '#description': '<p>Sign above</p>'
     '#uri_scheme': private
+    '#required': true
 css: ''
 javascript: ''
 settings:

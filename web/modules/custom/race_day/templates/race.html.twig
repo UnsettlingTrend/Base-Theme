@@ -11,20 +11,18 @@
  */
 #}
 <article{{ attributes.addClass('race') }}>
-  {% if register_team_url or waiver_modal_url %}
+  {% if register_team_url or join_team_url %}
     <div class="race__register-action">
       {% if register_team_url %}
         <a href="{{ register_team_url }}" class="mdc-button mdc-button--raised">
           <span class="mdc-button__ripple"></span>
           <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
         </a>
-      {% else %}
-        <a href="{{ waiver_modal_url }}"
-           class="mdc-button mdc-button--raised use-ajax"
-           data-dialog-type="modal"
-           data-dialog-options='{"width":720,"title":"{{ 'Participant Waiver'|t }}"}'>
+      {% endif %}
+      {% if join_team_url %}
+        <a href="{{ join_team_url }}" class="mdc-button mdc-button--outlined">
           <span class="mdc-button__ripple"></span>
-          <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
+          <span class="mdc-button__label">{{ 'Request to Join a Team'|t }}</span>
         </a>
       {% endif %}
     </div>

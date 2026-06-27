@@ -206,6 +206,15 @@ race_day.location_update:
   options:
     _format: json
 
+race_day.runner_team_request:
+  path: '/race/{race}/request-to-join'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\RunnerTeamRequestController::form'
+    _title: 'Request to Join a Team'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    race: \d+
+
 race_day.waiver_modal:
   path: '/race/{race}/waiver-modal'
   defaults:
