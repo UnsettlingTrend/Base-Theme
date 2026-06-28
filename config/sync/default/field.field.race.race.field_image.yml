@@ -1,0 +1,30 @@
+uuid: 4ead3899-f8ae-463f-9836-0bb261c209d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.race.field_image
+    - media.type.image
+  module:
+    - race_day
+id: race.race.field_image
+field_name: field_image
+entity_type: race
+bundle: race
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

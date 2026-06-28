@@ -1,0 +1,20 @@
+uuid: 171d2a27-74fc-4453-b2cc-93219c07959b
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - race_day
+id: race.field_image
+field_name: field_image
+entity_type: race
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

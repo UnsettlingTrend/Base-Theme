@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.race.race.field_image
     - field.field.race.race.field_paragraphs
     - field.field.race.race.field_waiver
     - views.view.race_leg
@@ -54,7 +55,7 @@ third_party_settings:
               provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
-            weight: 0
+            weight: 1
             additional: {  }
           3e51e5ec-25aa-47f0-b991-dbd40f62d694:
             uuid: 3e51e5ec-25aa-47f0-b991-dbd40f62d694
@@ -100,7 +101,7 @@ third_party_settings:
               views_label: ''
               items_per_page: null
               exposed: {  }
-            weight: 3
+            weight: 2
             additional: {  }
           e710ce05-0bcb-402a-a8b4-7c7c37a43a6b:
             uuid: e710ce05-0bcb-402a-a8b4-7c7c37a43a6b
@@ -116,6 +117,25 @@ third_party_settings:
               exposed: {  }
             weight: 3
             additional: {  }
+          c642ff6b-91e1-4e9b-a875-21436349ef5a:
+            uuid: c642ff6b-91e1-4e9b-a875-21436349ef5a
+            region: second
+            configuration:
+              id: 'field_block:race:race:field_image'
+              label: Image
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
         third_party_settings: {  }
 _core:
   default_config_hash: UEQ6JhZBvK5smL0o-npz2l72KSvi3VQinKxupSUVOl4
@@ -124,6 +144,15 @@ targetEntityType: race
 bundle: race
 mode: default
 content:
+  field_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: first
   field_waiver:
     type: webform_entity_reference_entity_view
     label: above

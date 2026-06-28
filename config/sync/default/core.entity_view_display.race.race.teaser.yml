@@ -1,9 +1,15 @@
+uuid: null
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.race.teaser
+    - field.field.race.race.field_image
+    - field.field.race.race.field_paragraphs
+    - field.field.race.race.field_waiver
   module:
+    - datetime
+    - options
     - race_day
 id: race.race.teaser
 targetEntityType: race
@@ -48,9 +54,11 @@ hidden:
   changed: true
   created: true
   description: true
+  field_image: true
   field_paragraphs: true
   field_waiver: true
   map_data: true
   max_teams: true
+  race_info_group: true
   search_api_excerpt: true
   uid: true
