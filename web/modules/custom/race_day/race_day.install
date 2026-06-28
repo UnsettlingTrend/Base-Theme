@@ -148,6 +148,25 @@ function race_day_update_10001(): void {
 }
 
 /**
+ * Install the Race teaser view mode and its display configuration.
+ */
+function race_day_update_10002(): void {
+  $config_factory = \Drupal::configFactory();
+  $module_path = \Drupal::service('extension.list.module')->getPath('race_day');
+  $config_dir = $module_path . '/config/install';
+
+  foreach ([
+    'core.entity_view_mode.race.teaser',
+    'core.entity_view_display.race.race.teaser',
+  ] as $config_name) {
+    if ($config_factory->get($config_name)->isNew()) {
+      $data = \Symfony\Component\Yaml\Yaml::parse(file_get_contents("$config_dir/$config_name.yml"));
+      $config_factory->getEditable($config_name)->setData($data)->save();
+    }
+  }
+}
+
+/**
  * Implements hook_uninstall().
  */
 function race_day_uninstall(): void {

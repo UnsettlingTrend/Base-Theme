@@ -6,6 +6,44 @@
  */
 
 /**
+ * Implements hook_form_FORM_ID_alter() for user_login_form.
+ *
+ * Wraps the standard login fields in a collapsed "Local Account" fieldset so
+ * the form is tidier when other login methods (e.g. SSO) are also present.
+ */
+function ut_material_form_user_login_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, string $form_id): void {
+  // Embed the Social Auth Login block above the local account fieldset so its
+  // position is tied to the form rather than the block region sort order.
+  $block = \Drupal::entityTypeManager()
+    ->getStorage('block')
+    ->load('ut_material_socialauthlogin');
+
+  if ($block) {
+    $form['social_auth'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+    $form['social_auth']['#weight'] = 0;
+  }
+
+  $local_fields = ['name', 'pass', 'actions'];
+  $fieldset = [
+    '#type' => 'details',
+    '#title' => t('Local Account'),
+    '#open' => FALSE,
+    '#weight' => 10,
+  ];
+
+  foreach ($local_fields as $key) {
+    if (isset($form[$key])) {
+      $fieldset[$key] = $form[$key];
+      unset($form[$key]);
+    }
+  }
+
+  $form['local_account'] = $fieldset;
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function ut_material_preprocess_html(array &$variables): void {
