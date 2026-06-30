@@ -224,7 +224,7 @@ $settings['hash_salt'] = 'SXGNp9wMkgups2dhCJikKb_56ND4Q05Rz3O6D_oDxwEcpBISgDeYYW
 $platform_variables = json_decode(base64_decode(getenv("PLATFORM_VARIABLES")), TRUE);
 // Creds for Google reCAPTCHA
 $config['recaptcha.settings']['site_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SITE_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SITE_KEY'] : '<environment-variable>';
-$config['recaptcha.settings']['secret_key'] = !empty($platform_variables['CREDS_RECAPTCHA_API_KEY']) ? $platform_variables['CREDS_RECAPTCHA_API_KEY'] : '<environment-variable>';
+$config['recaptcha.settings']['secret_key'] = !empty($platform_variables['CREDS_RECAPTCHA_SECRET_KEY']) ? $platform_variables['CREDS_RECAPTCHA_SECRET_KEY'] : '<environment-variable>';
 // Creds for Google Maps API
 $config['geolocation_google_maps.settings']['google_map_api_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_KEY'] : '<environment-variable>';
 $config['geolocation_google_maps.settings']['google_map_api_server_key'] = !empty($platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY']) ? $platform_variables['CREDS_GOOGLE_MAPS_PLATFORM_API_SERVER_KEY'] : '<environment-variable>';
