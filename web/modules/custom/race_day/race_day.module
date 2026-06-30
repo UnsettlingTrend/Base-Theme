@@ -103,6 +103,19 @@ function race_day_entity_access(EntityInterface $entity, string $operation, Acco
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter() for race templates.
+ *
+ * Adds a per-view-mode suggestion so Drupal looks for race--{view_mode}.html.twig
+ * (e.g. race--card.html.twig) before falling back to race.html.twig.
+ */
+function race_day_theme_suggestions_race_alter(array &$suggestions, array $variables): void {
+  $view_mode = $variables['elements']['#view_mode'] ?? NULL;
+  if ($view_mode) {
+    $suggestions[] = 'race__' . strtr($view_mode, '-', '_');
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function race_day_theme(): array {
@@ -110,6 +123,11 @@ function race_day_theme(): array {
     'race' => [
       'render element' => 'elements',
       'template' => 'race',
+    ],
+    'race__card' => [
+      'base hook' => 'race',
+      'render element' => 'elements',
+      'template' => 'race--card',
     ],
     'field__field_runner_legs' => [
       'base hook' => 'field',
@@ -619,6 +637,8 @@ function template_preprocess_race(array &$variables): void {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+
+  $variables['url'] = $variables['race']->toUrl('canonical')->toString();
 
   $variables['register_team_url'] = NULL;
   $variables['join_team_url'] = NULL;
