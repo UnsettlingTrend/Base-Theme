@@ -640,6 +640,8 @@ function template_preprocess_race(array &$variables): void {
 
   $variables['url'] = $variables['race']->toUrl('canonical')->toString();
 
+  $variables['#attached']['library'][] = 'race_day/race_display';
+
   $variables['register_team_url'] = NULL;
   $variables['join_team_url'] = NULL;
   if ($variables['view_mode'] === 'full' && $variables['race']->get('status')->value === 'registration_open') {

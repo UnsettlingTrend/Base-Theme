@@ -1,0 +1,10 @@
+.race .field_image {
+  display: flex;
+  justify-content: center;
+}
+
+.race .field_image img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

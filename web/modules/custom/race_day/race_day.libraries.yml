@@ -29,6 +29,12 @@ runner_assignment:
     - core/drupal.ajax
 
 
+race_display:
+  version: VERSION
+  css:
+    component:
+      css/race-display.css: {}
+
 race_leg_map:
   version: VERSION
   css:
