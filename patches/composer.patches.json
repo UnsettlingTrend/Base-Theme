@@ -8,6 +8,9 @@
     },
     "drupal/physical": {
       "Add additional units": "https://www.drupal.org/files/issues/2019-05-01/additional_kitchen_volume-3037212-5.patch"
+    },
+    "drupal/recaptcha": {
+      "Recaptcha Ludwig integration needs an update": "https://www.drupal.org/files/issues/2024-09-04/3472150-02.patch"
     }
   }
 }
