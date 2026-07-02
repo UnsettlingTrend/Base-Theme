@@ -60,7 +60,11 @@ function race_day_views_data_alter(array &$data): void {
  * see all race_team groups in the race_teams view.
  */
 function race_day_views_query_alter(ViewExecutable $view, QueryPluginBase $query): void {
-  if ($view->id() === 'race_teams' && \Drupal::currentUser()->hasPermission('manage race day groups')) {
+  $account = \Drupal::currentUser();
+  if ($view->id() === 'race_teams' && (
+    $account->hasPermission('manage race day groups') ||
+    $account->hasPermission('view all race team names')
+  )) {
     $query->options['disable_sql_rewrite'] = TRUE;
     // Restrict to race_team bundle — enforced here so the view has no
     // schema-problematic bundle filter that breaks on UI save.
@@ -81,6 +85,24 @@ function race_day_entity_type_alter(array &$entity_types): void {
 }
 
 /**
+ * Implements hook_webform_element_alter().
+ *
+ * Swap the race_team field's selection handler to the race_day plugin so that
+ * users with 'view all race team names' see all published teams without the
+ * Group module's membership restrictions filtering the list.
+ */
+function race_day_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
+  if (
+    ($element['#webform_key'] ?? NULL) === 'race_team' &&
+    ($element['#target_type'] ?? NULL) === 'group' &&
+    \Drupal::currentUser()->hasPermission('view all race team names')
+  ) {
+    $element['#selection_handler'] = 'race_day:race_team_name';
+    $element['#selection_settings'] = [];
+  }
+}
+
+/**
  * Implements hook_entity_access().
  *
  * Group 3.x's access handler only checks group-level role permissions and
@@ -93,6 +115,11 @@ function race_day_entity_access(EntityInterface $entity, string $operation, Acco
   }
   if ($operation === 'view') {
     return AccessResult::allowedIfHasPermission($account, 'view all race day groups')
+      ->orIf(AccessResult::allowedIfHasPermission($account, 'view all race team names'))
+      ->cachePerPermissions();
+  }
+  if ($operation === 'create') {
+    return AccessResult::allowedIfHasPermission($account, 'create race teams')
       ->cachePerPermissions();
   }
   if (in_array($operation, ['update', 'delete'], TRUE)) {

@@ -18,6 +18,13 @@ function ut_material_form_user_login_form_alter(array &$form, \Drupal\Core\Form\
     ->getStorage('block')
     ->load('ut_material_socialauthlogin');
 
+  $form['sso_message'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'p',
+    '#value' => t('Use one of the trusted Single Sign-On services below. This site will only receive validation of your identity, and the most basic info to create an account, such as email, name, and user icon. If you prefer, create/login using a local email/password login.'),
+    '#weight' => -1,
+  ];
+
   if ($block) {
     $form['social_auth'] = \Drupal::entityTypeManager()
       ->getViewBuilder('block')
@@ -40,7 +47,34 @@ function ut_material_form_user_login_form_alter(array &$form, \Drupal\Core\Form\
     }
   }
 
+  $fieldset['actions']['#weight'] = 10;
+
+  $fieldset['account_links'] = [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['local-account-links']],
+    '#weight' => 20,
+    'register' => [
+      '#type' => 'link',
+      '#title' => t('Create new account'),
+      '#url' => \Drupal\Core\Url::fromRoute('user.register'),
+    ],
+    'reset' => [
+      '#type' => 'link',
+      '#title' => t('Reset your password'),
+      '#url' => \Drupal\Core\Url::fromRoute('user.pass'),
+    ],
+  ];
+
   $form['local_account'] = $fieldset;
+
+  // Hide the page tabs (Log in / Create new account / Reset your password).
+  $form['#attached']['html_head'][] = [
+    [
+      '#tag' => 'style',
+      '#value' => '.path-user .tabs { display: none; }',
+    ],
+    'hide_user_tabs',
+  ];
 }
 
 /**

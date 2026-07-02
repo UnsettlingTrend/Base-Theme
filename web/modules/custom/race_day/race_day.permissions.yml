@@ -15,6 +15,14 @@
   title: 'Update Race Day location'
   description: 'Allows the user to submit GPS location updates during a race.'
 
+'view all race team names':
+  title: 'View all race team names'
+  description: 'Allows the user to see the names of published race team groups in views and selections, without granting access to view the full group entity.'
+
+'create race teams':
+  title: 'Create Race Teams'
+  description: 'Allows the user to create new race_team group entities.'
+
 'view all race day groups':
   title: 'View all Race Day groups'
   description: 'Allows the user to view all race_team group entities regardless of membership.'

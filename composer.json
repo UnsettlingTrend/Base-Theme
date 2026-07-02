@@ -140,6 +140,7 @@
         "drupal/views_dependent_filters": "^1.2",
         "drupal/viewsreference": "^2.0@beta",
         "drupal/webform": "^6.3@beta",
+        "drupal/webform_views": "^5.0",
         "drupal/workbench": "^1.6",
         "drush/drush": "^13",
         "gasparesganga/php-shapefile": "^3.4",

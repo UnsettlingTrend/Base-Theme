@@ -13,6 +13,16 @@ services:
     arguments:
       - '@entity_type.manager'
 
+  race_day.group_page_access_check:
+    class: Drupal\race_day\Access\GroupPageAccessCheck
+    tags:
+      - { name: access_check, applies_to: _race_day_group_page_access }
+
+  race_day.route_subscriber:
+    class: Drupal\race_day\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
   race_day.drush_commands:
     class: Drupal\race_day\Drush\Commands\RaceDayCommands
     arguments:

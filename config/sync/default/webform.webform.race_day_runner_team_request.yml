@@ -52,6 +52,24 @@ elements: |-
       '14:30': '14:30'
       '15:00': '15:00'
     '#required': true
+  request_status:
+    '#type': radios
+    '#title': 'Request Status'
+    '#options':
+      awaiting_review: 'Awaiting Review'
+      approved: Approved
+      denied: Denied
+    '#required': true
+    '#default_value': awaiting_review
+    '#format': description
+    '#access_create_roles':
+      - administrator
+      - race_day_coordinator
+    '#access_update_roles':
+      - administrator
+      - race_day_coordinator
+    '#access_view_roles':
+      - authenticated
 css: ''
 javascript: ''
 settings:
