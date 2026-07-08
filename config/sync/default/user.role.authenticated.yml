@@ -55,7 +55,6 @@ permissions:
   - 'access ai content suggestion tools'
   - 'access comments'
   - 'access content'
-  - 'access content overview'
   - 'access contextual links'
   - 'access media overview'
   - 'access printer-friendly version'
