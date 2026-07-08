@@ -11,10 +11,10 @@ label: 'Race Day Coordinator'
 weight: 3
 is_admin: false
 permissions:
-  - 'administer race_day'
   - 'create race teams'
   - 'manage race day groups'
   - 'manage race_day races'
+  - 'review all race team requests'
   - 'update race_day location'
   - 'view all race day groups'
   - 'view all race team names'

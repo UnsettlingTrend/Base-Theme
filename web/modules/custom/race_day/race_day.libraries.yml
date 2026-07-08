@@ -35,6 +35,16 @@ race_display:
     component:
       css/race-display.css: {}
 
+request_status_review:
+  version: VERSION
+  js:
+    js/request-status-review.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+    - core/drupal.announce
+
 race_leg_map:
   version: VERSION
   css:

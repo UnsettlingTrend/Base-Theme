@@ -9,22 +9,36 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\group\Entity\GroupInterface;
 
 /**
- * Blocks direct entity page access for users with only 'view all race team names'.
+ * Controls race_team group entity page access.
  *
- * Granting 'view' entity access is required so entity queries (webform
- * selects, views) can include race_team groups for these users, but we do not
- * want them landing on the full group entity page. A forbidden result here
- * wins over the allowed result from hook_entity_access().
+ * Allowed: administrators, Race Day Coordinators (view all race day groups),
+ * and group members with the group-level 'view group' permission.
+ * Forbidden: users with 'view all race team names' who don't meet the above.
  */
 class GroupPageAccessCheck implements AccessInterface {
 
   public function access(AccountInterface $account, GroupInterface $group = NULL): AccessResultInterface {
     if (!$group || $group->bundle() !== 'race_team') {
-      return AccessResult::neutral();
+      return AccessResult::allowed();
     }
-    if ($account->hasPermission('view all race team names') && !$account->hasPermission('view all race day groups')) {
+
+    // Administrators and coordinators with the Drupal-level permission.
+    if ($account->hasPermission('view all race day groups')) {
+      return AccessResult::allowed()->cachePerPermissions();
+    }
+
+    // Group members whose group role grants 'view group'.
+    if ($group->hasPermission('view group', $account)) {
+      return AccessResult::allowed()
+        ->addCacheContexts(['user.group_permissions'])
+        ->addCacheableDependency($group);
+    }
+
+    // Users who can see team names but don't qualify above: block entity page.
+    if ($account->hasPermission('view all race team names')) {
       return AccessResult::forbidden()->cachePerPermissions();
     }
+
     return AccessResult::neutral()->cachePerPermissions();
   }
 

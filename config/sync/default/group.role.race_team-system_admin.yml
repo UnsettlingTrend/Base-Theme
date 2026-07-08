@@ -1,0 +1,15 @@
+uuid: 00ec70b8-0224-4f9e-8e5e-60eb37aa1e3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+    - user.role.administrator
+id: race_team-system_admin
+label: 'System Admin'
+weight: -6
+admin: true
+scope: outsider
+global_role: administrator
+group_type: race_team
+permissions: {  }

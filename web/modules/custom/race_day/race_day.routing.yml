@@ -215,6 +215,17 @@ race_day.runner_team_request:
     _user_is_logged_in: 'TRUE'
     race: \d+
 
+race_day.update_request_status:
+  path: '/race-day/ajax/update-request-status'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\RequestStatusController::update'
+  requirements:
+    _permission: 'review all race team requests'
+    _csrf_request_header_token: 'TRUE'
+  methods: [POST]
+  options:
+    _format: json
+
 race_day.waiver_modal:
   path: '/race/{race}/waiver-modal'
   defaults:

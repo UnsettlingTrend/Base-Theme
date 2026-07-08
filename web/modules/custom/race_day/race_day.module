@@ -16,6 +16,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
+use Drupal\Component\Utility\Html;
+use Drupal\group\Entity\GroupInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 
@@ -52,6 +54,179 @@ function race_day_views_data_alter(array &$data): void {
 }
 
 /**
+ * Implements hook_preprocess_views_view_field().
+ */
+function race_day_preprocess_views_view_field(array &$variables): void {
+  $view = $variables['view'];
+
+  // -- race_teams view ---------------------------------------------------------
+  if ($view->id() === 'race_teams') {
+    $group = $variables['row']->_entity ?? NULL;
+    if (!($group instanceof GroupInterface)) {
+      return;
+    }
+
+    // Strip entity link for users who can't view the group entity page.
+    if ($variables['field']->options['id'] === 'label') {
+      $account = \Drupal::currentUser();
+      $can_view_page = $account->hasPermission('view all race day groups')
+        || $group->hasPermission('view group', $account);
+      if (!$can_view_page) {
+        $variables['output'] = ['#markup' => Html::escape($group->label())];
+      }
+      return;
+    }
+
+    // "Request to Join Team" column — only on the block_1 display.
+    if ($variables['field']->options['id'] === 'join_team' && $view->current_display === 'block_1') {
+      $account = \Drupal::currentUser();
+
+      // Only show for logged-in race_day_users.
+      if ($account->isAnonymous() || !$account->hasPermission('view all race team names')) {
+        return;
+      }
+
+      // Resolve the race ID from the view's contextual argument.
+      $race_id = $view->args[0] ?? NULL;
+      if (!$race_id) {
+        return;
+      }
+
+      // Hide if the user is already a member of this specific team.
+      if ($group->getMember($account)) {
+        return;
+      }
+
+      // Hide if the user is already a member of ANY race_team for this race.
+      // Uses a static cache so the query runs once per view render, not per row.
+      $already_in_race = &drupal_static('race_day_user_in_race_' . $account->id() . '_' . $race_id);
+      if (!isset($already_in_race)) {
+        $already_in_race = FALSE;
+        $teams_for_race = \Drupal::entityTypeManager()
+          ->getStorage('group')
+          ->getQuery()
+          ->accessCheck(FALSE)
+          ->condition('type', 'race_team')
+          ->condition('field_race', $race_id)
+          ->execute();
+        foreach ($teams_for_race as $gid) {
+          $team = \Drupal::entityTypeManager()->getStorage('group')->load($gid);
+          if ($team && $team->getMember($account)) {
+            $already_in_race = TRUE;
+            break;
+          }
+        }
+      }
+      if ($already_in_race) {
+        return;
+      }
+
+      // Hide if the user has an active (non-denied, non-canceled) request for
+      // this race. Denied or canceled requests allow them to try again.
+      $already_requested = &drupal_static('race_day_user_requested_' . $account->id() . '_' . $race_id);
+      if (!isset($already_requested)) {
+        $submissions = \Drupal::entityTypeManager()
+          ->getStorage('webform_submission')
+          ->loadByProperties([
+            'webform_id' => 'race_day_runner_team_request',
+            'uid'        => $account->id(),
+          ]);
+        $already_requested = FALSE;
+        $inactive_statuses = ['denied', 'canceled'];
+        foreach ($submissions as $submission) {
+          if ((string) $submission->getElementData('race') !== (string) $race_id) {
+            continue;
+          }
+          $status = $submission->getElementData('request_status') ?? '';
+          if (!in_array($status, $inactive_statuses, TRUE)) {
+            $already_requested = TRUE;
+            break;
+          }
+        }
+      }
+      if ($already_requested) {
+        return;
+      }
+
+      $url = \Drupal\Core\Url::fromRoute('race_day.runner_team_request', ['race' => $race_id], [
+        'query' => ['group' => $group->id()],
+      ]);
+
+      $variables['output'] = [
+        '#type' => 'link',
+        '#title' => t('Request to Join Team'),
+        '#url' => $url,
+        '#attributes' => ['class' => ['button', 'button--small', 'join-team-link']],
+      ];
+      return;
+    }
+
+    return;
+  }
+
+  // -- race_team_requests view: inline status select for reviewers ------------
+  if ($view->id() !== 'race_team_requests' || $variables['field']->options['id'] !== 'webform_submission_value_1') {
+    return;
+  }
+  $account = \Drupal::currentUser();
+  if (!$account->hasPermission('review all race team requests')) {
+    return;
+  }
+
+  $submission = $variables['row']->_entity ?? NULL;
+  if (!$submission) {
+    return;
+  }
+
+  $webform = \Drupal::entityTypeManager()->getStorage('webform')->load('race_day_runner_team_request');
+  $element = $webform ? $webform->getElement('request_status') : NULL;
+  if (!$element) {
+    return;
+  }
+
+  $sid = $submission->id();
+  $current = $submission->getElementData('request_status') ?? '';
+  $options = $element['#options'];
+
+  $select_attrs = 'class="request-status-select" data-sid="' . Html::escape($sid) . '"';
+  $select_html = '<select ' . $select_attrs . '>';
+  foreach ($options as $value => $label) {
+    $selected = ($value === $current) ? ' selected' : '';
+    $select_html .= '<option value="' . Html::escape($value) . '"' . $selected . '>' . Html::escape($label) . '</option>';
+  }
+  $select_html .= '</select>';
+
+  $endpoint = \Drupal\Core\Url::fromRoute('race_day.update_request_status')->toString();
+
+  $variables['output'] = [
+    '#markup' => $select_html,
+    '#attached' => [
+      'library' => ['race_day/request_status_review'],
+      'drupalSettings' => [
+        'race_day' => [
+          'requestStatusUrl' => $endpoint,
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * The race_teams block_1 display output varies per individual user (join link
+ * visibility depends on membership and webform submissions), so it must be
+ * cached per user — not per role. We also tag it with webform_submission_list
+ * so the cache is invalidated whenever a submission is created or updated.
+ */
+function race_day_views_pre_render(ViewExecutable $view): void {
+  if ($view->id() === 'race_teams' && $view->current_display === 'block_1') {
+    $view->element['#cache']['contexts'][] = 'user';
+    $view->element['#cache']['tags'][] = 'webform_submission_list';
+  }
+}
+
+/**
  * Implements hook_views_query_alter().
  *
  * Group 3.x moves itself to the end of the views_query_alter list and skips
@@ -82,6 +257,24 @@ function race_day_entity_type_alter(array &$entity_types): void {
   if (isset($entity_types['group'])) {
     $entity_types['group']->setListBuilderClass(\Drupal\race_day\Entity\Controller\RaceDayGroupListBuilder::class);
   }
+}
+
+/**
+ * Implements hook_entity_create_access().
+ *
+ * The Group module's /group/add/{type} route uses _entity_create_access, which
+ * calls createAccess() → hook_entity_create_access(), not hook_entity_access().
+ */
+function race_day_entity_create_access(AccountInterface $account, array $context, ?string $entity_bundle): AccessResult {
+  if (($context['entity_type_id'] ?? NULL) !== 'group') {
+    return AccessResult::neutral();
+  }
+  $bundle = $entity_bundle ?? ($context['bundle'] ?? NULL);
+  if ($bundle !== 'race_team') {
+    return AccessResult::neutral();
+  }
+  return AccessResult::allowedIfHasPermission($account, 'create race teams')
+    ->cachePerPermissions();
 }
 
 /**
@@ -116,10 +309,6 @@ function race_day_entity_access(EntityInterface $entity, string $operation, Acco
   if ($operation === 'view') {
     return AccessResult::allowedIfHasPermission($account, 'view all race day groups')
       ->orIf(AccessResult::allowedIfHasPermission($account, 'view all race team names'))
-      ->cachePerPermissions();
-  }
-  if ($operation === 'create') {
-    return AccessResult::allowedIfHasPermission($account, 'create race teams')
       ->cachePerPermissions();
   }
   if (in_array($operation, ['update', 'delete'], TRUE)) {
@@ -756,6 +945,56 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
     if (isset($form['elements']['race'])) {
       $form['elements']['race']['#default_value'] = $race->id();
       $form['elements']['race']['#disabled'] = TRUE;
+    }
+
+    // If a specific team was linked from the race_teams block, pre-fill and
+    // lock the race_team field too.
+    $group_id = (int) $request->query->get('group');
+    if ($group_id && isset($form['elements']['race_team'])) {
+      $form['elements']['race_team']['#default_value'] = $group_id;
+      $form['elements']['race_team']['#disabled'] = TRUE;
+    }
+
+    // Block duplicate submissions for the same race.
+    $form['#validate'][] = '_race_day_runner_team_request_validate_unique_race';
+  }
+}
+
+/**
+ * Validation callback for the runner team request webform.
+ *
+ * Prevents a user from submitting more than one request for the same race.
+ */
+function _race_day_runner_team_request_validate_unique_race(array &$form, FormStateInterface $form_state): void {
+  $account = \Drupal::currentUser();
+  if ($account->isAnonymous()) {
+    return;
+  }
+
+  // The race field is disabled and pre-filled, so read from the route, not
+  // form state (disabled fields are excluded from submitted values).
+  $race = \Drupal::request()->attributes->get('race');
+  if (!$race instanceof Race) {
+    return;
+  }
+  $race_id = (string) $race->id();
+
+  $existing = \Drupal::entityTypeManager()
+    ->getStorage('webform_submission')
+    ->loadByProperties([
+      'webform_id' => 'race_day_runner_team_request',
+      'uid'        => $account->id(),
+    ]);
+
+  $inactive_statuses = ['denied', 'canceled'];
+  foreach ($existing as $submission) {
+    if ((string) $submission->getElementData('race') !== $race_id) {
+      continue;
+    }
+    $status = $submission->getElementData('request_status') ?? '';
+    if (!in_array($status, $inactive_statuses, TRUE)) {
+      $form_state->setErrorByName('race', t('You have already submitted a request to join a team for this race.'));
+      return;
     }
   }
 }

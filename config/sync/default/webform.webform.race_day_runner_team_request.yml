@@ -59,6 +59,7 @@ elements: |-
       awaiting_review: 'Awaiting Review'
       approved: Approved
       denied: Denied
+      canceled: Canceled
     '#required': true
     '#default_value': awaiting_review
     '#format': description

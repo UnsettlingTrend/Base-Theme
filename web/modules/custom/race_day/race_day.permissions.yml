@@ -31,3 +31,7 @@
   title: 'Manage Race Day groups'
   description: 'Allows the user to edit and delete race_team group entities regardless of membership.'
   restrict access: true
+
+'review all race team requests':
+  title: 'Review all Race Team Requests'
+  description: 'Allows the user to update the request status of any Race Team Request webform submission directly from views.'

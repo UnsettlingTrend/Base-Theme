@@ -12,6 +12,6 @@ weight: 4
 is_admin: false
 permissions:
   - 'create race teams'
-  - 'view all race day groups'
+  - 'update race_day location'
   - 'view all race team names'
   - 'view race_day content'
