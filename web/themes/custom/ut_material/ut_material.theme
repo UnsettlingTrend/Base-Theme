@@ -49,6 +49,13 @@ function ut_material_form_user_login_form_alter(array &$form, \Drupal\Core\Form\
 
   $fieldset['actions']['#weight'] = 10;
 
+  // Move CAPTCHA inside the fieldset at the very bottom.
+  if (isset($form['captcha'])) {
+    $fieldset['captcha'] = $form['captcha'];
+    $fieldset['captcha']['#weight'] = 30;
+    unset($form['captcha']);
+  }
+
   $fieldset['account_links'] = [
     '#type' => 'container',
     '#attributes' => ['class' => ['local-account-links']],
