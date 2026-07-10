@@ -435,6 +435,10 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      access:
+        type: perm
+        options:
+          perm: 'manage race_day races'
       display_extenders: {  }
       path: admin/race-day/races
       menu:
