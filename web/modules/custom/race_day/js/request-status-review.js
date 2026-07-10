@@ -8,10 +8,13 @@
           const sid = select.dataset.sid;
           const status = select.value;
           const endpoint = drupalSettings.race_day.requestStatusUrl;
+          const previous = select.dataset.previous || select.querySelector('option[selected]')?.value || '';
 
+          // Store the previous value for rollback on error.
+          select.dataset.previous = previous;
           select.disabled = true;
+          select.classList.remove('request-status--error');
 
-          // Fetch session CSRF token then POST the update.
           fetch('/session/token')
             .then(function (r) { return r.text(); })
             .then(function (token) {
@@ -24,16 +27,25 @@
                 body: 'sid=' + encodeURIComponent(sid) + '&status=' + encodeURIComponent(status),
               });
             })
-            .then(function (response) { return response.json(); })
+            .then(function (response) {
+              if (!response.ok) {
+                throw new Error('HTTP ' + response.status);
+              }
+              return response.json();
+            })
             .then(function (data) {
               if (data.error) {
-                Drupal.announce(Drupal.t('Error updating status: @error', { '@error': data.error }));
-                console.error('Request status update error:', data.error);
+                throw new Error(data.error);
               }
+              // Success — record new value as the rollback baseline.
+              select.dataset.previous = status;
             })
             .catch(function (err) {
-              Drupal.announce(Drupal.t('Network error updating status.'));
-              console.error('Request status update network error:', err);
+              // Roll back the select to the previous value and mark it as errored.
+              select.value = select.dataset.previous;
+              select.classList.add('request-status--error');
+              select.title = Drupal.t('Save failed: @err', { '@err': err.message });
+              console.error('Request status update error:', err);
             })
             .finally(function () {
               select.disabled = false;

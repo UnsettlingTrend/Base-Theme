@@ -35,3 +35,19 @@
 'review all race team requests':
   title: 'Review all Race Team Requests'
   description: 'Allows the user to update the request status of any Race Team Request webform submission directly from views.'
+
+'view race teams overview page':
+  title: 'View Race Teams Overview Page'
+  description: 'Allows the user to access the Race Teams overview page listing all race_team groups.'
+
+'request to join race team':
+  title: 'Request to Join Race Team'
+  description: 'Allows the user to submit a request to join a race_team group.'
+
+'review all team requests':
+  title: 'Review all Team Requests'
+  description: 'Review all race day requests to be added to any team.'
+
+'review own team requests':
+  title: 'Review own Team Requests'
+  description: 'Review Team Requests for teams I''m on.'

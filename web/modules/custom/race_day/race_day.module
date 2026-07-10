@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\race_day\Entity\Race;
@@ -81,8 +82,8 @@ function race_day_preprocess_views_view_field(array &$variables): void {
     if ($variables['field']->options['id'] === 'join_team' && $view->current_display === 'block_1') {
       $account = \Drupal::currentUser();
 
-      // Only show for logged-in race_day_users.
-      if ($account->isAnonymous() || !$account->hasPermission('view all race team names')) {
+      // Only show for users who can request to join a team.
+      if (!$account->hasPermission('request to join race team')) {
         return;
       }
 
@@ -169,7 +170,10 @@ function race_day_preprocess_views_view_field(array &$variables): void {
     return;
   }
   $account = \Drupal::currentUser();
-  if (!$account->hasPermission('review all race team requests')) {
+  $can_review = $account->hasPermission('review all team requests')
+    || $account->hasPermission('review own team requests')
+    || $account->hasPermission('review all race team requests');
+  if (!$can_review) {
     return;
   }
 
@@ -198,31 +202,125 @@ function race_day_preprocess_views_view_field(array &$variables): void {
 
   $endpoint = \Drupal\Core\Url::fromRoute('race_day.update_request_status')->toString();
 
-  $variables['output'] = [
-    '#markup' => $select_html,
-    '#attached' => [
-      'library' => ['race_day/request_status_review'],
-      'drupalSettings' => [
-        'race_day' => [
-          'requestStatusUrl' => $endpoint,
-        ],
-      ],
-    ],
-  ];
+  // Set the field output to safe markup directly. Render arrays assigned to
+  // $variables['output'] can be lost in isolated Twig render contexts; using
+  // Markup::create() ensures the HTML is printed as-is.
+  $variables['output'] = Markup::create($select_html);
+
+  // Attach the JS library and settings to the view's own render array so they
+  // bubble up through the main render context rather than an isolated one.
+  $view->element['#attached']['library'][] = 'race_day/request_status_review';
+  $view->element['#attached']['drupalSettings']['race_day']['requestStatusUrl'] = $endpoint;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for webform_submission.
+ *
+ * If a new submission is created already approved, add the user to the team.
+ */
+function race_day_webform_submission_insert(EntityInterface $submission): void {
+  _race_day_sync_team_membership($submission, NULL, $submission->getElementData('request_status') ?? '');
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for webform_submission.
+ *
+ * Syncs group membership when the request_status field changes.
+ */
+function race_day_webform_submission_update(EntityInterface $submission): void {
+  $old_status = $submission->original->getElementData('request_status') ?? '';
+  $new_status = $submission->getElementData('request_status') ?? '';
+  if ($old_status === $new_status) {
+    return;
+  }
+  _race_day_sync_team_membership($submission, $old_status, $new_status);
+}
+
+/**
+ * Syncs race_team group membership based on request_status transitions.
+ *
+ * approved → anything else: remove from group + clear leg slot assignments.
+ * anything else → approved: add as group member.
+ */
+function _race_day_sync_team_membership(EntityInterface $submission, ?string $old_status, string $new_status): void {
+  if ($submission->getWebform()->id() !== 'race_day_runner_team_request') {
+    return;
+  }
+
+  $team_id = (int) $submission->getElementData('race_team');
+  if (!$team_id) {
+    return;
+  }
+
+  $uid = $submission->getOwnerId();
+  $storage = \Drupal::entityTypeManager()->getStorage('user');
+  $account = $storage->load($uid);
+  $group = \Drupal::entityTypeManager()->getStorage('group')->load($team_id);
+  if (!$account || !$group) {
+    return;
+  }
+
+  $was_approved = $old_status === 'approved';
+  $is_approved = $new_status === 'approved';
+
+  if ($is_approved && !$was_approved) {
+    if (!$group->getMember($account)) {
+      $group->addMember($account);
+    }
+    return;
+  }
+
+  if ($was_approved && !$is_approved) {
+    // Clear any leg slot assignments (field_runner_legs paragraphs) first.
+    foreach ($group->get('field_runner_legs')->referencedEntities() as $paragraph) {
+      if ($paragraph->bundle() !== 'race_day_leg_assignment') {
+        continue;
+      }
+      if ((int) $paragraph->get('field_race_day_runner')->target_id === (int) $uid) {
+        $paragraph->set('field_race_day_runner', NULL);
+        $paragraph->save();
+      }
+    }
+    // Then remove from the group.
+    if ($group->getMember($account)) {
+      $group->removeMember($account);
+    }
+  }
 }
 
 /**
  * Implements hook_views_pre_render().
- *
- * The race_teams block_1 display output varies per individual user (join link
- * visibility depends on membership and webform submissions), so it must be
- * cached per user — not per role. We also tag it with webform_submission_list
- * so the cache is invalidated whenever a submission is created or updated.
  */
 function race_day_views_pre_render(ViewExecutable $view): void {
+  // race_teams block_1: cache per user so join-link visibility is correct.
   if ($view->id() === 'race_teams' && $view->current_display === 'block_1') {
     $view->element['#cache']['contexts'][] = 'user';
     $view->element['#cache']['tags'][] = 'webform_submission_list';
+    return;
+  }
+
+  // race_team_requests block_1: require 'review all team requests' or, for
+  // 'review own team requests', membership in the current group.
+  if ($view->id() === 'race_team_requests' && $view->current_display === 'block_1') {
+    $account = \Drupal::currentUser();
+
+    if ($account->hasPermission('review all team requests')) {
+      return;
+    }
+
+    if ($account->hasPermission('review own team requests')) {
+      $gid = $view->args[0] ?? NULL;
+      if ($gid) {
+        $group = \Drupal::entityTypeManager()->getStorage('group')->load($gid);
+        if ($group && $group->getMember($account)) {
+          return;
+        }
+      }
+    }
+
+    // No access — suppress all results so the block renders empty.
+    $view->result = [];
+    $view->total_rows = 0;
   }
 }
 

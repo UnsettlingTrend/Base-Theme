@@ -2,7 +2,9 @@
 
 namespace Drupal\race_day\Controller;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,6 +12,40 @@ use Symfony\Component\HttpFoundation\Request;
  * Handles AJAX updates to the race team request status field.
  */
 class RequestStatusController extends ControllerBase {
+
+  /**
+   * Access callback for the update route.
+   *
+   * Grants access if the user has any review permission. For
+   * 'review own team requests', also verifies the submission belongs to a
+   * team the user is a member of.
+   */
+  public function access(AccountInterface $account, Request $request): AccessResult {
+    if ($account->hasPermission('review all team requests') || $account->hasPermission('review all race team requests')) {
+      return AccessResult::allowed()->cachePerPermissions();
+    }
+
+    if ($account->hasPermission('review own team requests')) {
+      $sid = (int) $request->request->get('sid');
+      if ($sid) {
+        $submission = $this->entityTypeManager()
+          ->getStorage('webform_submission')
+          ->load($sid);
+        if ($submission) {
+          $team_id = (int) $submission->getElementData('race_team');
+          if ($team_id) {
+            $group = $this->entityTypeManager()->getStorage('group')->load($team_id);
+            if ($group && $group->getMember($account)) {
+              return AccessResult::allowed()->cachePerUser()->addCacheableDependency($submission);
+            }
+          }
+        }
+      }
+      return AccessResult::forbidden()->cachePerUser();
+    }
+
+    return AccessResult::forbidden()->cachePerPermissions();
+  }
 
   public function update(Request $request): JsonResponse {
     $sid = (int) $request->request->get('sid');

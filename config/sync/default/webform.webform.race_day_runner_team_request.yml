@@ -62,7 +62,7 @@ elements: |-
       canceled: Canceled
     '#required': true
     '#default_value': awaiting_review
-    '#format': description
+    '#format': label
     '#access_create_roles':
       - administrator
       - race_day_coordinator

@@ -212,7 +212,7 @@ race_day.runner_team_request:
     _controller: '\Drupal\race_day\Controller\RunnerTeamRequestController::form'
     _title: 'Request to Join a Team'
   requirements:
-    _user_is_logged_in: 'TRUE'
+    _permission: 'request to join race team'
     race: \d+
 
 race_day.update_request_status:
@@ -220,7 +220,7 @@ race_day.update_request_status:
   defaults:
     _controller: '\Drupal\race_day\Controller\RequestStatusController::update'
   requirements:
-    _permission: 'review all race team requests'
+    _custom_access: '\Drupal\race_day\Controller\RequestStatusController::access'
     _csrf_request_header_token: 'TRUE'
   methods: [POST]
   options:

@@ -465,12 +465,9 @@ display:
           hide_alter_empty: true
           value: ''
       access:
-        type: role
+        type: perm
         options:
-          role:
-            administrator: administrator
-            race_day_coordinator: race_day_coordinator
-            race_day_user: race_day_user
+          perm: 'view all race team names'
       arguments:
         id:
           id: id
@@ -664,7 +661,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'view all race team names'
+          perm: 'view race teams overview page'
       query:
         type: views_query
         options:
