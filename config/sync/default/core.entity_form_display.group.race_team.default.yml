@@ -8,7 +8,7 @@ dependencies:
     - field.field.group.race_team.field_runner_legs
     - group.type.race_team
   module:
-    - media_library
+    - inline_entity_form
     - paragraphs
 _core:
   default_config_hash: L1c99KLgsAgUuIvkJiyUvTTLDO4gD3rzVZD79FAaF9M
@@ -18,11 +18,17 @@ bundle: race_team
 mode: default
 content:
   field_icon:
-    type: media_library_widget
+    type: inline_entity_form_simple
     weight: 2
     region: content
     settings:
-      media_types: {  }
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      revision: false
     third_party_settings: {  }
   field_race:
     type: entity_reference_autocomplete
