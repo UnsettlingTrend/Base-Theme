@@ -181,6 +181,45 @@ function ut_utilities_register_form_submit(array &$form, \Drupal\Core\Form\FormS
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_insert() for user.
+ *
+ * Applies the configured default Areas of Interest (and their associated
+ * roles) to every newly created account. This is the only path that applies
+ * defaults for accounts created outside user_register_form — most notably
+ * Social Auth SSO registration, which creates users directly via
+ * \Drupal\social_auth\User\UserManager::createUser() and never touches that
+ * form or ut_utilities_register_form_submit(). For accounts created through
+ * the form, that handler runs immediately after this and overwrites
+ * areas_of_interest with whatever was actually submitted, making this a
+ * safe, redundant no-op there.
+ */
+function ut_utilities_user_insert(\Drupal\Core\Entity\EntityInterface $account): void {
+  $defaults = \Drupal::config('ut_utilities.settings')->get('default_areas_of_interest') ?? [];
+  if (empty($defaults)) {
+    return;
+  }
+
+  $areas = ut_utilities_get_areas_of_interest();
+  $uid = $account->id();
+
+  \Drupal::service('user.data')->set('ut_utilities', $uid, 'areas_of_interest', $defaults);
+
+  $changed = FALSE;
+  foreach ($defaults as $key) {
+    foreach ($areas[$key]['roles'] ?? [] as $role_id) {
+      if (!$account->hasRole($role_id)) {
+        $account->addRole($role_id);
+        $changed = TRUE;
+      }
+    }
+  }
+
+  if ($changed) {
+    $account->save();
+  }
+}
+
+/**
  * Returns all area-of-interest definitions collected from every module.
  *
  * Results are sorted by weight then label.
