@@ -29,12 +29,13 @@ function ut_utilities_form_user_register_form_alter(array &$form, \Drupal\Core\F
   foreach ($areas as $key => $info) {
     $options[$key] = $info['label'];
   }
+  $default_areas = \Drupal::config('ut_utilities.settings')->get('default_areas_of_interest') ?? [];
 
   $form['areas_of_interest'] = [
     '#type' => 'checkboxes',
     '#title' => t('Areas of Interest'),
     '#options' => $options,
-    '#default_value' => [],
+    '#default_value' => $default_areas,
     '#weight' => 10,
     '#after_build' => ['\Drupal\ut_utilities\Form\AreasOfInterestForm::addOptionDescriptions'],
     '#areas' => $areas,
@@ -42,6 +43,111 @@ function ut_utilities_form_user_register_form_alter(array &$form, \Drupal\Core\F
 
   // Runs after the entity is saved so the new account already has an ID.
   $form['actions']['submit']['#submit'][] = 'ut_utilities_register_form_submit';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user_admin_settings.
+ *
+ * Adds a config-backed "Default Areas of Interest" field to
+ * /admin/config/people/accounts, letting admins choose which Areas of
+ * Interest are pre-selected on the new-user form (self-registration and
+ * admin-created accounts both use user_register_form).
+ */
+function ut_utilities_form_user_admin_settings_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $config = \Drupal::config('ut_utilities.settings');
+
+  // "Allow Social API logins to complete registration" — inserted inside the
+  // core "Registration and cancellation" details element, between "Who can
+  // register accounts?" and "Require email verification...".
+  $allow_social_api_registration = $config->get('allow_social_api_registration') ?? FALSE;
+
+  $social_api_element = [
+    '#type' => 'checkbox',
+    '#title' => t('Allow Social API logins to complete registration'),
+    '#description' => t('New user login attempts that use the Social API Single Sign-On options on the site will be allowed to fully register on the site, regardless of what "Who can register accounts?" is set to.'),
+    '#default_value' => $allow_social_api_registration,
+  ];
+  if (isset($form['registration_cancellation'])) {
+    $form['registration_cancellation'] = _ut_utilities_array_insert_before(
+      $form['registration_cancellation'],
+      'user_email_verification',
+      'ut_utilities_allow_social_api_registration',
+      $social_api_element
+    );
+  }
+
+  // "Default Areas of Interest" — inserted between the core
+  // "Anonymous users" and "Registration and cancellation" details elements.
+  $areas = ut_utilities_get_areas_of_interest();
+  if (!empty($areas)) {
+    $options = [];
+    foreach ($areas as $key => $info) {
+      $options[$key] = $info['label'];
+    }
+    $default_areas = $config->get('default_areas_of_interest') ?? [];
+
+    $areas_element = [
+      '#type' => 'details',
+      '#title' => t('Default Areas of Interest'),
+      '#open' => TRUE,
+    ];
+    $areas_element['default_areas_of_interest'] = [
+      '#type' => 'checkboxes',
+      '#title' => t('Default Areas of Interest'),
+      '#title_display' => 'invisible',
+      '#description' => t('Areas of Interest checked here will be automatically selected for new user accounts upon registration.'),
+      '#options' => $options,
+      '#default_value' => $default_areas,
+    ];
+
+    $form = _ut_utilities_array_insert_before(
+      $form,
+      'registration_cancellation',
+      'ut_utilities_default_areas_of_interest',
+      $areas_element
+    );
+  }
+
+  $form['#submit'][] = 'ut_utilities_user_admin_settings_submit';
+}
+
+/**
+ * Returns a copy of $array with $new_value inserted under $new_key.
+ *
+ * Inserted directly before $before_key so it lands between two existing
+ * elements regardless of #weight, matching Form API's fallback of sorting
+ * equal-weight elements by their array order. Appends to the end if
+ * $before_key isn't found.
+ */
+function _ut_utilities_array_insert_before(array $array, string $before_key, string $new_key, array $new_value): array {
+  $position = array_search($before_key, array_keys($array), TRUE);
+  if ($position === FALSE) {
+    $array[$new_key] = $new_value;
+    return $array;
+  }
+
+  return array_slice($array, 0, $position, TRUE)
+    + [$new_key => $new_value]
+    + array_slice($array, $position, NULL, TRUE);
+}
+
+/**
+ * Submit handler for ut_utilities' fields on user_admin_settings.
+ */
+function ut_utilities_user_admin_settings_submit(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $config = \Drupal::configFactory()->getEditable('ut_utilities.settings');
+
+  if ($form_state->hasValue('default_areas_of_interest')) {
+    $raw = $form_state->getValue('default_areas_of_interest') ?? [];
+    $selected = array_values(array_keys(array_filter($raw)));
+    $config->set('default_areas_of_interest', $selected);
+  }
+
+  if ($form_state->hasValue('ut_utilities_allow_social_api_registration')) {
+    $config->set('allow_social_api_registration', (bool) $form_state->getValue('ut_utilities_allow_social_api_registration'));
+  }
+
+  $config->save();
 }
 
 /**

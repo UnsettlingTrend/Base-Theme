@@ -3,3 +3,5 @@ type: module
 description: 'Shared utility features for the Unsettling Trend site.'
 package: Custom
 core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:social_auth
