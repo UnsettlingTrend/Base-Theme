@@ -44,10 +44,6 @@
   title: 'Request to Join Race Team'
   description: 'Allows the user to submit a request to join a race_team group.'
 
-'review all team requests':
-  title: 'Review all Team Requests'
-  description: 'Review all race day requests to be added to any team.'
-
-'review own team requests':
-  title: 'Review own Team Requests'
+'review own race team requests':
+  title: 'Review own Race Team Requests'
   description: 'Review Team Requests for teams I''m on.'

@@ -17,15 +17,15 @@ class RequestStatusController extends ControllerBase {
    * Access callback for the update route.
    *
    * Grants access if the user has any review permission. For
-   * 'review own team requests', also verifies the submission belongs to a
-   * team the user is a member of.
+   * 'review own race team requests', also verifies the submission belongs to
+   * a team the user is a member of.
    */
   public function access(AccountInterface $account, Request $request): AccessResult {
-    if ($account->hasPermission('review all team requests') || $account->hasPermission('review all race team requests')) {
+    if ($account->hasPermission('review all race team requests')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
 
-    if ($account->hasPermission('review own team requests')) {
+    if ($account->hasPermission('review own race team requests')) {
       $sid = (int) $request->request->get('sid');
       if ($sid) {
         $submission = $this->entityTypeManager()

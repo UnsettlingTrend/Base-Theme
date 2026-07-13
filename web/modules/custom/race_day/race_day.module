@@ -170,9 +170,8 @@ function race_day_preprocess_views_view_field(array &$variables): void {
     return;
   }
   $account = \Drupal::currentUser();
-  $can_review = $account->hasPermission('review all team requests')
-    || $account->hasPermission('review own team requests')
-    || $account->hasPermission('review all race team requests');
+  $can_review = $account->hasPermission('review all race team requests')
+    || $account->hasPermission('review own race team requests');
   if (!$can_review) {
     return;
   }
@@ -299,20 +298,21 @@ function race_day_views_pre_render(ViewExecutable $view): void {
     return;
   }
 
-  // race_team_requests block_1: require 'review all team requests' or, for
-  // 'review own team requests', membership in the current group.
+  // race_team_requests block_1: require 'review all race team requests' or,
+  // for 'review own race team requests', being the team captain or admin of
+  // the current group (not just any member).
   if ($view->id() === 'race_team_requests' && $view->current_display === 'block_1') {
     $account = \Drupal::currentUser();
 
-    if ($account->hasPermission('review all team requests')) {
+    if ($account->hasPermission('review all race team requests')) {
       return;
     }
 
-    if ($account->hasPermission('review own team requests')) {
+    if ($account->hasPermission('review own race team requests')) {
       $gid = $view->args[0] ?? NULL;
       if ($gid) {
         $group = \Drupal::entityTypeManager()->getStorage('group')->load($gid);
-        if ($group && $group->getMember($account)) {
+        if ($group && _race_day_is_team_captain_or_admin($group, $account)) {
           return;
         }
       }
@@ -322,6 +322,22 @@ function race_day_views_pre_render(ViewExecutable $view): void {
     $view->result = [];
     $view->total_rows = 0;
   }
+}
+
+/**
+ * Checks whether the account is a team captain or admin of the given group.
+ */
+function _race_day_is_team_captain_or_admin(GroupInterface $group, AccountInterface $account): bool {
+  $membership = $group->getMember($account);
+  if (!$membership) {
+    return FALSE;
+  }
+  foreach ($membership->getRoles() as $role) {
+    if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'], TRUE)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /**
@@ -342,6 +358,15 @@ function race_day_views_query_alter(ViewExecutable $view, QueryPluginBase $query
     // Restrict to race_team bundle — enforced here so the view has no
     // schema-problematic bundle filter that breaks on UI save.
     $query->addWhere(0, 'groups_field_data.type', 'race_team', '=');
+  }
+
+  // race_team_requests reaches groups_field_data via a relationship rather
+  // than as the base table, which Group's membership-based SQL rewrite can't
+  // resolve — it defensively appends a "1 = 0" condition and the view always
+  // returns zero rows. Access is already enforced by
+  // race_day_views_pre_render(), so disable Group's redundant rewrite here.
+  if ($view->id() === 'race_team_requests') {
+    $query->options['disable_sql_rewrite'] = TRUE;
   }
 }
 
@@ -413,6 +438,40 @@ function race_day_entity_access(EntityInterface $entity, string $operation, Acco
     return AccessResult::allowedIfHasPermission($account, 'manage race day groups')
       ->cachePerPermissions();
   }
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access() for webform_submission.
+ *
+ * The race_day_runner_team_request webform has no view_any/view_own access
+ * configured, so by default only full webform admins can view its
+ * submissions — not the team captains/admins who can already see them via
+ * the race_team_requests view/block (race_day_views_pre_render()). This
+ * grants matching 'view' access so entity access lines up with what's
+ * actually shown, for the same two cases: reviewers with 'review all race
+ * team requests', or team captains/admins (with 'review own race team
+ * requests') viewing a submission for their own team.
+ */
+function race_day_webform_submission_access(EntityInterface $entity, string $operation, AccountInterface $account): AccessResult {
+  if ($operation !== 'view' || $entity->getWebform()->id() !== 'race_day_runner_team_request') {
+    return AccessResult::neutral();
+  }
+
+  if ($account->hasPermission('review all race team requests')) {
+    return AccessResult::allowed()->cachePerPermissions();
+  }
+
+  if ($account->hasPermission('review own race team requests')) {
+    $team_id = (int) $entity->getElementData('race_team');
+    if ($team_id) {
+      $group = \Drupal::entityTypeManager()->getStorage('group')->load($team_id);
+      if ($group && _race_day_is_team_captain_or_admin($group, $account)) {
+        return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($entity);
+      }
+    }
+  }
+
   return AccessResult::neutral();
 }
 
@@ -506,12 +565,7 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
   $members = [];
 
   if ($membership) {
-    foreach ($membership->getRoles() as $role) {
-      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
-        $is_captain_or_admin = TRUE;
-        break;
-      }
-    }
+    $is_captain_or_admin = _race_day_is_team_captain_or_admin($group, $current_user);
 
     if ($is_captain_or_admin) {
       foreach ($group->getMembers() as $group_membership) {

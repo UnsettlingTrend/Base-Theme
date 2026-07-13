@@ -13,7 +13,7 @@ is_admin: false
 permissions:
   - 'create race teams'
   - 'request to join race team'
-  - 'review own team requests'
+  - 'review own race team requests'
   - 'update race_day location'
   - 'view all race team names'
   - 'view race_day content'
