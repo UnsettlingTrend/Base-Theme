@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.media.race_team_icon
     - field.field.group.race_team.field_icon
     - field.field.group.race_team.field_race
     - field.field.group.race_team.field_runner_legs
@@ -22,7 +23,7 @@ content:
     weight: 2
     region: content
     settings:
-      form_mode: default
+      form_mode: race_team_icon
       override_labels: false
       label_singular: ''
       label_plural: ''

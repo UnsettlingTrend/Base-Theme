@@ -15,3 +15,4 @@ dependencies:
   - drupal:path
   - pathauto:pathauto
   - token:token
+  - inline_entity_form:inline_entity_form
