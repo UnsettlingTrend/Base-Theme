@@ -71,4 +71,17 @@ div.views-element-container .cards-view-block {
   .views-row {
     max-width: 27rem;
   }
+
+  /*
+   * Drupal's contextual module only adds the ".contextual" class (and its
+   * position: absolute) once a user's actual permitted links are fetched via
+   * AJAX. A user with "access contextual links" but no permitted operations
+   * for this specific contextual group (e.g. lacking "administer views")
+   * gets a bare, unclassed placeholder div left behind, which otherwise
+   * still participates in this grid as an item and shifts every .views-row
+   * over by one slot. Take it out of flow regardless of hydration state.
+   */
+  > [data-contextual-id] {
+    position: absolute;
+  }
 }
