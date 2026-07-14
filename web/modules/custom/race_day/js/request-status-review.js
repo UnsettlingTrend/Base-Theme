@@ -15,6 +15,11 @@
           select.disabled = true;
           select.classList.remove('request-status--error');
 
+          // Detached Drupal.ajax object so its success() handler (with
+          // getEffect() etc.) can apply the ReplaceCommands the endpoint
+          // returns for the Runner Assignments and Team Members blocks.
+          const ajax = Drupal.ajax({ url: endpoint, progress: false });
+
           fetch('/session/token')
             .then(function (r) { return r.text(); })
             .then(function (token) {
@@ -29,16 +34,16 @@
             })
             .then(function (response) {
               if (!response.ok) {
-                throw new Error('HTTP ' + response.status);
+                return response.json().then(function (data) {
+                  throw new Error(data.error || ('HTTP ' + response.status));
+                });
               }
               return response.json();
             })
-            .then(function (data) {
-              if (data.error) {
-                throw new Error(data.error);
-              }
+            .then(function (commands) {
               // Success — record new value as the rollback baseline.
               select.dataset.previous = status;
+              ajax.success(commands, 200);
             })
             .catch(function (err) {
               // Roll back the select to the previous value and mark it as errored.

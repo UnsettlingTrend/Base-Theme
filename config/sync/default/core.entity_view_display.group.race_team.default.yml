@@ -109,7 +109,7 @@ third_party_settings:
               views_label: 'Team Requests'
               items_per_page: null
               exposed: {  }
-            weight: 2
+            weight: 4
             additional: {  }
         third_party_settings: {  }
 _core:

@@ -44,6 +44,7 @@ request_status_review:
     - core/once
     - core/drupalSettings
     - core/drupal.announce
+    - core/drupal.ajax
 
 race_leg_map:
   version: VERSION

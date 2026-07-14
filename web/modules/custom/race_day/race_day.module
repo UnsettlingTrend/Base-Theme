@@ -55,6 +55,29 @@ function race_day_views_data_alter(array &$data): void {
 }
 
 /**
+ * Implements hook_preprocess_block().
+ *
+ * Renders the "Team Requests" block on race_team group pages as a
+ * collapsible details element, collapsed by default, instead of a plain
+ * block with an always-visible table.
+ */
+function race_day_preprocess_block(array &$variables): void {
+  if (($variables['plugin_id'] ?? NULL) !== 'views_block:race_team_requests-block_1') {
+    return;
+  }
+
+  $variables['content'] = [
+    '#type' => 'details',
+    '#title' => $variables['label'] ?: t('Team Requests'),
+    '#open' => FALSE,
+    'content' => $variables['content'],
+  ];
+  // The details element renders its own summary/title; suppress the block's
+  // own heading so the label isn't shown twice.
+  $variables['label'] = '';
+}
+
+/**
  * Implements hook_preprocess_views_view_field().
  */
 function race_day_preprocess_views_view_field(array &$variables): void {
@@ -210,6 +233,24 @@ function race_day_preprocess_views_view_field(array &$variables): void {
   // bubble up through the main render context rather than an isolated one.
   $view->element['#attached']['library'][] = 'race_day/request_status_review';
   $view->element['#attached']['drupalSettings']['race_day']['requestStatusUrl'] = $endpoint;
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ *
+ * Gives the Team Members view a predictable wrapper ID so
+ * RequestStatusController::update() can target it with a ReplaceCommand
+ * after a request's status changes (which adds/removes group membership).
+ */
+function race_day_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'];
+  if ($view->id() !== 'race_team_members') {
+    return;
+  }
+  $group_id = $view->args[0] ?? NULL;
+  if ($group_id) {
+    $variables['attributes']['id'] = 'race-team-members-' . $group_id;
+  }
 }
 
 /**
@@ -403,18 +444,32 @@ function race_day_entity_create_access(AccountInterface $account, array $context
 /**
  * Implements hook_webform_element_alter().
  *
- * Swap the race_team field's selection handler to the race_day plugin so that
- * users with 'view all race team names' see all published teams without the
- * Group module's membership restrictions filtering the list.
+ * Restricts the race_team field's options to teams belonging to the race
+ * this form was opened for. Users with 'view all race team names' get the
+ * race_day plugin so they see all published teams for that race without the
+ * Group module's membership restrictions filtering the list; everyone else
+ * keeps the normal access-checked behavior, just scoped to the same race.
  */
 function race_day_webform_element_alter(array &$element, FormStateInterface $form_state, array $context): void {
   if (
-    ($element['#webform_key'] ?? NULL) === 'race_team' &&
-    ($element['#target_type'] ?? NULL) === 'group' &&
-    \Drupal::currentUser()->hasPermission('view all race team names')
+    ($element['#webform_key'] ?? NULL) !== 'race_team' ||
+    ($element['#target_type'] ?? NULL) !== 'group'
   ) {
+    return;
+  }
+
+  $race = \Drupal::request()->attributes->get('race');
+  $race_id = $race instanceof Race ? $race->id() : NULL;
+
+  if (\Drupal::currentUser()->hasPermission('view all race team names')) {
     $element['#selection_handler'] = 'race_day:race_team_name';
-    $element['#selection_settings'] = [];
+    $element['#selection_settings'] = $race_id ? ['race_id' => $race_id] : [];
+    return;
+  }
+
+  if ($race_id) {
+    $element['#selection_handler'] = 'race_day:race_team_by_race';
+    $element['#selection_settings']['race_id'] = $race_id;
   }
 }
 
@@ -1097,6 +1152,25 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
     if (isset($form['elements']['race'])) {
       $form['elements']['race']['#default_value'] = $race->id();
       $form['elements']['race']['#disabled'] = TRUE;
+    }
+
+    // Restrict the Race Team options to teams belonging to this race. The
+    // #selection_handler swap in race_day_webform_element_alter() runs
+    // before WebformElementManager::buildElement() resolves #options (it
+    // only affects server-side validation), so the rendered option list has
+    // to be pruned here instead, once #options already reflects the
+    // unfiltered handler.
+    if (isset($form['elements']['race_team']['#options']) && is_array($form['elements']['race_team']['#options'])) {
+      $group_storage = \Drupal::entityTypeManager()->getStorage('group');
+      foreach ($form['elements']['race_team']['#options'] as $key => $label) {
+        if ($key === '') {
+          continue;
+        }
+        $team = $group_storage->load($key);
+        if (!$team || (string) $team->get('field_race')->target_id !== (string) $race->id()) {
+          unset($form['elements']['race_team']['#options'][$key]);
+        }
+      }
     }
 
     // If a specific team was linked from the race_teams block, pre-fill and

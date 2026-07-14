@@ -49,6 +49,11 @@ class RaceTeamNameSelection extends DefaultSelection {
       $query->condition('type', array_values($configuration['target_bundles']), 'IN');
     }
 
+    // Restrict to teams for a specific race, if one is set.
+    if (!empty($configuration['race_id'])) {
+      $query->condition('field_race', $configuration['race_id']);
+    }
+
     $query->sort('label');
 
     return $query;

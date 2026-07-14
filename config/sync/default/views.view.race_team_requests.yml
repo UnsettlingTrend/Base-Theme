@@ -97,7 +97,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: webform_submission_field
-          label: 'Expected Pace (min/mile)'
+          label: Pace
           exclude: false
           alter:
             alter_text: false
@@ -150,7 +150,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: webform_submission_field
-          label: 'Request Status'
+          label: Status
           exclude: false
           alter:
             alter_text: false
