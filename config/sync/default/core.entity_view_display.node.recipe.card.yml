@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
     - field.field.node.recipe.field_subtitle
@@ -68,6 +69,7 @@ hidden:
   content_moderation_control: true
   field_directions: true
   field_ingredients: true
+  field_paragraphs: true
   field_subtitle: true
   field_tags: true
   langcode: true

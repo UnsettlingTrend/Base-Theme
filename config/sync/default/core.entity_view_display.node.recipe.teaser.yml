@@ -9,12 +9,14 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
     - field.field.node.recipe.field_subtitle
     - field.field.node.recipe.field_tags
     - node.type.recipe
   module:
+    - paragraphs
     - text
     - user
 id: node.recipe.teaser
@@ -34,6 +36,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: -20
+    region: content
+  field_paragraphs:
+    type: paragraph_summary
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_tags:
     type: entity_reference_label

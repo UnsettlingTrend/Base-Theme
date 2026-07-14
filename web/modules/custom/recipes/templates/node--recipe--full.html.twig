@@ -110,6 +110,8 @@
       <span id="prep-time"><strong>Prep Time: </strong>{{ content.field_prep_time|field_value }} minutes</span>
       <span id="cook_time"><strong>Cook Time: </strong>{{ content.field_cook_time|field_value }} minutes</span>
     </div>
+    {{ content.body }}
+    {{ content.field_paragraphs }}
     <div id="recipe-ingredients">
       <h2>Ingredients</h2>
       {{ content.field_ingredients }}

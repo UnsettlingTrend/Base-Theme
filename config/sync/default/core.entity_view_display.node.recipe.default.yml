@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
     - field.field.node.recipe.field_ingredients
+    - field.field.node.recipe.field_paragraphs
     - field.field.node.recipe.field_prep_time
     - field.field.node.recipe.field_servings
     - field.field.node.recipe.field_subtitle
@@ -27,7 +28,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   content_moderation_control:
     settings: {  }
@@ -68,7 +69,16 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 7
+    weight: 8
+    region: content
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: in_content
+      link: ''
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_prep_time:
     type: number_integer
@@ -94,7 +104,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   links:
     settings: {  }

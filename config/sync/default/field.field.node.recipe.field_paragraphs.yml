@@ -1,0 +1,66 @@
+uuid: 5a9155b5-8717-441b-820d-fb083dc48b30
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_paragraphs
+    - node.type.recipe
+    - paragraphs.paragraphs_type.media
+    - paragraphs.paragraphs_type.text_area
+  module:
+    - entity_reference_revisions
+id: node.recipe.field_paragraphs
+field_name: field_paragraphs
+entity_type: node
+bundle: recipe
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      text_area: text_area
+      media: media
+    negate: 0
+    target_bundles_drag_drop:
+      block:
+        weight: 13
+        enabled: false
+      from_library:
+        weight: -15
+        enabled: false
+      ingredient:
+        weight: -11
+        enabled: false
+      layout:
+        weight: 16
+        enabled: false
+      media:
+        weight: -12
+        enabled: true
+      race_day_leg_assignment:
+        weight: 18
+        enabled: false
+      record:
+        weight: -10
+        enabled: false
+      section:
+        weight: -14
+        enabled: false
+      strava_route:
+        weight: 21
+        enabled: false
+      text_area:
+        weight: -13
+        enabled: true
+      text_list:
+        weight: 21
+        enabled: false
+      view:
+        weight: -9
+        enabled: false
+field_type: entity_reference_revisions
