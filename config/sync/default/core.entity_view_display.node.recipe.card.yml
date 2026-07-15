@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.card
-    - field.field.node.recipe.body
     - field.field.node.recipe.field_cook_time
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
@@ -64,7 +63,6 @@ content:
     weight: 1
     region: content
 hidden:
-  body: true
   book_navigation: true
   content_moderation_control: true
   field_directions: true

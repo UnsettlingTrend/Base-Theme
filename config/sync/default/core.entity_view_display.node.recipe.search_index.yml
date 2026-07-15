@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_index
-    - field.field.node.recipe.body
     - field.field.node.recipe.field_cook_time
     - field.field.node.recipe.field_directions
     - field.field.node.recipe.field_image
@@ -29,13 +28,6 @@ targetEntityType: node
 bundle: recipe
 mode: search_index
 content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
   field_cook_time:
     type: number_integer
     label: inline
