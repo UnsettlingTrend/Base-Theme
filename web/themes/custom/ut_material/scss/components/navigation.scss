@@ -1,4 +1,111 @@
 
+/*
+ * Site title bar — centered, collapses to nothing as the page scrolls.
+ * --title-collapse-progress (0 = fully open, 1 = fully collapsed) is set
+ * directly from scroll position in theme.js, once per animation frame, so
+ * the collapse tracks the scroll 1:1 instead of snapping shut on a
+ * threshold — a threshold-triggered CSS transition finishes on its own
+ * clock (independent of further scrolling), which is what caused the
+ * jarring layout jump upward this was written to fix. No transition here:
+ * driving both scroll and the transition at once fights the scroll and
+ * makes it feel laggy/rubber-banded.
+ */
+.site-title-bar {
+  --title-collapse-progress: 0;
+  background: $color-bg-body;
+  text-align: center;
+  overflow: hidden;
+  max-height: calc(96px * (1 - var(--title-collapse-progress)));
+  padding: calc(20px * (1 - var(--title-collapse-progress))) 0;
+  opacity: calc(1 - var(--title-collapse-progress));
+
+  &__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/*
+ * Site logo, relocated into the menu bar (region--navbar.html.twig) next to
+ * the main menu's first link. Grows/shrinks in step with
+ * --title-collapse-progress (set on <html> by theme.js, alongside
+ * #site-title-bar's own copy of the same value — see above) instead of
+ * popping in at a threshold: 0 while the title bar (where the site name
+ * lives) is fully visible, full size once it's scrolled completely away,
+ * and everything in between tracks the scroll directly, the same reasoning
+ * as the title bar's own collapse. margin-right grows with it too, so the
+ * "Home" link doesn't sit awkwardly close while the icon is still small.
+ */
+.navbar-menu-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: calc(12px * var(--title-collapse-progress, 0));
+  opacity: var(--title-collapse-progress, 0);
+
+  img {
+    display: block;
+    height: calc(32px * var(--title-collapse-progress, 0));
+    width: auto;
+  }
+}
+
+/* Menu bar — light, sticks to the top once the title bar scrolls past. */
+/* top offset is set in admin_toolbar.scss (defaults to 0 via a CSS var). */
+.navbar.navbar--standard {
+  position: sticky;
+  z-index: 1001;
+  background: $color-bg-body;
+  color: $theme-primary;
+  border-bottom: 1px solid rgba($theme-primary, .15);
+
+  a,
+  .icon {
+    color: $theme-primary;
+  }
+}
+
+/*
+ * Match .main-content__container's width system (material_base's .container,
+ * extended in scss/base/layout.scss) so the menu row lines up with the page
+ * content below it instead of running edge-to-edge. Only the width-related
+ * properties are added here — .navbar--standard .navbar__container already
+ * sets display/height (material_base/scss/components/navbar.scss), and
+ * these don't conflict with that since they're different properties.
+ */
+.navbar__container {
+  width: 100%;
+  max-width: $lg;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $gutter;
+  padding-right: $gutter;
+}
+
+/*
+ * Base theme's .navbar__section (material_base/scss/components/navbar.scss)
+ * is `flex: 1 1 auto` — added as a second sibling inside the same flex
+ * .navbar__container as the main menu's section, it would just grow to
+ * share the row rather than sit at the far edge. `margin-left: auto`
+ * consumes all remaining free space in the flex container ahead of this
+ * section, pushing it (and nothing after it, since it's the last child) to
+ * the right — the standard flexbox one-item-right pattern, without needing
+ * `justify-content: space-between` on the container (which would also
+ * affect any further sections added later).
+ */
+.navbar__section--right {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.navbar-menu__item {
+  color: $theme-primary;
+}
+
+.menu-item--active-trail > .navbar-menu__item {
+  border-bottom: 2px solid $theme-primary;
+}
+
 /* Mobile Main Nav Menu Styles  */
 #block-ut-material-main-menu {
   /* (Screen width < 768px) */
@@ -26,7 +133,7 @@
       padding: 15px;
       cursor: pointer;
       font-weight: bold;
-      background: $theme-primary; /* Material Primary */
+      background: $theme-primary;
       color: $theme-background;
       text-align: center;
       border: none;
@@ -59,10 +166,10 @@
       display: flex;
       justify-content: space-between;
       padding: 16px;
-      border-bottom: 1px solid $theme-background;
+      border-bottom: 1px solid rgba($theme-primary, .15);
       text-decoration: none;
-      color: $theme-background;
-      background-color: $theme-primary;
+      color: $theme-primary;
+      background-color: $color-bg-body;
     }
   }
 
@@ -78,15 +185,5 @@
       display: flex;
       flex-direction: row;
     }
-  }
-}
-
-div.layout-container--page main div.main-content__container {
-  margin-top: 68px;
-}
-
-@media (min-width: $sm) {
-  div.layout-container--page main div.main-content__container {
-    margin-top: 75px;
   }
 }

@@ -1,9 +1,54 @@
-
-.toolbar-horizontal header.region-navbar.mdc-top-app-bar--not-fixed {
-  margin-top: 60px;
+/*
+ * How much fixed, top-anchored admin chrome (core toolbar bar, GIN's
+ * front-end secondary toolbar) sits above the navbar depends on which
+ * toolbar items and local tasks the CURRENT user has permission to see —
+ * it isn't the same for every logged-in user, so it can't be hardcoded off
+ * the toolbar-horizontal/toolbar-vertical body classes alone (those just
+ * mean "has some toolbar", not "has this much toolbar"). theme.js measures
+ * the actual rendered height and sets --navbar-toolbar-offset accordingly;
+ * it defaults to 0 for anonymous users, who have no toolbar at all.
+ */
+header.region-navbar {
+  margin-top: var(--navbar-toolbar-offset, 0px);
 }
 
-.toolbar-vertical header.region-navbar.mdc-top-app-bar--not-fixed {
-  margin-top: 87px;
+/*
+ * The admin toolbar (and GIN's secondary/local-tasks toolbar, which re-pins
+ * to the top of the viewport once scrolled past) is z-index 500+ (see core
+ * toolbar.module.css). --navbar-sticky-offset (set in theme.js) is the
+ * combined height of everything still pinned to the top of the viewport at
+ * scroll time, so the menu sticks below all of it rather than occupying the
+ * same space — deliberately not the same value as the header's margin-top
+ * above (that one excludes chrome that already pushes flow on its own).
+ * z-index: 1001 additionally keeps the menu itself above other page content
+ * regardless of stacking context; it now also outranks the toolbar's own
+ * 500+ range, so this positioning-based separation is what still keeps them
+ * from visibly overlapping, not the z-index order.
+ */
+.navbar.navbar--standard {
+  top: var(--navbar-sticky-offset, 0px);
+}
+
+/*
+ * GIN's own CSS (themes/contrib/gin/styles/components/toolbar_secondary.scss)
+ * hardcodes .gin-secondary-toolbar--frontend's sticky `inset-block-start: 0`
+ * unconditionally. That's harmless whenever the fixed .toolbar-bar above it
+ * collapses to height: 0 (GIN's vertical/sidebar toolbar layout at wide
+ * viewports — its icons live in a left sidebar, not a top bar). But below
+ * Drupal core's own "standard" breakpoint (61em / 976px), core forces the
+ * toolbar back into a single horizontal bar with a real, non-zero height —
+ * and GIN never adjusts the secondary toolbar's stick point to account for
+ * that. Once scrolled at those widths, it re-pins at top: 0 and renders
+ * directly underneath (behind) that real toolbar bar instead of below it.
+ *
+ * Point it at the same dynamically-measured --navbar-toolbar-offset our own
+ * elements use instead of GIN's hardcoded 0 — it already tracks the fixed
+ * toolbar bar's real height at any width/orientation (see theme.js), so
+ * this self-corrects across the breakpoint without us needing to duplicate
+ * GIN's own width logic. !important is needed because GIN's rule has equal
+ * selector specificity and cascade order isn't reliable to depend on here.
+ */
+.gin-secondary-toolbar--frontend {
+  top: var(--navbar-toolbar-offset, 0px) !important;
 }
 

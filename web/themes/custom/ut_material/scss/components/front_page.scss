@@ -4,13 +4,7 @@ body.front {
     max-width: $lg;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 64px;
-  }
-
-  @media only screen and (max-width: $sm) {
-    div.header-image {
-      margin-top: 56px;
-    }
+    margin-top: 0;
   }
 
   div.layout-container--page main div.main-content__container {

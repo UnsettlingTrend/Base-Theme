@@ -1,6 +1,6 @@
 uuid: c3face05-c320-4aab-a386-e363e26a69fa
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.account

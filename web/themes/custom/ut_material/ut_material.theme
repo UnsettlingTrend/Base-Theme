@@ -85,6 +85,36 @@ function ut_material_form_user_login_form_alter(array &$form, \Drupal\Core\Form\
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for region templates.
+ *
+ * Exposes the branding, main menu, and account menu blocks in the navbar
+ * region as separate variables so region--navbar.html.twig can lay them out
+ * as stacked/side-by-side rows (collapsing title bar + sticky menu, with the
+ * account menu right-aligned in its own navbar__section) instead of the
+ * single side-by-side row the base theme renders. `content` is already a
+ * flattened HTML string by this point (see
+ * ThemePreprocess::preprocessRegion()), so the individual block render
+ * arrays have to be pulled from `elements` before that happens.
+ *
+ * Also exposes the site logo URL directly (independent of the branding
+ * block above, which no longer renders it — see the
+ * block--navbar--system-branding-block.html.twig override) so
+ * region--navbar.html.twig can place it next to the main menu's first link,
+ * shown only once the title bar has scrolled fully out of view. Same
+ * approach material_base itself uses for the logo elsewhere
+ * (material_base.theme's own hook_preprocess_region()).
+ */
+function ut_material_preprocess_region(array &$variables): void {
+  if ($variables['elements']['#region'] !== 'navbar') {
+    return;
+  }
+  $variables['branding_block'] = $variables['elements']['ut_material_branding'] ?? NULL;
+  $variables['menu_block'] = $variables['elements']['ut_material_main_menu'] ?? NULL;
+  $variables['site_logo_url'] = \Drupal::service('file_url_generator')->generateString(theme_get_setting('logo.url'));
+  $variables['account_menu_block'] = $variables['elements']['ut_material_account_menu'] ?? NULL;
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function ut_material_preprocess_html(array &$variables): void {

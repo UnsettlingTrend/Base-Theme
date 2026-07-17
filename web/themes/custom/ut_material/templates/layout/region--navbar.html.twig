@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * Theme override to display the navbar region as two stacked rows:
+ * a centered site title bar that collapses on scroll, and a menu bar
+ * that sticks to the top once the title bar has scrolled past.
+ *
+ * The title bar and menu are rendered as two top-level siblings rather than
+ * both nested inside one <header> wrapper. A position: sticky element can
+ * only stay stuck within the bounds of its own containing block (its
+ * parent) — nesting the menu inside a <header> that's only as tall as the
+ * title bar + menu themselves means the menu would run out of "room" to
+ * stick in and scroll away with that undersized parent. As a direct child
+ * of .page-container (which spans the full page), it has the room it needs.
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{% set classes = [
+    'region',
+    'region-' ~ region|clean_class,
+    'page-navbar',
+] %}
+
+{% if content %}
+  <header{{ attributes.addClass(classes) }}>
+    <div class="site-title-bar" id="site-title-bar">
+      <div class="site-title-bar__inner">
+        {{ branding_block }}
+      </div>
+    </div>
+  </header>
+  <div class="navbar navbar--standard">
+    <div class="navbar__container">
+      <section class="navbar__section">
+        {% if site_logo_url %}
+          <a href="{{ path('<front>') }}" rel="home" class="navbar-menu-logo">
+            <img src="{{ site_logo_url }}" alt="{{ 'Home'|t }}" />
+          </a>
+        {% endif %}
+        {{ menu_block }}
+      </section>
+      {% if account_menu_block %}
+        <section class="navbar__section navbar__section--right">
+          {{ account_menu_block }}
+        </section>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
