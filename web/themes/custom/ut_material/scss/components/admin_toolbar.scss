@@ -13,17 +13,42 @@ header.region-navbar {
 }
 
 /*
+ * At mobile widths the header shouldn't reserve this space — per request,
+ * removed outright rather than narrowed. .region.region-navbar (2 classes)
+ * outranks header.region-navbar (1 class + 1 element) on specificity, so
+ * this wins without needing !important. Breakpoint matches this file's
+ * other mobile/desktop splits (navigation.scss's nav menu and site-name).
+ */
+@media (max-width: 767px) {
+  .region.region-navbar {
+    margin-top: 0;
+  }
+}
+
+/*
+ * At desktop widths, a flat 20px instead — per request. This replaces
+ * rather than adds to the dynamic --navbar-toolbar-offset above (same
+ * .region.region-navbar specificity trick), so on desktop the header no
+ * longer reserves space for the admin/GIN toolbar automatically; a
+ * logged-in desktop user with a tall enough toolbar could see it overlap
+ * the header again. Revisit if that turns out to matter in practice.
+ */
+@media (min-width: 768px) {
+  .region.region-navbar {
+    margin-top: 20px;
+  }
+}
+
+/*
  * The admin toolbar (and GIN's secondary/local-tasks toolbar, which re-pins
  * to the top of the viewport once scrolled past) is z-index 500+ (see core
- * toolbar.module.css). --navbar-sticky-offset (set in theme.js) is the
- * combined height of everything still pinned to the top of the viewport at
- * scroll time, so the menu sticks below all of it rather than occupying the
- * same space — deliberately not the same value as the header's margin-top
+ * toolbar.module.css), well above the sticky menu's z-index: 10. Once the
+ * menu sticks to top: 0 it renders underneath that chrome and disappears
+ * from view. Stick it below all of it instead of fighting for the same
+ * space — --navbar-sticky-offset (set in theme.js) is the combined height
+ * of everything still pinned to the top of the viewport at scroll time,
+ * which is deliberately not the same value as the header's margin-top
  * above (that one excludes chrome that already pushes flow on its own).
- * z-index: 1001 additionally keeps the menu itself above other page content
- * regardless of stacking context; it now also outranks the toolbar's own
- * 500+ range, so this positioning-based separation is what still keeps them
- * from visibly overlapping, not the z-index order.
  */
 .navbar.navbar--standard {
   top: var(--navbar-sticky-offset, 0px);

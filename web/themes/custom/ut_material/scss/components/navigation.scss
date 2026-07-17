@@ -27,6 +27,34 @@
 }
 
 /*
+ * Mobile: smaller resting top/bottom padding (10px vs. desktop's 20px).
+ * Keeps the same calc()-driven collapse-with-scroll behavior as the base
+ * rule above, just with a smaller starting value, rather than a static
+ * padding that would stop animating out at mobile widths.
+ */
+@media (max-width: 767px) {
+  .site-title-bar {
+    padding: calc(10px * (1 - var(--title-collapse-progress))) 0;
+  }
+}
+
+/*
+ * Site name — Google's "Rubik Maze" display font (loaded in fonts.scss), no
+ * link underline. Font size matches this file's existing mobile/desktop
+ * split for the nav menu below (max-width: 767px / min-width: 768px, i.e.
+ * $sm from material_base/scss/base/variables.scss).
+ */
+.site-name a {
+  font-family: 'Rubik Maze', $font-family-heading;
+  text-decoration: none;
+  font-size: 1.6rem;
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+}
+
+/*
  * Site logo, relocated into the menu bar (region--navbar.html.twig) next to
  * the main menu's first link. Grows/shrinks in step with
  * --title-collapse-progress (set on <html> by theme.js, alongside
@@ -54,7 +82,7 @@
 /* top offset is set in admin_toolbar.scss (defaults to 0 via a CSS var). */
 .navbar.navbar--standard {
   position: sticky;
-  z-index: 1001;
+  z-index: 10;
   background: $color-bg-body;
   color: $theme-primary;
   border-bottom: 1px solid rgba($theme-primary, .15);
