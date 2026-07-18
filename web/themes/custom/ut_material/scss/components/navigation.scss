@@ -21,13 +21,27 @@
   text-align: center;
   overflow: hidden;
   max-height: calc(96px * (1 - var(--title-collapse-progress)));
-  padding: calc(20px * (1 - var(--title-collapse-progress))) 0;
+  padding-top: calc(20px * (1 - var(--title-collapse-progress)));
+  padding-bottom: calc(20px * (1 - var(--title-collapse-progress)));
+  /*
+   * Guaranteed >=16px horizontal breathing room at any width — see
+   * .site-name a below for the other half of the "never overflow" fix.
+   * Since container query units (cqw, used below) are computed off this
+   * element's CONTENT box, this padding is automatically subtracted from
+   * that basis too, not just laid on top of it.
+   */
+  padding-left: 16px;
+  padding-right: 16px;
   opacity: calc(1 - var(--title-collapse-progress));
 
   &__inner {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    /* Belt-and-suspenders alongside the overflow: hidden above: keeps the
+       flex box itself from ever growing past the (already-padded)
+       available width, regardless of what it ends up containing. */
+    max-width: 100%;
   }
 }
 
@@ -35,11 +49,13 @@
  * Mobile: smaller resting top/bottom padding (10px vs. desktop's 20px).
  * Keeps the same calc()-driven collapse-with-scroll behavior as the base
  * rule above, just with a smaller starting value, rather than a static
- * padding that would stop animating out at mobile widths.
+ * padding that would stop animating out at mobile widths. Horizontal
+ * padding is unchanged from the base rule above.
  */
 @media (max-width: 767px) {
   .site-title-bar {
-    padding: calc(10px * (1 - var(--title-collapse-progress))) 0;
+    padding-top: calc(10px * (1 - var(--title-collapse-progress)));
+    padding-bottom: calc(10px * (1 - var(--title-collapse-progress)));
   }
 }
 
@@ -92,11 +108,27 @@
   padding: 0;
 }
 
+/*
+ * clamp() tuning below (below 520px or so, the site name was overflowing
+ * past the edge of the screen): the ceiling (3rem) was being reached at a
+ * container width of just 480px (10cqw = 3rem exactly there), so anywhere
+ * from 480px up to several times that, the text sat locked at its LARGEST
+ * size instead of actively shrinking — including the ~480-520px range
+ * that's actually too narrow for text at that size to fit. Lowering the
+ * coefficient to 8cqw pushes that lock-in point out to ~600px of content
+ * width, so the font is still actively shrinking through the narrow
+ * range where overflow was actually happening. The floor also came down
+ * (1.6rem -> 1.2rem) so it keeps shrinking further on very narrow phones
+ * rather than holding a fixed size indefinitely. .site-title-bar's
+ * overflow: hidden (and now its explicit horizontal padding) remain as a
+ * hard backstop regardless.
+ */
 .site-name a {
   font-family: 'Rubik Maze', $font-family-heading;
   text-decoration: none;
   display: inline-block;
-  font-size: clamp(1.6rem, 10cqw, 3rem);
+  max-width: 100%;
+  font-size: clamp(1.2rem, 8cqw, 3rem);
   line-height: 1;
   margin: 0.05em;
 }
