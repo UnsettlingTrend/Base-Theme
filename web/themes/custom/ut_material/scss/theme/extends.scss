@@ -124,8 +124,17 @@ section.region.region-pre-footer {
   }
 
   .field_source {
-    position: relative;
-    left: 50px;
+    /*
+     * Indent via margin, not `position: relative; left: 50px`. A relative
+     * offset shifts the box without shrinking its width, so whenever this
+     * block's auto-centering margin (from .node--type-quote's max-width +
+     * margin: auto above) is under 50px — any viewport width between
+     * "mobile, no centering margin to speak of" and "wide desktop, margin
+     * well over 50px" — the shift pushed past the container/viewport edge
+     * and caused a page-wide horizontal scrollbar with a blank column on
+     * the right. margin-left lets the auto-width box shrink to fit instead.
+     */
+    margin-left: 50px;
 
     &::before {
       content: '- ';

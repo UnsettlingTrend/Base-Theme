@@ -1,0 +1,11 @@
+uuid: a1e4f6c2-9b3d-47a1-8e2f-3c7d5b9a1f04
+langcode: en
+status: true
+dependencies:
+  module:
+    - ut_utilities
+id: content_creator
+label: 'Content Creator'
+weight: 3
+is_admin: false
+permissions: {  }

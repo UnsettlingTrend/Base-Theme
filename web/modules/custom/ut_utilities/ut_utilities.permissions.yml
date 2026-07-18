@@ -1,0 +1,4 @@
+'assign content creation area of interest':
+  title: "Assign 'Content Creation' Area of Interest"
+  description: 'Allows changing the value of the "Content Creation" Area of Interest checkbox on any user''s Areas of Interest page.'
+  restrict access: true

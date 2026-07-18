@@ -19,6 +19,13 @@
  *   - roles (string[], required): Drupal role IDs to assign when checked.
  *   - description (string, optional): Help text shown beneath the checkbox.
  *   - weight (int, optional): Sort order. Lower values appear first. Default 0.
+ *   - edit_permission (string, optional): If set, only users who have this
+ *     permission may change this checkbox's value — for any account,
+ *     including their own. Everyone else still sees the checkbox (and its
+ *     current value), but it renders #disabled, and submitting a tampered
+ *     value for it is rejected in form validation. Default: anyone who can
+ *     access the form (self, or an admin editing another account) may
+ *     change it.
  *
  * @see hook_ut_utilities_areas_of_interest_info_alter()
  */

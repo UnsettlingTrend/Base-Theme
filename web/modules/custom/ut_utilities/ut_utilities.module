@@ -40,6 +40,16 @@ function ut_utilities_form_user_register_form_alter(array &$form, \Drupal\Core\F
     '#after_build' => ['\Drupal\ut_utilities\Form\AreasOfInterestForm::addOptionDescriptions'],
     '#areas' => $areas,
   ];
+  // Must run now, before this element enters Drupal's form build pipeline —
+  // see AreasOfInterestForm::applyEditRestrictions() for why #after_build
+  // is too late for #disabled to have any effect.
+  \Drupal\ut_utilities\Form\AreasOfInterestForm::applyEditRestrictions($areas, $form['areas_of_interest']);
+
+  // Rejects a tampered submission for any permission-restricted area (see
+  // AreasOfInterestForm::validateRestrictedAreas()) — shared with the
+  // Areas of Interest profile form so the same rule applies wherever these
+  // checkboxes appear.
+  $form['#validate'][] = ['\Drupal\ut_utilities\Form\AreasOfInterestForm', 'validateRestrictedAreas'];
 
   // Runs after the entity is saved so the new account already has an ID.
   $form['actions']['submit']['#submit'][] = 'ut_utilities_register_form_submit';
@@ -258,6 +268,88 @@ function ut_utilities_menu_local_tasks_alter(array &$data, string $route_name): 
     if (isset($data['tabs'][0][$plugin_id])) {
       $data['tabs'][0][$plugin_id]['#weight'] = $weight;
     }
+  }
+}
+
+/**
+ * Implements hook_ut_utilities_areas_of_interest_info().
+ *
+ * Checking this grants the 'content_creator' role (config/install/
+ * user.role.content_creator.yml) — kept in sync in both directions:
+ * selecting/deselecting the area here grants/revokes the role (the existing
+ * generic behavior in AreasOfInterestForm::submitForm() /
+ * ut_utilities_register_form_submit(), driven by this 'roles' key), and
+ * ut_utilities_user_update() below does the reverse — if 'content_creator'
+ * is granted or removed some other way (e.g. an admin editing roles
+ * directly on /admin/people), the stored area selection is updated to
+ * match. Per `edit_permission`, only users with the 'assign content
+ * creation area of interest' permission (see ut_utilities.permissions.yml)
+ * may change its value for any account; everyone else sees it rendered
+ * #disabled, and a tampered submission is rejected in validation. See
+ * AreasOfInterestForm::addOptionDescriptions() and ::validateRestrictedAreas(),
+ * shared by both the profile form and the registration form.
+ */
+function ut_utilities_ut_utilities_areas_of_interest_info(): array {
+  return [
+    'content_creation' => [
+      'label'            => t('Content Creation'),
+      'description'      => t('Interested in creating content for the site (articles, recipes, and the like).'),
+      'roles'            => ['content_creator'],
+      'weight'           => 0,
+      'edit_permission'  => 'assign content creation area of interest',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for user.
+ *
+ * The reverse direction of AreasOfInterestForm::submitForm() /
+ * ut_utilities_register_form_submit(): those handle "area selected ->
+ * role granted"; this handles "role granted/revoked (by ANY means, not
+ * just the Areas of Interest form) -> area selected to match". Generic
+ * across every area with a non-empty 'roles' list (not just
+ * 'content_creation'), same as the forward direction already is. An area
+ * that lists more than one role is treated as selected only once the user
+ * holds ALL of them, and deselected as soon as any one is missing.
+ *
+ * Only writes to the user.data store, never re-saves $account — this hook
+ * fires mid-save, and doing so would recurse.
+ */
+function ut_utilities_user_update(\Drupal\Core\Entity\EntityInterface $account): void {
+  $old_roles = $account->original?->getRoles() ?? [];
+  $new_roles = $account->getRoles();
+  if ($old_roles === $new_roles) {
+    return;
+  }
+
+  $areas = ut_utilities_get_areas_of_interest();
+  $uid = $account->id();
+  $user_data = \Drupal::service('user.data');
+  $selections = $user_data->get('ut_utilities', $uid, 'areas_of_interest') ?? [];
+
+  $changed = FALSE;
+  foreach ($areas as $key => $info) {
+    $area_roles = $info['roles'] ?? [];
+    if (empty($area_roles)) {
+      // Nothing to sync from for an area with no linked roles.
+      continue;
+    }
+    $has_all_roles = !array_diff($area_roles, $new_roles);
+    $is_selected = in_array($key, $selections, TRUE);
+
+    if ($has_all_roles && !$is_selected) {
+      $selections[] = $key;
+      $changed = TRUE;
+    }
+    elseif (!$has_all_roles && $is_selected) {
+      $selections = array_values(array_diff($selections, [$key]));
+      $changed = TRUE;
+    }
+  }
+
+  if ($changed) {
+    $user_data->set('ut_utilities', $uid, 'areas_of_interest', $selections);
   }
 }
 

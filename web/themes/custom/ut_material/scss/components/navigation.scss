@@ -12,6 +12,11 @@
  */
 .site-title-bar {
   --title-collapse-progress: 0;
+  container-type: inline-size;
+  width: 100%;
+  max-width: $lg;
+  margin-left: auto;
+  margin-right: auto;
   background: $color-bg-body;
   text-align: center;
   overflow: hidden;
@@ -40,18 +45,60 @@
 
 /*
  * Site name — Google's "Rubik Maze" display font (loaded in fonts.scss), no
- * link underline. Font size matches this file's existing mobile/desktop
- * split for the nav menu below (max-width: 767px / min-width: 768px, i.e.
- * $sm from material_base/scss/base/variables.scss).
+ * link underline. Font size fills the available width of .site-title-bar
+ * (a container-type: inline-size context, above) via cqw units, rather
+ * than fixed per-breakpoint values — it scales continuously with the
+ * container's width instead of jumping at one breakpoint. Deliberately
+ * NOT tied to --title-collapse-progress: that var only drives
+ * .site-title-bar's height/padding/opacity (its collapse-on-scroll), so
+ * this stays a fixed size at any given viewport width and just fades out
+ * with the rest of the bar as it collapses, rather than also shrinking.
+ *
+ * The clamp() ceiling (3rem) is capped by the VERTICAL budget, not a
+ * design choice — .site-title-bar is a fixed max-height: 96px box
+ * (see above) with 2×20px resting padding, leaving ~56px for this text.
+ * cqw scales off the bar's *width*, which has no relation to that height
+ * budget, so an unclamped or too-large ceiling here overflows the fixed
+ * height and gets clipped by .site-title-bar's overflow: hidden — which
+ * is what "pushed down, bottom half not visible" was: at 4rem (64px) with
+ * normal line-height (~1.2×) plus percentage margins, the text's rendered
+ * box was well over 56px tall.
+ *
+ * That's also why margin is 0.05em (5% of the text's own size) rather
+ * than a plain 5%: percentage margins resolve against the CONTAINING
+ * BLOCK'S WIDTH on every side, including top/bottom — in a wide, short
+ * box like this one, 5% of a ~1100px-wide bar is ~55px of margin stacked
+ * on both the top AND bottom, alone several times the entire available
+ * height. em-based margin scales with the text instead, which is what
+ * "a margin around it" should actually look like here.
+ *
+ * line-height: 1 (not "normal") overrides material_base's own
+ * .navbar-branding__title (the OTHER class this same element carries,
+ * material_base/scss/components/navbar-branding.scss) hardcoding
+ * line-height: 24px — inherited by this link regardless of its own
+ * font-size, which crushed the text into a 24px-tall box no matter how
+ * large font-size got. Tightened to 1 (vs. normal's ~1.2×) to leave more
+ * of the 56px budget for the margin instead of line spacing.
  */
+/*
+ * .navbar-branding__title (the same contrib class .site-name carries)
+ * also hardcodes padding: 12px, another 24px (12 top + 12 bottom) eaten
+ * out of the same 56px budget on top of the line-height issue above —
+ * unrelated property, same root cause (a contrib default sized for its
+ * own fixed small font-size, not one we're deliberately blowing up to
+ * fill the space). Zero it out here so the text gets the full budget.
+ */
+.site-name {
+  padding: 0;
+}
+
 .site-name a {
   font-family: 'Rubik Maze', $font-family-heading;
   text-decoration: none;
-  font-size: 1.6rem;
-
-  @media (min-width: 768px) {
-    font-size: 3rem;
-  }
+  display: inline-block;
+  font-size: clamp(1.6rem, 10cqw, 3rem);
+  line-height: 1;
+  margin: 0.05em;
 }
 
 /*
@@ -91,6 +138,21 @@
   .icon {
     color: $theme-primary;
   }
+
+  /*
+   * material_base/scss/components/navbar.scss's own `.navbar .icon` rule
+   * sets both `color` and `fill: $color-on-primary` — sized for the base
+   * theme's default dark/colored navbar. SVGs here (e.g. the dropdown
+   * caret, class="icon navbar-menu__item-icon") are colored via `fill`,
+   * not `currentColor`, so re-declaring only `color` above left that
+   * contrib `fill` undisturbed — same specificity fight already documented
+   * for menu-item colors elsewhere in this file, just missed for `fill`.
+   * Icons rendered invisible: $color-on-primary (light) fill on this
+   * variant's light $color-bg-body background.
+   */
+  .icon {
+    fill: $theme-primary;
+  }
 }
 
 /*
@@ -124,6 +186,24 @@
 .navbar__section--right {
   flex: 0 0 auto;
   margin-left: auto;
+}
+
+/*
+ * Flex items default to `min-width: auto`, which floors their shrinking at
+ * their content's min-content width — the same issue already fixed for
+ * .layout__region in scss/theme/layout.scss (see the comment there). The
+ * main menu's items never wrap (.navbar-menu is `display: flex` in a row),
+ * so its min-content width is the sum of every menu item's natural width.
+ * Only logged-in users get a second .navbar__section--right (the account
+ * menu, flex: 0 0 auto and non-shrinking by design) sharing this row — once
+ * both sections' minimum widths together exceed .navbar__container's actual
+ * width, flexbox can't shrink the menu section below its floor and instead
+ * overflows the whole page horizontally. Anonymous users, with only one
+ * section in the row, never hit this. min-width: 0 lets the menu section
+ * actually shrink to fit instead.
+ */
+.navbar__container > .navbar__section {
+  min-width: 0;
 }
 
 .navbar-menu__item {
