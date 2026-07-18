@@ -219,14 +219,73 @@
   /* (Screen width < 768px) */
   @media (max-width: 767px) {
 
-    /* Make children items show properly in the structure for mobile menu*/
-    .mdc-menu-surface--anchor .mdc-menu-surface--open {
-      position: relative;
-      overflow: unset;
+    /*
+     * Child (level-1+) dropdown panels — reworked from MDC's own floating,
+     * content-width popover to a standard mobile accordion:
+     *
+     * - Full width to match the top-level items. MDC menus size to their
+     *   widest item by default (no explicit width, just min-width: 112px
+     *   and a max-width cap), which is why these were only ever as wide as
+     *   their widest link.
+     * - A single smooth transition that grows the available space and
+     *   reveals the content together, rather than the menu items below it
+     *   just popping down while the content separately fades in.
+     *
+     * Uses the CSS grid-template-rows: 0fr -> 1fr technique rather than a
+     * fixed max-height (e.g. 0 -> 1000px): transitioning max-height across
+     * a fixed range that's much taller than the real content means the
+     * value blows past the content's actual height very early in the
+     * transition's timeline — the panel finishes revealing itself almost
+     * immediately, well before the 0.3s duration elapses, which is exactly
+     * why it read as an instant pop rather than a quick slide. The grid
+     * row transitions to the content's true intrinsic height instead, so
+     * the full 0.3s is spent actually animating regardless of how tall any
+     * given submenu is.
+     *
+     * .mdc-menu-surface.mdc-menu-surface--open (two classes) naturally
+     * outweighs MDC's own single-class `.mdc-menu-surface--open` and
+     * `--animating-open` rules, so transform/opacity/display are
+     * overridden here without needing !important. `display: grid` (rather
+     * than MDC's own display: none/inline-block toggle) applies
+     * unconditionally so the grid-template-rows transition has a
+     * consistent starting point to animate from in both directions.
+     */
+    .mdc-menu-surface {
+      display: grid;
+      grid-template-rows: 0fr;
+      width: 100%;
+      max-width: none; /* overrides MDC's calc(100vw - 32px) cap */
+      transition: grid-template-rows 0.3s ease;
+      transform: none;
+      opacity: 1;
+
+      &.mdc-menu-surface--open {
+        /* Out of MDC's absolute positioning and into normal flow, so the
+           expanding panel pushes the items below it down the page instead
+           of floating over them. */
+        position: relative;
+        grid-template-rows: 1fr;
+      }
 
       .mdc-deprecated-list {
         padding: 0;
-        width: 100vw;
+        /*
+         * 100% not 100vw: vw includes the scrollbar's width, so whenever a
+         * scrollbar is present this was wider than the page's actual
+         * visible width, pushing the dropdown past the right edge and
+         * causing horizontal page scroll. The containing block here
+         * (.navbar.navbar--standard, position: sticky — see .navbar-menu
+         * below) already spans the full visible width, so 100% matches it
+         * exactly without the scrollbar-inclusion problem.
+         */
+        width: 100%;
+        /* The grid row's height comes from this item's intrinsic height;
+           overflow: hidden clips it during the 0fr (collapsed) state, and
+           min-height: 0 overrides a grid item's default min-height: auto,
+           which would otherwise keep the row from actually collapsing to
+           zero. */
+        overflow: hidden;
+        min-height: 0;
       }
     }
 
@@ -235,36 +294,74 @@
     /* Prepare for the dropdown going full screen beneath */
     position: static;
 
-    /* 1. Create the Hamburger Toggle Button via CSS if not in HTML */
+    /*
+     * 1. Create the Hamburger Toggle Button via CSS if not in HTML
+     *
+     * Styled to match the menu items it replaces/reveals (.navbar-menu__item
+     * below) rather than standing out as its own solid-colored button: same
+     * $theme-primary blue for its text/☰ glyph (theme.js's "Menu ☰" markup
+     * is plain text, so `color` alone covers both), transparent background,
+     * no border.
+     */
     .menu-toggle {
       display: block;
-      padding: 15px;
+      padding: 15px 0 15px 15px;
       cursor: pointer;
       font-weight: bold;
-      background: $theme-primary;
-      color: $theme-background;
+      background: transparent;
+      color: $theme-primary;
       text-align: center;
       border: none;
     }
 
-    /* 2. Hide the menu by default and position it */
+    /*
+     * 2. Hide the menu by default and position it
+     *
+     * width: 100% not 100vw — see the .mdc-deprecated-list comment above,
+     * same scrollbar-inclusion bug, same fix. This element's containing
+     * block (nearest positioned ancestor for its `position: absolute;
+     * left: 0`) is .navbar.navbar--standard (position: sticky), which
+     * already spans the page's actual visible width edge-to-edge.
+     *
+     * Slides down/up on open/close using the same grid-template-rows:
+     * 0fr -> 1fr technique as the child dropdown panels above (see that
+     * comment for why, e.g., a fixed max-height transition looks like an
+     * instant pop rather than a slide) — `.menu--level-0` below is this
+     * grid's single row/item. display: none was toggled straight to block
+     * before (theme.js just adds/removes .is-open), which can't be
+     * transitioned at all.
+     */
     .navbar-menu {
-      display: none; /* Hidden until toggled */
-      flex-direction: column;
-      width: 100vw;
+      display: grid;
+      grid-template-rows: 0fr;
+      width: 100%;
       position: absolute;
       left: 0;
+      transition: grid-template-rows 0.3s ease;
     }
 
     /* 3. Class to show the menu when JS toggles it */
     .navbar-menu.is-open {
-      display: block;
+      grid-template-rows: 1fr;
     }
 
-    /* 4. Reset list styles for vertical stack */
+    /*
+     * 4. Reset list styles for vertical stack
+     *
+     * Also .navbar-menu's grid row/item (see above): overflow: hidden
+     * clips it during the 0fr (collapsed) state, and min-height: 0
+     * overrides a grid item's default min-height: auto, which would
+     * otherwise keep the row from actually collapsing to zero. Being a
+     * grid item here doesn't conflict with this element also being
+     * `display: flex` for its own children (the top-level menu items) —
+     * those are independent, one governs how .menu--level-0 itself is
+     * sized within .navbar-menu, the other how its own children lay out.
+     */
     .menu--level-0 {
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
       padding: 0;
       margin: 0;
       list-style: none;
@@ -278,6 +375,25 @@
       text-decoration: none;
       color: $theme-primary;
       background-color: $color-bg-body;
+    }
+
+    /*
+     * Same striping effect as the site's <table> rows
+     * (scss/components/tables.scss's `tbody tr:nth-child(even)`, which uses
+     * rgba(0, 0, 0, 0.02)) — anchored to the first item instead of the
+     * second, per request: the dropdown's first item is the one that needs
+     * to visually read as "darker/first of a list", not the second.
+     *
+     * Uses an opaque mix() of the same 2% black into $color-bg-body, rather
+     * than the table's rgba() overlay directly: a table row's background
+     * only ever composites against the rest of the (opaque) page behind it,
+     * but this dropdown is `position: absolute` and floats over whatever
+     * page content is beneath it — an alpha background there lets that
+     * content bleed through the stripe instead of tinting a solid surface.
+     * mix() computes the same visual shade as a solid, opaque color.
+     */
+    .menu-item:nth-child(odd) > .navbar-menu__item {
+      background-color: mix(#000, $color-bg-body, 2%);
     }
   }
 
