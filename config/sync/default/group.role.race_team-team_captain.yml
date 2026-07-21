@@ -14,12 +14,10 @@ scope: individual
 global_role: null
 group_type: race_team
 permissions:
-  - 'administer members'
   - 'delete group'
   - 'edit group'
   - 'leave group'
   - 'update own group_membership relationship'
-  - 'view all group revisions'
   - 'view group'
   - 'view group_membership relationship'
   - 'view latest group version'

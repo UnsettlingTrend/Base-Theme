@@ -55,8 +55,20 @@ class WaiverGateSubscriber implements EventSubscriberInterface {
       return;
     }
 
+    $query = ['return_route' => $route];
+    // "Request to Join Team" links to race_day.runner_team_request with the
+    // pre-selected team as ?group=. Carry it through the waiver detour so
+    // race_day_webform_submission_form_alter()'s post-waiver redirect (in
+    // race_day.module) can still pass it back to runner_team_request,
+    // where it's what pre-fills and locks the Race Team field. Without
+    // this, that context was silently lost at this very first redirect.
+    $group_id = $request->query->get('group');
+    if ($group_id) {
+      $query['group'] = $group_id;
+    }
+
     $redirect_url = Url::fromRoute('race_day.waiver_modal', ['race' => $race->id()], [
-      'query' => ['return_route' => $route],
+      'query' => $query,
     ])->toString();
     $event->setResponse(new RedirectResponse($redirect_url));
   }

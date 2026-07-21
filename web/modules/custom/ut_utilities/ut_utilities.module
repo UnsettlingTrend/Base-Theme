@@ -6,6 +6,82 @@
  */
 
 /**
+ * Implements hook_ENTITY_TYPE_presave() for media.
+ *
+ * The image media bundle's own field_title (added so every media bundle has
+ * a usable "title", not just image) duplicated field_media_image's own
+ * built-in Title sub-field (an image field property — the "Title" input
+ * that appears alongside "Alt" when a field's title_field setting is
+ * enabled, per field.field.media.image.field_media_image.yml). That's two
+ * "Title" inputs asking for the same thing on the same form. field_title is
+ * now hidden from every image-bundle form display
+ * (core.entity_form_display.media.image.{default,race_team_icon}.yml —
+ * media_library's already had it hidden); this keeps it populated anyway by
+ * mirroring field_media_image's own title onto it on save, so field_title
+ * stays usable for image media too (e.g. for code/views that read it
+ * generically across bundles) without asking the editor twice.
+ */
+function ut_utilities_media_presave(\Drupal\media\MediaInterface $media): void {
+  if ($media->bundle() !== 'image' || !$media->hasField('field_media_image') || !$media->hasField('field_title')) {
+    return;
+  }
+
+  $title = $media->get('field_media_image')->title ?? '';
+  if ($title !== '') {
+    $media->set('field_title', $title);
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * Appends a #process callback to the 'name' render element (contrib "Name"
+ * module — provides the site's split first/middle/last name field, used on
+ * both /user/register and the user edit form) so its per-component
+ * sub-fields are legible at rest, not just once focused.
+ *
+ * @see _ut_utilities_name_element_persistent_helper_text()
+ */
+function ut_utilities_element_info_alter(array &$types): void {
+  if (isset($types['name'])) {
+    $types['name']['#process'][] = '_ut_utilities_name_element_persistent_helper_text';
+  }
+}
+
+/**
+ * #process callback: makes 'name' element sub-field helper text persistent.
+ *
+ * This site's user name field (core.entity_form_display.user.user.default.yml)
+ * is configured with `title_display: description` for every component
+ * (Given, Middle name(s), Family, etc.). Per
+ * \Drupal\name\Element\Name::applyTitleDisplay()'s 'description' case, that
+ * setting hides each sub-field's real <label> (#title_display =>
+ * 'invisible') and moves the label text into #description instead. Our
+ * theme renders #description as MDC's helper text
+ * (material_base_mdc/templates/form/form-element--textfield.html.twig),
+ * which by Material Design's own default is *not* persistent — shown only
+ * once the field is focused. That's exactly why "Given"/"Middle
+ * name(s)"/"Family" were invisible until clicked into: the only thing
+ * telling the user what a field is for was hidden at rest.
+ *
+ * Setting the `helper-text-persistent` attribute is this theme's own
+ * opt-in for always-visible helper text —
+ * material_base_mdc.theme's template_preprocess_form_element() reads it
+ * straight off #attributes, so this only needs to run once the "name"
+ * element's own #process callback has expanded #components into actual
+ * child form elements (appended after it in ut_utilities_element_info_alter()
+ * above, rather than reimplementing the label-substitution logic here).
+ */
+function _ut_utilities_name_element_persistent_helper_text(array $element, \Drupal\Core\Form\FormStateInterface $form_state, array &$complete_form): array {
+  foreach (\Drupal\Core\Render\Element::children($element) as $key) {
+    if (($element[$key]['#title_display'] ?? NULL) === 'invisible' && !empty($element[$key]['#description'])) {
+      $element[$key]['#attributes']['helper-text-persistent'] = TRUE;
+    }
+  }
+  return $element;
+}
+
+/**
  * Returns all area-of-interest definitions collected from every module.
  *
  * Results are sorted by weight then label.

@@ -47,3 +47,7 @@
 'review own race team requests':
   title: 'Review own Race Team Requests'
   description: 'Review Team Requests for teams I''m on.'
+
+'edit runner assignments on race team edit form':
+  title: 'Edit Runner Assignments on Race Team Edit Form'
+  description: 'Allows the user to see and edit the race leg assignments on the race team group entity''s edit form itself.'

@@ -808,6 +808,19 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
   $entity = $form_object->getEntity();
 
   if ($entity->getEntityTypeId() === 'group' && $entity->bundle() === 'race_team') {
+    if ($form_object->getOperation() === 'delete') {
+      // Cancel should return to the team's own page, not core's
+      // ContentEntityDeleteForm::getCancelUrl() default of
+      // $entity->toUrl('collection') — Group's "collection" link template
+      // is /admin/group (see the #[ContentEntityType] handlers in
+      // Drupal\group\Entity\Group), a generic admin listing rather than
+      // anywhere related to the team someone was just looking at.
+      if (isset($form['actions']['cancel'])) {
+        $form['actions']['cancel']['#url'] = $entity->toUrl();
+      }
+      return;
+    }
+
     if ($entity->isNew()) {
       $race_id = \Drupal::request()->query->get('race_id');
 
@@ -849,15 +862,47 @@ function race_day_form_alter(array &$form, FormStateInterface $form_state, strin
       }
     }
     else {
-      // On the edit form, show existing assignments but lock add/remove controls.
-      if (isset($form['field_runner_legs']['widget'])) {
-        $widget = &$form['field_runner_legs']['widget'];
-        $widget['add_more']['#access'] = FALSE;
-        foreach (Element::children($widget) as $delta) {
-          if (is_numeric($delta) && isset($widget[$delta]['top']['links'])) {
-            $widget[$delta]['top']['links']['#access'] = FALSE;
+      // Race is locked to whatever was chosen at creation — not editable on
+      // the edit form. Hide the real widget (#access = FALSE keeps its
+      // already-correct #default_value, the current field_race entity,
+      // from being processed as input — same mechanism the add form above
+      // relies on for its own URL-driven lock, and the same reason
+      // #access = FALSE elements are skipped during validation, so the
+      // field being required doesn't block this form even though nothing
+      // here submits a value for it) and show the race's label as plain
+      // text instead — a disabled/greyed-out input would still look like
+      // an editable field, not "regular text".
+      if (isset($form['field_race']['widget'][0]['target_id'])) {
+        $form['field_race']['widget'][0]['target_id']['#access'] = FALSE;
+
+        /** @var \Drupal\race_day\Entity\Race|null $race */
+        $race = $entity->get('field_race')->entity;
+        $form['field_race_display'] = [
+          '#type' => 'item',
+          '#title' => $entity->getFieldDefinition('field_race')->getLabel(),
+          '#markup' => $race ? $race->label() : t('— None —'),
+          '#weight' => $form['field_race']['#weight'] ?? 0,
+        ];
+      }
+
+      // On the edit form, show existing assignments but lock add/remove
+      // controls — restricted to users with the 'edit runner assignments on
+      // race team edit form' permission (race_day.permissions.yml); anyone
+      // without it doesn't see the field on this form at all, same as the
+      // add form above always hides it.
+      if (\Drupal::currentUser()->hasPermission('edit runner assignments on race team edit form')) {
+        if (isset($form['field_runner_legs']['widget'])) {
+          $widget = &$form['field_runner_legs']['widget'];
+          $widget['add_more']['#access'] = FALSE;
+          foreach (Element::children($widget) as $delta) {
+            if (is_numeric($delta) && isset($widget[$delta]['top']['links'])) {
+              $widget[$delta]['top']['links']['#access'] = FALSE;
+            }
           }
         }
+      }
+      else {
+        $form['field_runner_legs']['#access'] = FALSE;
       }
     }
   }
@@ -1128,7 +1173,22 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
   if ($route === 'race_day.waiver_modal') {
     $return_route = $request->query->get('return_route');
     if ($return_route === 'race_day.runner_team_request') {
-      $destination = \Drupal\Core\Url::fromRoute('race_day.runner_team_request', ['race' => $race->id()])->toString();
+      // Carry the pre-selected team back through — WaiverGateSubscriber
+      // forwards it onto this request's query string as ?group= (see that
+      // class), which is what this same function's own
+      // race_day.runner_team_request branch below reads to pre-fill and
+      // lock the Race Team field. Without this, a user who clicked
+      // "Request to Join Team" for a specific team, then had to fill out a
+      // waiver first, would land back on this form with no memory of which
+      // team they'd originally chosen.
+      $query = [];
+      $group_id = $request->query->get('group');
+      if ($group_id) {
+        $query['group'] = $group_id;
+      }
+      $destination = \Drupal\Core\Url::fromRoute('race_day.runner_team_request', ['race' => $race->id()], [
+        'query' => $query,
+      ])->toString();
     }
     else {
       $destination = \Drupal\Core\Url::fromRoute('entity.group.add_form', ['group_type' => 'race_team'], [
@@ -1183,6 +1243,42 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
 
     // Block duplicate submissions for the same race.
     $form['#validate'][] = '_race_day_runner_team_request_validate_unique_race';
+
+    // After a successful request, land the user back on the team's own
+    // page (e.g. to see their pending request reflected in its roster)
+    // instead of the webform's generic default confirmation page. Appended
+    // to the submit button's own #submit array — same reasoning as
+    // _race_day_waiver_post_submit() above: Webform's submit button
+    // carries its own #submit handlers, which would shadow a form-level
+    // $form['#submit'][] append.
+    if (!empty($form['actions'])) {
+      foreach (Element::children($form['actions']) as $key) {
+        if (($form['actions'][$key]['#type'] ?? '') === 'submit') {
+          $form['actions'][$key]['#submit'][] = '_race_day_runner_team_request_redirect_to_team';
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Submit handler for the runner team request webform.
+ *
+ * Redirects to the race team's own page after a successful request. Runs
+ * after Webform's own submission handling (which is what sets its
+ * configured default-confirmation-page redirect), so this simply
+ * overwrites that with the team's URL — last write to
+ * $form_state->setRedirectUrl() wins.
+ */
+function _race_day_runner_team_request_redirect_to_team(array &$form, FormStateInterface $form_state): void {
+  $team_id = (int) $form_state->getValue('race_team');
+  if (!$team_id) {
+    return;
+  }
+
+  $team = \Drupal::entityTypeManager()->getStorage('group')->load($team_id);
+  if ($team) {
+    $form_state->setRedirectUrl($team->toUrl());
   }
 }
 
