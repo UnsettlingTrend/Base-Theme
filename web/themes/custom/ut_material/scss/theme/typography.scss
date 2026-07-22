@@ -1,4 +1,11 @@
 @use '@material/typography';
+@import 'variables';
+
+// Sitewide text-selection highlight, in place of the browser default blue.
+::selection {
+  background-color: $theme-primary;
+  color: $color-bg-body;
+}
 
 .page {
   @include typography.typography(body1);
