@@ -190,6 +190,16 @@
   .icon {
     fill: $color-header-menu-font;
   }
+
+  /*
+   * Overrides material_base's own $navbar-height-stadard (64px, set on
+   * .navbar--standard .navbar__container — see the comment below). Same
+   * specificity trick as the rest of this block: .navbar.navbar--standard
+   * (2 classes) outranks contrib's .navbar--standard (1 class) alone.
+   */
+  .navbar__container {
+    height: 54px;
+  }
 }
 
 /*
@@ -238,9 +248,14 @@
  * overflows the whole page horizontally. Anonymous users, with only one
  * section in the row, never hit this. min-width: 0 lets the menu section
  * actually shrink to fit instead.
+ *
+ * Also strips material_base's own `padding: 8px 12px` on this element —
+ * .navbar__container already carries the page's own gutter padding (see
+ * above), so the section's padding on top of that was doubling up.
  */
 .navbar__container > .navbar__section {
   min-width: 0;
+  padding: 0;
 }
 
 .navbar-menu__item {
@@ -362,7 +377,10 @@
       display: block;
       padding: 15px 0 15px 15px;
       cursor: pointer;
-      font-weight: bold;
+      /* Matches the desktop top-level items' own weight (material_base's
+         .menu--level-0 > .menu-item > .navbar-menu__item uses this same
+         token) rather than a hardcoded `bold` (700). */
+      font-weight: $font-weight-button;
       background: transparent;
       color: $color-header-menu-font;
       text-align: center;
@@ -447,15 +465,19 @@
      * solid surface. mix() computes the same visual shade as a solid, opaque
      * color.
      *
-     * Mixed toward white, not black: $color-header-background is already
-     * dark, and a couple more percent of black on top of it is barely
-     * distinguishable from the base — the usual light-table move (darken the
-     * stripe) doesn't read once the base itself is this dark. Lightening
-     * instead gives the same "alternating row" effect a visible amount of
-     * contrast to work with.
+     * Mixed toward black, matching the light-table convention this codebase
+     * already uses elsewhere ($color-header-background is a light tint, so
+     * darkening reads clearly here — see the git history on this rule for
+     * why a dark header background needed the opposite direction instead).
+     *
+     * Capped at 2% rather than 8%: $color-header-menu-font's contrast ratio
+     * against $color-header-background is already close to the 4.5:1 AA
+     * floor, and 8% darkened this row's background just enough to drop that
+     * text below it. 2% is still a visible alternating stripe without
+     * eating into that margin.
      */
     .menu-item:nth-child(odd) > .navbar-menu__item {
-      background-color: mix(#fff, $color-header-background, 12%);
+      background-color: mix(#000, $color-header-background, 2%);
     }
   }
 
