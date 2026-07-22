@@ -17,7 +17,7 @@
   max-width: $lg;
   margin-left: auto;
   margin-right: auto;
-  background: $color-bg-body;
+  background: $color-header-background;
   text-align: center;
   overflow: hidden;
   max-height: calc(96px * (1 - var(--title-collapse-progress)));
@@ -108,6 +108,10 @@
   padding: 0;
 }
 
+.site-slogan {
+  color: $color-header-sitename;
+}
+
 /*
  * clamp() tuning below (below 520px or so, the site name was overflowing
  * past the edge of the screen): the ceiling (3rem) was being reached at a
@@ -131,6 +135,7 @@
   font-size: clamp(1.2rem, 8cqw, 3rem);
   line-height: 1;
   margin: 0.05em;
+  color: $color-header-sitename;
 }
 
 /*
@@ -162,13 +167,13 @@
 .navbar.navbar--standard {
   position: sticky;
   z-index: 10;
-  background: $color-bg-body;
-  color: $theme-primary;
-  border-bottom: 1px solid rgba($theme-primary, .15);
+  background: $color-header-background;
+  color: $color-header-menu-font;
+  border-bottom: 1px solid rgba($color-header-menu-font, .15);
 
   a,
   .icon {
-    color: $theme-primary;
+    color: $color-header-menu-font;
   }
 
   /*
@@ -183,7 +188,7 @@
    * variant's light $color-bg-body background.
    */
   .icon {
-    fill: $theme-primary;
+    fill: $color-header-menu-font;
   }
 }
 
@@ -239,11 +244,15 @@
 }
 
 .navbar-menu__item {
-  color: $theme-primary;
+  color: $color-header-menu-font;
 }
 
+/* Active item breaks from the menu's orange to the same white as the site
+   name — the "anchor" color of the header — rather than a darker/lighter
+   shade of the accent. */
 .menu-item--active-trail > .navbar-menu__item {
-  border-bottom: 2px solid $theme-primary;
+  color: $color-header-sitename;
+  border-bottom: 2px solid $color-header-sitename;
 }
 
 /* Mobile Main Nav Menu Styles  */
@@ -290,6 +299,10 @@
       transition: grid-template-rows 0.3s ease;
       transform: none;
       opacity: 1;
+      /* MDC's own default is a white menu-surface; the list items below
+         already paint over it edge-to-edge, but this covers the surface
+         itself too so nothing white shows through its box-shadow/corners. */
+      background: $color-header-background;
 
       &.mdc-menu-surface--open {
         /* Out of MDC's absolute positioning and into normal flow, so the
@@ -319,6 +332,16 @@
         overflow: hidden;
         min-height: 0;
       }
+
+      /*
+       * Marks these as child items now that the accordion flattens the
+       * menu's hierarchy into a single vertical stack — .mdc-menu-surface
+       * only ever wraps menu_level 1+ (menu--navbar.html.twig), so this
+       * never matches the top-level items outside it.
+       */
+      .navbar-menu__item-text::before {
+        content: '- ';
+      }
     }
 
     /* Move the whole nav to the right */
@@ -331,9 +354,9 @@
      *
      * Styled to match the menu items it replaces/reveals (.navbar-menu__item
      * below) rather than standing out as its own solid-colored button: same
-     * $theme-primary blue for its text/☰ glyph (theme.js's "Menu ☰" markup
-     * is plain text, so `color` alone covers both), transparent background,
-     * no border.
+     * $color-header-menu-font for its text/☰ glyph (theme.js's "Menu ☰"
+     * markup is plain text, so `color` alone covers both), transparent
+     * background, no border.
      */
     .menu-toggle {
       display: block;
@@ -341,7 +364,7 @@
       cursor: pointer;
       font-weight: bold;
       background: transparent;
-      color: $theme-primary;
+      color: $color-header-menu-font;
       text-align: center;
       border: none;
     }
@@ -403,10 +426,10 @@
       display: flex;
       justify-content: space-between;
       padding: 16px;
-      border-bottom: 1px solid rgba($theme-primary, .15);
+      border-bottom: 1px solid rgba($color-header-menu-font, .15);
       text-decoration: none;
-      color: $theme-primary;
-      background-color: $color-bg-body;
+      color: $color-header-menu-font;
+      background-color: $color-header-background;
     }
 
     /*
@@ -416,16 +439,23 @@
      * second, per request: the dropdown's first item is the one that needs
      * to visually read as "darker/first of a list", not the second.
      *
-     * Uses an opaque mix() of the same 2% black into $color-bg-body, rather
-     * than the table's rgba() overlay directly: a table row's background
-     * only ever composites against the rest of the (opaque) page behind it,
-     * but this dropdown is `position: absolute` and floats over whatever
-     * page content is beneath it — an alpha background there lets that
-     * content bleed through the stripe instead of tinting a solid surface.
-     * mix() computes the same visual shade as a solid, opaque color.
+     * Uses an opaque mix() rather than the table's rgba() overlay directly:
+     * a table row's background only ever composites against the rest of the
+     * (opaque) page behind it, but this dropdown is `position: absolute` and
+     * floats over whatever page content is beneath it — an alpha background
+     * there lets that content bleed through the stripe instead of tinting a
+     * solid surface. mix() computes the same visual shade as a solid, opaque
+     * color.
+     *
+     * Mixed toward white, not black: $color-header-background is already
+     * dark, and a couple more percent of black on top of it is barely
+     * distinguishable from the base — the usual light-table move (darken the
+     * stripe) doesn't read once the base itself is this dark. Lightening
+     * instead gives the same "alternating row" effect a visible amount of
+     * contrast to work with.
      */
     .menu-item:nth-child(odd) > .navbar-menu__item {
-      background-color: mix(#000, $color-bg-body, 2%);
+      background-color: mix(#fff, $color-header-background, 12%);
     }
   }
 

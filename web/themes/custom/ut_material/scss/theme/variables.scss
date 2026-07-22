@@ -2,12 +2,13 @@
 
 // Colors.
 
-$color-primary-base: #126da9;
-$color-primary-alt: #506a7b;
-$color-secondary-base: #949b32;
+$color-primary-base: #078BAF;
+$color-primary-alt: #5e8491;
+$color-secondary-base: #f1862f;
+$color-secondary-alt: #FFF1D0;
 $color-accent-base: $color-secondary-base;
 $color-bg-body: #fff;
-$theme-primary: $color-primary-base;
+$theme-primary: #F2994A;
 $theme-secondary: $color-secondary-base;
 $theme-background: $color-bg-body;
 $theme-background-gray: #b9b9b9;
@@ -15,6 +16,11 @@ $color-text-base: #000;
 $color-text-base-light: #a7a6a6;
 $color-text: color.adjust($color-text-base, $lightness: 26%); // #424242
 $color-heading: color.adjust($color-text-base, $lightness: 13%); // #212121
+
+// The Header area
+$color-header-background: #06556B; // $color-primary-alt, darkened ~8%
+$color-header-menu-font: #F2994A; // orange accent
+$color-header-sitename: #FFFFFF;
 
 // Fonts & typography.
 

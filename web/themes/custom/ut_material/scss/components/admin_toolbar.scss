@@ -9,7 +9,8 @@
  * it defaults to 0 for anonymous users, who have no toolbar at all.
  */
 header.region-navbar {
-  margin-top: var(--navbar-toolbar-offset, 0px);
+  padding-top: var(--navbar-toolbar-offset, 0px);
+  background: $color-header-background;
 }
 
 /*
@@ -21,7 +22,7 @@ header.region-navbar {
  */
 @media (max-width: 767px) {
   .region.region-navbar {
-    margin-top: 0;
+    padding-top: 0;
   }
 }
 
@@ -35,7 +36,7 @@ header.region-navbar {
  */
 @media (min-width: 768px) {
   .region.region-navbar {
-    margin-top: 20px;
+    padding-top: 20px;
   }
 }
 
