@@ -8,13 +8,14 @@ dependencies:
     - node.type.page
     - node.type.webform
   module:
+    - media
     - node
-    - ut_utilities
 id: content_creator
 label: 'Content Creator'
 weight: 3
 is_admin: false
 permissions:
+  - 'access media overview'
   - 'create article content'
   - 'create landing_page content'
   - 'create page content'

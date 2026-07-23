@@ -6,6 +6,10 @@
   title: 'Manage Race Day races'
   description: 'Allows the user to create, edit, and delete races and race legs.'
 
+'view race_day races admin listing':
+  title: 'View Race Day races admin listing'
+  description: 'Allows the user to view the admin listing of all races at /admin/race-day/races, without the ability to create, edit, or delete them.'
+
 'administer race_day':
   title: 'Administer Race Day'
   description: 'Allows full administration of the Race Day module, including settings and all content.'

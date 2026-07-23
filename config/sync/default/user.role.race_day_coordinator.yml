@@ -22,3 +22,4 @@ permissions:
   - 'view all race team names'
   - 'view race teams overview page'
   - 'view race_day content'
+  - 'view race_day races admin listing'

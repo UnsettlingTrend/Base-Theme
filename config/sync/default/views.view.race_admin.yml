@@ -223,7 +223,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'manage race_day races'
+          perm: 'view race_day races admin listing'
       empty:
         area_text_custom:
           id: area_text_custom
@@ -416,10 +416,6 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'manage race_day races'
       display_extenders: {  }
       path: admin/race-day/races
       menu:

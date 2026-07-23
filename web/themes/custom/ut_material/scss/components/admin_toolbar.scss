@@ -78,3 +78,16 @@ header.region-navbar {
   top: var(--navbar-toolbar-offset, 0px) !important;
 }
 
+/*
+ * The "Races" toolbar icon (.toolbar-icon-race-day-admin) is NOT set here.
+ * It was originally, but that rule only ever applies on pages where
+ * ut_material's own theme.css loads — the admin toolbar is rendered via the
+ * ADMIN theme (Gin) regardless of which theme is rendering the page content,
+ * so on actual /admin/* pages this file never loads at all. The working fix
+ * lives in race_day_page_attachments() (race_day.module) instead, which
+ * injects the --icon override as an inline <style> tag unconditionally on
+ * every page — theme-independent, same as how the toolbar itself renders.
+ * The icon asset (images/races-run.svg) still lives in this theme; that
+ * hook just points at ut_material's compiled dist/ copy of it.
+ */
+

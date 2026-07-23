@@ -10,6 +10,14 @@ race_day.admin:
   requirements:
     _permission: 'view race_day content'
 
+race_day.my_teams:
+  path: '/admin/race-day/my-teams'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\MyTeamsController::page'
+    _title: 'My Teams'
+  requirements:
+    _permission: 'view race_day content'
+
 # --------------------------------------------------------------------------
 # Race entity routes
 # --------------------------------------------------------------------------

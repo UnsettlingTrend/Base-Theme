@@ -52,6 +52,14 @@ function race_day_views_data_alter(array &$data): void {
       'id' => 'race_team_member_name',
     ],
   ];
+  $data['groups_field_data']['race_team_current_user_member'] = [
+    'title' => t('Race Team current user member'),
+    'help' => t('Filters race_team groups down to ones the current user is a member of (subquery, no virtual-key join).'),
+    'filter' => [
+      'title' => t('Current user is a member'),
+      'id' => 'race_team_current_user_member',
+    ],
+  ];
 }
 
 /**
@@ -189,7 +197,13 @@ function race_day_preprocess_views_view_field(array &$variables): void {
   }
 
   // -- race_team_requests view: inline status select for reviewers ------------
-  if ($view->id() !== 'race_team_requests' || $variables['field']->options['id'] !== 'webform_submission_value_1') {
+  // Scoped to block_1 ("Team Requests", placed on race_team group pages —
+  // see core.entity_view_display.group.race_team.default.yml) only —
+  // block_2 ("My Team Requests", on the /admin/race-day/my-teams page)
+  // keeps its plain Status text, per request.
+  if ($view->id() !== 'race_team_requests'
+    || $view->current_display !== 'block_1'
+    || $variables['field']->options['id'] !== 'webform_submission_value_1') {
     return;
   }
   $account = \Drupal::currentUser();
@@ -561,6 +575,11 @@ function race_day_theme(): array {
       'base hook' => 'field',
       'template' => 'field--field-runner-legs',
       'path' => \Drupal::service('extension.list.module')->getPath('race_day') . '/templates/field',
+    ],
+    'views_view_field__race_admin__status' => [
+      'base hook' => 'views_view_field',
+      'template' => 'views-view-field--race-admin--status',
+      'path' => \Drupal::service('extension.list.module')->getPath('race_day') . '/templates/views',
     ],
   ];
 }
@@ -1078,21 +1097,46 @@ function race_day_race_team_create_submit(array &$form, FormStateInterface $form
  * Implements hook_page_attachments().
  */
 function race_day_page_attachments(array &$attachments): void {
-  if (!\Drupal::service('module_handler')->moduleExists('gin')) {
+  // Gin is a THEME, not a module — moduleExists('gin') is always FALSE and
+  // silently short-circuited this hook on every page load.
+  if (!\Drupal::service('theme_handler')->themeExists('gin')) {
     return;
   }
   try {
-    $gin_path = \Drupal::service('extension.list.theme')->getPath('gin');
+    $icon_path = \Drupal::service('extension.list.theme')->getPath('ut_material') . '/dist/images/races-run.svg';
   }
   catch (\Exception $e) {
     return;
   }
-  $sprite_url = base_path() . $gin_path . '/dist/media/sprite.svg';
+  // A standalone SVG file, not a #fragment reference into Gin's shared
+  // sprite.svg: mask-image support for URL fragments pointing at a <symbol>
+  // inside an external SVG is inconsistent across browsers (notably Chrome),
+  // even when the symbol ID genuinely exists in the sprite — the icon simply
+  // fails to resolve and Gin's fallback square shows instead.
+  $icon_url = base_path() . $icon_path;
+  // 23px = Gin's own --gin-icon-size-toolbar (20px) at +15%. The size/
+  // position rule below needs to beat Gin's own
+  // #toolbar-item-administration-tray .toolbar-icon::before (an ID
+  // selector — see styles/layout/toolbar.scss), so it repeats that same ID
+  // to tie its specificity rather than losing to it; the !important is
+  // extra insurance rather than relying solely on this <style> tag's late
+  // position in <head> to win that tie on source order (same reasoning as
+  // .gin-secondary-toolbar--frontend's override in admin_toolbar.scss).
+  // inset-inline-start recreates Gin's own centering formula
+  // (styles/layout/toolbar.scss) for the new size instead of the old 20px.
+  $css = '.toolbar .toolbar-bar .toolbar-icon-race-day-admin::before { --icon: url("' . $icon_url . '"); }'
+    . '@media (min-width: 976px) {'
+    . '#toolbar-item-administration-tray .toolbar-icon-race-day-admin::before {'
+    . 'width: 23px !important;'
+    . 'height: 23px !important;'
+    . 'inset-inline-start: calc((var(--gin-toolbar-width-collapsed) - 23px) / 2 - 9px) !important;'
+    . '}'
+    . '}';
   $attachments['#attached']['html_head'][] = [
     [
       '#type' => 'html_tag',
       '#tag' => 'style',
-      '#value' => '.toolbar .toolbar-bar .toolbar-icon-race-day-admin::before { --icon: url("' . $sprite_url . '#calendar-view"); }',
+      '#value' => $css,
       '#attributes' => ['data-race-day-toolbar' => ''],
     ],
     'race_day_toolbar_icon',

@@ -43,6 +43,13 @@ race_day.teams:
   parent: race_day.admin
   weight: 10
 
+race_day.my_teams:
+  title: 'My Teams'
+  description: "View the teams (past and present) that you're a member of, and any team requests you've made."
+  route_name: race_day.my_teams
+  parent: race_day.admin
+  weight: 11
+
 race_day.assignments:
   title: 'Runner Assignments'
   description: 'View and manage runner-to-leg assignments.'

@@ -31,7 +31,13 @@ class RaceTeamMemberFilter extends StringFilter {
     $subquery = \Drupal::database()->select('group_relationship_field_data', 'gr');
     $subquery->join('users_field_data', 'u', 'u.uid = gr.entity_id');
     $subquery->addField('gr', 'gid');
-    $subquery->condition('gr.plugin_id', 'race_team-group_membership');
+    // 'group_membership' is the relationship's CONTENT PLUGIN ID (stored in
+    // this column) — not 'race_team-group_membership', which is the
+    // relationship TYPE's config entity ID. The old value here never
+    // matched any real row, so this filter has always returned zero
+    // results; confirmed against real membership data while building
+    // RaceTeamCurrentUserMemberFilter, which shares this same subquery.
+    $subquery->condition('gr.plugin_id', 'group_membership');
     $subquery->where("u.name LIKE :member_name", [':member_name' => $value]);
 
     $this->query->addWhere(
