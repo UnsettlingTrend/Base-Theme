@@ -13,16 +13,19 @@
 <article{{ attributes.addClass('race') }}>
   {% if register_team_url or join_team_url %}
     <div class="race__register-action">
-      {% if register_team_url %}
-        <a href="{{ register_team_url }}" class="mdc-button mdc-button--raised">
-          <span class="mdc-button__ripple"></span>
-          <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
-        </a>
-      {% endif %}
+      {# "Request to Join a Team" takes the primary (raised) spot and goes
+         first whenever it's available; "Register a Team" only stays raised
+         when it's the sole action on the page. #}
       {% if join_team_url %}
-        <a href="{{ join_team_url }}" class="mdc-button mdc-button--outlined">
+        <a href="{{ join_team_url }}" class="mdc-button mdc-button--raised">
           <span class="mdc-button__ripple"></span>
           <span class="mdc-button__label">{{ 'Request to Join a Team'|t }}</span>
+        </a>
+      {% endif %}
+      {% if register_team_url %}
+        <a href="{{ register_team_url }}" class="mdc-button {{ join_team_url ? 'mdc-button--outlined' : 'mdc-button--raised' }}">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
         </a>
       {% endif %}
     </div>
