@@ -6,7 +6,7 @@ race_day.admin:
   path: '/admin/race-day'
   defaults:
     _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Races'
+    _title: 'Race Day'
   requirements:
     _permission: 'view race_day content'
 

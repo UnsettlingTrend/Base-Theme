@@ -6,7 +6,7 @@ dependencies:
     - field.storage.group_relationship.group_roles
     - user.role.administrator
     - user.role.race_day_coordinator
-    - user.role.race_day_user
+    - user.role.race_day_runner
   module:
     - group
     - user
@@ -175,7 +175,7 @@ display:
           role:
             administrator: administrator
             race_day_coordinator: race_day_coordinator
-            race_day_user: race_day_user
+            race_day_runner: race_day_runner
       cache:
         type: tag
         options: {  }

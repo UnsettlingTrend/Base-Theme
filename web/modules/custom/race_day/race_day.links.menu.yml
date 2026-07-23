@@ -1,6 +1,6 @@
 # Top-level admin toolbar item — appears alongside Content, Structure, etc.
 race_day.admin:
-  title: 'Races'
+  title: 'Race Day'
   description: 'Manage relay races, teams, legs, and runner assignments.'
   route_name: race_day.admin
   parent: system.admin

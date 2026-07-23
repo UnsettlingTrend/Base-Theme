@@ -167,6 +167,71 @@ function race_day_update_10002(): void {
 }
 
 /**
+ * Rename 'Race Day User' role to 'Race Day Runner', preserving user assignments.
+ */
+function race_day_update_10003(): void {
+  $config_factory = \Drupal::configFactory();
+
+  // Capture affected users before deleting the old role.
+  $uids = \Drupal::entityQuery('user')
+    ->condition('roles', 'race_day_user')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $old_role = \Drupal::entityTypeManager()->getStorage('user_role')->load('race_day_user');
+  if ($old_role) {
+    $old_role->delete();
+  }
+
+  // Create the new role directly, in case config sync/install hasn't run yet.
+  if (!\Drupal::entityTypeManager()->getStorage('user_role')->load('race_day_runner')) {
+    \Drupal\user\Entity\Role::create([
+      'id' => 'race_day_runner',
+      'label' => 'Race Day Runner',
+      'weight' => 4,
+      'permissions' => [
+        'create race teams',
+        'request to join race team',
+        'review own race team requests',
+        'update race_day location',
+        'view all race team names',
+        'view race_day content',
+        'view race_day races admin listing',
+      ],
+    ])->save();
+  }
+
+  // Re-assign affected users to the renamed role.
+  if (!empty($uids)) {
+    foreach (\Drupal::entityTypeManager()->getStorage('user')->loadMultiple($uids) as $user) {
+      $user->addRole('race_day_runner');
+      $user->save();
+    }
+  }
+
+  // Delete old role actions and create new ones.
+  foreach (['user_add_role_action.race_day_user', 'user_remove_role_action.race_day_user'] as $action_id) {
+    $action = $config_factory->getEditable('system.action.' . $action_id);
+    if (!$action->isNew()) {
+      $action->delete();
+    }
+  }
+
+  // Import the new action configs.
+  $config_path = \Drupal::service('extension.list.module')->getPath('race_day') . '/config/install';
+  $source = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  foreach ([
+    'system.action.user_add_role_action.race_day_runner',
+    'system.action.user_remove_role_action.race_day_runner',
+  ] as $config_name) {
+    if ($data = $source->read($config_name)) {
+      $config_storage->write($config_name, $data);
+    }
+  }
+}
+
+/**
  * Implements hook_uninstall().
  */
 function race_day_uninstall(): void {

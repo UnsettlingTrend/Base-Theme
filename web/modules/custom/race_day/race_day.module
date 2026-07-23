@@ -30,7 +30,7 @@ function race_day_ut_utilities_areas_of_interest_info(): array {
     'running' => [
       'label'       => t('Running'),
       'description' => t('Sign up for races and other running related activities.'),
-      'roles'       => ['race_day_user'],
+      'roles'       => ['race_day_runner'],
       'weight'      => 0,
     ],
   ];

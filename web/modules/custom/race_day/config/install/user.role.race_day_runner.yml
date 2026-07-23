@@ -5,8 +5,8 @@ dependencies:
     - race_day
 _core:
   default_config_hash: a-tCT5YDYpWVpwwnkdDwMq2_Pc9iZSNlXdZN7aYr0r8
-id: race_day_user
-label: 'Race Day User'
+id: race_day_runner
+label: 'Race Day Runner'
 weight: 4
 is_admin: false
 permissions:
