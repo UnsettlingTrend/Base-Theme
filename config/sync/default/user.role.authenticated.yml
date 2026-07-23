@@ -43,7 +43,6 @@ dependencies:
     - system
     - taxonomy
     - toolbar
-    - workbench
 _core:
   default_config_hash: btW6TFHajhy7Eo6YUvdFiPh4TcPggo8GBXYctjV6zag
 id: authenticated
@@ -59,7 +58,6 @@ permissions:
   - 'access printer-friendly version'
   - 'access toolbar'
   - 'access user profiles'
-  - 'access workbench'
   - 'change own username'
   - 'create audio media'
   - 'create document media'
