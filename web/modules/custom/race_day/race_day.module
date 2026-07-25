@@ -1415,7 +1415,10 @@ function _race_day_runner_team_request_redirect_to_team(array &$form, FormStateI
 /**
  * Validation callback for the runner team request webform.
  *
- * Prevents a user from submitting more than one request for the same race.
+ * Prevents a user from submitting a request for a race they're already
+ * racing in — either as a standing member of one of its teams, or via an
+ * awaiting-review/approved request for one of its teams that hasn't been
+ * denied or canceled.
  */
 function _race_day_runner_team_request_validate_unique_race(array &$form, FormStateInterface $form_state): void {
   $account = \Drupal::currentUser();
@@ -1431,6 +1434,23 @@ function _race_day_runner_team_request_validate_unique_race(array &$form, FormSt
   }
   $race_id = (string) $race->id();
 
+  // Criterion 1: already a member of a race_team group for this race.
+  // Direct query rather than Group module's virtual relationship chain, for
+  // the same reason as RaceTeamMemberFilter/RaceTeamCurrentUserMemberFilter:
+  // that chain produces invalid SQL (empty column alias) on DISTINCT queries.
+  $membership_query = \Drupal::database()->select('group_relationship_field_data', 'gr');
+  $membership_query->fields('gr', ['gid']);
+  $membership_query->innerJoin('group__field_race', 'gf', 'gf.entity_id = gr.gid AND gf.deleted = 0');
+  $membership_query->condition('gr.entity_id', $account->id());
+  $membership_query->condition('gr.plugin_id', 'group_membership');
+  $membership_query->condition('gf.field_race_target_id', $race_id);
+  $membership_query->range(0, 1);
+  if ($membership_query->execute()->fetchField()) {
+    $form_state->setErrorByName('race', t('You are already on a team for this race.'));
+    return;
+  }
+
+  // Criterion 2: an existing awaiting-review or approved request for this race.
   $existing = \Drupal::entityTypeManager()
     ->getStorage('webform_submission')
     ->loadByProperties([

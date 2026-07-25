@@ -6,3 +6,42 @@
 .local-account-links a {
   display: block;
 }
+
+/*
+ * Inline per-field validation errors. Drupal core's own form-element.html.twig
+ * just wraps these in a plain <div class="form-item--error-message"> with no
+ * CSS at all — completely unstyled until now. Matches material_base's own
+ * .messages--colored.messages--error "classic" box (same variables, same
+ * proportions) rather than the quieter left-border treatment used for the
+ * page-level error summary (see components/messages.scss) — this is meant
+ * to look like the original default, just anchored under a single field.
+ */
+.form-item--error-message {
+  background: $color-bg-messages-error;
+  color: $color-text-messages-error;
+  border-radius: 4px;
+  padding: 14px 16px 14px 54px;
+  position: relative;
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 4px;
+
+  &::before {
+    content: '!';
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $color-text-messages-error;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

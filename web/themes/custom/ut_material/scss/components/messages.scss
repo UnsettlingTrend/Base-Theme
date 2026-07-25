@@ -48,3 +48,19 @@
     color: #f57f17;
   }
 }
+
+/*
+ * Restates material_base's own .messages--colored.messages--error "classic"
+ * box explicitly (same colors/proportions it already ships with), so this
+ * general Drupal message area matches the inline per-field error box
+ * (.form-item--error-message, components/forms.scss) exactly rather than
+ * relying on two separate stylesheets happening to agree by coincidence.
+ */
+.messages--colored.messages--error {
+  background: $color-bg-messages-error;
+  color: $color-text-messages-error;
+
+  a {
+    color: $color-link-messages-error;
+  }
+}
