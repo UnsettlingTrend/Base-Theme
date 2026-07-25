@@ -210,7 +210,7 @@ handlers:
   email:
     id: email
     handler_id: email
-    label: Email
+    label: 'Email to User'
     notes: 'Email to send user when submitting a Race Day Participant Waiver.'
     status: true
     conditions: {  }

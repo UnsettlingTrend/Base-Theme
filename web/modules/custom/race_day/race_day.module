@@ -558,6 +558,77 @@ function race_day_theme_suggestions_race_alter(array &$suggestions, array $varia
 }
 
 /**
+ * Implements hook_token_info().
+ */
+function race_day_token_info(): array {
+  return [
+    'tokens' => [
+      'webform_submission' => [
+        'team-captain-emails' => [
+          'name' => t('Team captain email addresses'),
+          'description' => t("Comma-separated email addresses of every user with the 'Team Captain' role on the race_team group referenced by this submission's race_team field."),
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function race_day_tokens($type, $tokens, array $data, array $options, \Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata): array {
+  $replacements = [];
+
+  if ($type !== 'webform_submission' || empty($data['webform_submission'])) {
+    return $replacements;
+  }
+
+  if (isset($tokens['team-captain-emails'])) {
+    $replacements[$tokens['team-captain-emails']] = _race_day_team_captain_emails($data['webform_submission']);
+  }
+
+  return $replacements;
+}
+
+/**
+ * Returns a comma-separated list of Team Captain emails for the race_team
+ * group referenced by a webform submission's 'race_team' element.
+ *
+ * Uses a direct query against group_relationship_field_data rather than
+ * Group module's virtual relationship chain, for the same reason as
+ * RaceTeamMemberFilter/RaceTeamCurrentUserMemberFilter: that chain produces
+ * invalid SQL (empty column alias) on DISTINCT queries.
+ */
+function _race_day_team_captain_emails(\Drupal\webform\WebformSubmissionInterface $submission): string {
+  $gid = $submission->getElementData('race_team');
+  if (empty($gid)) {
+    return '';
+  }
+
+  $query = \Drupal::database()->select('group_relationship_field_data', 'gr');
+  $query->fields('gr', ['entity_id']);
+  $query->innerJoin('group_relationship__group_roles', 'roles', 'roles.entity_id = gr.id');
+  $query->condition('gr.gid', $gid);
+  $query->condition('gr.plugin_id', 'group_membership');
+  $query->condition('roles.group_roles_target_id', 'race_team-team_captain');
+  $query->distinct();
+  $uids = $query->execute()->fetchCol();
+
+  if (empty($uids)) {
+    return '';
+  }
+
+  $addresses = [];
+  foreach (\Drupal::entityTypeManager()->getStorage('user')->loadMultiple($uids) as $user) {
+    if ($mail = $user->getEmail()) {
+      $addresses[] = $mail;
+    }
+  }
+
+  return implode(',', $addresses);
+}
+
+/**
  * Implements hook_theme().
  */
 function race_day_theme(): array {
