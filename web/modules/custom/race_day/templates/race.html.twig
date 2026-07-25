@@ -8,6 +8,9 @@
  * - race: The Race entity object.
  * - view_mode: View mode, e.g. 'full', 'teaser'.
  * - register_team_url: Url object for the "Register a Team" button, or null.
+ * - join_team_url: Url object for the "Request to Join a Team" button, or null.
+ * - login_to_register_url: Url object for the anonymous-user "Login/Create
+ *   an Account" button, or null. Only set when neither of the above is.
  */
 #}
 <article{{ attributes.addClass('race') }}>
@@ -28,6 +31,13 @@
           <span class="mdc-button__label">{{ 'Register a Team'|t }}</span>
         </a>
       {% endif %}
+    </div>
+  {% elseif login_to_register_url %}
+    <div class="race__register-action">
+      <a href="{{ login_to_register_url }}" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{ 'Login/Create an Account to Sign Up for Race'|t }}</span>
+      </a>
     </div>
   {% endif %}
   {% if content %}

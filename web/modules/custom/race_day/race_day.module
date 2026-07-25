@@ -1182,6 +1182,21 @@ function template_preprocess_race(array &$variables): void {
       }
     }
   }
+
+  // Anonymous users never pass the access checks above (no 'create race
+  // teams' or 'request to join race team' permission), so they'd otherwise
+  // see no call to action at all. Point them at login/registration instead,
+  // landing back on this race afterward.
+  $variables['login_to_register_url'] = NULL;
+  if ($variables['view_mode'] === 'full'
+    && $variables['race']->get('status')->value === 'registration_open'
+    && \Drupal::currentUser()->isAnonymous()
+    && !$variables['register_team_url']
+    && !$variables['join_team_url']) {
+    $variables['login_to_register_url'] = \Drupal\Core\Url::fromRoute('user.login', [], [
+      'query' => ['destination' => $variables['url']],
+    ]);
+  }
 }
 
 /**
