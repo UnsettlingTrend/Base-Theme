@@ -1,4 +1,4 @@
-uuid: 42c40bac-3624-4b4f-ac96-dbc9a1959664
+uuid: b613358a-ac7e-47bc-a4ec-c532b70dbcb2
 langcode: en
 status: open
 dependencies: {  }
@@ -8,9 +8,9 @@ close: null
 uid: 2
 template: false
 archive: false
-id: participant_waiver_2026
-title: 'Participant Waiver - 2026'
-description: ''
+id: race_day_participant_waiver_defa
+title: 'Race Day - Participant Waiver - Default'
+description: '<p>This is the standard Race Day Participant Waiver.</p>'
 categories: {  }
 elements: |-
   waiver_content:
@@ -206,5 +206,43 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers: {  }
+handlers:
+  email:
+    id: email
+    handler_id: email
+    label: Email
+    notes: 'Email to send user when submitting a Race Day Participant Waiver.'
+    status: true
+    conditions: {  }
+    weight: 0
+    settings:
+      states:
+        - completed
+      to_mail: '[current-user:mail]'
+      to_options: {  }
+      bcc_mail: ''
+      bcc_options: {  }
+      cc_mail: ''
+      cc_options: {  }
+      from_mail: _default
+      from_options: {  }
+      from_name: _default
+      reply_to: ''
+      return_path: ''
+      sender_mail: ''
+      sender_name: ''
+      subject: 'Race Day Participant Waiver submitted'
+      body: _default
+      excluded_elements: {  }
+      ignore_access: false
+      exclude_empty: true
+      exclude_empty_checkbox: false
+      exclude_attachments: false
+      html: true
+      attachments: false
+      twig: false
+      theme_name: ''
+      langcode: ''
+      parameters: {  }
+      debug: false
 variants: {  }
