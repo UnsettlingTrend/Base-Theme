@@ -3,7 +3,7 @@ _core:
 langcode: en
 uuid: a2e197cc-a8a5-40a3-a5ae-34c96bccc8d0
 name: ChrisFeragotti.com
-mail: chrisferagotti@gmail.com
+mail: automaton@chrisferagotti.com
 slogan: ''
 page:
   403: /node/10
