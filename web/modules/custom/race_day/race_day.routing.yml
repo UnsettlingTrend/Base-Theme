@@ -234,6 +234,17 @@ race_day.update_request_status:
   options:
     _format: json
 
+race_day.update_member_pace:
+  path: '/race-day/ajax/update-member-pace'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\MemberPaceController::update'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    _csrf_request_header_token: 'TRUE'
+  methods: [POST]
+  options:
+    _format: json
+
 race_day.waiver_modal:
   path: '/race/{race}/waiver-modal'
   defaults:
@@ -242,3 +253,15 @@ race_day.waiver_modal:
   requirements:
     _user_is_logged_in: 'TRUE'
     race: \d+
+
+race_day.cancel_team_request:
+  path: '/race-day/team-request/{webform_submission}/cancel'
+  defaults:
+    _form: '\Drupal\race_day\Form\CancelTeamRequestForm'
+    _title: 'Cancel Team Request'
+  requirements:
+    _custom_access: '\Drupal\race_day\Form\CancelTeamRequestForm::access'
+  options:
+    parameters:
+      webform_submission:
+        type: entity:webform_submission

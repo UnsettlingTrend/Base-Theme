@@ -21,6 +21,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\group\Entity\GroupInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
+use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Implements hook_ut_utilities_areas_of_interest_info().
@@ -196,6 +197,55 @@ function race_day_preprocess_views_view_field(array &$variables): void {
     return;
   }
 
+  // -- race_team_members view: inline pace select for a member's own row ------
+  // Only on block_1 (the "Team Members" block on race_team group pages) and
+  // only for the row belonging to the current user — everyone else's Pace
+  // still renders as plain text via the field's default 'string' formatter.
+  if ($view->id() === 'race_team_members') {
+    if ($view->current_display !== 'block_1' || $variables['field']->options['id'] !== 'field_pace') {
+      return;
+    }
+
+    $account = \Drupal::currentUser();
+    if ($account->isAnonymous()) {
+      return;
+    }
+
+    $relationship = $variables['row']->_entity ?? NULL;
+    if (!$relationship instanceof \Drupal\group\Entity\GroupRelationshipInterface) {
+      return;
+    }
+    if ((int) $relationship->get('entity_id')->target_id !== (int) $account->id()) {
+      return;
+    }
+
+    $webform = \Drupal::entityTypeManager()->getStorage('webform')->load('race_day_runner_team_request');
+    $element = $webform ? $webform->getElement('expected_pace') : NULL;
+    if (!$element) {
+      return;
+    }
+
+    $current = $relationship->get('field_pace')->value ?? '';
+    $options = $element['#options'];
+
+    $select_attrs = 'class="member-pace-select" data-relationship-id="' . Html::escape($relationship->id()) . '"';
+    $select_html = '<select ' . $select_attrs . '>';
+    foreach ($options as $value => $label) {
+      $selected = ($value === $current) ? ' selected' : '';
+      $select_html .= '<option value="' . Html::escape($value) . '"' . $selected . '>' . Html::escape($label) . '</option>';
+    }
+    $select_html .= '</select>';
+
+    $endpoint = \Drupal\Core\Url::fromRoute('race_day.update_member_pace')->toString();
+
+    // Set the field output to safe markup directly — see the same note on
+    // the race_team_requests status select below re: Markup::create().
+    $variables['output'] = Markup::create($select_html);
+    $view->element['#attached']['library'][] = 'race_day/member_pace_review';
+    $view->element['#attached']['drupalSettings']['race_day']['memberPaceUrl'] = $endpoint;
+    return;
+  }
+
   // -- race_team_requests view: inline status select for reviewers ------------
   // Scoped to block_1 ("Team Requests", placed on race_team group pages —
   // see core.entity_view_display.group.race_team.default.yml) only —
@@ -319,7 +369,11 @@ function _race_day_sync_team_membership(EntityInterface $submission, ?string $ol
 
   if ($is_approved && !$was_approved) {
     if (!$group->getMember($account)) {
-      $group->addMember($account);
+      // Carry the requested pace over onto the membership itself (field_pace
+      // on the group_relationship, config/sync/default/field.field.group_relationship
+      // .race_team-group_membership.field_pace.yml) — addMember()'s $values
+      // param sets fields on the relationship entity at creation time.
+      $group->addMember($account, ['field_pace' => $submission->getElementData('expected_pace')]);
     }
     return;
   }
@@ -516,11 +570,14 @@ function race_day_entity_access(EntityInterface $entity, string $operation, Acco
  * The race_day_runner_team_request webform has no view_any/view_own access
  * configured, so by default only full webform admins can view its
  * submissions — not the team captains/admins who can already see them via
- * the race_team_requests view/block (race_day_views_pre_render()). This
- * grants matching 'view' access so entity access lines up with what's
- * actually shown, for the same two cases: reviewers with 'review all race
- * team requests', or team captains/admins (with 'review own race team
- * requests') viewing a submission for their own team.
+ * the race_team_requests view/block (race_day_views_pre_render()), nor the
+ * runner who submitted it in the first place (e.g. the Pace/Status columns
+ * of their own row in the "My Team Requests" block on /admin/race-day/my-teams
+ * otherwise render blank, since Views' webform submission value field checks
+ * this same entity access). This grants matching 'view' access for all three
+ * cases: reviewers with 'review all race team requests', team captains/admins
+ * (with 'review own race team requests') viewing a submission for their own
+ * team, or the submission's own owner.
  */
 function race_day_webform_submission_access(EntityInterface $entity, string $operation, AccountInterface $account): AccessResult {
   if ($operation !== 'view' || $entity->getWebform()->id() !== 'race_day_runner_team_request') {
@@ -529,6 +586,10 @@ function race_day_webform_submission_access(EntityInterface $entity, string $ope
 
   if ($account->hasPermission('review all race team requests')) {
     return AccessResult::allowed()->cachePerPermissions();
+  }
+
+  if ((int) $entity->getOwnerId() === (int) $account->id() && !$account->isAnonymous()) {
+    return AccessResult::allowed()->cachePerUser()->addCacheableDependency($entity);
   }
 
   if ($account->hasPermission('review own race team requests')) {
@@ -542,6 +603,58 @@ function race_day_webform_submission_access(EntityInterface $entity, string $ope
   }
 
   return AccessResult::neutral();
+}
+
+/**
+ * Determines whether an account may cancel a race team request.
+ *
+ * Anyone who can already view the submission (the submitter, a reviewer, or
+ * the team's captain/admin — see race_day_webform_submission_access())
+ * may cancel it, but only while it's still active (not already denied or
+ * canceled — the same "active request" definition used elsewhere, e.g.
+ * _race_day_runner_team_request_ineligibility_reason()).
+ */
+function _race_day_can_cancel_team_request(WebformSubmissionInterface $submission, AccountInterface $account): bool {
+  if ($submission->getWebform()->id() !== 'race_day_runner_team_request') {
+    return FALSE;
+  }
+  $status = $submission->getElementData('request_status') ?? '';
+  if (in_array($status, ['denied', 'canceled'], TRUE)) {
+    return FALSE;
+  }
+  return race_day_webform_submission_access($submission, 'view', $account)->isAllowed();
+}
+
+/**
+ * Implements hook_entity_operation().
+ *
+ * Adds a "Cancel" operation to race_day_runner_team_request webform
+ * submissions in the "Team Requests"/"My Team Requests" views (both use the
+ * entity_operations Views field, which already surfaces webform's own
+ * "View" operation here — this hook is the standard way to add another
+ * alongside it, no Views config changes needed). Opens as a confirmation
+ * modal (CancelTeamRequestForm) rather than acting immediately.
+ */
+function race_day_entity_operation(EntityInterface $entity): array {
+  if (!$entity instanceof WebformSubmissionInterface) {
+    return [];
+  }
+  if (!_race_day_can_cancel_team_request($entity, \Drupal::currentUser())) {
+    return [];
+  }
+
+  return [
+    'cancel' => [
+      'title' => t('Cancel'),
+      'weight' => 20,
+      'url' => \Drupal\Core\Url::fromRoute('race_day.cancel_team_request', ['webform_submission' => $entity->id()]),
+      'attributes' => [
+        'class' => ['use-ajax'],
+        'data-dialog-type' => 'modal',
+        'data-dialog-options' => \Drupal\Component\Serialization\Json::encode(['width' => 400]),
+      ],
+    ],
+  ];
 }
 
 /**
@@ -1339,6 +1452,29 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
 
   // Runner team request form: pre-fill and lock the race field.
   if ($route === 'race_day.runner_team_request') {
+    $account = \Drupal::currentUser();
+    if (_race_day_runner_team_request_ineligibility_reason($account, (string) $race->id())) {
+      // Ineligible up front (already on a team for this race, or already has
+      // an active request in) — disable the whole form rather than letting
+      // the user fill it out only to be rejected by
+      // _race_day_runner_team_request_validate_unique_race() on submit.
+      // Setting #disabled here isn't enough on its own: webform's own
+      // entity-select elements (e.g. race_team) rebuild their #options and
+      // #disabled in their own #process callbacks, which run after this
+      // alter and clobber whatever we set here. A #pre_render callback runs
+      // last, right before rendering, so it has the final say.
+      // #pre_render callbacks must be a class method on a
+      // TrustedCallbackInterface implementation or an anonymous function —
+      // a bare function name string isn't allowed — so wrap it in a closure.
+      $form['#disabled'] = TRUE;
+      $form['#pre_render'][] = function (array $element): array {
+        return _race_day_runner_team_request_force_disable($element);
+      };
+      \Drupal::messenger()->addError(t('You\'re either already a member of a team for this race, or have an outstanding request to join a team. Check your Team status at <a href=":url">My Teams</a>.', [
+        ':url' => \Drupal\Core\Url::fromRoute('race_day.my_teams')->toString(),
+      ]));
+    }
+
     if (isset($form['elements']['race'])) {
       $form['elements']['race']['#default_value'] = $race->id();
       $form['elements']['race']['#disabled'] = TRUE;
@@ -1413,12 +1549,34 @@ function _race_day_runner_team_request_redirect_to_team(array &$form, FormStateI
 }
 
 /**
+ * #pre_render callback that force-disables every input element in a form.
+ *
+ * Runs immediately before rendering, after all #process callbacks (including
+ * webform's own, which rebuild entity-select elements like race_team and
+ * would otherwise silently re-enable them if we only set #disabled earlier
+ * in hook_webform_submission_form_alter()).
+ */
+function _race_day_runner_team_request_force_disable(array $element): array {
+  foreach (Element::children($element) as $key) {
+    $element[$key] = _race_day_runner_team_request_force_disable($element[$key]);
+  }
+  if (!empty($element['#input'])) {
+    $element['#disabled'] = TRUE;
+    $element['#attributes']['disabled'] = 'disabled';
+  }
+  return $element;
+}
+
+/**
  * Validation callback for the runner team request webform.
  *
  * Prevents a user from submitting a request for a race they're already
  * racing in — either as a standing member of one of its teams, or via an
  * awaiting-review/approved request for one of its teams that hasn't been
- * denied or canceled.
+ * denied or canceled. This is a defense-in-depth backstop: the same check
+ * already disables the form up front in race_day_webform_submission_form_alter(),
+ * but this still runs server-side in case the request outraces that (e.g. a
+ * stale cached form render, or a direct POST).
  */
 function _race_day_runner_team_request_validate_unique_race(array &$form, FormStateInterface $form_state): void {
   $account = \Drupal::currentUser();
@@ -1432,7 +1590,30 @@ function _race_day_runner_team_request_validate_unique_race(array &$form, FormSt
   if (!$race instanceof Race) {
     return;
   }
-  $race_id = (string) $race->id();
+
+  switch (_race_day_runner_team_request_ineligibility_reason($account, (string) $race->id())) {
+    case 'member':
+      $form_state->setErrorByName('race', t('You are already on a team for this race.'));
+      break;
+
+    case 'request':
+      $form_state->setErrorByName('race', t('You have already submitted a request to join a team for this race.'));
+      break;
+  }
+}
+
+/**
+ * Determines whether an account is ineligible to request to join a team.
+ *
+ * @return string|null
+ *   'member' if already a standing member of a race_team group for this
+ *   race, 'request' if there's already an awaiting-review/approved request
+ *   in for this race, or NULL if eligible.
+ */
+function _race_day_runner_team_request_ineligibility_reason(AccountInterface $account, string $race_id): ?string {
+  if ($account->isAnonymous()) {
+    return NULL;
+  }
 
   // Criterion 1: already a member of a race_team group for this race.
   // Direct query rather than Group module's virtual relationship chain, for
@@ -1446,8 +1627,7 @@ function _race_day_runner_team_request_validate_unique_race(array &$form, FormSt
   $membership_query->condition('gf.field_race_target_id', $race_id);
   $membership_query->range(0, 1);
   if ($membership_query->execute()->fetchField()) {
-    $form_state->setErrorByName('race', t('You are already on a team for this race.'));
-    return;
+    return 'member';
   }
 
   // Criterion 2: an existing awaiting-review or approved request for this race.
@@ -1465,10 +1645,11 @@ function _race_day_runner_team_request_validate_unique_race(array &$form, FormSt
     }
     $status = $submission->getElementData('request_status') ?? '';
     if (!in_array($status, $inactive_statuses, TRUE)) {
-      $form_state->setErrorByName('race', t('You have already submitted a request to join a team for this race.'));
-      return;
+      return 'request';
     }
   }
+
+  return NULL;
 }
 
 /**

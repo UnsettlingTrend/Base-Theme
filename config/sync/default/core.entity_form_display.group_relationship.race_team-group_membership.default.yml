@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group_relationship.race_team-group_membership.field_pace
     - field.field.group_relationship.race_team-group_membership.group_roles
     - group.relationship_type.race_team-group_membership
   module:
@@ -44,4 +45,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_pace: true
   uid: true

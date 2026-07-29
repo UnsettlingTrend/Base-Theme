@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group_relationship.race_team-group_membership.field_pace
     - field.field.group_relationship.race_team-group_membership.group_roles
     - group.relationship_type.race_team-group_membership
 _core:
@@ -22,6 +23,7 @@ content:
     region: content
 hidden:
   entity_id: true
+  field_pace: true
   langcode: true
   search_api_excerpt: true
   uid: true

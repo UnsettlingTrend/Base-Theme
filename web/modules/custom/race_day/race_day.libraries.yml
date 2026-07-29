@@ -46,6 +46,17 @@ request_status_review:
     - core/drupal.announce
     - core/drupal.ajax
 
+member_pace_review:
+  version: VERSION
+  js:
+    js/member-pace-review.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+    - core/drupal.announce
+    - core/drupal.ajax
+
 race_leg_map:
   version: VERSION
   css:
