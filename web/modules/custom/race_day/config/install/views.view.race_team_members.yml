@@ -1,6 +1,12 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.storage.group_relationship.field_pace
+    - field.storage.group_relationship.group_roles
+    - user.role.administrator
+    - user.role.race_day_coordinator
+    - user.role.race_day_runner
   module:
     - group
     - user
@@ -85,6 +91,134 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        field_pace:
+          id: field_pace
+          table: group_relationship__field_pace
+          field: field_pace
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: group_relationship
+          entity_field: field_pace
+          plugin_id: field
+          label: Pace
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        group_roles:
+          id: group_roles
+          table: group_relationship__group_roles
+          field: group_roles
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       pager:
         type: none
         options:
@@ -101,8 +235,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: role
+        options:
+          role:
+            administrator: administrator
+            race_day_coordinator: race_day_coordinator
+            race_day_runner: race_day_runner
       cache:
         type: tag
         options: {  }
@@ -166,11 +304,25 @@ display:
           default_row_class: true
           columns:
             name: name
+            field_pace: field_pace
+            group_roles: group_roles
           default: '-1'
           info:
             name:
               sortable: true
               default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_pace:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            group_roles:
               align: ''
               separator: ''
               empty_column: false
@@ -217,6 +369,7 @@ display:
           group_relation_plugins:
             group_membership: '0'
       use_ajax: false
+      group_by: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -228,7 +381,10 @@ display:
         - route
         - url
         - url.query_args
-      tags: {  }
+        - user.roles
+      tags:
+        - 'config:field.storage.group_relationship.field_pace'
+        - 'config:field.storage.group_relationship.group_roles'
   block_1:
     id: block_1
     display_title: Block
@@ -244,4 +400,7 @@ display:
         - route
         - url
         - url.query_args
-      tags: {  }
+        - user.roles
+      tags:
+        - 'config:field.storage.group_relationship.field_pace'
+        - 'config:field.storage.group_relationship.group_roles'

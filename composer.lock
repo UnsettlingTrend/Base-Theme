@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66727b8b0a53dcae72bb5e11a816a1c8",
+    "content-hash": "699213b3aa2a095678d5312460e3cdcc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -9420,6 +9420,102 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/symfony_mailer_log",
                 "issues": "https://www.drupal.org/project/issues/symfony_mailer_log"
+            }
+        },
+        {
+            "name": "drupal/time_formatter",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/time_formatter.git",
+                "reference": "2.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/time_formatter-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "1284966553bfcc8c37b77549df5ce8ea0790a822"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.2",
+                    "datestamp": "1732914485",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "akosh",
+                    "homepage": "https://www.drupal.org/user/698510"
+                },
+                {
+                    "name": "arnold.csisztai",
+                    "homepage": "https://www.drupal.org/user/3610208"
+                },
+                {
+                    "name": "balazswmann",
+                    "homepage": "https://www.drupal.org/user/2204810"
+                },
+                {
+                    "name": "boobaa",
+                    "homepage": "https://www.drupal.org/user/199303"
+                },
+                {
+                    "name": "gobinathm",
+                    "homepage": "https://www.drupal.org/user/21629"
+                },
+                {
+                    "name": "heddn",
+                    "homepage": "https://www.drupal.org/user/1463982"
+                },
+                {
+                    "name": "jan.mashat",
+                    "homepage": "https://www.drupal.org/user/3198923"
+                },
+                {
+                    "name": "lekob",
+                    "homepage": "https://www.drupal.org/user/3258368"
+                },
+                {
+                    "name": "miklos.vekony",
+                    "homepage": "https://www.drupal.org/user/633202"
+                },
+                {
+                    "name": "pronovix",
+                    "homepage": "https://www.drupal.org/user/3834019"
+                },
+                {
+                    "name": "sheshsharma",
+                    "homepage": "https://www.drupal.org/user/3614527"
+                },
+                {
+                    "name": "tamasd",
+                    "homepage": "https://www.drupal.org/user/372872"
+                },
+                {
+                    "name": "yce",
+                    "homepage": "https://www.drupal.org/user/2252152"
+                }
+            ],
+            "description": "Field formatter for integer fields storing time in seconds/milliseconds displaying it in various formats.",
+            "homepage": "https://www.drupal.org/project/time_formatter",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/time_formatter",
+                "issues": "http://drupal.org/project/issues/time_formatter"
             }
         },
         {

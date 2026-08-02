@@ -2,10 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group_relationship.race_team-group_membership.field_pace
     - field.field.group_relationship.race_team-group_membership.group_roles
     - group.relationship_type.race_team-group_membership
-_core:
-  default_config_hash: EB9edpMFFknOf8DqCXZYqi6fbtp-ENAULsL_pXr2x38
 id: group_relationship.race_team-group_membership.default
 targetEntityType: group_relationship
 bundle: race_team-group_membership
@@ -21,6 +20,7 @@ content:
     region: content
 hidden:
   entity_id: true
+  field_pace: true
   langcode: true
   search_api_excerpt: true
   uid: true

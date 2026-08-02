@@ -3,14 +3,27 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.race_day_leg_assignment.field_expected_time
     - field.field.paragraph.race_day_leg_assignment.field_race_day_leg
+    - field.field.paragraph.race_day_leg_assignment.field_race_day_leg_status
     - field.field.paragraph.race_day_leg_assignment.field_race_day_runner
     - paragraphs.paragraphs_type.race_day_leg_assignment
+  module:
+    - options
 id: paragraph.race_day_leg_assignment.default
 targetEntityType: paragraph
 bundle: race_day_leg_assignment
 mode: default
 content:
+  field_expected_time:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_race_day_leg:
     type: entity_reference_label
     label: hidden
@@ -18,6 +31,13 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_race_day_leg_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
     region: content
   field_race_day_runner:
     type: entity_reference_label

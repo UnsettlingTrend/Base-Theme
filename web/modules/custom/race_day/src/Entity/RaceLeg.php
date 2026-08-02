@@ -121,49 +121,10 @@ class RaceLeg extends ContentEntityBase implements EntityChangedInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['distance'] = BaseFieldDefinition::create('decimal')
-      ->setLabel(new TranslatableMarkup('Distance'))
-      ->setDescription(new TranslatableMarkup('Distance of this leg in miles.'))
-      ->setRequired(TRUE)
-      ->setSetting('precision', 10)
-      ->setSetting('scale', 2)
-      ->setDisplayOptions('view', [
-        'label' => 'inline',
-        'type' => 'number_decimal',
-        'weight' => -20,
-        'settings' => ['suffix' => ' mi', 'scale' => 2],
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'number',
-        'weight' => -20,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['difficulty'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(new TranslatableMarkup('Difficulty'))
-      ->setDescription(new TranslatableMarkup('Difficulty rating for this leg.'))
-      ->setSetting('allowed_values', [
-        'easy' => 'Easy',
-        'moderate' => 'Moderate',
-        'hard' => 'Hard',
-        'very_hard' => 'Very Hard',
-      ])
-      ->setDisplayOptions('view', [
-        'label' => 'inline',
-        'type' => 'list_default',
-        'weight' => -18,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => -18,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['route'] =BaseFieldDefinition::create('entity_reference_revisions')
+    $fields['route'] = BaseFieldDefinition::create('entity_reference_revisions')
       ->setLabel(new TranslatableMarkup('Route'))
-      ->setDescription(new TranslatableMarkup('An embedded Strava route map for this leg.'))
+      ->setDescription(new TranslatableMarkup("An embedded Strava route map for this leg. Also holds the leg's distance."))
+      ->setRequired(TRUE)
       ->setSetting('target_type', 'paragraph')
       ->setSetting('handler', 'default:paragraph')
       ->setSetting('handler_settings', [
@@ -235,6 +196,30 @@ class RaceLeg extends ContentEntityBase implements EntityChangedInterface {
       ->setComputed(TRUE);
 
     return $fields;
+  }
+
+  /**
+   * Returns this leg's distance in miles, from its embedded route paragraph.
+   */
+  public function getDistance(): ?string {
+    $paragraph = $this->get('route')->entity;
+    if (!$paragraph || !$paragraph->hasField('field_distance')) {
+      return NULL;
+    }
+    $value = $paragraph->get('field_distance')->value;
+    return $value !== NULL ? (string) $value : NULL;
+  }
+
+  /**
+   * Returns this leg's elevation gain in feet, from its route paragraph.
+   */
+  public function getElevationGain(): ?string {
+    $paragraph = $this->get('route')->entity;
+    if (!$paragraph || !$paragraph->hasField('field_elevation_gain')) {
+      return NULL;
+    }
+    $value = $paragraph->get('field_elevation_gain')->value;
+    return $value !== NULL ? (string) $value : NULL;
   }
 
 }

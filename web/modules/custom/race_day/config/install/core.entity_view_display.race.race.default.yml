@@ -2,13 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.race.race.field_image
     - field.field.race.race.field_paragraphs
+    - field.field.race.race.field_waiver
     - views.view.race_leg
     - views.view.race_map
+    - views.view.race_teams
   module:
     - layout_builder
     - race_day
     - views
+    - webform
 third_party_settings:
   layout_builder:
     enabled: true
@@ -50,7 +54,7 @@ third_party_settings:
               provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
-            weight: 0
+            weight: 1
             additional: {  }
           3e51e5ec-25aa-47f0-b991-dbd40f62d694:
             uuid: 3e51e5ec-25aa-47f0-b991-dbd40f62d694
@@ -96,25 +100,75 @@ third_party_settings:
               views_label: ''
               items_per_page: null
               exposed: {  }
+            weight: 2
+            additional: {  }
+          e710ce05-0bcb-402a-a8b4-7c7c37a43a6b:
+            uuid: e710ce05-0bcb-402a-a8b4-7c7c37a43a6b
+            region: first
+            configuration:
+              id: 'views_block:race_teams-block_1'
+              label: ''
+              label_display: visible
+              provider: views
+              context_mapping: {  }
+              views_label: ''
+              items_per_page: null
+              exposed: {  }
             weight: 3
             additional: {  }
+          c642ff6b-91e1-4e9b-a875-21436349ef5a:
+            uuid: c642ff6b-91e1-4e9b-a875-21436349ef5a
+            region: second
+            configuration:
+              id: 'field_block:race:race:field_image'
+              label: Image
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: card
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
         third_party_settings: {  }
-_core:
-  default_config_hash: UEQ6JhZBvK5smL0o-npz2l72KSvi3VQinKxupSUVOl4
 id: race.race.default
 targetEntityType: race
 bundle: race
 mode: default
-content: {  }
+content:
+  field_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: first
+  field_waiver:
+    type: webform_entity_reference_entity_view
+    label: above
+    settings:
+      source_entity: true
+      lazy: false
+    third_party_settings: {  }
+    weight: 0
+    region: first
 hidden:
   changed: true
   created: true
   description: true
   field_paragraphs: true
-  map_data: true
+  max_runners_per_team: true
   max_teams: true
   name: true
   race_date: true
+  race_info_group: true
   search_api_excerpt: true
   status: true
   total_distance: true

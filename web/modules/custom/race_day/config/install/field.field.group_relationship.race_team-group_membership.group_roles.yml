@@ -4,8 +4,6 @@ dependencies:
   config:
     - field.storage.group_relationship.group_roles
     - group.relationship_type.race_team-group_membership
-_core:
-  default_config_hash: cc3E8d6RqX3fPNYg5HKPTkH2MuN9j_ZHPzAA-So3PO4
 id: group_relationship.race_team-group_membership.group_roles
 field_name: group_roles
 entity_type: group_relationship

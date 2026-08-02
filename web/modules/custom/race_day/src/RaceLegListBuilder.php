@@ -19,7 +19,6 @@ class RaceLegListBuilder extends EntityListBuilder {
     $header['leg_number'] = $this->t('#');
     $header['label'] = $this->t('Leg');
     $header['distance'] = $this->t('Distance');
-    $header['difficulty'] = $this->t('Difficulty');
     return $header + parent::buildHeader();
   }
 
@@ -30,8 +29,7 @@ class RaceLegListBuilder extends EntityListBuilder {
     /** @var \Drupal\race_day\Entity\RaceLeg $entity */
     $row['leg_number'] = $entity->get('leg_number')->value ?? '';
     $row['label'] = $entity->get('label')->value ?? '';
-    $row['distance'] = ($entity->get('distance')->value ?? '') . ' mi';
-    $row['difficulty'] = $entity->get('difficulty')->value ?? '';
+    $row['distance'] = ($entity->getDistance() ?? '') . ' mi';
     return $row + parent::buildRow($entity);
   }
 

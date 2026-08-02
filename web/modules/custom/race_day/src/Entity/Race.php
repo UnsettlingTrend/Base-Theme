@@ -195,13 +195,18 @@ class Race extends ContentEntityBase implements EntityOwnerInterface, EntityChan
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['map_data'] = BaseFieldDefinition::create('string_long')
-      ->setLabel(new TranslatableMarkup('Map Data'))
-      ->setDescription(new TranslatableMarkup('GeoJSON or encoded polyline data for the full race route.'))
+    $fields['max_runners_per_team'] = BaseFieldDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Maximum Runners Per Team'))
+      ->setDescription(new TranslatableMarkup('Maximum number of runners allowed on each team for this race. Leave empty for unlimited.'))
+      ->setSetting('unsigned', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'number_integer',
+        'weight' => -9,
+      ])
       ->setDisplayOptions('form', [
-        'type' => 'string_textarea',
-        'weight' => -5,
-        'settings' => ['rows' => 10],
+        'type' => 'number',
+        'weight' => -9,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

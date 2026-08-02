@@ -18,7 +18,6 @@ class RaceLegCsvService {
     'leg_number',
     'label',
     'distance',
-    'difficulty',
     'description',
     'strava_route_id',
   ];
@@ -56,6 +55,7 @@ class RaceLegCsvService {
 
     foreach ($leg_storage->loadMultiple($ids) as $leg) {
       $strava_route_id = '';
+      $para = NULL;
       if (!$leg->get('route')->isEmpty()) {
         $para_id = $leg->get('route')->target_id;
         if ($para_id && $para = $para_storage->load($para_id)) {
@@ -72,8 +72,7 @@ class RaceLegCsvService {
         $leg->get('race_id')->target_id,
         $leg->get('leg_number')->value,
         $leg->label(),
-        $leg->get('distance')->value,
-        $leg->get('difficulty')->value ?? '',
+        $para?->get('field_distance')->value,
         $description,
         $strava_route_id,
       ]);
@@ -148,7 +147,6 @@ class RaceLegCsvService {
       $leg_number      = (int) trim($row[$col['leg_number']]);
       $label           = trim($row[$col['label']]);
       $distance        = trim($row[$col['distance']]);
-      $difficulty      = trim($row[$col['difficulty']]);
       $description     = trim($row[$col['description']]);
       $strava_route_id = trim($row[$col['strava_route_id']]);
 
@@ -188,11 +186,9 @@ class RaceLegCsvService {
 
         $leg->set('leg_number', $leg_number);
         $leg->set('label', $label);
-        $leg->set('distance', $distance);
-        $leg->set('difficulty', $difficulty !== '' ? $difficulty : NULL);
         $leg->set('description', $description !== '' ? ['value' => $description, 'format' => 'plain_text'] : NULL);
 
-        $this->upsertStravaRoute($leg, $para_storage, $strava_route_id, $is_new);
+        $this->upsertStravaRoute($leg, $para_storage, $strava_route_id, $distance, $is_new);
 
         $leg->save();
         $is_new ? $stats['created']++ : $stats['updated']++;
@@ -231,38 +227,41 @@ class RaceLegCsvService {
     return $options;
   }
 
-  private function upsertStravaRoute($leg, $para_storage, string $strava_route_id, bool $is_new): void {
+  /**
+   * Creates or updates the leg's route paragraph with the CSV row's data.
+   *
+   * The route paragraph is required on every leg (it's the sole home for
+   * distance, whether or not the leg has real Strava route data), so unlike
+   * the old distance-on-the-leg behaviour, a blank strava_route_id no longer
+   * deletes the paragraph — it just leaves field_strava_route_id empty.
+   */
+  private function upsertStravaRoute($leg, $para_storage, string $strava_route_id, string $distance, bool $is_new): void {
     $existing_para = NULL;
     if (!$is_new && !$leg->get('route')->isEmpty()) {
       $existing_para = $para_storage->load($leg->get('route')->target_id);
     }
 
-    if ($strava_route_id !== '') {
-      if ($existing_para) {
-        $existing_para->set('field_strava_route_id', $strava_route_id);
-        $existing_para->save();
-        $leg->set('route', [
-          'target_id'          => $existing_para->id(),
-          'target_revision_id' => $existing_para->getRevisionId(),
-        ]);
-      }
-      else {
-        $para = $para_storage->create([
-          'type'                  => 'strava_route',
-          'field_strava_route_id' => $strava_route_id,
-        ]);
-        $para->save();
-        $leg->set('route', [
-          'target_id'          => $para->id(),
-          'target_revision_id' => $para->getRevisionId(),
-        ]);
-      }
+    if ($existing_para) {
+      $existing_para->set('field_strava_route_id', $strava_route_id !== '' ? $strava_route_id : NULL);
+      $existing_para->set('field_distance', $distance);
+      $existing_para->setNewRevision(FALSE);
+      $existing_para->save();
+      $leg->set('route', [
+        'target_id'          => $existing_para->id(),
+        'target_revision_id' => $existing_para->getRevisionId(),
+      ]);
     }
     else {
-      if ($existing_para) {
-        $para_storage->delete([$existing_para]);
-      }
-      $leg->set('route', NULL);
+      $para = $para_storage->create([
+        'type'                  => 'strava_route',
+        'field_strava_route_id' => $strava_route_id !== '' ? $strava_route_id : NULL,
+        'field_distance'        => $distance,
+      ]);
+      $para->save();
+      $leg->set('route', [
+        'target_id'          => $para->id(),
+        'target_revision_id' => $para->getRevisionId(),
+      ]);
     }
   }
 

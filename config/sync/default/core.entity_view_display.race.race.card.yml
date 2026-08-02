@@ -73,7 +73,7 @@ hidden:
   description: true
   field_paragraphs: true
   field_waiver: true
-  map_data: true
+  max_runners_per_team: true
   max_teams: true
   race_info_group: true
   search_api_excerpt: true

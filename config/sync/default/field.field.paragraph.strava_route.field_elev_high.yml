@@ -1,0 +1,23 @@
+uuid: f3ea642c-c3fe-4438-ac2a-0085692d5253
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_elev_high
+    - paragraphs.paragraphs_type.strava_route
+id: paragraph.strava_route.field_elev_high
+field_name: field_elev_high
+entity_type: paragraph
+bundle: strava_route
+label: 'Highest Elevation'
+description: 'Highest elevation point along the route, imported from Strava, in feet.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

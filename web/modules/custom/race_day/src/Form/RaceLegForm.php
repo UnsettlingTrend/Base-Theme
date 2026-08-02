@@ -87,15 +87,24 @@ class RaceLegForm extends ContentEntityForm {
       $paragraph->set('field_strava_summary_polyline', $summary_polyline);
     }
 
-    if (isset($payload['distance']) && is_numeric($payload['distance'])) {
+    if (isset($payload['distance']) && is_numeric($payload['distance']) && $paragraph->hasField('field_distance')) {
       $miles = round(((float) $payload['distance']) * 0.000621371, 2);
-      $entity->set('distance', $miles);
+      $paragraph->set('field_distance', $miles);
     }
 
     if (isset($payload['elevation_gain']) && is_numeric($payload['elevation_gain'])
       && $paragraph->hasField('field_elevation_gain')) {
       $feet = (int) round(((float) $payload['elevation_gain']) * 3.28084);
       $paragraph->set('field_elevation_gain', max(0, $feet));
+    }
+
+    if ($needs_refresh && $paragraph->hasField('field_elev_high') && $paragraph->hasField('field_elev_low')) {
+      $streams = $this->fetchRouteStreams($route_id);
+      $bounds = $streams !== NULL ? $this->extractElevationBounds($streams) : NULL;
+      if ($bounds !== NULL) {
+        $paragraph->set('field_elev_high', $bounds['high']);
+        $paragraph->set('field_elev_low', $bounds['low']);
+      }
     }
 
     $start = $this->extractLatLng(
@@ -160,6 +169,62 @@ class RaceLegForm extends ContentEntityForm {
       ]);
       return NULL;
     }
+  }
+
+  /**
+   * Fetches the current Strava route streams using the configured API token.
+   */
+  private function fetchRouteStreams(string $route_id): ?array {
+    if (!\Drupal::hasService('strava_api.route_client')) {
+      return NULL;
+    }
+
+    try {
+      $streams = \Drupal::service('strava_api.route_client')->fetchRouteStreams($route_id);
+      return is_array($streams) ? $streams : NULL;
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('race_day')->warning('Failed to fetch Strava route @id streams: @message', [
+        '@id' => $route_id,
+        '@message' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
+  }
+
+  /**
+   * Returns the highest/lowest elevation (in feet) from a streams response.
+   *
+   * @param array $streams
+   *   The decoded response from GET /routes/{id}/streams: a list of stream
+   *   objects, each with a "type" (e.g. "altitude") and a "data" array.
+   *
+   * @return array{high: int, low: int}|null
+   *   The route's highest/lowest elevation in feet, or NULL when the streams
+   *   response has no usable altitude data.
+   */
+  private function extractElevationBounds(array $streams): ?array {
+    $altitude = NULL;
+    foreach ($streams as $stream) {
+      if (is_array($stream) && ($stream['type'] ?? NULL) === 'altitude' && is_array($stream['data'] ?? NULL)) {
+        $altitude = $stream['data'];
+        break;
+      }
+    }
+
+    if (empty($altitude)) {
+      return NULL;
+    }
+
+    $meters = array_filter($altitude, 'is_numeric');
+    if (empty($meters)) {
+      return NULL;
+    }
+
+    return [
+      'high' => (int) round(max($meters) * 3.28084),
+      'low' => (int) round(min($meters) * 3.28084),
+    ];
   }
 
   /**

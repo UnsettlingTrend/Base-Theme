@@ -62,12 +62,11 @@ content:
       default_data: true
       webforms: {  }
     third_party_settings: {  }
-  map_data:
-    type: string_textarea
-    weight: 7
+  max_runners_per_team:
+    type: number
+    weight: 6
     region: content
     settings:
-      rows: 10
       placeholder: ''
     third_party_settings: {  }
   max_teams:

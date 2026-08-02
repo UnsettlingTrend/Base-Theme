@@ -101,8 +101,7 @@ class RaceLegMapStyle extends StylePluginBase {
       $legs[] = [
         'label' => $entity->label(),
         'leg_number' => (int) ($entity->get('leg_number')->value ?? 0),
-        'distance' => $entity->hasField('distance') ? (string) ($entity->get('distance')->value ?? '') : '',
-        'difficulty' => $entity->hasField('difficulty') ? (string) ($entity->get('difficulty')->value ?? '') : '',
+        'distance' => (string) ($entity->getDistance() ?? ''),
         'polyline' => $polyline,
       ];
     }

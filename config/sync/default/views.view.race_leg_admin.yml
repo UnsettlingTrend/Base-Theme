@@ -3,10 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.paragraph.field_distance
+    - field.storage.paragraph.field_elev_high
+    - field.storage.paragraph.field_elev_low
+    - field.storage.paragraph.field_elevation_gain
     - user.role.administrator
     - user.role.race_day_coordinator
   module:
-    - options
+    - paragraphs
     - race_day
     - user
   enforced:
@@ -111,13 +115,13 @@ display:
             link_to_entity: true
         distance:
           id: distance
-          table: race_leg
-          field: distance
-          relationship: none
+          table: paragraph__field_distance
+          field: field_distance
+          relationship: route__target_revision_id
           group_type: group
           admin_label: ''
-          entity_type: race_leg
-          entity_field: distance
+          entity_type: paragraph
+          entity_field: field_distance
           plugin_id: field
           label: Distance
           exclude: false
@@ -138,31 +142,198 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
-        difficulty:
-          id: difficulty
-          table: race_leg
-          field: difficulty
-          relationship: none
+        field_elevation_gain:
+          id: field_elevation_gain
+          table: paragraph__field_elevation_gain
+          field: field_elevation_gain
+          relationship: route__target_revision_id
           group_type: group
           admin_label: ''
-          entity_type: race_leg
-          entity_field: difficulty
           plugin_id: field
-          label: Difficulty
+          label: 'Elevation Gain'
           exclude: false
           alter:
             alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          type: list_default
-          settings: {  }
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_elev_high:
+          id: field_elev_high
+          table: paragraph__field_elev_high
+          field: field_elev_high
+          relationship: route__target_revision_id
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: 'Highest Elevation'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_elev_low:
+          id: field_elev_low
+          table: paragraph__field_elev_low
+          field: field_elev_low
+          relationship: route__target_revision_id
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: 'Lowest Elevation'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         operations:
           id: operations
           table: race_leg
@@ -304,36 +475,6 @@ display:
               authenticated: authenticated
             placeholder: ''
           is_grouped: false
-        difficulty:
-          id: difficulty
-          table: race_leg
-          field: difficulty
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: race_leg
-          entity_field: difficulty
-          plugin_id: in_operator
-          operator: in
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: difficulty_op
-            label: Difficulty
-            description: ''
-            use_operator: false
-            operator: difficulty_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: difficulty
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
       style:
         type: table
         options:
@@ -345,8 +486,10 @@ display:
             label: label
             name: name
             distance: distance
-            difficulty: difficulty
             operations: operations
+            field_elevation_gain: field_elevation_gain
+            field_elev_high: field_elev_high
+            field_elev_low: field_elev_low
           default: leg_number
           info:
             leg_number:
@@ -377,21 +520,39 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-low
-            difficulty:
+            operations:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_elevation_gain:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
-              responsive: priority-low
-            operations:
-              sortable: false
+              responsive: ''
+            field_elev_high:
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
+            field_elev_low:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
           empty_table: true
+          caption: ''
+          description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -414,6 +575,17 @@ display:
           entity_field: race_id
           plugin_id: standard
           required: false
+        route__target_revision_id:
+          id: route__target_revision_id
+          table: race_leg
+          field: route__target_revision_id
+          relationship: none
+          group_type: group
+          admin_label: Route
+          entity_type: race_leg
+          entity_field: route
+          plugin_id: standard
+          required: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -425,7 +597,11 @@ display:
         - url
         - url.query_args
         - user.roles
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_distance'
+        - 'config:field.storage.paragraph.field_elev_high'
+        - 'config:field.storage.paragraph.field_elev_low'
+        - 'config:field.storage.paragraph.field_elevation_gain'
   page_1:
     id: page_1
     display_title: Page
@@ -451,4 +627,8 @@ display:
         - url
         - url.query_args
         - user.roles
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_distance'
+        - 'config:field.storage.paragraph.field_elev_high'
+        - 'config:field.storage.paragraph.field_elev_low'
+        - 'config:field.storage.paragraph.field_elevation_gain'

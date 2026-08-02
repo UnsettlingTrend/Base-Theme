@@ -177,6 +177,7 @@ module:
   taxonomy: 0
   telephone: 0
   text: 0
+  time_formatter: 0
   token: 0
   toolbar: 0
   twig_field_value: 0

@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Drupal\strava_api;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 /**
  * Lightweight client for reading Strava route payloads.
@@ -27,6 +28,20 @@ class StravaRouteClient {
    * Fetches route details from Strava, refreshing the token if needed.
    */
   public function fetchRoute(string $routeId): ?array {
+    return $this->apiGet('/routes/' . $routeId, $routeId);
+  }
+
+  /**
+   * Fetches a route's distance/altitude/latlng streams from Strava.
+   */
+  public function fetchRouteStreams(string $routeId): ?array {
+    return $this->apiGet('/routes/' . $routeId . '/streams', $routeId);
+  }
+
+  /**
+   * Issues a GET request against Strava, refreshing the token if needed.
+   */
+  private function apiGet(string $path, string $routeId): ?array {
     if (!ctype_digit($routeId)) {
       return NULL;
     }
@@ -37,29 +52,21 @@ class StravaRouteClient {
     }
 
     try {
-      $response = $this->httpClient->request('GET', self::API_BASE . '/routes/' . $routeId, [
-        'headers' => ['Authorization' => 'Bearer ' . $token, 'Accept' => 'application/json'],
-        'http_errors' => FALSE,
-        'timeout' => 15,
-      ]);
+      $response = $this->doRequest($path, $token);
 
       // On 401, attempt one token refresh and retry.
       if ($response->getStatusCode() === 401) {
         $token = $this->refreshToken();
         if ($token === NULL) {
-          $this->logger->warning('Unable to fetch Strava route @id: token refresh failed.', ['@id' => $routeId]);
+          $this->logger->warning('Unable to fetch Strava @path: token refresh failed.', ['@path' => $path]);
           return NULL;
         }
-        $response = $this->httpClient->request('GET', self::API_BASE . '/routes/' . $routeId, [
-          'headers' => ['Authorization' => 'Bearer ' . $token, 'Accept' => 'application/json'],
-          'http_errors' => FALSE,
-          'timeout' => 15,
-        ]);
+        $response = $this->doRequest($path, $token);
       }
 
       if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
-        $this->logger->warning('Unable to fetch Strava route @id: Strava API returned HTTP @status.', [
-          '@id' => $routeId,
+        $this->logger->warning('Unable to fetch Strava @path: Strava API returned HTTP @status.', [
+          '@path' => $path,
           '@status' => $response->getStatusCode(),
         ]);
         return NULL;
@@ -69,12 +76,23 @@ class StravaRouteClient {
       return is_array($payload) ? $payload : NULL;
     }
     catch (\Throwable $e) {
-      $this->logger->warning('Unable to fetch Strava route @id: @message', [
-        '@id' => $routeId,
+      $this->logger->warning('Unable to fetch Strava @path: @message', [
+        '@path' => $path,
         '@message' => $e->getMessage(),
       ]);
       return NULL;
     }
+  }
+
+  /**
+   * Issues a single GET request against the Strava API.
+   */
+  private function doRequest(string $path, string $token): ResponseInterface {
+    return $this->httpClient->request('GET', self::API_BASE . $path, [
+      'headers' => ['Authorization' => 'Bearer ' . $token, 'Accept' => 'application/json'],
+      'http_errors' => FALSE,
+      'timeout' => 15,
+    ]);
   }
 
   /**

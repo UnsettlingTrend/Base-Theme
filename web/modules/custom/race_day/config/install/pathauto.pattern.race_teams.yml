@@ -5,8 +5,6 @@ dependencies:
     - group.type.race_team
   module:
     - group
-_core:
-  default_config_hash: BmtrrIr_Jyox0e0sizMHiIJu1Chzh1vMbZLXVjq9NMs
 id: race_teams
 label: 'Race Teams'
 type: 'canonical_entities:group'

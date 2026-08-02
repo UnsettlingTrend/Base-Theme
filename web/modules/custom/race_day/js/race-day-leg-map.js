@@ -126,9 +126,6 @@
           if (leg.distance) {
             popupLabel += ' (' + parseFloat(leg.distance).toFixed(2) + ' mi)';
           }
-          if (leg.difficulty) {
-            popupLabel += ' &mdash; ' + leg.difficulty;
-          }
           line.bindTooltip(popupLabel, { sticky: true });
 
           polylinesByLeg[leg.leg_number] = line;

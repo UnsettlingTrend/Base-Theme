@@ -1,14 +1,14 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.storage.paragraph.field_distance
   module:
-    - options
+    - paragraphs
     - race_day
   enforced:
     module:
       - race_day
-_core:
-  default_config_hash: 5JmEL5zYvTKxqkhK-CZgOLWmz3pzBgFzsVxpshDBgMk
 id: race_leg
 label: 'Race Legs'
 module: views
@@ -80,13 +80,13 @@ display:
             link_to_entity: true
         distance:
           id: distance
-          table: race_leg
-          field: distance
-          relationship: none
+          table: paragraph__field_distance
+          field: field_distance
+          relationship: route__target_revision_id
           group_type: group
           admin_label: ''
-          entity_type: race_leg
-          entity_field: distance
+          entity_type: paragraph
+          entity_field: field_distance
           plugin_id: field
           label: Distance
           exclude: false
@@ -107,31 +107,6 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
-        difficulty:
-          id: difficulty
-          table: race_leg
-          field: difficulty
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: race_leg
-          entity_field: difficulty
-          plugin_id: field
-          label: Difficulty
-          exclude: false
-          alter:
-            alter_text: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          type: list_default
-          settings: {  }
       pager:
         type: full
         options:
@@ -225,7 +200,6 @@ display:
             leg_number: leg_number
             label: label
             distance: distance
-            difficulty: difficulty
           default: leg_number
           info:
             leg_number:
@@ -249,13 +223,6 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-low
-            difficulty:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: priority-low
           empty_table: true
       row:
         type: fields
@@ -267,7 +234,19 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships: {  }
+      relationships:
+        route__target_revision_id:
+          id: route__target_revision_id
+          table: race_leg
+          field: route__target_revision_id
+          relationship: none
+          group_type: group
+          admin_label: Route
+          entity_type: race_leg
+          entity_field: route
+          plugin_id: standard
+          required: false
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -278,13 +257,15 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_distance'
   block_1:
     id: block_1
     display_title: Block
     display_plugin: block
     position: 1
     display_options:
+      title: Legs
       fields:
         leg_number:
           id: leg_number
@@ -341,13 +322,13 @@ display:
             link_to_entity: true
         distance:
           id: distance
-          table: race_leg
-          field: distance
-          relationship: none
+          table: paragraph__field_distance
+          field: field_distance
+          relationship: route__target_revision_id
           group_type: group
           admin_label: ''
-          entity_type: race_leg
-          entity_field: distance
+          entity_type: paragraph
+          entity_field: field_distance
           plugin_id: field
           label: Distance
           exclude: false
@@ -368,8 +349,47 @@ display:
             decimal_separator: .
             scale: 2
             prefix_suffix: true
+      arguments:
+        race_id:
+          id: race_id
+          table: race_leg
+          field: race_id
+          relationship: none
+          group_type: group
+          admin_label: Race
+          entity_type: race_leg
+          entity_field: race_id
+          plugin_id: entity_target_id
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: race
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          target_entity_type_id: race
       defaults:
+        title: false
         fields: false
+        arguments: false
       exposed_block: true
       display_extenders: {  }
     cache_metadata:
@@ -379,7 +399,8 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_distance'
   page_1:
     id: page_1
     display_title: Page
@@ -395,4 +416,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-      tags: {  }
+      tags:
+        - 'config:field.storage.paragraph.field_distance'

@@ -3,8 +3,6 @@ status: true
 dependencies:
   module:
     - race_day
-_core:
-  default_config_hash: 68x7_4RKONEqAc3K13S3fB146ksiFPg24f-sHrwfTVY
 id: races
 label: Races
 type: 'canonical_entities:race'

@@ -4,15 +4,13 @@ dependencies:
   config:
     - field.storage.group.field_race
     - group.type.race_team
-_core:
-  default_config_hash: J5khkfHoQEdpN6-2W2FA7U2IJ-hEv-Y2VznwbG-Lk9Q
 id: group.race_team.field_race
 field_name: field_race
 entity_type: group
 bundle: race_team
 label: Race
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

@@ -232,6 +232,211 @@ function race_day_update_10003(): void {
 }
 
 /**
+ * Implements hook_update_dependencies().
+ */
+function race_day_update_dependencies(): array {
+  // race_day_update_10004() writes to field_distance on the strava_route
+  // paragraph, so that field must exist first.
+  return [
+    'race_day' => [
+      10004 => [
+        'strava_api' => 10003,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Move the 'distance' field from race_leg onto its route paragraph.
+ *
+ * Distance is now solely owned by the route paragraph (field_distance),
+ * whether populated from Strava or entered manually. The 'route' field is
+ * also made required as of this update (see RaceLeg::baseFieldDefinitions()),
+ * so every leg is guaranteed a paragraph to hold its distance.
+ */
+function race_day_update_10004(): void {
+  $para_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+
+  // Copy each leg's existing distance onto its route paragraph before the
+  // 'distance' column is dropped below. Read raw DB values directly since
+  // 'distance' is no longer in RaceLeg::baseFieldDefinitions() by this point,
+  // so the entity API can no longer see the field.
+  $rows = \Drupal::database()->select('race_leg', 'rl')
+    ->fields('rl', ['id', 'distance', 'route__target_id'])
+    ->execute()
+    ->fetchAll();
+
+  foreach ($rows as $row) {
+    if ($row->distance === NULL || $row->route__target_id === NULL) {
+      continue;
+    }
+    $paragraph = $para_storage->load($row->route__target_id);
+    if (!$paragraph || !$paragraph->hasField('field_distance')) {
+      continue;
+    }
+    // Update the existing revision in place; a new revision would leave the
+    // leg's stored route__target_revision_id pointing at the old one.
+    $paragraph->set('field_distance', $row->distance);
+    $paragraph->setNewRevision(FALSE);
+    $paragraph->save();
+  }
+
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $storage_definition = $update_manager->getFieldStorageDefinition('distance', 'race_leg');
+  if ($storage_definition) {
+    $update_manager->uninstallFieldStorageDefinition($storage_definition);
+  }
+}
+
+/**
+ * Backfill field_elev_high/field_elev_low on existing route paragraphs.
+ *
+ * These fields were added in strava_api_update_10002(), by which point most
+ * route paragraphs already had a cached payload/polyline from an earlier
+ * fetch. strava_api_entity_presave() skips re-fetching whenever a route's
+ * cached payload and polyline already match, so ordinary re-saves never
+ * backfill fields introduced after that cache was populated. This fetches
+ * each route's elevation stream directly instead, sidestepping that cache.
+ *
+ * Runs after race_day_update_10004(), which already depends on
+ * strava_api_update_10003() (itself after strava_api_update_10002(), where
+ * field_elev_high/field_elev_low were created) — so those fields are
+ * guaranteed to exist by the time this runs.
+ */
+function race_day_update_10005(): string {
+  if (!\Drupal::hasService('strava_api.route_client')) {
+    return 'strava_api.route_client service unavailable; skipped.';
+  }
+
+  $client = \Drupal::service('strava_api.route_client');
+  $para_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+
+  $ids = $para_storage->getQuery()
+    ->condition('type', 'strava_route')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  $updated = 0;
+  $skipped = 0;
+  foreach ($para_storage->loadMultiple($ids) as $paragraph) {
+    if (!$paragraph->hasField('field_elev_high') || !$paragraph->hasField('field_elev_low')) {
+      continue;
+    }
+    if (!$paragraph->get('field_elev_high')->isEmpty() && !$paragraph->get('field_elev_low')->isEmpty()) {
+      continue;
+    }
+
+    $route_id = trim((string) ($paragraph->get('field_strava_route_id')->value ?? ''));
+    if (!ctype_digit($route_id)) {
+      $skipped++;
+      continue;
+    }
+
+    $streams = $client->fetchRouteStreams($route_id);
+    $bounds = is_array($streams) ? _race_day_extract_elevation_bounds($streams) : NULL;
+    if ($bounds === NULL) {
+      \Drupal::logger('race_day')->warning('Could not backfill elevation high/low for route @id (paragraph @pid): no altitude data returned.', [
+        '@id' => $route_id,
+        '@pid' => $paragraph->id(),
+      ]);
+      $skipped++;
+      continue;
+    }
+
+    $paragraph->set('field_elev_high', $bounds['high']);
+    $paragraph->set('field_elev_low', $bounds['low']);
+    // Update the existing revision in place; a new revision would leave any
+    // referencing leg's stored route__target_revision_id pointing at the old
+    // one.
+    $paragraph->setNewRevision(FALSE);
+    $paragraph->save();
+    $updated++;
+  }
+
+  return "Backfilled elevation high/low on $updated route paragraph(s); $skipped skipped.";
+}
+
+/**
+ * Returns the highest/lowest elevation (in feet) from a route streams response.
+ *
+ * Duplicated from strava_api.module's _strava_api_extract_elevation_bounds()
+ * so this update hook doesn't reach into another module's internal helper.
+ *
+ * @param array $streams
+ *   The decoded response from GET /routes/{id}/streams: a list of stream
+ *   objects, each with a "type" (e.g. "altitude") and a "data" array.
+ *
+ * @return array{high: int, low: int}|null
+ */
+function _race_day_extract_elevation_bounds(array $streams): ?array {
+  $altitude = NULL;
+  foreach ($streams as $stream) {
+    if (is_array($stream) && ($stream['type'] ?? NULL) === 'altitude' && is_array($stream['data'] ?? NULL)) {
+      $altitude = $stream['data'];
+      break;
+    }
+  }
+
+  if (empty($altitude)) {
+    return NULL;
+  }
+
+  $meters = array_filter($altitude, 'is_numeric');
+  if (empty($meters)) {
+    return NULL;
+  }
+
+  return [
+    'high' => (int) round(max($meters) * 3.28084),
+    'low' => (int) round(min($meters) * 3.28084),
+  ];
+}
+
+/**
+ * Remove the unused 'difficulty' field from race_leg.
+ */
+function race_day_update_10006(): void {
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $storage_definition = $update_manager->getFieldStorageDefinition('difficulty', 'race_leg');
+  if ($storage_definition) {
+    $update_manager->uninstallFieldStorageDefinition($storage_definition);
+  }
+}
+
+/**
+ * Add the 'max_runners_per_team' field to race.
+ */
+function race_day_update_10007(): void {
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  if ($update_manager->getFieldStorageDefinition('max_runners_per_team', 'race')) {
+    return;
+  }
+  $entity_type = \Drupal::entityTypeManager()->getDefinition('race');
+  $fields = \Drupal\race_day\Entity\Race::baseFieldDefinitions($entity_type);
+  $update_manager->installFieldStorageDefinition(
+    'max_runners_per_team',
+    'race',
+    'race_day',
+    $fields['max_runners_per_team']
+  );
+}
+
+/**
+ * Remove the unused 'map_data' field from race.
+ *
+ * Nothing reads or writes it — the race page's map comes from the race_map
+ * Views block (base table race_leg), built from each leg's own embedded
+ * Strava route, not from anything stored directly on the race.
+ */
+function race_day_update_10008(): void {
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+  $storage_definition = $update_manager->getFieldStorageDefinition('map_data', 'race');
+  if ($storage_definition) {
+    $update_manager->uninstallFieldStorageDefinition($storage_definition);
+  }
+}
+
+/**
  * Implements hook_uninstall().
  */
 function race_day_uninstall(): void {

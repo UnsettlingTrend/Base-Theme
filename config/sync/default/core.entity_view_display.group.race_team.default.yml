@@ -45,44 +45,8 @@ third_party_settings:
         layout_settings:
           label: ''
           context_mapping: {  }
-          column_widths: 67-33
+          column_widths: 33-67
         components:
-          146bf807-ecf9-4efe-b68c-32dab1a7006f:
-            uuid: 146bf807-ecf9-4efe-b68c-32dab1a7006f
-            region: first
-            configuration:
-              id: 'field_block:group:race_team:field_runner_legs'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_revisions_entity_view
-                label: above
-                settings:
-                  view_mode: default
-                  link: ''
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          146c9111-009e-4ef7-b764-500049477b39:
-            uuid: 146c9111-009e-4ef7-b764-500049477b39
-            region: second
-            configuration:
-              id: 'field_block:group:race_team:field_icon'
-              label: Icon
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: entity_reference_entity_view
-                label: hidden
-                settings:
-                  view_mode: icon
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
           47439246-a6a3-4ca7-b1c8-e42858e5525e:
             uuid: 47439246-a6a3-4ca7-b1c8-e42858e5525e
             region: second
@@ -110,6 +74,49 @@ third_party_settings:
               items_per_page: null
               exposed: {  }
             weight: 2
+            additional: {  }
+          146c9111-009e-4ef7-b764-500049477b39:
+            uuid: 146c9111-009e-4ef7-b764-500049477b39
+            region: first
+            configuration:
+              id: 'field_block:group:race_team:field_icon'
+              label: Icon
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: icon
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
+        third_party_settings: {  }
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+          context_mapping: {  }
+        components:
+          146bf807-ecf9-4efe-b68c-32dab1a7006f:
+            uuid: 146bf807-ecf9-4efe-b68c-32dab1a7006f
+            region: content
+            configuration:
+              id: 'field_block:group:race_team:field_runner_legs'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: above
+                settings:
+                  view_mode: default
+                  link: ''
+                third_party_settings: {  }
+            weight: 0
             additional: {  }
         third_party_settings: {  }
 _core:

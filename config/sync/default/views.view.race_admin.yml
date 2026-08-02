@@ -189,6 +189,33 @@ display:
           settings:
             thousand_separator: ''
             prefix_suffix: true
+        max_runners_per_team:
+          id: max_runners_per_team
+          table: race
+          field: max_runners_per_team
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: race
+          entity_field: max_runners_per_team
+          plugin_id: field
+          label: 'Max Runners/Team'
+          exclude: false
+          alter:
+            alter_text: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
         operations:
           id: operations
           table: race
@@ -326,6 +353,7 @@ display:
             status: status
             total_distance: total_distance
             max_teams: max_teams
+            max_runners_per_team: max_runners_per_team
             uid: uid
             operations: operations
           default: race_date
@@ -366,6 +394,13 @@ display:
               empty_column: false
               responsive: priority-low
             max_teams:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+            max_runners_per_team:
               sortable: true
               default_sort_order: asc
               align: ''

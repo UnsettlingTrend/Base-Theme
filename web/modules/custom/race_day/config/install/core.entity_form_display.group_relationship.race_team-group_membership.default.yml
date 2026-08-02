@@ -2,12 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.group_relationship.race_team-group_membership.field_pace
     - field.field.group_relationship.race_team-group_membership.group_roles
     - group.relationship_type.race_team-group_membership
   module:
     - path
-_core:
-  default_config_hash: P5Zvnvi-hLhyZSTQuSZJzoTEoZds8pZDIkwdL4W6lnM
 id: group_relationship.race_team-group_membership.default
 targetEntityType: group_relationship
 bundle: race_team-group_membership
@@ -43,4 +42,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_pace: true
   uid: true

@@ -15,6 +15,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
 use Drupal\Component\Utility\Html;
@@ -59,6 +60,14 @@ function race_day_views_data_alter(array &$data): void {
     'filter' => [
       'title' => t('Current user is a member'),
       'id' => 'race_team_current_user_member',
+    ],
+  ];
+  $data['groups_field_data']['race_team_member_count'] = [
+    'title' => t('Race Team member count'),
+    'help' => t('Number of members in this race_team group (subquery, no virtual-key join).'),
+    'field' => [
+      'title' => t('Member Count'),
+      'id' => 'race_team_member_count',
     ],
   ];
 }
@@ -394,6 +403,121 @@ function _race_day_sync_team_membership(EntityInterface $submission, ?string $ol
       $group->removeMember($account);
     }
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for paragraph.
+ *
+ * Recomputes field_expected_time on race_day_leg_assignment paragraphs on
+ * every save (assignment, removal, or an explicit resave triggered by
+ * race_day_group_relationship_update() after a pace change), from the
+ * assigned leg's distance and the runner's current pace — so the field is
+ * always derived fresh rather than needing to be kept in sync by hand at
+ * every call site that touches the paragraph.
+ */
+function race_day_paragraph_presave(EntityInterface $entity): void {
+  if ($entity->bundle() !== 'race_day_leg_assignment' || !$entity->hasField('field_expected_time')) {
+    return;
+  }
+  /** @var \Drupal\paragraphs\ParagraphInterface $entity */
+  $entity->set('field_expected_time', _race_day_calculate_expected_time($entity));
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for group_relationship.
+ *
+ * When a member's expected pace changes, resave every leg assignment they
+ * currently hold on that same team so race_day_paragraph_presave() picks up
+ * the new pace and recomputes field_expected_time.
+ */
+function race_day_group_relationship_update(EntityInterface $entity): void {
+  if ($entity->bundle() !== 'race_team-group_membership' || !$entity->hasField('field_pace')) {
+    return;
+  }
+
+  $old_pace = $entity->original?->get('field_pace')->value;
+  $new_pace = $entity->get('field_pace')->value;
+  if ($old_pace === $new_pace) {
+    return;
+  }
+
+  /** @var \Drupal\group\Entity\GroupRelationshipInterface $entity */
+  $group = $entity->getGroup();
+  $uid = (int) $entity->get('entity_id')->target_id;
+  if (!$group || !$uid) {
+    return;
+  }
+
+  foreach ($group->get('field_runner_legs')->referencedEntities() as $paragraph) {
+    if ($paragraph->bundle() !== 'race_day_leg_assignment') {
+      continue;
+    }
+    if ((int) $paragraph->get('field_race_day_runner')->target_id === $uid) {
+      $paragraph->save();
+    }
+  }
+}
+
+/**
+ * Computes a leg assignment's expected finish time, in milliseconds.
+ *
+ * distance (miles, from the assigned leg's Strava route) × pace
+ * (minutes per mile, from the runner's pace on their team membership) ×
+ * 60,000. NULL if the assignment has no runner or leg, the leg has no
+ * distance yet, or the runner has no parseable pace set.
+ */
+function _race_day_calculate_expected_time(ParagraphInterface $assignment): ?int {
+  if ($assignment->get('field_race_day_runner')->isEmpty() || $assignment->get('field_race_day_leg')->isEmpty()) {
+    return NULL;
+  }
+
+  /** @var \Drupal\race_day\Entity\RaceLeg|null $leg */
+  $leg = $assignment->get('field_race_day_leg')->entity;
+  $distance = $leg?->getDistance();
+  if ($distance === NULL || !is_numeric($distance)) {
+    return NULL;
+  }
+
+  $group = $assignment->getParentEntity();
+  if (!$group instanceof GroupInterface) {
+    return NULL;
+  }
+
+  $uid = (int) $assignment->get('field_race_day_runner')->target_id;
+  $pace = _race_day_get_member_pace((int) $group->id(), $uid);
+  $pace_minutes = $pace !== NULL ? _race_day_parse_pace_minutes($pace) : NULL;
+  if ($pace_minutes === NULL) {
+    return NULL;
+  }
+
+  return (int) round(((float) $distance) * $pace_minutes * 60);
+}
+
+/**
+ * Returns a race_team member's expected pace (e.g. "09:30"), or NULL.
+ */
+function _race_day_get_member_pace(int $group_id, int $uid): ?string {
+  $relationships = \Drupal::entityTypeManager()->getStorage('group_relationship')->loadByProperties([
+    'gid' => $group_id,
+    'entity_id' => $uid,
+    'plugin_id' => 'group_membership',
+  ]);
+  $relationship = $relationships ? reset($relationships) : NULL;
+  if (!$relationship || !$relationship->hasField('field_pace')) {
+    return NULL;
+  }
+  $value = $relationship->get('field_pace')->value;
+  return $value !== NULL && $value !== '' ? (string) $value : NULL;
+}
+
+/**
+ * Parses a "MM:SS" pace string into minutes (e.g. "09:30" → 9.5).
+ */
+function _race_day_parse_pace_minutes(string $pace): ?float {
+  if (!preg_match('/^(\d+):([0-5]\d)$/', trim($pace), $matches)) {
+    return NULL;
+  }
+  return ((int) $matches[1]) + ((int) $matches[2]) / 60;
 }
 
 /**
@@ -858,6 +982,7 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
     $leg_name = '';
     $leg_url = '';
     $leg_distance = '';
+    $leg_elevation_gain = '';
     if ($paragraph->hasField('field_race_day_leg') && !$paragraph->get('field_race_day_leg')->isEmpty()) {
       /** @var \Drupal\race_day\Entity\RaceLeg $leg */
       $leg = $paragraph->get('field_race_day_leg')->entity;
@@ -865,7 +990,8 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
         $leg_number = $leg->get('leg_number')->value;
         $leg_name = $leg->label();
         $leg_url = $leg->toUrl('canonical')->toString();
-        $leg_distance = $leg->get('distance')->value ?? '';
+        $leg_distance = $leg->getDistance() ?? '';
+        $leg_elevation_gain = $leg->getElevationGain() ?? '';
       }
     }
 
@@ -891,15 +1017,16 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
     }
 
     $rows[] = [
-      'paragraph_id' => $paragraph->id(),
-      'leg_number'   => $leg_number,
-      'leg_name'     => $leg_name,
-      'leg_url'      => $leg_url,
-      'leg_distance' => $leg_distance,
-      'runner'       => $runner_name,
-      'runner_id'    => $runner_id,
-      'has_runner'   => $has_runner,
-      'can_remove'   => $can_remove,
+      'paragraph_id'       => $paragraph->id(),
+      'leg_number'         => $leg_number,
+      'leg_name'           => $leg_name,
+      'leg_url'            => $leg_url,
+      'leg_distance'       => $leg_distance,
+      'leg_elevation_gain' => $leg_elevation_gain,
+      'runner'             => $runner_name,
+      'runner_id'          => $runner_id,
+      'has_runner'         => $has_runner,
+      'can_remove'         => $can_remove,
     ];
   }
 
@@ -1214,7 +1341,7 @@ function _race_day_recalculate_total_distance(int $race_id): void {
   if ($leg_ids) {
     $legs = \Drupal::entityTypeManager()->getStorage('race_leg')->loadMultiple($leg_ids);
     foreach ($legs as $leg) {
-      $total += (float) ($leg->get('distance')->value ?? 0);
+      $total += (float) ($leg->getDistance() ?? 0);
     }
   }
 
@@ -1396,6 +1523,25 @@ function _race_day_count_teams_for_race(int $race_id): int {
 }
 
 /**
+ * Determines whether a race_team group has reached its race's runner cap.
+ *
+ * max_runners_per_team lives on the race, not the team, so every team for a
+ * given race shares the same cap. NULL (or a team with no linked race) means
+ * unlimited.
+ */
+function _race_day_team_is_full(GroupInterface $team): bool {
+  $race = $team->hasField('field_race') ? $team->get('field_race')->entity : NULL;
+  if (!$race) {
+    return FALSE;
+  }
+  $max_runners = $race->get('max_runners_per_team')->value;
+  if ($max_runners === NULL) {
+    return FALSE;
+  }
+  return count($team->getMembers()) >= (int) $max_runners;
+}
+
+/**
  * Implements hook_webform_submission_form_alter().
  *
  * When the waiver form is submitted from the race registration modal, override
@@ -1480,7 +1626,8 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
       $form['elements']['race']['#disabled'] = TRUE;
     }
 
-    // Restrict the Race Team options to teams belonging to this race. The
+    // Restrict the Race Team options to teams belonging to this race, and
+    // exclude any team already at its race's max_runners_per_team cap. The
     // #selection_handler swap in race_day_webform_element_alter() runs
     // before WebformElementManager::buildElement() resolves #options (it
     // only affects server-side validation), so the rendered option list has
@@ -1493,7 +1640,7 @@ function race_day_webform_submission_form_alter(array &$form, FormStateInterface
           continue;
         }
         $team = $group_storage->load($key);
-        if (!$team || (string) $team->get('field_race')->target_id !== (string) $race->id()) {
+        if (!$team || (string) $team->get('field_race')->target_id !== (string) $race->id() || _race_day_team_is_full($team)) {
           unset($form['elements']['race_team']['#options'][$key]);
         }
       }

@@ -3,6 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.strava_route.field_distance
+    - field.field.paragraph.strava_route.field_elev_high
+    - field.field.paragraph.strava_route.field_elev_low
     - field.field.paragraph.strava_route.field_elevation_gain
     - field.field.paragraph.strava_route.field_end_lat
     - field.field.paragraph.strava_route.field_end_lng
@@ -25,6 +28,17 @@ targetEntityType: paragraph
 bundle: strava_route
 mode: default
 content:
+  field_distance:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: -1
+    region: content
   field_strava_route_id:
     type: strava_route_map
     label: hidden
@@ -33,6 +47,8 @@ content:
     weight: 0
     region: content
 hidden:
+  field_elev_high: true
+  field_elev_low: true
   field_elevation_gain: true
   field_end_lat: true
   field_end_lng: true

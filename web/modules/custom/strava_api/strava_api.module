@@ -80,6 +80,26 @@ function strava_api_entity_presave(EntityInterface $entity): void {
     $entity->set('field_elevation_gain', max(0, $feet));
   }
 
+  if ($entity->hasField('field_elev_high') && $entity->hasField('field_elev_low')
+    && \Drupal::hasService('strava_api.route_client')) {
+    try {
+      $streams = \Drupal::service('strava_api.route_client')->fetchRouteStreams($route_id);
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('strava_api')->warning('Failed to fetch Strava route @id streams: @message', [
+        '@id' => $route_id,
+        '@message' => $e->getMessage(),
+      ]);
+      $streams = NULL;
+    }
+
+    $bounds = is_array($streams) ? _strava_api_extract_elevation_bounds($streams) : NULL;
+    if ($bounds !== NULL) {
+      $entity->set('field_elev_high', $bounds['high']);
+      $entity->set('field_elev_low', $bounds['low']);
+    }
+  }
+
   $start = _strava_api_extract_latlng(
     $payload['start_latlng']
     ?? [$payload['start_latitude'] ?? NULL, $payload['start_longitude'] ?? NULL]
@@ -123,7 +143,10 @@ function strava_api_field_widget_single_element_form_alter(array &$element, Form
   }
 
   $strava_fields = [
+    'field_distance',
     'field_elevation_gain',
+    'field_elev_high',
+    'field_elev_low',
     'field_start_lat',
     'field_start_lng',
     'field_end_lat',
@@ -136,7 +159,16 @@ function strava_api_field_widget_single_element_form_alter(array &$element, Form
   // Decimal fields that are NULL in the DB render as '' in the number widget.
   // Drupal's entity constraint validator rejects '' as "not a valid number", so
   // we attach a validator that converts '' back to NULL before entity validation.
-  $decimal_fields = ['field_elevation_gain', 'field_start_lat', 'field_start_lng', 'field_end_lat', 'field_end_lng'];
+  $decimal_fields = [
+    'field_distance',
+    'field_elevation_gain',
+    'field_elev_high',
+    'field_elev_low',
+    'field_start_lat',
+    'field_start_lng',
+    'field_end_lat',
+    'field_end_lng',
+  ];
 
   $subform = &$element['subform'];
 
@@ -216,6 +248,39 @@ function _strava_api_extract_latlng(mixed $value): ?array {
     return NULL;
   }
   return [(float) $value[0], (float) $value[1]];
+}
+
+/**
+ * Returns the highest/lowest elevation (in feet) from a route streams response.
+ *
+ * @param array $streams
+ *   The decoded response from GET /routes/{id}/streams: a list of stream
+ *   objects, each with a "type" (e.g. "altitude") and a "data" array.
+ *
+ * @return array{high: int, low: int}|null
+ */
+function _strava_api_extract_elevation_bounds(array $streams): ?array {
+  $altitude = NULL;
+  foreach ($streams as $stream) {
+    if (is_array($stream) && ($stream['type'] ?? NULL) === 'altitude' && is_array($stream['data'] ?? NULL)) {
+      $altitude = $stream['data'];
+      break;
+    }
+  }
+
+  if (empty($altitude)) {
+    return NULL;
+  }
+
+  $meters = array_filter($altitude, 'is_numeric');
+  if (empty($meters)) {
+    return NULL;
+  }
+
+  return [
+    'high' => (int) round(max($meters) * 3.28084),
+    'low' => (int) round(min($meters) * 3.28084),
+  ];
 }
 
 /**

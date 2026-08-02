@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.base_field_override.group.race_team.label
     - field.field.group.race_team.field_icon
     - field.field.group.race_team.field_race
     - field.field.group.race_team.field_runner_legs
     - group.type.race_team
     - views.view.race_team_members
+    - views.view.race_team_requests
   module:
     - layout_builder
     - layout_discovery
@@ -22,22 +22,6 @@ third_party_settings:
         layout_settings:
           label: ''
         components:
-          e699fb18-4757-447c-a1ca-332f40f97881:
-            uuid: e699fb18-4757-447c-a1ca-332f40f97881
-            region: content
-            configuration:
-              id: 'field_block:group:race_team:label'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: string
-                label: hidden
-                settings:
-                  link_to_entity: false
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
           b606717a-a9fc-4197-a03c-eb77b58a4dc8:
             uuid: b606717a-a9fc-4197-a03c-eb77b58a4dc8
             region: content
@@ -54,48 +38,71 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 1
             additional: {  }
-          146c9111-009e-4ef7-b764-500049477b39:
-            uuid: 146c9111-009e-4ef7-b764-500049477b39
-            region: content
-            configuration:
-              id: 'field_block:group:race_team:field_icon'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_entity_view
-                label: above
-                settings:
-                  view_mode: default
-                  link: false
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
         third_party_settings: {  }
       -
         layout_id: layout_twocol_section
         layout_settings:
           label: ''
           context_mapping: {  }
-          column_widths: 67-33
+          column_widths: 33-67
         components:
-          42dff912-edca-4e7e-b918-48984f40a190:
-            uuid: 42dff912-edca-4e7e-b918-48984f40a190
+          47439246-a6a3-4ca7-b1c8-e42858e5525e:
+            uuid: 47439246-a6a3-4ca7-b1c8-e42858e5525e
             region: second
             configuration:
-              id: 'views_block:race_team_members-block_1'
-              label: ''
+              id: 'views_block:race_team_requests-block_1'
+              label: 'Team Requests'
               label_display: visible
               provider: views
               context_mapping: {  }
-              views_label: ''
+              views_label: 'Team Requests'
               items_per_page: null
               exposed: {  }
-            weight: 1
+            weight: 4
             additional: {  }
+          d8a6526d-1042-44c3-85c6-a031293b7db9:
+            uuid: d8a6526d-1042-44c3-85c6-a031293b7db9
+            region: second
+            configuration:
+              id: 'views_block:race_team_members-block_1'
+              label: 'Team Members'
+              label_display: visible
+              provider: views
+              context_mapping: {  }
+              views_label: 'Team Members'
+              items_per_page: null
+              exposed: {  }
+            weight: 2
+            additional: {  }
+          146c9111-009e-4ef7-b764-500049477b39:
+            uuid: 146c9111-009e-4ef7-b764-500049477b39
+            region: first
+            configuration:
+              id: 'field_block:group:race_team:field_icon'
+              label: Icon
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: icon
+                third_party_settings: {  }
+            weight: 0
+            additional: {  }
+        third_party_settings: {  }
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+          context_mapping: {  }
+        components:
           146bf807-ecf9-4efe-b68c-32dab1a7006f:
             uuid: 146bf807-ecf9-4efe-b68c-32dab1a7006f
-            region: first
+            region: content
             configuration:
               id: 'field_block:group:race_team:field_runner_legs'
               label_display: '0'
@@ -111,8 +118,6 @@ third_party_settings:
             weight: 0
             additional: {  }
         third_party_settings: {  }
-_core:
-  default_config_hash: sRfPYoeo2C2HmpjOr1eJmvAnhUU0xYTy2RpQbpGHLyU
 id: group.race_team.default
 targetEntityType: group
 bundle: race_team

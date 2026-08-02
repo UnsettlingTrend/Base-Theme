@@ -5,11 +5,10 @@ dependencies:
     - datetime
     - options
     - race_day
+    - user
   enforced:
     module:
       - race_day
-_core:
-  default_config_hash: ey_ejFxofbq6Sllsdc-ffAknm7wPthNvQJZ2l4aXFBM
 id: race_admin
 label: 'Races - Admin'
 module: views
@@ -187,17 +186,17 @@ display:
           settings:
             thousand_separator: ''
             prefix_suffix: true
-        uid:
-          id: uid
+        max_runners_per_team:
+          id: max_runners_per_team
           table: race
-          field: uid
+          field: max_runners_per_team
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: race
-          entity_field: uid
+          entity_field: max_runners_per_team
           plugin_id: field
-          label: Author
+          label: 'Max Runners/Team'
           exclude: false
           alter:
             alter_text: false
@@ -210,9 +209,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          type: entity_reference_label
+          type: number_integer
           settings:
-            link: true
+            thousand_separator: ''
+            prefix_suffix: true
         operations:
           id: operations
           table: race
@@ -244,6 +244,10 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+      access:
+        type: perm
+        options:
+          perm: 'view race_day races admin listing'
       empty:
         area_text_custom:
           id: area_text_custom
@@ -346,6 +350,7 @@ display:
             status: status
             total_distance: total_distance
             max_teams: max_teams
+            max_runners_per_team: max_runners_per_team
             uid: uid
             operations: operations
           default: race_date
@@ -392,6 +397,13 @@ display:
               separator: ''
               empty_column: false
               responsive: priority-low
+            max_runners_per_team:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
             uid:
               sortable: true
               default_sort_order: asc
@@ -428,6 +440,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
   page_1:
     id: page_1
@@ -435,10 +448,6 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'manage race_day races'
       display_extenders: {  }
       path: admin/race-day/races
       menu:
@@ -457,4 +466,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }

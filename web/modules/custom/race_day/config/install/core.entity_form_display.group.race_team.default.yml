@@ -10,8 +10,6 @@ dependencies:
   module:
     - inline_entity_form
     - paragraphs
-_core:
-  default_config_hash: L1c99KLgsAgUuIvkJiyUvTTLDO4gD3rzVZD79FAaF9M
 id: group.race_team.default
 targetEntityType: group
 bundle: race_team

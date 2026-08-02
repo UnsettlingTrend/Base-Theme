@@ -3,8 +3,6 @@ status: true
 dependencies:
   module:
     - race_day
-_core:
-  default_config_hash: vmD7G22lymaLKgguaWbl4iCIRbb2xKOR_LnKFxSX8f8
 id: race_legs
 label: 'Race Legs'
 type: 'canonical_entities:race_leg'

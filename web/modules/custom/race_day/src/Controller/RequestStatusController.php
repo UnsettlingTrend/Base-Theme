@@ -87,6 +87,20 @@ class RequestStatusController extends ControllerBase {
       return new JsonResponse(['error' => 'Submission not found.'], 404);
     }
 
+    // Re-check the team's runner cap right before approving — it may have
+    // filled up since this request came in (other approvals, or the cap
+    // being lowered). _race_day_form_alter() already excludes full teams
+    // from the request form itself, but that's a point-in-time filter, not
+    // a guarantee that holds until a reviewer acts on this submission.
+    $current_status = $submission->getElementData('request_status') ?? '';
+    if ($status === 'approved' && $current_status !== 'approved') {
+      $team_id = (int) $submission->getElementData('race_team');
+      $team = $team_id ? $this->entityTypeManager()->getStorage('group')->load($team_id) : NULL;
+      if ($team && _race_day_team_is_full($team)) {
+        return new JsonResponse(['error' => 'This team is already at its maximum number of runners.'], 409);
+      }
+    }
+
     $submission->setElementData('request_status', $status);
     // Saving triggers race_day_webform_submission_update(), which syncs group
     // membership and clears leg assignments synchronously before this

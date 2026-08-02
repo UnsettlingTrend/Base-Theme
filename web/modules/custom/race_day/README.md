@@ -7,7 +7,7 @@ A Drupal 11 module for managing relay races with live GPS tracking.
 ## Features
 
 - **Races** — Create relay race events with date, status, and route map data
-- **Legs** — Define individual segments with distance, difficulty, elevation, and GPS coordinates
+- **Legs** — Define individual segments with distance, elevation, and GPS coordinates
 - **Runner Assignments** — Assign runners (Drupal users) to specific legs
 - **Live GPS Tracking** — Runners submit location updates via REST API; positions displayed on race map
 - **Location History** — GPS pings logged to `race_day_location_log` for replay and analysis
@@ -19,7 +19,7 @@ A Drupal 11 module for managing relay races with live GPS tracking.
 ```
 Race (event)
   ├── RaceLeg (segment 1, 2, 3...)
-  │     └── start/end coordinates, route geometry, distance, difficulty
+  │     └── start/end coordinates, route geometry, distance
   └── RaceAssignment (runner ↔ leg)
         ├── runner (user reference)
         ├── live GPS: current_lat, current_lng, speed
@@ -101,7 +101,7 @@ lando drush race-day:legs:import /app/web/exports/race_legs.csv
 lando drush race-day:legs:import /app/web/exports/race_legs.csv --delete-missing
 ```
 
-**CSV columns:** `race_id`, `leg_number`, `label`, `distance`, `difficulty`, `description`, `strava_route_id`
+**CSV columns:** `race_id`, `leg_number`, `label`, `distance`, `description`, `strava_route_id`
 
 The `strava_route` paragraph for each leg is managed automatically — the Strava route ID is read on export and created/updated on import.
 

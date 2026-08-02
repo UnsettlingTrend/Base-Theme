@@ -167,7 +167,7 @@ hidden:
   created: true
   description: true
   field_paragraphs: true
-  map_data: true
+  max_runners_per_team: true
   max_teams: true
   name: true
   race_date: true

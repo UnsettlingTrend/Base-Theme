@@ -14,6 +14,7 @@
         <th>#</th>
         <th>Leg Name</th>
         <th>Distance</th>
+        <th>Elevation Gain</th>
         <th>Runner</th>
       </tr>
     </thead>
@@ -29,6 +30,7 @@
             {% endif %}
           </td>
           <td>{{ row.leg_distance }}</td>
+          <td>{{ row.leg_elevation_gain }}</td>
           <td>
             {% if row.has_runner %}
               {{ row.runner }}

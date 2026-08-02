@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - paragraphs
+    - path
     - race_day
     - text
 id: race_leg.race_leg.default
@@ -16,19 +17,6 @@ content:
     region: content
     settings:
       rows: 4
-      placeholder: ''
-    third_party_settings: {  }
-  difficulty:
-    type: options_select
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  distance:
-    type: number
-    weight: 3
-    region: content
-    settings:
       placeholder: ''
     third_party_settings: {  }
   label:
@@ -45,6 +33,12 @@ content:
     region: content
     settings:
       placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
     third_party_settings: {  }
   race_id:
     type: entity_reference_autocomplete

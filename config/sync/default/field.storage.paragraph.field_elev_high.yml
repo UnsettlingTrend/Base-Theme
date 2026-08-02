@@ -1,0 +1,20 @@
+uuid: 81dd6a77-c44e-41fa-ae7e-fced7ab92122
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_elev_high
+field_name: field_elev_high
+entity_type: paragraph
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
