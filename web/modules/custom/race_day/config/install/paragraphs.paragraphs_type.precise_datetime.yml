@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: precise_datetime
+label: 'Precise Datetime'
+icon_uuid: null
+icon_default: null
+description: 'Captures a precise date and time of day, to the millisecond.'
+behavior_plugins: {  }

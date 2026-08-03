@@ -1,0 +1,31 @@
+uuid: 9438584c-478e-4f27-8af3-9c94cfe3bff7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.precise_datetime.field_precise_date
+    - field.field.paragraph.precise_datetime.field_precise_time
+    - paragraphs.paragraphs_type.precise_datetime
+  module:
+    - datetime
+id: paragraph.precise_datetime.default
+targetEntityType: paragraph
+bundle: precise_datetime
+mode: default
+content:
+  field_precise_date:
+    type: datetime_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_precise_time:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -448,14 +448,16 @@ function race_day_group_relationship_update(EntityInterface $entity): void {
     return;
   }
 
-  foreach ($group->get('field_runner_legs')->referencedEntities() as $paragraph) {
-    if ($paragraph->bundle() !== 'race_day_leg_assignment') {
-      continue;
-    }
+  foreach (_race_day_team_assignments($group) as $paragraph) {
     if ((int) $paragraph->get('field_race_day_runner')->target_id === $uid) {
       $paragraph->save();
     }
   }
+
+  // The pace change may have altered field_expected_time on one or more of
+  // this member's legs, which can shift every subsequent leg's expected
+  // start/finish — recompute the whole chain, not just their own legs.
+  _race_day_recalculate_team_expected_schedule($group);
 }
 
 /**
@@ -490,7 +492,7 @@ function _race_day_calculate_expected_time(ParagraphInterface $assignment): ?int
     return NULL;
   }
 
-  return (int) round(((float) $distance) * $pace_minutes * 60);
+  return (int) round(((float) $distance) * $pace_minutes * 60000);
 }
 
 /**
@@ -518,6 +520,375 @@ function _race_day_parse_pace_minutes(string $pace): ?float {
     return NULL;
   }
   return ((int) $matches[1]) + ((int) $matches[2]) / 60;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for paragraph.
+ *
+ * Newly-created assignments don't have an id yet during their own presave
+ * (so a nested field_expected_start/finish paragraph can't be parented to
+ * them there) — this runs after the insert, once the id exists.
+ */
+function race_day_paragraph_insert(EntityInterface $entity): void {
+  if ($entity->bundle() !== 'race_day_leg_assignment') {
+    return;
+  }
+  $group = $entity->getParentEntity();
+  if ($group instanceof GroupInterface) {
+    _race_day_recalculate_team_expected_schedule($group);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for paragraph.
+ *
+ * Any change to a leg assignment (runner assigned/removed, re-pointed to a
+ * different leg, status change, etc.) can affect its own expected time and
+ * everything chained after it, so the whole team's schedule gets recomputed.
+ */
+function race_day_paragraph_update(EntityInterface $entity): void {
+  if ($entity->bundle() !== 'race_day_leg_assignment') {
+    return;
+  }
+  $group = $entity->getParentEntity();
+  if ($group instanceof GroupInterface) {
+    _race_day_recalculate_team_expected_schedule($group);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for race.
+ *
+ * When a race's date/time changes, every team's expected schedule needs
+ * recomputing — leg 1 anchors to it directly, and every later leg chains
+ * from leg 1 through each leg's own expected time.
+ */
+function race_day_race_update(EntityInterface $entity): void {
+  if (!$entity->hasField('race_date')) {
+    return;
+  }
+  $old_date = $entity->original?->get('race_date')->value;
+  $new_date = $entity->get('race_date')->value;
+  if ($old_date === $new_date) {
+    return;
+  }
+
+  $group_ids = \Drupal::entityQuery('group')
+    ->condition('type', 'race_team')
+    ->condition('field_race', $entity->id())
+    ->accessCheck(FALSE)
+    ->execute();
+  if (!$group_ids) {
+    return;
+  }
+
+  $group_storage = \Drupal::entityTypeManager()->getStorage('group');
+  foreach ($group_storage->loadMultiple($group_ids) as $group) {
+    _race_day_recalculate_team_expected_schedule($group);
+  }
+}
+
+/**
+ * Returns a race_team's leg assignment paragraphs, keyed by leg number.
+ *
+ * Queries directly by the paragraphs' own composite-parent fields (set via
+ * setParentEntity() when each assignment was created) rather than through
+ * $group->get('field_runner_legs')->referencedEntities() — the latter
+ * resolves each item via the group's own stored target_revision_id, which
+ * can go stale the moment an assignment is resaved without the group itself
+ * being resaved (the normal case here: assignments are saved directly, not
+ * through the group's own paragraphs widget). Querying by parent id instead
+ * always finds each assignment's true latest revision.
+ *
+ * @return array<int, \Drupal\paragraphs\ParagraphInterface>
+ *   Assignment paragraphs keyed by their leg's leg_number, ascending.
+ */
+function _race_day_team_assignments(GroupInterface $group): array {
+  $ids = \Drupal::entityQuery('paragraph')
+    ->condition('type', 'race_day_leg_assignment')
+    ->condition('parent_id', $group->id())
+    ->condition('parent_type', 'group')
+    ->condition('parent_field_name', 'field_runner_legs')
+    ->accessCheck(FALSE)
+    ->execute();
+  if (!$ids) {
+    return [];
+  }
+
+  $assignments = [];
+  foreach (\Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($ids) as $paragraph) {
+    $leg = $paragraph->get('field_race_day_leg')->isEmpty() ? NULL : $paragraph->get('field_race_day_leg')->entity;
+    if ($leg) {
+      $assignments[(int) $leg->get('leg_number')->value] = $paragraph;
+    }
+  }
+  ksort($assignments);
+  return $assignments;
+}
+
+/**
+ * Recalculates the expected start/finish chain for every leg on a team.
+ *
+ * Leg 1's expected start is the race's own date/time
+ * (_race_day_race_date_time_parts()). Every other leg's expected start is
+ * the previous leg's expected finish, and every leg's expected finish is
+ * its own expected start plus its expected time
+ * (_race_day_calculate_expected_time()).
+ *
+ * If a leg's expected time isn't available (no runner assigned, no leg
+ * distance yet, no parseable pace, etc.), the chain breaks there: that leg
+ * keeps whatever expected start was already computed for it (it's still
+ * fully determined by the previous leg, independent of this leg's own
+ * runner), but its expected finish — and every subsequent leg's expected
+ * start and finish — gets wiped, since none of that is derivable anymore.
+ */
+function _race_day_recalculate_team_expected_schedule(GroupInterface $group): void {
+  if ($group->bundle() !== 'race_team' || !$group->hasField('field_race') || $group->get('field_race')->isEmpty()) {
+    return;
+  }
+  $race = $group->get('field_race')->entity;
+  if (!$race instanceof Race) {
+    return;
+  }
+
+  $assignments = _race_day_team_assignments($group);
+  if (!$assignments) {
+    return;
+  }
+
+  $next_start = _race_day_race_date_time_parts($race);
+  foreach ($assignments as $assignment) {
+    if (!$assignment->hasField('field_expected_start') || !$assignment->hasField('field_expected_finish')) {
+      continue;
+    }
+
+    $start_parts = $next_start;
+    $expected_time_ms = $start_parts !== NULL ? _race_day_calculate_expected_time($assignment) : NULL;
+    $finish_parts = $expected_time_ms !== NULL ? _race_day_add_ms_to_parts($start_parts, $expected_time_ms) : NULL;
+
+    $needs_save = _race_day_set_leg_moment($assignment, 'field_expected_start', $start_parts);
+    $needs_save = _race_day_set_leg_moment($assignment, 'field_expected_finish', $finish_parts) || $needs_save;
+    if ($needs_save) {
+      // Update the existing revision in place — a new revision here would
+      // leave the group's own stored target_revision_id for this leg
+      // assignment (in field_runner_legs) stale, since the group itself
+      // isn't being resaved.
+      $assignment->setNewRevision(FALSE);
+      $assignment->save();
+    }
+
+    // Once broken, every subsequent leg gets NULL parts, wiping both fields.
+    $next_start = $finish_parts;
+  }
+}
+
+/**
+ * Sets, updates, or clears one of a leg assignment's date/time fields.
+ *
+ * Creates the nested precise_datetime paragraph if none exists yet, updates
+ * it in place if one does, or deletes it and clears the field if $parts is
+ * NULL. Never saves $assignment itself — the caller does that once after
+ * both field_expected_start and field_expected_finish have been set, so a
+ * single save covers both.
+ *
+ * @return bool
+ *   TRUE if $assignment's own field value changed (a new paragraph got
+ *   attached, or an existing reference got cleared) and so needs saving.
+ *   FALSE if nothing changed, or if only the nested paragraph's own values
+ *   changed (that's saved here directly, since its revision id — and so
+ *   $assignment's reference to it — doesn't change).
+ */
+function _race_day_set_leg_moment(ParagraphInterface $assignment, string $field_name, ?array $parts): bool {
+  if (!$assignment->hasField($field_name)) {
+    return FALSE;
+  }
+  $field = $assignment->get($field_name);
+  $existing = $field->isEmpty() ? NULL : $field->get(0)->entity;
+
+  if ($parts === NULL) {
+    if (!$existing) {
+      return FALSE;
+    }
+    $existing_id = $existing->id();
+    $assignment->set($field_name, NULL);
+    $orphan = \Drupal::entityTypeManager()->getStorage('paragraph')->load($existing_id);
+    if ($orphan) {
+      $orphan->delete();
+    }
+    return TRUE;
+  }
+
+  if ($existing) {
+    if ($existing->get('field_precise_date')->value === $parts['date']
+      && (int) $existing->get('field_precise_time')->value === $parts['time_ms']) {
+      return FALSE;
+    }
+    $existing->set('field_precise_date', $parts['date']);
+    $existing->set('field_precise_time', $parts['time_ms']);
+    $existing->setNewRevision(FALSE);
+    $existing->save();
+    return FALSE;
+  }
+
+  $new_paragraph = Paragraph::create([
+    'type' => 'precise_datetime',
+    'field_precise_date' => $parts['date'],
+    'field_precise_time' => $parts['time_ms'],
+  ]);
+  $new_paragraph->setParentEntity($assignment, $field_name);
+  $new_paragraph->save();
+  $assignment->set($field_name, [
+    ['target_id' => $new_paragraph->id(), 'target_revision_id' => $new_paragraph->getRevisionId()],
+  ]);
+  return TRUE;
+}
+
+/**
+ * Adds a millisecond duration to a date/time_ms pair, rolling over days.
+ *
+ * @param array{date: string, time_ms: int} $parts
+ * @param int $add_ms
+ *
+ * @return array{date: string, time_ms: int}
+ */
+function _race_day_add_ms_to_parts(array $parts, int $add_ms): array {
+  $total_ms = $parts['time_ms'] + $add_ms;
+  $day_offset = intdiv($total_ms, 86400000);
+  $time_ms = $total_ms % 86400000;
+
+  $date = new \DateTime($parts['date']);
+  if ($day_offset !== 0) {
+    $date->modify(($day_offset > 0 ? '+' : '') . $day_offset . ' days');
+  }
+
+  return [
+    'date' => $date->format('Y-m-d'),
+    'time_ms' => $time_ms,
+  ];
+}
+
+/**
+ * Splits a race's date/time into local-timezone date + ms-since-midnight.
+ *
+ * race_date is stored in UTC (core datetime field convention); this converts
+ * to the site's default timezone first so, e.g., a race entered as starting
+ * at 1pm Eastern comes back as time_ms for 13:00, not whatever 1pm UTC
+ * happens to be locally.
+ *
+ * @return array{date: string, time_ms: int}|null
+ */
+function _race_day_race_date_time_parts(Race $race): ?array {
+  $item = $race->get('race_date');
+  if ($item->isEmpty()) {
+    return NULL;
+  }
+
+  /** @var \Drupal\Core\Datetime\DrupalDateTime $date */
+  $date = clone $item->date;
+  $timezone = \Drupal::config('system.date')->get('timezone.default') ?: date_default_timezone_get();
+  $date->setTimezone(new \DateTimeZone($timezone));
+
+  $time_ms = ((int) $date->format('H')) * 3600000
+    + ((int) $date->format('i')) * 60000
+    + ((int) $date->format('s')) * 1000;
+
+  return [
+    'date' => $date->format('Y-m-d'),
+    'time_ms' => $time_ms,
+  ];
+}
+
+/**
+ * Formats a precise_datetime paragraph's time as 12-hour "g:i A", or '' if unset.
+ */
+function _race_day_format_precise_datetime(?ParagraphInterface $moment): string {
+  if (!$moment || $moment->get('field_precise_date')->isEmpty() || $moment->get('field_precise_time')->isEmpty()) {
+    return '';
+  }
+  $ms = (int) $moment->get('field_precise_time')->value;
+  return gmdate('g:i A', intdiv($ms, 1000));
+}
+
+/**
+ * Formats a leg assignment's actual (or, absent that, expected) start/finish.
+ *
+ * @param \Drupal\paragraphs\ParagraphInterface $assignment
+ *   A race_day_leg_assignment paragraph.
+ * @param string $actual_field
+ *   'field_actual_start' or 'field_actual_finish'.
+ * @param string $expected_field
+ *   'field_expected_start' or 'field_expected_finish'.
+ *
+ * @return array{value: string, type: string}
+ *   'type' is 'actual' or 'expected' depending on which field the value came
+ *   from, or '' (with an empty 'value') if neither field has one.
+ */
+function _race_day_leg_assignment_moment(ParagraphInterface $assignment, string $actual_field, string $expected_field): array {
+  foreach ([$actual_field => 'actual', $expected_field => 'expected'] as $field_name => $type) {
+    if (!$assignment->hasField($field_name) || $assignment->get($field_name)->isEmpty()) {
+      continue;
+    }
+    $formatted = _race_day_format_precise_datetime($assignment->get($field_name)->get(0)->entity);
+    if ($formatted !== '') {
+      return ['value' => $formatted, 'type' => $type];
+    }
+  }
+  return ['value' => '', 'type' => ''];
+}
+
+/**
+ * Converts a precise_datetime paragraph to milliseconds since the Unix epoch.
+ *
+ * Used only to diff two moments against each other, so the choice of epoch
+ * doesn't matter as long as both sides use it consistently.
+ */
+function _race_day_moment_epoch_ms(?ParagraphInterface $moment): ?int {
+  if (!$moment || $moment->get('field_precise_date')->isEmpty() || $moment->get('field_precise_time')->isEmpty()) {
+    return NULL;
+  }
+  $date = $moment->get('field_precise_date')->value;
+  $time_ms = (int) $moment->get('field_precise_time')->value;
+  $day_ms = (new \DateTime($date, new \DateTimeZone('UTC')))->getTimestamp() * 1000;
+  return $day_ms + $time_ms;
+}
+
+/**
+ * Formats a millisecond duration as "H:i:s.uuu" (hours:minutes:seconds.ms).
+ */
+function _race_day_format_duration_ms(int $duration_ms): string {
+  $hours = intdiv($duration_ms, 3600000);
+  $remainder = $duration_ms % 3600000;
+  $minutes = intdiv($remainder, 60000);
+  $remainder %= 60000;
+  $seconds = intdiv($remainder, 1000);
+  $millis = $remainder % 1000;
+  return sprintf('%d:%02d:%02d.%03d', $hours, $minutes, $seconds, $millis);
+}
+
+/**
+ * Formats a leg assignment's elapsed time.
+ *
+ * Once both an actual start and actual finish are recorded, this is the
+ * measured difference between them; until then, it falls back to the
+ * paragraph's own expected/estimated time.
+ *
+ * @return array{value: string, type: string}
+ *   'type' is 'actual' or 'expected' depending on the source, or '' (with an
+ *   empty 'value') if neither is available.
+ */
+function _race_day_leg_assignment_time(ParagraphInterface $assignment): array {
+  if (!$assignment->get('field_actual_start')->isEmpty() && !$assignment->get('field_actual_finish')->isEmpty()) {
+    $start_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_start')->get(0)->entity);
+    $finish_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_finish')->get(0)->entity);
+    if ($start_ms !== NULL && $finish_ms !== NULL) {
+      return ['value' => _race_day_format_duration_ms($finish_ms - $start_ms), 'type' => 'actual'];
+    }
+  }
+
+  if (!$assignment->hasField('field_expected_time') || $assignment->get('field_expected_time')->isEmpty()) {
+    return ['value' => '', 'type' => ''];
+  }
+  return ['value' => _race_day_format_duration_ms((int) $assignment->get('field_expected_time')->value), 'type' => 'expected'];
 }
 
 /**
@@ -995,6 +1366,10 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       }
     }
 
+    $leg_start = _race_day_leg_assignment_moment($paragraph, 'field_actual_start', 'field_expected_start');
+    $leg_finish = _race_day_leg_assignment_moment($paragraph, 'field_actual_finish', 'field_expected_finish');
+    $leg_time = _race_day_leg_assignment_time($paragraph);
+
     $runner_name = '';
     $runner_id = NULL;
     $has_runner = FALSE;
@@ -1023,6 +1398,9 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       'leg_url'            => $leg_url,
       'leg_distance'       => $leg_distance,
       'leg_elevation_gain' => $leg_elevation_gain,
+      'leg_start'          => $leg_start,
+      'leg_finish'         => $leg_finish,
+      'leg_time'           => $leg_time,
       'runner'             => $runner_name,
       'runner_id'          => $runner_id,
       'has_runner'         => $has_runner,

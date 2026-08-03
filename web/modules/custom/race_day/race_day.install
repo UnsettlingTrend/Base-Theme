@@ -437,6 +437,73 @@ function race_day_update_10008(): void {
 }
 
 /**
+ * Adds the 'Precise Datetime' paragraph type.
+ *
+ * Captures a date (field_precise_date, date-only — no time component) and a
+ * time of day (field_precise_time, integer milliseconds since midnight,
+ * 0–86399999, meant to be displayed with the time_formatter module).
+ *
+ * field_date already exists as a paragraph field storage (used by the
+ * 'record' bundle) with datetime_type 'datetime', not 'date' — field storage
+ * settings are shared across every bundle using that field name, so a
+ * genuinely date-only field here needs its own field name instead.
+ */
+function race_day_update_10009(): void {
+  if (!\Drupal\paragraphs\Entity\ParagraphsType::load('precise_datetime')) {
+    \Drupal\paragraphs\Entity\ParagraphsType::create([
+      'id' => 'precise_datetime',
+      'label' => 'Precise Datetime',
+      'description' => 'Captures a precise date and time of day, to the millisecond.',
+    ])->save();
+  }
+
+  if (!\Drupal\field\Entity\FieldStorageConfig::loadByName('paragraph', 'field_precise_date')) {
+    \Drupal\field\Entity\FieldStorageConfig::create([
+      'field_name' => 'field_precise_date',
+      'entity_type' => 'paragraph',
+      'type' => 'datetime',
+      'settings' => ['datetime_type' => 'date'],
+      'cardinality' => 1,
+      'translatable' => TRUE,
+    ])->save();
+  }
+  if (!\Drupal\field\Entity\FieldConfig::loadByName('paragraph', 'precise_datetime', 'field_precise_date')) {
+    \Drupal\field\Entity\FieldConfig::create([
+      'field_name' => 'field_precise_date',
+      'entity_type' => 'paragraph',
+      'bundle' => 'precise_datetime',
+      'label' => 'Date',
+      'description' => '',
+      'required' => FALSE,
+      'translatable' => FALSE,
+    ])->save();
+  }
+
+  if (!\Drupal\field\Entity\FieldStorageConfig::loadByName('paragraph', 'field_precise_time')) {
+    \Drupal\field\Entity\FieldStorageConfig::create([
+      'field_name' => 'field_precise_time',
+      'entity_type' => 'paragraph',
+      'type' => 'integer',
+      'settings' => ['unsigned' => TRUE, 'size' => 'normal'],
+      'cardinality' => 1,
+      'translatable' => TRUE,
+    ])->save();
+  }
+  if (!\Drupal\field\Entity\FieldConfig::loadByName('paragraph', 'precise_datetime', 'field_precise_time')) {
+    \Drupal\field\Entity\FieldConfig::create([
+      'field_name' => 'field_precise_time',
+      'entity_type' => 'paragraph',
+      'bundle' => 'precise_datetime',
+      'label' => 'Precise Time',
+      'description' => 'Milliseconds since midnight (0-86399999), i.e. the time of day down to the millisecond. Use with the time_formatter module to display as HH:MM:SS.mmm.',
+      'required' => FALSE,
+      'translatable' => FALSE,
+      'settings' => ['min' => 0, 'max' => 86399999],
+    ])->save();
+  }
+}
+
+/**
  * Implements hook_uninstall().
  */
 function race_day_uninstall(): void {
