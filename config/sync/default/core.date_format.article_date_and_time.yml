@@ -5,4 +5,4 @@ dependencies: {  }
 id: article_date_and_time
 label: 'Article Date and Time'
 locked: false
-pattern: 'M d, Y \a\t g:ia T'
+pattern: 'M d, Y \a\t g:ia'
