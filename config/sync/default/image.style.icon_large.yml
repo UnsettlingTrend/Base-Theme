@@ -1,0 +1,17 @@
+uuid: ad0724a4-b81c-4b18-afd9-16c2e258f416
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: icon_large
+label: 'Icon - Large (250x250)'
+effects:
+  0377e325-cfd0-401c-aacc-de1feeea739a:
+    uuid: 0377e325-cfd0-401c-aacc-de1feeea739a
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 250
+      height: 250
+      crop_type: focal_point
