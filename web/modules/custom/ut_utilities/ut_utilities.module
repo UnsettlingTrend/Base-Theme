@@ -6,6 +6,70 @@
  */
 
 /**
+ * Implements hook_link_alter().
+ *
+ * Appends a 'destination' query parameter to every rendered link that points
+ * at the login form (menu links, "Log in" links in custom templates, etc.),
+ * so that after logging in the user lands back on the page they clicked
+ * from, instead of on their profile page (core's default post-login
+ * redirect). Anonymous users redirected to the login form by an
+ * access-denied page already get this from core; this covers the remaining
+ * case of a plain link to /user/login clicked directly.
+ *
+ * Leaves an already-present destination alone (e.g. a link built with an
+ * intentionally different one, like race_day_preprocess_race()'s
+ * login_to_register_url) rather than overwriting it.
+ *
+ * @see ut_utilities_preprocess_menu()
+ */
+function ut_utilities_link_alter(array &$variables): void {
+  $url = $variables['url'];
+  if (!$url->isRouted() || $url->getRouteName() !== 'user.login' || isset($variables['options']['query']['destination'])) {
+    return;
+  }
+
+  $variables['options']['query']['destination'] = \Drupal::destination()->get();
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ *
+ * Companion to ut_utilities_link_alter() above. That hook computes the
+ * correct per-request 'destination' value, but a rendered menu is cached
+ * (block render cache, and internal_page_cache for anonymous users) without
+ * varying by the current path — so whichever page happens to prime the cache
+ * first would "freeze" its destination into the login link for every other
+ * page until the cache is cleared. Verified this actually happens: after a
+ * cache clear, /blog and /recipes both served a login link pointing back at
+ * "/" (whichever page the account-menu block was first rendered for), not
+ * their own path, until the 'url.path' cache context was added here.
+ *
+ * Declaring 'url.path' forces the cached menu markup to vary per page,
+ * matching what the destination value itself depends on.
+ */
+function ut_utilities_preprocess_menu(array &$variables): void {
+  if (_ut_utilities_menu_has_login_link($variables['items'] ?? [])) {
+    $variables['#cache']['contexts'][] = 'url.path';
+  }
+}
+
+/**
+ * Recursively checks a menu item tree for a link to the login form.
+ */
+function _ut_utilities_menu_has_login_link(array $items): bool {
+  foreach ($items as $item) {
+    $url = $item['url'] ?? NULL;
+    if ($url instanceof \Drupal\Core\Url && $url->isRouted() && $url->getRouteName() === 'user.login') {
+      return TRUE;
+    }
+    if (!empty($item['below']) && _ut_utilities_menu_has_login_link($item['below'])) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave() for media.
  *
  * The image media bundle's own field_title (added so every media bundle has
