@@ -12,7 +12,9 @@ label: Pace
 description: "The runner's expected pace, carried over from their team request webform submission when approved."
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    value: '10:00'
 default_value_callback: ''
 settings: {  }
 field_type: string
