@@ -413,14 +413,69 @@ function _race_day_sync_team_membership(EntityInterface $submission, ?string $ol
  * race_day_group_relationship_update() after a pace change), from the
  * assigned leg's distance and the runner's current pace — so the field is
  * always derived fresh rather than needing to be kept in sync by hand at
- * every call site that touches the paragraph.
+ * every call site that touches the paragraph. Also cascades a leg assignment
+ * being marked Running to the rest of its team's assignments.
  */
 function race_day_paragraph_presave(EntityInterface $entity): void {
-  if ($entity->bundle() !== 'race_day_leg_assignment' || !$entity->hasField('field_expected_time')) {
+  if ($entity->bundle() !== 'race_day_leg_assignment') {
     return;
   }
   /** @var \Drupal\paragraphs\ParagraphInterface $entity */
-  $entity->set('field_expected_time', _race_day_calculate_expected_time($entity));
+  if ($entity->hasField('field_expected_time')) {
+    $entity->set('field_expected_time', _race_day_calculate_expected_time($entity));
+  }
+  if ($entity->hasField('field_race_day_leg_status') && $entity->get('field_race_day_leg_status')->value === 'running') {
+    _race_day_cascade_running_status($entity);
+  }
+}
+
+/**
+ * Cascades a leg assignment's Status becoming Running to the rest of its team.
+ *
+ * Every earlier leg (lower leg_number) on the same team is marked Finished —
+ * by definition, if this leg is now running, the runner reached it by
+ * finishing everything before it, whatever those assignments' statuses
+ * happened to say. And since only one assignment per team should ever be
+ * Running at a time (the same single-selection behavior the old Current
+ * Runner checkbox had — Paragraphs has no native way to enforce that across
+ * sibling instances of the same paragraph type), any other assignment still
+ * marked Running gets reset to Created; this should only happen if a leg
+ * out of sequence was marked Running by hand, since normal race progression
+ * always moves forward.
+ */
+function _race_day_cascade_running_status(ParagraphInterface $assignment): void {
+  if (!$assignment->hasField('field_race_day_leg') || $assignment->get('field_race_day_leg')->isEmpty()) {
+    return;
+  }
+  $leg = $assignment->get('field_race_day_leg')->entity;
+  if (!$leg) {
+    return;
+  }
+  $leg_number = (int) $leg->get('leg_number')->value;
+
+  $group = $assignment->getParentEntity();
+  if (!$group instanceof GroupInterface) {
+    return;
+  }
+
+  foreach (_race_day_team_assignments($group) as $sibling_leg_number => $sibling) {
+    if ((int) $sibling->id() === (int) $assignment->id() || !$sibling->hasField('field_race_day_leg_status')) {
+      continue;
+    }
+
+    if ($sibling_leg_number < $leg_number) {
+      if ($sibling->get('field_race_day_leg_status')->value !== 'finished') {
+        $sibling->set('field_race_day_leg_status', 'finished');
+        $sibling->setNewRevision(FALSE);
+        $sibling->save();
+      }
+    }
+    elseif ($sibling->get('field_race_day_leg_status')->value === 'running') {
+      $sibling->set('field_race_day_leg_status', 'created');
+      $sibling->setNewRevision(FALSE);
+      $sibling->save();
+    }
+  }
 }
 
 /**
@@ -589,7 +644,99 @@ function race_day_race_update(EntityInterface $entity): void {
 }
 
 /**
- * Returns a race_team's leg assignment paragraphs, keyed by leg number.
+ * Implements hook_cron().
+ *
+ * For every race currently marked "In Progress", updates which leg
+ * assignment is marked Running on each of its teams.
+ */
+function race_day_cron(): void {
+  $race_ids = \Drupal::entityQuery('race')
+    ->condition('status', 'in_progress')
+    ->accessCheck(FALSE)
+    ->execute();
+  if (!$race_ids) {
+    return;
+  }
+
+  $race_storage = \Drupal::entityTypeManager()->getStorage('race');
+  foreach ($race_storage->loadMultiple($race_ids) as $race) {
+    _race_day_update_running_status_for_race($race);
+  }
+}
+
+/**
+ * Updates the Running status on every team's leg assignments for a race.
+ */
+function _race_day_update_running_status_for_race(Race $race): void {
+  $group_ids = \Drupal::entityQuery('group')
+    ->condition('type', 'race_team')
+    ->condition('field_race', $race->id())
+    ->accessCheck(FALSE)
+    ->execute();
+  if (!$group_ids) {
+    return;
+  }
+
+  $now_ms = _race_day_now_epoch_ms();
+  $group_storage = \Drupal::entityTypeManager()->getStorage('group');
+  foreach ($group_storage->loadMultiple($group_ids) as $group) {
+    _race_day_update_running_status_for_team($group, $now_ms);
+  }
+}
+
+/**
+ * Marks whichever of a team's leg assignments is "out" right now as Running.
+ *
+ * A leg assignment is "out" when $now_ms falls within its start/finish
+ * window (_race_day_leg_assignment_window()) — start inclusive, finish
+ * exclusive, so the instant one leg finishes belongs to the next leg's
+ * window, not both at once. Setting a Status of Running triggers
+ * race_day_paragraph_presave()'s cascade, which finishes every earlier leg
+ * and clears Running from anything else that still had it — so nothing
+ * further needs doing here beyond finding the one leg that should become
+ * Running (never regressing a leg that's already Running or Finished).
+ *
+ * If no leg's window contains $now_ms because time has passed the last
+ * leg's own finish, there's no later leg left to trigger that cascade for
+ * it — so that last leg is marked Finished directly here instead.
+ */
+function _race_day_update_running_status_for_team(GroupInterface $group, int $now_ms): void {
+  $assignments = _race_day_team_assignments($group);
+  if (!$assignments) {
+    return;
+  }
+
+  foreach ($assignments as $assignment) {
+    if (!$assignment->hasField('field_race_day_leg_status')) {
+      continue;
+    }
+    $window = _race_day_leg_assignment_window($assignment);
+    if ($window['start'] === NULL || $window['finish'] === NULL
+      || $now_ms < $window['start'] || $now_ms >= $window['finish']) {
+      continue;
+    }
+    if ($assignment->get('field_race_day_leg_status')->value === 'created') {
+      $assignment->set('field_race_day_leg_status', 'running');
+      $assignment->setNewRevision(FALSE);
+      $assignment->save();
+    }
+    return;
+  }
+
+  $last = end($assignments);
+  if (!$last->hasField('field_race_day_leg_status') || $last->get('field_race_day_leg_status')->value === 'finished') {
+    return;
+  }
+  $last_window = _race_day_leg_assignment_window($last);
+  if ($last_window['finish'] !== NULL && $now_ms >= $last_window['finish']) {
+    $last->set('field_race_day_leg_status', 'finished');
+    $last->setNewRevision(FALSE);
+    $last->save();
+  }
+}
+
+/**
+ * Returns every race_day_leg_assignment paragraph belonging to a team.
  *
  * Queries directly by the paragraphs' own composite-parent fields (set via
  * setParentEntity() when each assignment was created) rather than through
@@ -601,9 +748,9 @@ function race_day_race_update(EntityInterface $entity): void {
  * always finds each assignment's true latest revision.
  *
  * @return array<int, \Drupal\paragraphs\ParagraphInterface>
- *   Assignment paragraphs keyed by their leg's leg_number, ascending.
+ *   Assignment paragraphs, keyed by paragraph id, in no particular order.
  */
-function _race_day_team_assignments(GroupInterface $group): array {
+function _race_day_group_leg_assignments(GroupInterface $group): array {
   $ids = \Drupal::entityQuery('paragraph')
     ->condition('type', 'race_day_leg_assignment')
     ->condition('parent_id', $group->id())
@@ -611,12 +758,22 @@ function _race_day_team_assignments(GroupInterface $group): array {
     ->condition('parent_field_name', 'field_runner_legs')
     ->accessCheck(FALSE)
     ->execute();
-  if (!$ids) {
-    return [];
-  }
+  return $ids ? \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($ids) : [];
+}
 
+/**
+ * Returns a race_team's leg assignment paragraphs, keyed by leg number.
+ *
+ * Only includes assignments that have a leg assigned — use
+ * _race_day_group_leg_assignments() instead if you need every assignment on
+ * the team regardless of whether a leg has been picked yet.
+ *
+ * @return array<int, \Drupal\paragraphs\ParagraphInterface>
+ *   Assignment paragraphs keyed by their leg's leg_number, ascending.
+ */
+function _race_day_team_assignments(GroupInterface $group): array {
   $assignments = [];
-  foreach (\Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($ids) as $paragraph) {
+  foreach (_race_day_group_leg_assignments($group) as $paragraph) {
     $leg = $paragraph->get('field_race_day_leg')->isEmpty() ? NULL : $paragraph->get('field_race_day_leg')->entity;
     if ($leg) {
       $assignments[(int) $leg->get('leg_number')->value] = $paragraph;
@@ -810,7 +967,12 @@ function _race_day_format_precise_datetime(?ParagraphInterface $moment): string 
 }
 
 /**
- * Formats a leg assignment's actual (or, absent that, expected) start/finish.
+ * Resolves a leg assignment's actual (or, absent that, expected) moment.
+ *
+ * The shared "prefer actual, fall back to expected" lookup behind both
+ * _race_day_leg_assignment_moment() (display) and
+ * _race_day_leg_assignment_window() (current-runner detection) — kept in one
+ * place so both always agree on which moment is authoritative.
  *
  * @param \Drupal\paragraphs\ParagraphInterface $assignment
  *   A race_day_leg_assignment paragraph.
@@ -819,21 +981,36 @@ function _race_day_format_precise_datetime(?ParagraphInterface $moment): string 
  * @param string $expected_field
  *   'field_expected_start' or 'field_expected_finish'.
  *
+ * @return array{moment: \Drupal\paragraphs\ParagraphInterface|null, type: string}
+ *   'type' is 'actual' or 'expected' depending on which field the moment
+ *   came from, or '' (with a NULL 'moment') if neither field has one.
+ */
+function _race_day_resolve_leg_assignment_moment(ParagraphInterface $assignment, string $actual_field, string $expected_field): array {
+  foreach ([$actual_field => 'actual', $expected_field => 'expected'] as $field_name => $type) {
+    if (!$assignment->hasField($field_name) || $assignment->get($field_name)->isEmpty()) {
+      continue;
+    }
+    $moment = $assignment->get($field_name)->get(0)->entity;
+    if ($moment && !$moment->get('field_precise_date')->isEmpty() && !$moment->get('field_precise_time')->isEmpty()) {
+      return ['moment' => $moment, 'type' => $type];
+    }
+  }
+  return ['moment' => NULL, 'type' => ''];
+}
+
+/**
+ * Formats a leg assignment's actual (or, absent that, expected) start/finish.
+ *
  * @return array{value: string, type: string}
  *   'type' is 'actual' or 'expected' depending on which field the value came
  *   from, or '' (with an empty 'value') if neither field has one.
  */
 function _race_day_leg_assignment_moment(ParagraphInterface $assignment, string $actual_field, string $expected_field): array {
-  foreach ([$actual_field => 'actual', $expected_field => 'expected'] as $field_name => $type) {
-    if (!$assignment->hasField($field_name) || $assignment->get($field_name)->isEmpty()) {
-      continue;
-    }
-    $formatted = _race_day_format_precise_datetime($assignment->get($field_name)->get(0)->entity);
-    if ($formatted !== '') {
-      return ['value' => $formatted, 'type' => $type];
-    }
+  $resolved = _race_day_resolve_leg_assignment_moment($assignment, $actual_field, $expected_field);
+  if (!$resolved['moment']) {
+    return ['value' => '', 'type' => ''];
   }
-  return ['value' => '', 'type' => ''];
+  return ['value' => _race_day_format_precise_datetime($resolved['moment']), 'type' => $resolved['type']];
 }
 
 /**
@@ -850,6 +1027,41 @@ function _race_day_moment_epoch_ms(?ParagraphInterface $moment): ?int {
   $time_ms = (int) $moment->get('field_precise_time')->value;
   $day_ms = (new \DateTime($date, new \DateTimeZone('UTC')))->getTimestamp() * 1000;
   return $day_ms + $time_ms;
+}
+
+/**
+ * Returns "now" on the same synthetic epoch _race_day_moment_epoch_ms() uses
+ * (a local wall-clock date/time re-expressed as ms-since-UTC-midnight of
+ * that date), so it can be compared directly against a leg assignment's
+ * start/finish moments.
+ */
+function _race_day_now_epoch_ms(): int {
+  $timezone = \Drupal::config('system.date')->get('timezone.default') ?: date_default_timezone_get();
+  $now = (new \DateTime('now'))->setTimezone(new \DateTimeZone($timezone));
+
+  $time_ms = ((int) $now->format('H')) * 3600000
+    + ((int) $now->format('i')) * 60000
+    + ((int) $now->format('s')) * 1000;
+  $day_ms = (new \DateTime($now->format('Y-m-d'), new \DateTimeZone('UTC')))->getTimestamp() * 1000;
+  return $day_ms + $time_ms;
+}
+
+/**
+ * Returns a leg assignment's start/finish window, in the same synthetic
+ * epoch as _race_day_now_epoch_ms(), using actual times where recorded and
+ * falling back to expected times otherwise — the exact same resolution
+ * _race_day_leg_assignment_moment() uses for the Runner Assignments table,
+ * so "current runner" always agrees with what that table displays.
+ *
+ * @return array{start: int|null, finish: int|null}
+ */
+function _race_day_leg_assignment_window(ParagraphInterface $assignment): array {
+  $start = _race_day_resolve_leg_assignment_moment($assignment, 'field_actual_start', 'field_expected_start')['moment'];
+  $finish = _race_day_resolve_leg_assignment_moment($assignment, 'field_actual_finish', 'field_expected_finish')['moment'];
+  return [
+    'start' => _race_day_moment_epoch_ms($start),
+    'finish' => _race_day_moment_epoch_ms($finish),
+  ];
 }
 
 /**
@@ -1310,6 +1522,12 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
   /** @var \Drupal\group\Entity\GroupInterface $group */
   $group = $variables['element']['#object'];
 
+  // Styles the current-runner row highlight; loaded for every viewer, not
+  // just members, since the highlight is informational rather than
+  // interactive (unlike race_day/runner_assignment below, which is only
+  // useful — and so only attached — for members who can act on the table).
+  $variables['#attached']['library'][] = 'race_day/runner_legs_display';
+
   $current_user = \Drupal::currentUser();
   $membership = $group->getMember($current_user);
 
@@ -1391,6 +1609,8 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       $can_remove = TRUE;
     }
 
+    $current_runner = $paragraph->hasField('field_race_day_leg_status') && $paragraph->get('field_race_day_leg_status')->value === 'running';
+
     $rows[] = [
       'paragraph_id'       => $paragraph->id(),
       'leg_number'         => $leg_number,
@@ -1405,6 +1625,7 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       'runner_id'          => $runner_id,
       'has_runner'         => $has_runner,
       'can_remove'         => $can_remove,
+      'current_runner'     => $current_runner,
     ];
   }
 

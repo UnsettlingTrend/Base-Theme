@@ -16,6 +16,12 @@ admin_toolbar:
     theme:
       css/admin-toolbar.css: {}
 
+runner_legs_display:
+  version: VERSION
+  css:
+    component:
+      css/runner-legs-table.css: {}
+
 runner_assignment:
   version: VERSION
   css:

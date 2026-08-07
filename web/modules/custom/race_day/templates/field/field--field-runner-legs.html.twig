@@ -23,7 +23,7 @@
     </thead>
     <tbody>
       {% for row in runner_assignment_rows %}
-        <tr>
+        <tr{% if row.current_runner %} class="current-runner"{% endif %}>
           <td>{{ row.leg_number }}</td>
           <td>
             {% if row.leg_url %}
