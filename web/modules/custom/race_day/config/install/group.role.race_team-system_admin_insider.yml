@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+    - user.role.administrator
+id: race_team-system_admin_insider
+label: 'System Admin'
+weight: -6
+admin: true
+scope: insider
+global_role: administrator
+group_type: race_team
+permissions: {  }

@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.race_team
+    - user.role.race_day_coordinator
+id: race_team-coordinator_insider
+label: Coordinator
+weight: -7
+admin: true
+scope: insider
+global_role: race_day_coordinator
+group_type: race_team
+permissions: {  }
