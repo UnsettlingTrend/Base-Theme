@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.user.private_message_author
     - field.field.user.user.field_name
+    - field.field.user.user.field_ut_tracking_retention
     - field.field.user.user.user_picture
   module:
     - user
@@ -25,8 +26,14 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  masquerade:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 50
+    region: content
 hidden:
   field_name: true
+  field_ut_tracking_retention: true
   langcode: true
   member_for: true
   private_message_link: true

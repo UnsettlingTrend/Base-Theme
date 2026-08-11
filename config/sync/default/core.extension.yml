@@ -13,6 +13,7 @@ module:
   ai_logging: 0
   ajax_comments: 0
   automated_cron: 0
+  basic_auth: 0
   better_exposed_filters: 0
   big_pipe: 0
   block: 0
@@ -185,6 +186,7 @@ module:
   update: 0
   user: 0
   uswds_templates: 0
+  ut_tracking: 0
   ut_utilities: 0
   views_bulk_operations: 0
   views_dependent_filters: 0

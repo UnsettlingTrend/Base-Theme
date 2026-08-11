@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Tracking module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Component\Serialization\Yaml;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\views\Entity\View;
+
+/**
+ * Installs the GPS Locations admin View (views.view.gps_location_admin).
+ *
+ * It ships as config/install/views.view.gps_location_admin.yml, so it's
+ * present on any fresh install of this module — but this module was
+ * already installed on this (and possibly other) environments before the
+ * View existed, and config/install is only auto-imported at install
+ * time. Create it explicitly here so it lands on already-installed sites
+ * too, reading the same packaged YAML rather than duplicating its
+ * content inline.
+ */
+function ut_tracking_update_10001(): void {
+  if (\Drupal::entityTypeManager()->getStorage('view')->load('gps_location_admin')) {
+    return;
+  }
+
+  $module_path = \Drupal::service('extension.list.module')->getPath('ut_tracking');
+  $data = Yaml::decode(file_get_contents($module_path . '/config/install/views.view.gps_location_admin.yml'));
+  View::create($data)->save();
+}
+
+/**
+ * Installs the Full Map View (views.view.gps_location_map), replacing the
+ * old MapController/ut_tracking.map route.
+ *
+ * Same reasoning as ut_tracking_update_10001(): ships in config/install
+ * for fresh installs, but must be created explicitly here for this and
+ * any other already-installed site.
+ */
+function ut_tracking_update_10002(): void {
+  if (\Drupal::entityTypeManager()->getStorage('view')->load('gps_location_map')) {
+    return;
+  }
+
+  $module_path = \Drupal::service('extension.list.module')->getPath('ut_tracking');
+  $data = Yaml::decode(file_get_contents($module_path . '/config/install/views.view.gps_location_map.yml'));
+  View::create($data)->save();
+}
+
+/**
+ * Creates ut_tracking.settings (retention_period, default "forever").
+ *
+ * Ships as config/install/ut_tracking.settings.yml, which — same as the
+ * two updates above — only auto-imports on a fresh module install, not on
+ * this already-installed site. "Forever" as the default is deliberate:
+ * enabling automatic deletion of a user's location history should be an
+ * explicit opt-in on /admin/tracking/settings, not something that starts
+ * happening silently the moment this update runs.
+ */
+function ut_tracking_update_10003(): void {
+  \Drupal::configFactory()->getEditable('ut_tracking.settings')
+    ->set('retention_period', 'forever')
+    ->save();
+}
+
+/**
+ * Creates the field_ut_tracking_retention field on the user entity, for
+ * the per-user retention override on the account's new "Tracking" tab.
+ *
+ * Same reasoning as the updates above re: config/install only
+ * auto-importing on a fresh install. Unlike the Views/settings config
+ * created by those updates, a configurable field is two config entities
+ * (storage + the bundle instance) — saving FieldStorageConfig triggers
+ * Drupal to provision the field's dedicated database table itself, no
+ * separate entityDefinitionUpdateManager step needed (that's specific to
+ * base fields on content entities, not Field API configurable fields).
+ */
+function ut_tracking_update_10004(): void {
+  if (\Drupal::entityTypeManager()->getStorage('field_storage_config')->load('user.field_ut_tracking_retention')) {
+    return;
+  }
+
+  $module_path = \Drupal::service('extension.list.module')->getPath('ut_tracking');
+
+  $storage_data = Yaml::decode(file_get_contents($module_path . '/config/install/field.storage.user.field_ut_tracking_retention.yml'));
+  FieldStorageConfig::create($storage_data)->save();
+
+  $field_data = Yaml::decode(file_get_contents($module_path . '/config/install/field.field.user.user.field_ut_tracking_retention.yml'));
+  FieldConfig::create($field_data)->save();
+}

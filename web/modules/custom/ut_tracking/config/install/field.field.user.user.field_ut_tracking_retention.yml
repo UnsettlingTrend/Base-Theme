@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_ut_tracking_retention
+  enforced:
+    module:
+      - ut_tracking
+id: user.user.field_ut_tracking_retention
+field_name: field_ut_tracking_retention
+entity_type: user
+bundle: user
+label: 'GPS Tracking Retention'
+description: ''
+required: false
+default_value:
+  -
+    value: default
+default_value_callback: ''
+settings: {  }
+field_type: list_string

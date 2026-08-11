@@ -1,0 +1,127 @@
+# --------------------------------------------------------------------------
+# Toolbar section landing page (see ut_tracking.links.menu.yml). The "Full
+# Map" child link points at view.gps_location_map.page_1 instead of a
+# route defined here — see views.view.gps_location_map.yml's class-level
+# rationale in GpsLocationMapStyle.php.
+# --------------------------------------------------------------------------
+
+ut_tracking.admin:
+  path: '/admin/tracking'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Tracking'
+  requirements:
+    _permission: 'administer ut_tracking'
+
+ut_tracking.settings:
+  path: '/admin/tracking/settings'
+  defaults:
+    _form: '\Drupal\ut_tracking\Form\SettingsForm'
+    _title: 'Tracking Settings'
+  requirements:
+    _permission: 'administer ut_tracking'
+
+# --------------------------------------------------------------------------
+# Per-user retention override, surfaced as a "Tracking" tab on the user's
+# own account page — see ut_tracking.links.task.yml. Same access as core's
+# own "Edit" tab (entity.user.edit_form): the account owner, or an admin
+# who can edit that account.
+# --------------------------------------------------------------------------
+
+ut_tracking.user_retention:
+  path: '/user/{user}/tracking'
+  defaults:
+    _form: '\Drupal\ut_tracking\Form\UserRetentionForm'
+    _title: 'Tracking'
+  requirements:
+    _entity_access: 'user.update'
+  options:
+    parameters:
+      user:
+        type: entity:user
+
+# --------------------------------------------------------------------------
+# Mobile app API endpoints
+# --------------------------------------------------------------------------
+
+ut_tracking.whoami:
+  path: '/api/ut-tracking/whoami'
+  defaults:
+    _controller: '\Drupal\ut_tracking\Controller\LocationReportController::whoAmI'
+  requirements:
+    _permission: 'report own gps location'
+    _custom_access: '\Drupal\ut_tracking\Access\SecureRequestAccessCheck::access'
+  methods: [GET]
+  options:
+    _format: json
+    _auth: ['basic_auth']
+
+ut_tracking.report_location:
+  path: '/api/ut-tracking/location'
+  defaults:
+    _controller: '\Drupal\ut_tracking\Controller\LocationReportController::report'
+  requirements:
+    _permission: 'report own gps location'
+    _custom_access: '\Drupal\ut_tracking\Access\SecureRequestAccessCheck::access'
+  methods: [POST]
+  options:
+    _format: json
+    _auth: ['basic_auth']
+
+# --------------------------------------------------------------------------
+# GPS Location entity routes (admin review/cleanup only — reports are never
+# created or edited through the UI, only via the API endpoint above).
+# --------------------------------------------------------------------------
+
+entity.gps_location.canonical:
+  path: '/gps-location/{gps_location}'
+  defaults:
+    _entity_view: 'gps_location'
+    _title: 'GPS Location'
+  requirements:
+    _entity_access: 'gps_location.view'
+    gps_location: \d+
+
+entity.gps_location.delete_form:
+  path: '/gps-location/{gps_location}/delete'
+  defaults:
+    _entity_form: 'gps_location.delete'
+    _title: 'Delete GPS Location'
+  requirements:
+    _entity_access: 'gps_location.delete'
+    gps_location: \d+
+
+# entity.gps_location.collection is intentionally NOT defined here — the
+# admin listing at /admin/content/gps-location is a Views page display
+# (view.gps_location_admin.page_1), see GpsLocation.php's class docblock.
+
+# --------------------------------------------------------------------------
+# GPS Device entity routes (same admin-only review/cleanup pattern — devices
+# are auto-registered by LocationReportController, never created via a form).
+# --------------------------------------------------------------------------
+
+entity.gps_device.canonical:
+  path: '/gps-device/{gps_device}'
+  defaults:
+    _entity_view: 'gps_device'
+    _title: 'GPS Device'
+  requirements:
+    _entity_access: 'gps_device.view'
+    gps_device: \d+
+
+entity.gps_device.delete_form:
+  path: '/gps-device/{gps_device}/delete'
+  defaults:
+    _entity_form: 'gps_device.delete'
+    _title: 'Delete GPS Device'
+  requirements:
+    _entity_access: 'gps_device.delete'
+    gps_device: \d+
+
+entity.gps_device.collection:
+  path: '/admin/content/gps-device'
+  defaults:
+    _entity_list: 'gps_device'
+    _title: 'GPS Devices'
+  requirements:
+    _permission: 'administer ut_tracking'

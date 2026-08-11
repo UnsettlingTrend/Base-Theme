@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_name
+    - field.field.user.user.field_ut_tracking_retention
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -71,6 +72,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  private_messages:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  social_auth:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   timezone:
     weight: 5
     region: content
@@ -85,4 +96,5 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
 hidden:
+  field_ut_tracking_retention: true
   langcode: true

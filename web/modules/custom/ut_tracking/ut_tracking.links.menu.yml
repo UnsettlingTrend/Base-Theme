@@ -1,0 +1,42 @@
+# The top-level "Tracking" toolbar item, positioned directly before core's
+# "Reports" item with nothing in between (weight 5, tied with Race Day's
+# own top-level item — see ut_tracking.module's hook_menu_links_discovered_
+# alter() for how Reports gets bumped out of that tier so it always renders
+# right after, and why a same-weight tie-break by plugin ID/naming trick
+# alone doesn't work here).
+ut_tracking.admin:
+  title: 'Tracking'
+  description: 'GPS location reports, registered devices, and the live map.'
+  route_name: ut_tracking.admin
+  parent: system.admin
+  weight: 5
+
+ut_tracking.gps_locations:
+  title: 'GPS Locations'
+  description: 'View and delete GPS location reports submitted by the mobile app.'
+  route_name: view.gps_location_admin.page_1
+  parent: ut_tracking.admin
+  weight: 0
+
+ut_tracking.full_map:
+  title: 'Full Map'
+  description: "A live map of every user's most recent GPS location."
+  route_name: view.gps_location_map.page_1
+  parent: ut_tracking.admin
+  weight: 1
+
+ut_tracking.settings:
+  title: 'Settings'
+  description: 'Configure how long GPS location reports are kept before being automatically deleted.'
+  route_name: ut_tracking.settings
+  parent: ut_tracking.admin
+  weight: 2
+
+# Left parented under Content, not under the new "Tracking" item — the
+# submenu there is meant to hold exactly the items above, not this one.
+ut_tracking.gps_devices:
+  title: 'GPS Devices'
+  description: 'View and delete devices that have registered by successfully reporting a GPS location.'
+  route_name: entity.gps_device.collection
+  parent: system.admin_content
+  weight: 11
