@@ -43,6 +43,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - ut_tracking
 _core:
   default_config_hash: btW6TFHajhy7Eo6YUvdFiPh4TcPggo8GBXYctjV6zag
 id: authenticated
@@ -90,6 +91,7 @@ permissions:
   - 'edit own video media'
   - 'edit terms in tags'
   - 'post comments'
+  - 'report own gps location'
   - 'skip CAPTCHA'
   - 'skip comment approval'
   - 'update media'
