@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the UT Utilities module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_schema().
+ */
+function ut_utilities_schema(): array {
+  return [
+    'ut_utilities_api_token' => [
+      'description' => 'Bearer tokens issued after a verified Google sign-in (see AppAuthController::googleLogin()) — the credential the mobile app uses in place of a Drupal password, since Google sign-in never gives it one to send as Basic Auth.',
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'not null' => TRUE,
+        ],
+        'uid' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'token_hash' => [
+          'type' => 'varchar',
+          'length' => 64,
+          'not null' => TRUE,
+          'description' => 'SHA-256 hex hash of the token. The plaintext token is shown to the app exactly once, at issuance, and never itself stored.',
+        ],
+        'created' => [
+          'type' => 'int',
+          'not null' => TRUE,
+        ],
+      ],
+      'primary key' => ['id'],
+      'unique keys' => [
+        'token_hash' => ['token_hash'],
+      ],
+      'indexes' => [
+        'uid' => ['uid'],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Creates the ut_utilities_api_token table, migrating any existing rows
+ * from ut_tracking_api_token (this table's previous home, before app
+ * authentication moved out of the Tracking module into this one) and
+ * dropping that old table once copied.
+ *
+ * hook_schema() only runs automatically at module install time; this
+ * module was already installed before this table existed, so — same
+ * pattern used throughout ut_tracking's own update hooks — it must be
+ * created explicitly here too.
+ */
+function ut_utilities_update_10001(): void {
+  $schema = \Drupal::database()->schema();
+  if ($schema->tableExists('ut_utilities_api_token')) {
+    return;
+  }
+  $schema->createTable('ut_utilities_api_token', ut_utilities_schema()['ut_utilities_api_token']);
+
+  if ($schema->tableExists('ut_tracking_api_token')) {
+    $existing = \Drupal::database()->select('ut_tracking_api_token', 't')
+      ->fields('t', ['uid', 'token_hash', 'created'])
+      ->execute();
+
+    $insert = \Drupal::database()->insert('ut_utilities_api_token')
+      ->fields(['uid', 'token_hash', 'created']);
+    $has_rows = FALSE;
+    foreach ($existing as $row) {
+      $insert->values([
+        'uid' => $row->uid,
+        'token_hash' => $row->token_hash,
+        'created' => $row->created,
+      ]);
+      $has_rows = TRUE;
+    }
+    if ($has_rows) {
+      $insert->execute();
+    }
+
+    $schema->dropTable('ut_tracking_api_token');
+  }
+}

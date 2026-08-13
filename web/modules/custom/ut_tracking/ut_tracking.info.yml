@@ -10,3 +10,4 @@ dependencies:
   - leaflet:leaflet_markercluster
   - drupal:image
   - drupal:options
+  - ut_utilities:ut_utilities

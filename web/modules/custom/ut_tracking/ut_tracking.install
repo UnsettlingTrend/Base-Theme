@@ -13,6 +13,45 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\Entity\View;
 
 /**
+ * Implements hook_schema().
+ */
+function ut_tracking_schema(): array {
+  return [
+    'ut_tracking_api_token' => [
+      'description' => 'Bearer tokens issued after a verified Google sign-in (see LocationReportController::googleLogin()) — the credential the mobile app uses in place of a Drupal password, since Google sign-in never gives it one to send as Basic Auth.',
+      'fields' => [
+        'id' => [
+          'type' => 'serial',
+          'not null' => TRUE,
+        ],
+        'uid' => [
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'token_hash' => [
+          'type' => 'varchar',
+          'length' => 64,
+          'not null' => TRUE,
+          'description' => 'SHA-256 hex hash of the token. The plaintext token is shown to the app exactly once, at issuance, and never itself stored.',
+        ],
+        'created' => [
+          'type' => 'int',
+          'not null' => TRUE,
+        ],
+      ],
+      'primary key' => ['id'],
+      'unique keys' => [
+        'token_hash' => ['token_hash'],
+      ],
+      'indexes' => [
+        'uid' => ['uid'],
+      ],
+    ],
+  ];
+}
+
+/**
  * Installs the GPS Locations admin View (views.view.gps_location_admin).
  *
  * It ships as config/install/views.view.gps_location_admin.yml, so it's
@@ -91,4 +130,21 @@ function ut_tracking_update_10004(): void {
 
   $field_data = Yaml::decode(file_get_contents($module_path . '/config/install/field.field.user.user.field_ut_tracking_retention.yml'));
   FieldConfig::create($field_data)->save();
+}
+
+/**
+ * Creates the ut_tracking_api_token table (see ut_tracking_schema()), for
+ * Google-sign-in Bearer tokens.
+ *
+ * hook_schema() only runs automatically at module install time; this
+ * module was already installed before this table existed, so — same
+ * reasoning as every update above, applied to a plain DB table instead
+ * of config — it must be created explicitly here too.
+ */
+function ut_tracking_update_10005(): void {
+  $schema = \Drupal::database()->schema();
+  if ($schema->tableExists('ut_tracking_api_token')) {
+    return;
+  }
+  $schema->createTable('ut_tracking_api_token', ut_tracking_schema()['ut_tracking_api_token']);
 }

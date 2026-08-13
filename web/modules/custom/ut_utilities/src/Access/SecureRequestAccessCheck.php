@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Drupal\ut_tracking\Access;
+namespace Drupal\ut_utilities\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Rejects GPS location API requests that did not arrive over HTTPS.
+ * Rejects app API requests that did not arrive over HTTPS.
  *
- * The mobile app authenticates with HTTP Basic Auth on every request, which
- * sends the account's credentials in the clear unless the transport itself
- * is encrypted — this closes that off at the application layer as a
+ * The mobile app authenticates with HTTP Basic Auth (or a Bearer token) on
+ * every request, which sends credentials in the clear unless the transport
+ * itself is encrypted — this closes that off at the application layer as a
  * defense-in-depth backstop alongside TLS termination at the edge.
  */
 class SecureRequestAccessCheck {
 
   /**
-   * Access check callback for ut_tracking.report_location.
+   * Access check callback for the app's API routes.
    *
    * Relies on Request::isSecure(), which itself honors Drupal's
    * reverse-proxy trust settings ($settings['reverse_proxy_*'] in

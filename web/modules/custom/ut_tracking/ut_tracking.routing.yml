@@ -42,6 +42,13 @@ ut_tracking.user_retention:
 
 # --------------------------------------------------------------------------
 # Mobile app API endpoints
+#
+# whoami/location accept EITHER HTTP Basic Auth (a Drupal username +
+# password) OR "Authorization: Bearer <token>" (ut_utilities_api_token —
+# see ut_utilities\Authentication\ApiTokenAuth), the credential issued by
+# ut_utilities.google_login (POST /api/app/google-login). Both resolve to
+# \Drupal::currentUser() identically once authenticated, so the controller
+# methods don't need to know or care which one a given request used.
 # --------------------------------------------------------------------------
 
 ut_tracking.whoami:
@@ -50,11 +57,11 @@ ut_tracking.whoami:
     _controller: '\Drupal\ut_tracking\Controller\LocationReportController::whoAmI'
   requirements:
     _permission: 'report own gps location'
-    _custom_access: '\Drupal\ut_tracking\Access\SecureRequestAccessCheck::access'
+    _custom_access: '\Drupal\ut_utilities\Access\SecureRequestAccessCheck::access'
   methods: [GET]
   options:
     _format: json
-    _auth: ['basic_auth']
+    _auth: ['basic_auth', 'ut_utilities_api_token']
 
 ut_tracking.report_location:
   path: '/api/ut-tracking/location'
@@ -62,11 +69,11 @@ ut_tracking.report_location:
     _controller: '\Drupal\ut_tracking\Controller\LocationReportController::report'
   requirements:
     _permission: 'report own gps location'
-    _custom_access: '\Drupal\ut_tracking\Access\SecureRequestAccessCheck::access'
+    _custom_access: '\Drupal\ut_utilities\Access\SecureRequestAccessCheck::access'
   methods: [POST]
   options:
     _format: json
-    _auth: ['basic_auth']
+    _auth: ['basic_auth', 'ut_utilities_api_token']
 
 # --------------------------------------------------------------------------
 # GPS Location entity routes (admin review/cleanup only — reports are never

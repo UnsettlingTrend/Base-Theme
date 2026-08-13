@@ -144,6 +144,7 @@
         "drupal/webform_views": "^5.0",
         "drupal/workbench": "^1.6",
         "drush/drush": "^13",
+        "firebase/php-jwt": "^7.1",
         "gasparesganga/php-shapefile": "^3.4",
         "geocoder-php/google-maps-provider": "^4.6",
         "kint-php/kint": "^5.1",

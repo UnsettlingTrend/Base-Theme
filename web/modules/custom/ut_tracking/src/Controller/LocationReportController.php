@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * REST-style controller for the mobile app's own API surface: verifying a
- * login (GET /api/ut-tracking/whoami) and reporting a location (POST
- * /api/ut-tracking/location).
+ * REST-style controller for the mobile app's tracking-specific API surface:
+ * verifying a username/password login (GET /api/ut-tracking/whoami) and
+ * reporting a location (POST /api/ut-tracking/location). Signing in with
+ * Google lives in ut_utilities\Controller\AppAuthController instead — it's
+ * generic app authentication, not tracking-specific.
  *
  * /api/ut-tracking/location accepts a JSON body:
  *   {
@@ -34,12 +36,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class LocationReportController extends ControllerBase {
 
   /**
-   * Lets the mobile app verify a username/password against this site
-   * (and confirm the account can actually report locations) before
-   * saving them on-device — without the side effect of creating a
+   * Lets the mobile app verify a username/password (or Bearer token —
+   * see ut_utilities\Authentication\ApiTokenAuth) against this site, and
+   * confirm the account can actually report locations, before saving
+   * credentials on-device — without the side effect of creating a
    * gps_location/gps_device record the way POSTing to /location would.
-   * Same auth/HTTPS requirements as that route; see
-   * ut_tracking.routing.yml.
+   * Same auth/HTTPS requirements as that route; see ut_tracking.routing.yml.
    */
   public function whoAmI(): JsonResponse {
     return new JsonResponse([
