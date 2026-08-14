@@ -1,11 +1,11 @@
 .race_id.field--label-inline > div:first-child,
 .leg_number.field--label-inline > div:first-child,
-.distance.field--label-inline > div:first-child {
+.field_distance.field--label-inline > div:first-child {
   font-weight: bold;
 }
 
 .race_id.field--label-inline > div:first-child::after,
 .leg_number.field--label-inline > div:first-child::after,
-.distance.field--label-inline > div:first-child::after {
+.field_distance.field--label-inline > div:first-child::after {
   content: ':';
 }

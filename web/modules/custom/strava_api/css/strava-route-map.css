@@ -32,3 +32,10 @@
   color: #555;
   font-size: 0.95rem;
 }
+.strava-route-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.75em;
+}

@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Implements hook_entity_presave().
@@ -127,6 +131,101 @@ function strava_api_entity_presave(EntityInterface $entity): void {
     $entity->set('field_end_lat', round($end[0], 7));
     $entity->set('field_end_lng', round($end[1], 7));
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for paragraph.
+ *
+ * Adds "Navigate to Start" / "Navigate to End" buttons to a strava_route
+ * paragraph's rendering, directly below its Distance field (field_distance
+ * is weight -1, the route map is weight 0 — this renders at -0.5, between
+ * them), Start first. Each is Google Maps' directions URL (not just a
+ * dropped pin), so tapping it starts turn-by-turn navigation to that point
+ * — opens the Google Maps app on mobile if installed, falls back to Maps
+ * in the browser otherwise. Opens in a new tab so the race leg page stays
+ * put.
+ *
+ * Styled as MDC buttons, both identical (raised) — same markup pattern
+ * (mdc-button__ripple + mdc-button__label spans as the link's #title,
+ * since #title accepts a render array) as race.html.twig's own MDC
+ * buttons, for visual consistency with the rest of the site rather than
+ * inventing a one-off button style here.
+ */
+function strava_api_paragraph_view(array &$build, ParagraphInterface $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  if ($entity->bundle() !== 'strava_route') {
+    return;
+  }
+
+  $start_url = _strava_api_google_maps_directions_url($entity, 'field_start_lat', 'field_start_lng');
+  $end_url = _strava_api_google_maps_directions_url($entity, 'field_end_lat', 'field_end_lng');
+
+  if (!$start_url && !$end_url) {
+    return;
+  }
+
+  $build['strava_route_nav'] = [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['strava-route-nav']],
+    '#attached' => ['library' => ['strava_api/strava_route_map']],
+    '#weight' => -0.5,
+  ];
+  if ($start_url) {
+    $build['strava_route_nav']['start'] = _strava_api_mdc_button_link($start_url, t('Navigate to Start'));
+  }
+  if ($end_url) {
+    $build['strava_route_nav']['end'] = _strava_api_mdc_button_link($end_url, t('Navigate to End'));
+  }
+}
+
+/**
+ * Builds a link render array styled as an MDC button.
+ */
+function _strava_api_mdc_button_link(Url $url, TranslatableMarkup $title): array {
+  return [
+    '#type' => 'link',
+    '#title' => [
+      'ripple' => [
+        '#type' => 'html_tag',
+        '#tag' => 'span',
+        '#attributes' => ['class' => ['mdc-button__ripple']],
+      ],
+      'label' => [
+        '#type' => 'html_tag',
+        '#tag' => 'span',
+        '#attributes' => ['class' => ['mdc-button__label']],
+        '#value' => $title,
+      ],
+    ],
+    '#url' => $url,
+    '#attributes' => [
+      'class' => ['mdc-button', 'mdc-button--raised', 'strava-route-nav__link'],
+      'target' => '_blank',
+      'rel' => 'noopener',
+    ],
+  ];
+}
+
+/**
+ * Returns a Google Maps directions Url to a lat/lng field pair, or NULL if
+ * either coordinate is missing.
+ *
+ * @see https://developers.google.com/maps/documentation/urls/get-started#directions-action
+ */
+function _strava_api_google_maps_directions_url(ParagraphInterface $entity, string $lat_field, string $lng_field): ?Url {
+  if (!$entity->hasField($lat_field) || !$entity->hasField($lng_field)) {
+    return NULL;
+  }
+  $lat = $entity->get($lat_field)->value;
+  $lng = $entity->get($lng_field)->value;
+  if ($lat === NULL || $lng === NULL) {
+    return NULL;
+  }
+  return Url::fromUri('https://www.google.com/maps/dir/', [
+    'query' => [
+      'api' => '1',
+      'destination' => "$lat,$lng",
+    ],
+  ]);
 }
 
 /**
