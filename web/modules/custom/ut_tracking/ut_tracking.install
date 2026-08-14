@@ -148,3 +148,126 @@ function ut_tracking_update_10005(): void {
   }
   $schema->createTable('ut_tracking_api_token', ut_tracking_schema()['ut_tracking_api_token']);
 }
+
+/**
+ * Switches the GPS Locations admin view's "Reported by" and "Device"
+ * columns from unexposed to exposed, filterable select lists of real
+ * users/devices, instead of the plain "type the raw target ID" textfield
+ * Views falls back to for any int-typed column (which is what these two
+ * entity_reference base fields got by default — see
+ * ut_tracking_views_data_alter()).
+ *
+ * Same reasoning as every update above re: config/install only
+ * auto-importing on a fresh install. The exact option values here (widget:
+ * select, sub_handler: 'default:<target entity type>', etc.) were derived
+ * by instantiating the real 'entity_reference' filter plugin
+ * (\Drupal\views\Plugin\views\filter\EntityReference) via
+ * ViewExecutable::initHandlers() and reading back its normalized
+ * $options, rather than hand-guessed, since that plugin's option tree
+ * (inherited through ManyToOne/InOperator/FilterPluginBase) is large
+ * enough that a hand-typed array would risk missing keys Views expects at
+ * runtime.
+ */
+function ut_tracking_update_10006(): void {
+  $view = View::load('gps_location_admin');
+  if (!$view) {
+    return;
+  }
+
+  $display = &$view->getDisplay('default');
+  $display['display_options']['filters']['uid'] = [
+    'id' => 'uid',
+    'table' => 'gps_location',
+    'field' => 'uid',
+    'relationship' => 'none',
+    'group_type' => 'group',
+    'admin_label' => '',
+    'operator' => 'or',
+    'value' => [],
+    'group' => 1,
+    'exposed' => TRUE,
+    'expose' => [
+      'operator_id' => FALSE,
+      'label' => 'Reported by',
+      'description' => '',
+      'use_operator' => FALSE,
+      'operator' => '',
+      'operator_limit_selection' => FALSE,
+      'operator_list' => [],
+      'identifier' => 'uid',
+      'required' => FALSE,
+      'remember' => FALSE,
+      'multiple' => FALSE,
+      'remember_roles' => ['authenticated' => 'authenticated'],
+      'reduce' => FALSE,
+    ],
+    'is_grouped' => FALSE,
+    'group_info' => [
+      'label' => '',
+      'description' => '',
+      'identifier' => '',
+      'optional' => TRUE,
+      'widget' => 'select',
+      'multiple' => FALSE,
+      'remember' => FALSE,
+      'default_group' => 'All',
+      'default_group_multiple' => [],
+      'group_items' => [],
+    ],
+    'reduce_duplicates' => FALSE,
+    'sub_handler' => 'default:user',
+    'sub_handler_settings' => [],
+    'widget' => 'select',
+    'plugin_id' => 'entity_reference',
+    'entity_type' => 'gps_location',
+    'entity_field' => 'uid',
+  ];
+  $display['display_options']['filters']['device'] = [
+    'id' => 'device',
+    'table' => 'gps_location',
+    'field' => 'device',
+    'relationship' => 'none',
+    'group_type' => 'group',
+    'admin_label' => '',
+    'operator' => 'or',
+    'value' => [],
+    'group' => 1,
+    'exposed' => TRUE,
+    'expose' => [
+      'operator_id' => FALSE,
+      'label' => 'Device',
+      'description' => '',
+      'use_operator' => FALSE,
+      'operator' => '',
+      'operator_limit_selection' => FALSE,
+      'operator_list' => [],
+      'identifier' => 'device',
+      'required' => FALSE,
+      'remember' => FALSE,
+      'multiple' => FALSE,
+      'remember_roles' => ['authenticated' => 'authenticated'],
+      'reduce' => FALSE,
+    ],
+    'is_grouped' => FALSE,
+    'group_info' => [
+      'label' => '',
+      'description' => '',
+      'identifier' => '',
+      'optional' => TRUE,
+      'widget' => 'select',
+      'multiple' => FALSE,
+      'remember' => FALSE,
+      'default_group' => 'All',
+      'default_group_multiple' => [],
+      'group_items' => [],
+    ],
+    'reduce_duplicates' => FALSE,
+    'sub_handler' => 'default:gps_device',
+    'sub_handler_settings' => [],
+    'widget' => 'select',
+    'plugin_id' => 'entity_reference',
+    'entity_type' => 'gps_location',
+    'entity_field' => 'device',
+  ];
+  $view->save();
+}

@@ -334,20 +334,17 @@ display:
           admin_label: ''
           entity_type: gps_location
           entity_field: uid
-          plugin_id: numeric
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
+          plugin_id: entity_reference
+          operator: or
+          value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: uid_op
+            operator_id: ''
             label: 'Reported by'
             description: ''
             use_operator: false
-            operator: uid_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
             identifier: uid
@@ -356,9 +353,7 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -371,6 +366,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+          reduce_duplicates: false
+          sub_handler: 'default:user'
+          widget: select
+          sub_handler_settings: {  }
         device:
           id: device
           table: gps_location
@@ -380,20 +379,17 @@ display:
           admin_label: ''
           entity_type: gps_location
           entity_field: device
-          plugin_id: numeric
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
+          plugin_id: entity_reference
+          operator: or
+          value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: device_op
+            operator_id: ''
             label: Device
             description: ''
             use_operator: false
-            operator: device_op
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
             identifier: device
@@ -402,9 +398,7 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -417,6 +411,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+          reduce_duplicates: false
+          sub_handler: 'default:gps_device'
+          widget: select
+          sub_handler_settings: {  }
       style:
         type: table
         options:

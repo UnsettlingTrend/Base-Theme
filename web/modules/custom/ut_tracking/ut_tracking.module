@@ -57,6 +57,13 @@ function ut_tracking_menu_links_discovered_alter(array &$links): void {
  * Registers the "latest per user" pseudo-field so LatestPerUserFilter is
  * selectable as a gps_location filter in Views config — see
  * views.view.gps_location_map.yml and LatestPerUserFilter.php.
+ *
+ * Also swaps the default 'filter' plugin for the entity_reference base
+ * fields 'uid' and 'device' from 'numeric' (a plain "type the raw target
+ * ID" textfield — the generic plugin Views falls back to for any int-typed
+ * column, entity reference or not) to core's own 'entity_reference' filter
+ * plugin, which knows how to render as a select list of real entity labels
+ * — see views.view.gps_location_admin.yml's uid/device filters.
  */
 function ut_tracking_views_data_alter(array &$data): void {
   $data['gps_location']['latest_per_user'] = [
@@ -67,6 +74,9 @@ function ut_tracking_views_data_alter(array &$data): void {
       'id' => 'latest_per_user',
     ],
   ];
+
+  $data['gps_location']['uid']['filter']['id'] = 'entity_reference';
+  $data['gps_location']['device']['filter']['id'] = 'entity_reference';
 }
 
 /**
