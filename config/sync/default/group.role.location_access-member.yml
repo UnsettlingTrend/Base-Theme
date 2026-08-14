@@ -1,0 +1,17 @@
+uuid: 13117456-07ed-412c-9dab-d7cd10f38165
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.location_access
+    - user.role.authenticated
+id: location_access-member
+label: Member
+weight: -8
+admin: false
+scope: insider
+global_role: authenticated
+group_type: location_access
+permissions:
+  - 'view group'
+  - 'view group_membership relationship'

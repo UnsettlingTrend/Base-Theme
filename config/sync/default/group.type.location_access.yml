@@ -1,0 +1,11 @@
+uuid: 292e5d9b-44bb-46cc-a524-0cc07c902867
+langcode: en
+status: true
+dependencies: {  }
+id: location_access
+label: 'Location Access'
+description: "Auto-created one per user. Controls who can view that user's current GPS location: direct members (other users), plus members of any race_team group listed in this group's Authorized Race Teams field."
+new_revision: false
+creator_membership: false
+creator_wizard: false
+creator_roles: {  }

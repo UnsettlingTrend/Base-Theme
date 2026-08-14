@@ -7,7 +7,13 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\group\Entity\GroupInterface;
+use Drupal\ut_tracking\Form\LocationAccessToggleForm;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_page_attachments().
@@ -298,4 +304,104 @@ function _ut_tracking_ids_older_than_cutoff(EntityStorageInterface $storage, str
   }
 
   return $query->execute();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for user.
+ *
+ * Auto-provisions a "Location Access" group for every new account — see
+ * _ut_tracking_ensure_location_access_group(). Existing accounts (from
+ * before this feature existed) are backfilled once by
+ * ut_tracking_update_10007() instead.
+ */
+function ut_tracking_user_insert(EntityInterface $account): void {
+  /** @var \Drupal\user\UserInterface $account */
+  _ut_tracking_ensure_location_access_group($account);
+}
+
+/**
+ * Creates $user's "Location Access" group if they don't already have one,
+ * and adds $user to it as an admin member (group role
+ * "location_access-admin", an "admin: true" role — see
+ * config/install/group.role.location_access-admin.yml) so they can manage
+ * who's granted access to their location without needing a site-wide
+ * permission. Idempotent: safe to call on every login/whoami-style check,
+ * not just at account creation.
+ */
+function _ut_tracking_ensure_location_access_group(UserInterface $user): GroupInterface {
+  $existing = _ut_tracking_get_location_access_group($user);
+  if ($existing) {
+    return $existing;
+  }
+
+  /** @var \Drupal\group\Entity\GroupInterface $group */
+  $group = \Drupal::entityTypeManager()->getStorage('group')->create([
+    'type' => 'location_access',
+    'label' => $user->getDisplayName() . "'s Location Access",
+    'uid' => $user->id(),
+  ]);
+  $group->save();
+  $group->addMember($user, ['group_roles' => ['location_access-admin']]);
+
+  return $group;
+}
+
+/**
+ * Loads $user's "Location Access" group, or NULL if they don't have one.
+ */
+function _ut_tracking_get_location_access_group(AccountInterface $user): ?GroupInterface {
+  $groups = \Drupal::entityTypeManager()->getStorage('group')->loadByProperties([
+    'type' => 'location_access',
+    'uid' => $user->id(),
+  ]);
+  /** @var \Drupal\group\Entity\GroupInterface|false $group */
+  $group = $groups ? reset($groups) : NULL;
+  return $group ?: NULL;
+}
+
+/**
+ * Whether $viewer may view $owner's current GPS location, via $owner's
+ * Location Access group: either a direct member of that group, or a
+ * member of any race_team group listed in the group's "Authorized Race
+ * Teams" field (field_authorized_race_teams).
+ *
+ * Deliberately does NOT check the 'administer ut_tracking' permission or
+ * $viewer === $owner — see GpsLocationAccessControlHandler, the sole
+ * caller, for those.
+ */
+function _ut_tracking_user_can_view_location(AccountInterface $viewer, AccountInterface $owner): bool {
+  $group = _ut_tracking_get_location_access_group($owner);
+  if (!$group) {
+    return FALSE;
+  }
+
+  if ($group->getMember($viewer)) {
+    return TRUE;
+  }
+
+  foreach ($group->get('field_authorized_race_teams')->referencedEntities() as $race_team) {
+    if ($race_team instanceof GroupInterface && $race_team->getMember($viewer)) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for user.
+ *
+ * Adds the Grant/Revoke Location Access button (LocationAccessToggleForm)
+ * when the current user is viewing someone ELSE's profile — never their
+ * own, since granting/revoking is about who can see the *viewer's*
+ * location, and a user always has access to their own.
+ */
+function ut_tracking_user_view(array &$build, UserInterface $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  $current_user = \Drupal::currentUser();
+  if ($current_user->isAnonymous() || (int) $current_user->id() === (int) $entity->id()) {
+    return;
+  }
+
+  $build['location_access_toggle'] = \Drupal::formBuilder()->getForm(LocationAccessToggleForm::class, $entity);
+  $build['location_access_toggle']['#weight'] = 100;
 }

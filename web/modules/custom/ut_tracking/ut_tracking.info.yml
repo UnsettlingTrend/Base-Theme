@@ -11,3 +11,5 @@ dependencies:
   - drupal:image
   - drupal:options
   - ut_utilities:ut_utilities
+  - group:group
+  - race_day:race_day

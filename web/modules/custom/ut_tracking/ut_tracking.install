@@ -8,8 +8,13 @@
 declare(strict_types=1);
 
 use Drupal\Component\Serialization\Yaml;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\group\Entity\GroupRelationshipType;
+use Drupal\group\Entity\GroupRole;
+use Drupal\group\Entity\GroupType;
 use Drupal\views\Entity\View;
 
 /**
@@ -270,4 +275,62 @@ function ut_tracking_update_10006(): void {
     'entity_field' => 'device',
   ];
   $view->save();
+}
+
+/**
+ * Creates the "Location Access" group type (config/install/group.type.
+ * location_access.yml and its roles/relationship type/field/displays),
+ * and backfills a Location Access group for every existing user account
+ * — ut_tracking_user_insert() only auto-provisions one for accounts
+ * created from now on.
+ *
+ * Same reasoning as every update above re: config/install only
+ * auto-importing on a fresh install.
+ */
+function ut_tracking_update_10007(): void {
+  $module_path = \Drupal::service('extension.list.module')->getPath('ut_tracking');
+  $read = fn (string $filename) => Yaml::decode(file_get_contents("$module_path/config/install/$filename"));
+
+  if (!GroupType::load('location_access')) {
+    GroupType::create($read('group.type.location_access.yml'))->save();
+  }
+  if (!GroupRole::load('location_access-admin')) {
+    GroupRole::create($read('group.role.location_access-admin.yml'))->save();
+  }
+  if (!GroupRole::load('location_access-member')) {
+    GroupRole::create($read('group.role.location_access-member.yml'))->save();
+  }
+  if (!GroupRelationshipType::load('location_access-group_membership')) {
+    GroupRelationshipType::create($read('group.relationship_type.location_access-group_membership.yml'))->save();
+  }
+  if (!FieldStorageConfig::loadByName('group', 'field_authorized_race_teams')) {
+    FieldStorageConfig::create($read('field.storage.group.field_authorized_race_teams.yml'))->save();
+  }
+  if (!FieldConfig::loadByName('group', 'location_access', 'field_authorized_race_teams')) {
+    FieldConfig::create($read('field.field.group.location_access.field_authorized_race_teams.yml'))->save();
+  }
+  if (!EntityFormDisplay::load('group.location_access.default')) {
+    EntityFormDisplay::create($read('core.entity_form_display.group.location_access.default.yml'))->save();
+  }
+  if (!EntityViewDisplay::load('group.location_access.default')) {
+    EntityViewDisplay::create($read('core.entity_view_display.group.location_access.default.yml'))->save();
+  }
+
+  $uids = \Drupal::entityQuery('user')
+    ->condition('uid', 0, '>')
+    ->accessCheck(FALSE)
+    ->execute();
+  $backfilled = 0;
+  foreach (\Drupal::entityTypeManager()->getStorage('user')->loadMultiple($uids) as $user) {
+    if (!_ut_tracking_get_location_access_group($user)) {
+      _ut_tracking_ensure_location_access_group($user);
+      $backfilled++;
+    }
+  }
+
+  if ($backfilled) {
+    \Drupal::logger('ut_tracking')->notice('Backfilled @count Location Access group(s) for existing users.', [
+      '@count' => $backfilled,
+    ]);
+  }
 }

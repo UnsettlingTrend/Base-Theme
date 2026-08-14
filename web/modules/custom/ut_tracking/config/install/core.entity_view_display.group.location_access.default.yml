@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.location_access.field_authorized_race_teams
+    - group.type.location_access
+id: group.location_access.default
+targetEntityType: group
+bundle: location_access
+mode: default
+content:
+  field_authorized_race_teams:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  changed: true
+  created: true
+  label: true
+  langcode: true
+  search_api_excerpt: true
+  uid: true
