@@ -18,6 +18,19 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  * Leaflet/clustering/marker rendering this hands the data to lives in
  * ut_tracking/js/full-map.js, unchanged.
  *
+ * The View's own access plugin only gates the page itself (any
+ * authenticated user — see views.view.gps_location_map.yml), same as any
+ * other row here: the query's LatestPerUserFilter returns every user's
+ * latest report regardless of viewer, unfiltered by gps_location entity
+ * access (which is admin-only anyway — see
+ * GpsLocationAccessControlHandler). Per-viewer filtering therefore has to
+ * happen here, in render(): each row is only turned into a marker if
+ * _ut_tracking_user_can_view_location() (or "administer ut_tracking")
+ * grants the CURRENT viewer access to THAT row's owner — the exact same
+ * Location Access group check the profile page's "Current Location"
+ * section uses, so a given viewer sees the same set of people's current
+ * location everywhere on the site, not a looser set here.
+ *
  * @ViewsStyle(
  *   id = "gps_location_map",
  *   title = @Translation("GPS Location Map"),
@@ -54,6 +67,8 @@ class GpsLocationMapStyle extends StylePluginBase {
   public function render(): array {
     $markers = [];
     $marker_style = ImageStyle::load('map_marker');
+    $viewer = \Drupal::currentUser();
+    $viewer_is_admin = $viewer->hasPermission('administer ut_tracking');
 
     foreach ($this->view->result as $row) {
       /** @var \Drupal\ut_tracking\Entity\GpsLocation|null $location */
@@ -64,6 +79,10 @@ class GpsLocationMapStyle extends StylePluginBase {
 
       $user = $location->getOwner();
       if (!$user) {
+        continue;
+      }
+
+      if (!$viewer_is_admin && !_ut_tracking_user_can_view_location($viewer, $user)) {
         continue;
       }
 

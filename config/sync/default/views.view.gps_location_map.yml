@@ -2,6 +2,8 @@ uuid: 6bfd1463-0e00-436c-88cc-2c4ffe91c9e9
 langcode: en
 status: true
 dependencies:
+  config:
+    - user.role.authenticated
   module:
     - user
     - ut_tracking
@@ -29,9 +31,10 @@ display:
         options:
           offset: 0
       access:
-        type: perm
+        type: role
         options:
-          perm: 'administer ut_tracking'
+          role:
+            authenticated: authenticated
       cache:
         type: none
         options: {  }
@@ -96,7 +99,7 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_interface'
-        - user.permissions
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -110,5 +113,5 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_interface'
-        - user.permissions
+        - user.roles
       tags: {  }

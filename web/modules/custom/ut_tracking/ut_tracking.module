@@ -11,7 +11,9 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\ut_tracking\Entity\GpsLocation;
 use Drupal\ut_tracking\Form\LocationAccessToggleForm;
 use Drupal\user\UserInterface;
 
@@ -394,7 +396,10 @@ function _ut_tracking_user_can_view_location(AccountInterface $viewer, AccountIn
  * Adds the Grant/Revoke Location Access button (LocationAccessToggleForm)
  * when the current user is viewing someone ELSE's profile — never their
  * own, since granting/revoking is about who can see the *viewer's*
- * location, and a user always has access to their own.
+ * location, and a user always has access to their own. Also adds a
+ * "Current Location" section — a single-pin Leaflet map plus a "Navigate
+ * There" button — whenever the viewer is authorized to see $entity's
+ * current location (see _ut_tracking_get_authorized_current_location()).
  */
 function ut_tracking_user_view(array &$build, UserInterface $entity, EntityViewDisplayInterface $display, string $view_mode): void {
   $current_user = \Drupal::currentUser();
@@ -404,4 +409,108 @@ function ut_tracking_user_view(array &$build, UserInterface $entity, EntityViewD
 
   $build['location_access_toggle'] = \Drupal::formBuilder()->getForm(LocationAccessToggleForm::class, $entity);
   $build['location_access_toggle']['#weight'] = 100;
+
+  $location = _ut_tracking_get_authorized_current_location($current_user, $entity);
+  if ($location) {
+    $build['current_location'] = _ut_tracking_build_current_location_section($location);
+    $build['current_location']['#weight'] = 99;
+  }
+}
+
+/**
+ * Returns $owner's current (most recent) GPS location, if $viewer is
+ * authorized to see it — an admin ("administer ut_tracking"), or anyone
+ * _ut_tracking_user_can_view_location() grants access to via $owner's
+ * Location Access group. NULL if unauthorized, or $owner has no location
+ * on record.
+ *
+ * Deliberately bypasses normal gps_location entity access (locked down to
+ * admins only — see GpsLocationAccessControlHandler): this is a
+ * narrower, separate grant, to only the single most recent record, never
+ * the full history.
+ */
+function _ut_tracking_get_authorized_current_location(AccountInterface $viewer, UserInterface $owner): ?GpsLocation {
+  if (!$viewer->hasPermission('administer ut_tracking') && !_ut_tracking_user_can_view_location($viewer, $owner)) {
+    return NULL;
+  }
+
+  $storage = \Drupal::entityTypeManager()->getStorage('gps_location');
+  $ids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('uid', $owner->id())
+    ->sort('recorded', 'DESC')
+    ->range(0, 1)
+    ->execute();
+
+  /** @var \Drupal\ut_tracking\Entity\GpsLocation|null $location */
+  $location = $ids ? $storage->load(reset($ids)) : NULL;
+  return $location;
+}
+
+/**
+ * Builds the "Current Location" render section: last-updated timestamp, a
+ * single-pin Leaflet map, and a "Navigate There" button (Google Maps
+ * directions, same URL pattern as strava_api's leg start/end buttons).
+ */
+function _ut_tracking_build_current_location_section(GpsLocation $location): array {
+  $lat = (float) $location->get('latitude')->value;
+  $lng = (float) $location->get('longitude')->value;
+  $recorded = (int) $location->get('recorded')->value;
+
+  return [
+    '#type' => 'container',
+    '#attributes' => ['class' => ['ut-tracking-current-location']],
+    'heading' => [
+      '#type' => 'html_tag',
+      '#tag' => 'h2',
+      '#value' => t('Current Location'),
+    ],
+    'timestamp' => [
+      '#type' => 'html_tag',
+      '#tag' => 'p',
+      '#value' => t('Last updated: @time', [
+        '@time' => \Drupal::service('date.formatter')->format($recorded, 'short'),
+      ]),
+    ],
+    'map' => [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => ['ut-tracking-current-location-map'],
+        'data-lat' => $lat,
+        'data-lng' => $lng,
+      ],
+      '#value' => '<div class="ut-tracking-current-location-map--loading">' . t('Loading map…') . '</div>',
+      '#attached' => [
+        'library' => ['ut_tracking/current_location_map'],
+      ],
+    ],
+    'navigate' => [
+      '#type' => 'link',
+      '#title' => [
+        'ripple' => [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => ['class' => ['mdc-button__ripple']],
+        ],
+        'label' => [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => ['class' => ['mdc-button__label']],
+          '#value' => t('Navigate There'),
+        ],
+      ],
+      '#url' => Url::fromUri('https://www.google.com/maps/dir/', [
+        'query' => [
+          'api' => '1',
+          'destination' => "$lat,$lng",
+        ],
+      ]),
+      '#attributes' => [
+        'class' => ['mdc-button', 'mdc-button--raised'],
+        'target' => '_blank',
+        'rel' => 'noopener',
+      ],
+    ],
+  ];
 }

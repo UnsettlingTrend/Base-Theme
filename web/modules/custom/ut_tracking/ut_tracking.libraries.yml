@@ -17,3 +17,15 @@ full_map:
     - core/drupalSettings
     - leaflet/leaflet
     - leaflet_markercluster/leaflet-markercluster
+
+current_location_map:
+  version: VERSION
+  css:
+    component:
+      css/current-location-map.css: {}
+  js:
+    js/current-location-map.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - leaflet/leaflet

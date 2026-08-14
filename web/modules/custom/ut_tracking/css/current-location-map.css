@@ -1,0 +1,25 @@
+/**
+ * @file
+ * Styles for a user's Current Location section on their profile page.
+ */
+.ut-tracking-current-location-map {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f0f0f0;
+  margin-bottom: 0.75em;
+}
+.ut-tracking-current-location-map__canvas {
+  width: 100%;
+  height: 100%;
+}
+.ut-tracking-current-location-map--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-style: italic;
+}
