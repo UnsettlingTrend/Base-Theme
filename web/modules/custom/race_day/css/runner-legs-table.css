@@ -1,3 +1,77 @@
 .runner-assignments tr.current-runner {
   background-color: #c8e6c9;
 }
+
+.leg-schedule-arrow {
+  margin: 0 0.25em;
+  color: #888;
+}
+
+.leg-duration {
+  margin-left: 0.4em;
+  color: #666;
+  font-size: 0.9em;
+}
+
+/**
+ * Below 700px, each row becomes its own stacked card instead of a table
+ * row — no horizontal scrolling, one label:value pair per line. The
+ * data-label attribute (see field--field-runner-legs.html.twig) supplies
+ * each cell's label via ::before, since a <td> has no label of its own
+ * once it's no longer sitting under a <th>.
+ */
+@media (max-width: 700px) {
+  .runner-assignments,
+  .runner-assignments thead,
+  .runner-assignments tbody,
+  .runner-assignments th,
+  .runner-assignments td,
+  .runner-assignments tr {
+    display: block;
+  }
+
+  .runner-assignments thead tr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .runner-assignments tbody tr {
+    /* ut_material/dist/css/theme.css sets a global "table tbody tr {
+       height: 52px }" for normal desktop tables. display: block above
+       doesn't clear that — height is a separate property — so without
+       this, every card gets clipped to 52px regardless of how much its
+       stacked <td>s actually need, and rows visually overlap. */
+    height: auto;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5em 0.75em;
+  }
+
+  .runner-assignments tbody tr.current-runner {
+    border-color: #81c784;
+  }
+
+  .runner-assignments td {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0.35em 0;
+    border: none;
+    border-top: 1px solid #eee;
+  }
+
+  .runner-assignments td:first-child {
+    border-top: none;
+  }
+
+  .runner-assignments td::before {
+    content: attr(data-label);
+    flex: 0 0 40%;
+    font-weight: bold;
+    color: #555;
+  }
+}

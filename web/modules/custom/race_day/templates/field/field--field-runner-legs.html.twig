@@ -2,6 +2,14 @@
 /**
  * @file
  * Template for the Runner Assignments field on race_team groups.
+ *
+ * 5 columns, not the original 8 — Distance/Elevation Gain and
+ * Start/Finish/Time were each folded into one combined column
+ * (leg_stats, and the Start/Finish/Time markup below) so there's less to
+ * scan at any width, and fewer columns for the mobile card layout (see
+ * css/runner-legs-table.css) to stack. data-label attributes below are
+ * that layout's hook — it turns each <td> into a label:value block below
+ * the css/runner-legs-table.css breakpoint, reading them via ::before.
  */
 #}
 <div{{ attributes.setAttribute('id', 'runner-assignments-' ~ group_id) }}>
@@ -13,31 +21,37 @@
       <tr>
         <th>#</th>
         <th>Leg Name</th>
-        <th>Distance</th>
-        <th>Elevation Gain</th>
-        <th>Start</th>
-        <th>Finish</th>
-        <th>Time</th>
+        <th>Distance / Elevation</th>
+        <th>Schedule</th>
         <th>Runner</th>
       </tr>
     </thead>
     <tbody>
       {% for row in runner_assignment_rows %}
         <tr{% if row.current_runner %} class="current-runner"{% endif %}>
-          <td>{{ row.leg_number }}</td>
-          <td>
+          <td data-label="#">{{ row.leg_number }}</td>
+          <td data-label="Leg Name">
             {% if row.leg_url %}
               <a href="{{ row.leg_url }}">{{ row.leg_name }}</a>
             {% else %}
               {{ row.leg_name }}
             {% endif %}
           </td>
-          <td>{{ row.leg_distance }}</td>
-          <td>{{ row.leg_elevation_gain }}</td>
-          <td class="leg-time{% if row.leg_start.type %} leg-time--{{ row.leg_start.type }}{% endif %}">{{ row.leg_start.value }}</td>
-          <td class="leg-time{% if row.leg_finish.type %} leg-time--{{ row.leg_finish.type }}{% endif %}">{{ row.leg_finish.value }}</td>
-          <td class="leg-time{% if row.leg_time.type %} leg-time--{{ row.leg_time.type }}{% endif %}">{{ row.leg_time.value }}</td>
-          <td>
+          <td data-label="Distance / Elevation">{{ row.leg_stats }}</td>
+          <td class="leg-schedule" data-label="Schedule">
+            {% if row.leg_start.value or row.leg_finish.value %}
+              <span class="leg-time{% if row.leg_start.type %} leg-time--{{ row.leg_start.type }}{% endif %}">{{ row.leg_start.value|default('—') }}</span>
+              <span class="leg-schedule-arrow">→</span>
+              <span class="leg-time{% if row.leg_finish.type %} leg-time--{{ row.leg_finish.type }}{% endif %}">{{ row.leg_finish.value|default('—') }}</span>
+            {% endif %}
+            {% if row.leg_time.value %}
+              <span class="leg-duration{% if row.leg_time.type %} leg-duration--{{ row.leg_time.type }}{% endif %}">({{ row.leg_time.value }})</span>
+            {% endif %}
+            {% if not row.leg_start.value and not row.leg_finish.value and not row.leg_time.value %}
+              —
+            {% endif %}
+          </td>
+          <td data-label="Runner">
             {% if row.has_runner %}
               {{ row.runner }}
               {% if row.can_remove %}

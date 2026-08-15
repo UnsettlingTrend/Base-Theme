@@ -1516,6 +1516,24 @@ function race_day_preprocess_field(array &$variables): void {
 }
 
 /**
+ * Combines a leg's distance and elevation gain into one display string for
+ * the Runner Assignments table's merged Distance/Elevation column, e.g.
+ * "5.20 mi, +320 ft". Either half is dropped if not (yet) available —
+ * elevation gain in particular can lag behind distance while a leg's
+ * Strava route data is still syncing (see strava_api_entity_presave()).
+ */
+function _race_day_format_leg_stats(string $distance, string $elevation_gain): string {
+  $parts = [];
+  if ($distance !== '' && is_numeric($distance)) {
+    $parts[] = number_format((float) $distance, 2) . ' mi';
+  }
+  if ($elevation_gain !== '' && is_numeric($elevation_gain)) {
+    $parts[] = '+' . number_format((float) $elevation_gain, 0) . ' ft';
+  }
+  return $parts ? implode(', ', $parts) : '—';
+}
+
+/**
  * Preprocess helper for field_runner_legs on race_team group pages.
  */
 function _race_day_preprocess_field_runner_legs(array &$variables): void {
@@ -1618,6 +1636,7 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       'leg_url'            => $leg_url,
       'leg_distance'       => $leg_distance,
       'leg_elevation_gain' => $leg_elevation_gain,
+      'leg_stats'          => _race_day_format_leg_stats($leg_distance, $leg_elevation_gain),
       'leg_start'          => $leg_start,
       'leg_finish'         => $leg_finish,
       'leg_time'           => $leg_time,
