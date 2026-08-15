@@ -513,6 +513,19 @@ function race_day_group_relationship_update(EntityInterface $entity): void {
   // this member's legs, which can shift every subsequent leg's expected
   // start/finish — recompute the whole chain, not just their own legs.
   _race_day_recalculate_team_expected_schedule($group);
+
+  // Only after every downstream time has settled: the schedule shift above
+  // can change which leg is actually "out" right now (e.g. reveal that the
+  // current leg should already have handed off to the next runner), so
+  // Running status has to be re-checked against the new schedule, not the
+  // one this pace change just made stale. Same "in_progress races only"
+  // scope race_day_cron() uses for this same check, so a pace edit doesn't
+  // start flipping Running/Finished status on a race that hasn't started
+  // or has already been marked complete.
+  $race = $group->hasField('field_race') ? $group->get('field_race')->entity : NULL;
+  if ($race instanceof Race && $race->get('status')->value === 'in_progress') {
+    _race_day_update_running_status_for_team($group, _race_day_now_epoch_ms());
+  }
 }
 
 /**
