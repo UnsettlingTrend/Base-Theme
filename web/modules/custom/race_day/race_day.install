@@ -504,6 +504,67 @@ function race_day_update_10009(): void {
 }
 
 /**
+ * Adds the 'Actual Time' field to the Race Day Leg Assignment paragraph.
+ *
+ * Set up identically to 'Expected Time' (field_expected_time): an unsigned
+ * integer of milliseconds, no min/max. Unlike field_expected_time (computed
+ * from pace × distance), this is populated either directly by a Race Day
+ * Coordinator via the leg schedule modal, or derived from
+ * field_actual_start/field_actual_finish when those are edited instead — see
+ * _race_day_apply_actual_time() and _race_day_sync_actual_time_from_endpoints()
+ * in race_day.module.
+ */
+function race_day_update_10010(): void {
+  if (!\Drupal\field\Entity\FieldStorageConfig::loadByName('paragraph', 'field_actual_time')) {
+    \Drupal\field\Entity\FieldStorageConfig::create([
+      'field_name' => 'field_actual_time',
+      'entity_type' => 'paragraph',
+      'type' => 'integer',
+      'settings' => ['unsigned' => FALSE, 'size' => 'normal'],
+      'cardinality' => 1,
+      'translatable' => TRUE,
+    ])->save();
+  }
+
+  if (!\Drupal\field\Entity\FieldConfig::loadByName('paragraph', 'race_day_leg_assignment', 'field_actual_time')) {
+    \Drupal\field\Entity\FieldConfig::create([
+      'field_name' => 'field_actual_time',
+      'entity_type' => 'paragraph',
+      'bundle' => 'race_day_leg_assignment',
+      'label' => 'Actual Time',
+      'description' => 'The time, in milliseconds, that the runner actually finished in.',
+      'required' => FALSE,
+      'translatable' => FALSE,
+    ])->save();
+  }
+
+  $form_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_form_display')
+    ->load('paragraph.race_day_leg_assignment.default');
+  if ($form_display && !$form_display->getComponent('field_actual_time')) {
+    $form_display->setComponent('field_actual_time', [
+      'type' => 'number',
+      'weight' => 8,
+      'region' => 'content',
+      'settings' => ['placeholder' => ''],
+    ])->save();
+  }
+
+  $view_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display')
+    ->load('paragraph.race_day_leg_assignment.default');
+  if ($view_display && !$view_display->getComponent('field_actual_time')) {
+    $view_display->setComponent('field_actual_time', [
+      'type' => 'number_integer',
+      'label' => 'above',
+      'weight' => 8,
+      'region' => 'content',
+      'settings' => ['thousand_separator' => '', 'prefix_suffix' => TRUE],
+    ])->save();
+  }
+}
+
+/**
  * Implements hook_uninstall().
  */
 function race_day_uninstall(): void {

@@ -13,9 +13,12 @@
  */
 #}
 <div{{ attributes.setAttribute('id', 'runner-assignments-' ~ group_id) }}>
-  {% if not label_hidden %}
-    <h2 class="field__label">{{ label }}</h2>
-  {% endif %}
+  <div class="runner-assignments-heading">
+    {% if not label_hidden %}
+      <h2 class="field__label">{{ label }}</h2>
+    {% endif %}
+    <p class="runner-assignments-note">Times in <strong>bold</strong> based off expected paces</p>
+  </div>
   <table class="runner-assignments">
     <thead>
       <tr>
@@ -39,15 +42,28 @@
           </td>
           <td data-label="Distance / Elevation">{{ row.leg_stats }}</td>
           <td class="leg-schedule" data-label="Schedule">
-            {% if row.leg_start.value or row.leg_finish.value %}
-              <span class="leg-time{% if row.leg_start.type %} leg-time--{{ row.leg_start.type }}{% endif %}">{{ row.leg_start.value|default('—') }}</span>
-              <span class="leg-schedule-arrow">→</span>
-              <span class="leg-time{% if row.leg_finish.type %} leg-time--{{ row.leg_finish.type }}{% endif %}">{{ row.leg_finish.value|default('—') }}</span>
-            {% endif %}
-            {% if row.leg_time.value %}
-              <span class="leg-duration{% if row.leg_time.type %} leg-duration--{{ row.leg_time.type }}{% endif %}">({{ row.leg_time.value }})</span>
-            {% endif %}
-            {% if not row.leg_start.value and not row.leg_finish.value and not row.leg_time.value %}
+            {% if row.leg_start.value or row.leg_finish.value or row.leg_time.value %}
+              {% set schedule_content %}
+                {% if row.leg_start.value or row.leg_finish.value %}
+                  <span class="leg-time{% if row.leg_start.type %} leg-time--{{ row.leg_start.type }}{% endif %}">{{ row.leg_start.value|default('—') }}</span>
+                  <span class="leg-schedule-arrow">→</span>
+                  <span class="leg-time{% if row.leg_finish.type %} leg-time--{{ row.leg_finish.type }}{% endif %}">{{ row.leg_finish.value|default('—') }}</span>
+                {% endif %}
+                {% if row.leg_time.value %}
+                  <span class="leg-duration{% if row.leg_time.type %} leg-duration--{{ row.leg_time.type }}{% endif %}">({{ row.leg_time.value }})</span>
+                {% endif %}
+              {% endset %}
+              {% if row.has_runner %}
+                <a
+                  href="{{ row.schedule_modal_url }}"
+                  class="use-ajax leg-schedule-trigger"
+                  data-dialog-type="modal"
+                  data-dialog-options="{{ row.schedule_dialog_options }}"
+                >{{ schedule_content }}</a>
+              {% else %}
+                {{ schedule_content }}
+              {% endif %}
+            {% else %}
               —
             {% endif %}
           </td>

@@ -35,6 +35,19 @@ runner_assignment:
     - core/drupal.ajax
 
 
+leg_schedule_modal:
+  version: VERSION
+  css:
+    component:
+      css/leg-schedule-modal.css: {}
+  js:
+    js/leg-schedule-modal.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupal.ajax
+    - core/drupal.dialog.ajax
+
 race_display:
   version: VERSION
   css:

@@ -245,6 +245,29 @@ race_day.update_member_pace:
   options:
     _format: json
 
+race_day.leg_schedule_modal:
+  path: '/race-day/group/{group}/leg-assignment/{paragraph}/schedule'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\LegScheduleController::modal'
+    _title: 'Leg Schedule'
+  requirements:
+    _race_day_group_page_access: 'TRUE'
+    group: \d+
+    paragraph: \d+
+
+race_day.update_leg_schedule:
+  path: '/race-day/group/{group}/leg-assignment/{paragraph}/schedule/update'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\LegScheduleController::update'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+    _csrf_request_header_token: 'TRUE'
+    group: \d+
+    paragraph: \d+
+  methods: [POST]
+  options:
+    _format: json
+
 race_day.waiver_modal:
   path: '/race/{race}/waiver-modal'
   defaults:

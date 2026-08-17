@@ -1,0 +1,34 @@
+// Fixed bug: the × close button on Drupal's core AJAX/jQuery UI dialogs
+// (core/drupal.dialog.ajax — used site-wide by any `use-ajax` +
+// data-dialog-type="modal" link, e.g. race_day's leg schedule modal, the
+// cancel-team-request confirm dialog, etc.) has a clickable area offset
+// down-and-right from the visible × glyph.
+//
+// Root cause: Gin's own dialog.css tries to reset the icon
+// (`.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick`) to fill and
+// center within the 32px close button — `width: 100%; height: 100%; inset:
+// 0; transform: none;`. But some other rule in the cascade (not pinned down
+// exactly — not a normal stylesheet rule matched via a DOM walk of
+// document.styleSheets, so likely something jQuery UI's dialog widget
+// applies more dynamically) still wins on `transform`, leaving a stray
+// `translate(-50%, -50%)` applied on top of Gin's `inset: 0` positioning.
+// That shifts the icon up-left by half its own size (~14px) while the
+// button's own clickable box stays put — exactly the "× is up-left of
+// where I can click" symptom.
+//
+// Fix: re-assert `transform: none` (and `inset: 0` for safety) after Gin's
+// own dialog.css, so nothing downstream of it can still apply that stray
+// translate. `!important` is required for the same reason
+// admin_toolbar.scss needs it against Gin: the conflicting declaration
+// isn't losing on specificity or source order in any way we can win
+// without it.
+//
+// Verified in browser: before the fix, the button's own box was
+// (1043, 282.2)–(1075, 314.2) while the visible × sat at
+// (1030.4, 269.6)–(1059, 298.2) — offset up-left by ~12.6px in both axes.
+// After, the × sits at (1044.7, 283.9)–(1073.3, 312.5), inset evenly by the
+// button's own ~1.7px border on all four sides — centered and click-aligned.
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
+  inset: 0 !important;
+  transform: none !important;
+}

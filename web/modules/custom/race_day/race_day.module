@@ -518,14 +518,8 @@ function race_day_group_relationship_update(EntityInterface $entity): void {
   // can change which leg is actually "out" right now (e.g. reveal that the
   // current leg should already have handed off to the next runner), so
   // Running status has to be re-checked against the new schedule, not the
-  // one this pace change just made stale. Same "in_progress races only"
-  // scope race_day_cron() uses for this same check, so a pace edit doesn't
-  // start flipping Running/Finished status on a race that hasn't started
-  // or has already been marked complete.
-  $race = $group->hasField('field_race') ? $group->get('field_race')->entity : NULL;
-  if ($race instanceof Race && $race->get('status')->value === 'in_progress') {
-    _race_day_update_running_status_for_team($group, _race_day_now_epoch_ms());
-  }
+  // one this pace change just made stale.
+  _race_day_maybe_update_running_status($group);
 }
 
 /**
@@ -1093,15 +1087,23 @@ function _race_day_format_duration_ms(int $duration_ms): string {
 /**
  * Formats a leg assignment's elapsed time.
  *
- * Once both an actual start and actual finish are recorded, this is the
- * measured difference between them; until then, it falls back to the
- * paragraph's own expected/estimated time.
+ * field_actual_time is authoritative once set — it's kept in sync with
+ * field_actual_start/field_actual_finish whenever either of those is edited
+ * (see _race_day_sync_actual_time_from_endpoints()), and is set directly when
+ * a Race Day Coordinator edits the "Time" value itself. The on-the-fly
+ * start/finish diff below only covers legacy assignments where both actual
+ * moments exist but field_actual_time was never backfilled. Absent all of
+ * that, this falls back to the paragraph's own expected/estimated time.
  *
  * @return array{value: string, type: string}
  *   'type' is 'actual' or 'expected' depending on the source, or '' (with an
  *   empty 'value') if neither is available.
  */
 function _race_day_leg_assignment_time(ParagraphInterface $assignment): array {
+  if ($assignment->hasField('field_actual_time') && !$assignment->get('field_actual_time')->isEmpty()) {
+    return ['value' => _race_day_format_duration_ms((int) $assignment->get('field_actual_time')->value), 'type' => 'actual'];
+  }
+
   if (!$assignment->get('field_actual_start')->isEmpty() && !$assignment->get('field_actual_finish')->isEmpty()) {
     $start_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_start')->get(0)->entity);
     $finish_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_finish')->get(0)->entity);
@@ -1114,6 +1116,375 @@ function _race_day_leg_assignment_time(ParagraphInterface $assignment): array {
     return ['value' => '', 'type' => ''];
   }
   return ['value' => _race_day_format_duration_ms((int) $assignment->get('field_expected_time')->value), 'type' => 'expected'];
+}
+
+/**
+ * Formats a leg assignment's actual elapsed time for the schedule modal's
+ * separate Actual column — field_actual_time if set, else the on-the-fly
+ * actual_start/actual_finish diff (see _race_day_leg_assignment_time()), but
+ * — unlike that function — never falling back to the expected/estimated
+ * time, since the modal already shows that in its own Expected column.
+ */
+function _race_day_actual_duration_display(ParagraphInterface $assignment): string {
+  if ($assignment->hasField('field_actual_time') && !$assignment->get('field_actual_time')->isEmpty()) {
+    return _race_day_format_duration_ms((int) $assignment->get('field_actual_time')->value);
+  }
+
+  if (!$assignment->get('field_actual_start')->isEmpty() && !$assignment->get('field_actual_finish')->isEmpty()) {
+    $start_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_start')->get(0)->entity);
+    $finish_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_finish')->get(0)->entity);
+    if ($start_ms !== NULL && $finish_ms !== NULL) {
+      return _race_day_format_duration_ms($finish_ms - $start_ms);
+    }
+  }
+
+  return '';
+}
+
+/**
+ * Determines which date to pair with a manually-edited time-of-day value.
+ *
+ * $field_name is always field_actual_start or field_actual_finish. Prefers
+ * that field's own existing date (editing the time shouldn't silently move
+ * it to a different day), then the matching expected field's date, then the
+ * race's own date as a last resort for a leg with no expected moment yet.
+ */
+function _race_day_leg_moment_date_for_field(ParagraphInterface $assignment, string $field_name): ?string {
+  if (!$assignment->get($field_name)->isEmpty()) {
+    $existing = $assignment->get($field_name)->get(0)->entity;
+    if ($existing && !$existing->get('field_precise_date')->isEmpty()) {
+      return $existing->get('field_precise_date')->value;
+    }
+  }
+
+  $expected_field = $field_name === 'field_actual_start' ? 'field_expected_start' : 'field_expected_finish';
+  if ($assignment->hasField($expected_field) && !$assignment->get($expected_field)->isEmpty()) {
+    $expected = $assignment->get($expected_field)->get(0)->entity;
+    if ($expected && !$expected->get('field_precise_date')->isEmpty()) {
+      return $expected->get('field_precise_date')->value;
+    }
+  }
+
+  $group = $assignment->getParentEntity();
+  if ($group instanceof GroupInterface && $group->hasField('field_race') && !$group->get('field_race')->isEmpty()) {
+    $race = $group->get('field_race')->entity;
+    if ($race instanceof Race) {
+      $race_parts = _race_day_race_date_time_parts($race);
+      return $race_parts['date'] ?? NULL;
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Recomputes field_actual_time from field_actual_start/field_actual_finish.
+ *
+ * Only sets the field in memory — callers are responsible for saving
+ * $assignment once, alongside whichever other field they just changed.
+ * No-op unless both actual endpoints are present and resolvable.
+ */
+function _race_day_sync_actual_time_from_endpoints(ParagraphInterface $assignment): void {
+  if ($assignment->get('field_actual_start')->isEmpty() || $assignment->get('field_actual_finish')->isEmpty()) {
+    return;
+  }
+  $start_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_start')->get(0)->entity);
+  $finish_ms = _race_day_moment_epoch_ms($assignment->get('field_actual_finish')->get(0)->entity);
+  if ($start_ms === NULL || $finish_ms === NULL) {
+    return;
+  }
+  $assignment->set('field_actual_time', $finish_ms - $start_ms);
+}
+
+/**
+ * Sets a leg assignment's actual start time-of-day, from the schedule modal.
+ *
+ * Keeps field_actual_time in sync if an actual finish is already known.
+ */
+function _race_day_apply_actual_start(ParagraphInterface $assignment, int $time_of_day_ms): bool {
+  $date = _race_day_leg_moment_date_for_field($assignment, 'field_actual_start');
+  if ($date === NULL) {
+    return FALSE;
+  }
+  _race_day_set_leg_moment($assignment, 'field_actual_start', ['date' => $date, 'time_ms' => $time_of_day_ms]);
+  _race_day_sync_actual_time_from_endpoints($assignment);
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+  return TRUE;
+}
+
+/**
+ * Sets a leg assignment's actual finish time-of-day, from the schedule modal.
+ *
+ * Keeps field_actual_time in sync if an actual start is already known.
+ */
+function _race_day_apply_actual_finish(ParagraphInterface $assignment, int $time_of_day_ms): bool {
+  $date = _race_day_leg_moment_date_for_field($assignment, 'field_actual_finish');
+  if ($date === NULL) {
+    return FALSE;
+  }
+  _race_day_set_leg_moment($assignment, 'field_actual_finish', ['date' => $date, 'time_ms' => $time_of_day_ms]);
+  _race_day_sync_actual_time_from_endpoints($assignment);
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+  return TRUE;
+}
+
+/**
+ * Sets a leg assignment's actual elapsed time, from the schedule modal.
+ *
+ * If an actual start is already known, derives the actual finish as
+ * start + duration, per the schedule modal's documented behavior.
+ */
+function _race_day_apply_actual_time(ParagraphInterface $assignment, int $duration_ms): void {
+  $assignment->set('field_actual_time', $duration_ms);
+
+  if (!$assignment->get('field_actual_start')->isEmpty()) {
+    $start_moment = $assignment->get('field_actual_start')->get(0)->entity;
+    if ($start_moment && !$start_moment->get('field_precise_date')->isEmpty() && !$start_moment->get('field_precise_time')->isEmpty()) {
+      $start_parts = [
+        'date' => $start_moment->get('field_precise_date')->value,
+        'time_ms' => (int) $start_moment->get('field_precise_time')->value,
+      ];
+      _race_day_set_leg_moment($assignment, 'field_actual_finish', _race_day_add_ms_to_parts($start_parts, $duration_ms));
+    }
+  }
+
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+}
+
+/**
+ * Clears a leg assignment's actual start, reverting the Schedule column back
+ * to its expected start. Only that one field is touched — field_actual_time
+ * and field_actual_finish are left as-is, matching each Reset button's
+ * "clear just this field" scope.
+ */
+function _race_day_reset_actual_start(ParagraphInterface $assignment): void {
+  $assignment->set('field_actual_start', NULL);
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+}
+
+/**
+ * Clears a leg assignment's actual finish, reverting the Schedule column
+ * back to its expected finish. See _race_day_reset_actual_start() re: scope.
+ */
+function _race_day_reset_actual_finish(ParagraphInterface $assignment): void {
+  $assignment->set('field_actual_finish', NULL);
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+}
+
+/**
+ * Clears a leg assignment's actual time, reverting the Schedule column back
+ * to its expected — or actual-start/finish-derived — time. See
+ * _race_day_reset_actual_start() re: scope.
+ */
+function _race_day_reset_actual_time(ParagraphInterface $assignment): void {
+  $assignment->set('field_actual_time', NULL);
+  $assignment->setNewRevision(FALSE);
+  $assignment->save();
+}
+
+/**
+ * Parses a time-of-day string (as submitted by an <input type="time">) into
+ * milliseconds since midnight.
+ *
+ * Accepts "HH:MM" or "HH:MM:SS", 24-hour. Returns NULL if unparseable or out
+ * of range.
+ */
+function _race_day_parse_time_of_day_to_ms(string $input): ?int {
+  $parts = explode(':', trim($input));
+  if (count($parts) < 2 || count($parts) > 3) {
+    return NULL;
+  }
+  foreach ($parts as $part) {
+    if (!ctype_digit($part)) {
+      return NULL;
+    }
+  }
+  [$hours, $minutes] = array_map('intval', $parts);
+  $seconds = isset($parts[2]) ? (int) $parts[2] : 0;
+  if ($hours > 23 || $minutes > 59 || $seconds > 59) {
+    return NULL;
+  }
+  return $hours * 3600000 + $minutes * 60000 + $seconds * 1000;
+}
+
+/**
+ * Parses a duration string into milliseconds.
+ *
+ * Accepts "H:MM:SS", "MM:SS", or plain seconds, each optionally with a
+ * ".mmm" millisecond suffix — the same shapes _race_day_format_duration_ms()
+ * produces, so a value copied from the table's own display round-trips.
+ * Returns NULL if unparseable or out of range.
+ */
+function _race_day_parse_duration_to_ms(string $input): ?int {
+  $input = trim($input);
+  if ($input === '') {
+    return NULL;
+  }
+
+  $millis = 0;
+  if (str_contains($input, '.')) {
+    [$input, $millis_part] = explode('.', $input, 2);
+    if ($millis_part === '' || !ctype_digit($millis_part)) {
+      return NULL;
+    }
+    $millis = (int) str_pad(substr($millis_part, 0, 3), 3, '0');
+  }
+
+  $parts = explode(':', $input);
+  foreach ($parts as $part) {
+    if (!ctype_digit($part)) {
+      return NULL;
+    }
+  }
+
+  switch (count($parts)) {
+    case 3:
+      [$hours, $minutes, $seconds] = array_map('intval', $parts);
+      break;
+
+    case 2:
+      $hours = 0;
+      [$minutes, $seconds] = array_map('intval', $parts);
+      break;
+
+    case 1:
+      $hours = 0;
+      $minutes = 0;
+      $seconds = (int) $parts[0];
+      break;
+
+    default:
+      return NULL;
+  }
+
+  if ($minutes > 59 || $seconds > 59) {
+    return NULL;
+  }
+  return $hours * 3600000 + $minutes * 60000 + $seconds * 1000 + $millis;
+}
+
+/**
+ * Re-checks which leg is "running" on a team, if its race is in progress.
+ *
+ * Shared by every code path that can shift a team's schedule after the fact
+ * — a pace change (race_day_group_relationship_update()) or a Race Day
+ * Coordinator editing actual times via the leg schedule modal
+ * (LegScheduleController::update()) — so Running/Finished status always
+ * reflects the latest schedule rather than the one in effect before the
+ * edit. Scoped to in_progress races only, same as race_day_cron().
+ */
+function _race_day_maybe_update_running_status(GroupInterface $group): void {
+  $race = $group->hasField('field_race') ? $group->get('field_race')->entity : NULL;
+  if ($race instanceof Race && $race->get('status')->value === 'in_progress') {
+    _race_day_update_running_status_for_team($group, _race_day_now_epoch_ms());
+  }
+}
+
+/**
+ * Formats milliseconds-since-midnight as "HH:MM:SS" for an <input type="time">
+ * value attribute, which requires zero-padded 24-hour HH:MM:SS.
+ */
+function _race_day_format_time_of_day_ms_for_input(int $time_ms): string {
+  $hours = intdiv($time_ms, 3600000);
+  $remainder = $time_ms % 3600000;
+  $minutes = intdiv($remainder, 60000);
+  $seconds = intdiv($remainder % 60000, 1000);
+  return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+}
+
+/**
+ * Builds the leg schedule modal's render array.
+ *
+ * $can_edit governs only whether the template renders edit controls —
+ * LegScheduleController::update() re-checks the same permission server-side
+ * before saving anything, so this is a display concern, not the access
+ * boundary.
+ */
+function _race_day_build_leg_schedule_modal(GroupInterface $group, ParagraphInterface $paragraph, bool $can_edit): array {
+  $expected_start = $paragraph->hasField('field_expected_start') && !$paragraph->get('field_expected_start')->isEmpty()
+    ? $paragraph->get('field_expected_start')->get(0)->entity : NULL;
+  $expected_finish = $paragraph->hasField('field_expected_finish') && !$paragraph->get('field_expected_finish')->isEmpty()
+    ? $paragraph->get('field_expected_finish')->get(0)->entity : NULL;
+  $actual_start = !$paragraph->get('field_actual_start')->isEmpty() ? $paragraph->get('field_actual_start')->get(0)->entity : NULL;
+  $actual_finish = !$paragraph->get('field_actual_finish')->isEmpty() ? $paragraph->get('field_actual_finish')->get(0)->entity : NULL;
+
+  $rows = [
+    'start' => [
+      'label' => t('Start Time'),
+      'expected_display' => _race_day_format_precise_datetime($expected_start) ?: '—',
+      'actual_display' => _race_day_format_precise_datetime($actual_start) ?: '—',
+      'input_type' => 'time',
+      'input_value' => $actual_start ? _race_day_format_time_of_day_ms_for_input((int) $actual_start->get('field_precise_time')->value) : '',
+      // Whether field_actual_start ITSELF is set, so Reset only ever
+      // appears when there's something in that specific field to clear.
+      'has_actual' => !$paragraph->get('field_actual_start')->isEmpty(),
+    ],
+    'finish' => [
+      'label' => t('End Time'),
+      'expected_display' => _race_day_format_precise_datetime($expected_finish) ?: '—',
+      'actual_display' => _race_day_format_precise_datetime($actual_finish) ?: '—',
+      'input_type' => 'time',
+      'input_value' => $actual_finish ? _race_day_format_time_of_day_ms_for_input((int) $actual_finish->get('field_precise_time')->value) : '',
+      'has_actual' => !$paragraph->get('field_actual_finish')->isEmpty(),
+    ],
+    'time' => [
+      'label' => t('Time'),
+      'expected_display' => $paragraph->hasField('field_expected_time') && !$paragraph->get('field_expected_time')->isEmpty()
+        ? _race_day_format_duration_ms((int) $paragraph->get('field_expected_time')->value) : '—',
+      'actual_display' => _race_day_actual_duration_display($paragraph) ?: '—',
+      'input_type' => 'text',
+      'input_value' => $paragraph->hasField('field_actual_time') && !$paragraph->get('field_actual_time')->isEmpty()
+        ? _race_day_format_duration_ms((int) $paragraph->get('field_actual_time')->value) : '',
+      'has_actual' => $paragraph->hasField('field_actual_time') && !$paragraph->get('field_actual_time')->isEmpty(),
+    ],
+  ];
+
+  $update_url = \Drupal\Core\Url::fromRoute('race_day.update_leg_schedule', [
+    'group' => $group->id(),
+    'paragraph' => $paragraph->id(),
+  ])->toString();
+
+  $leg_number = '';
+  $leg_name = '';
+  if ($paragraph->hasField('field_race_day_leg') && !$paragraph->get('field_race_day_leg')->isEmpty()) {
+    $leg = $paragraph->get('field_race_day_leg')->entity;
+    if ($leg) {
+      $leg_number = $leg->get('leg_number')->value;
+      $leg_name = $leg->label();
+    }
+  }
+
+  $runner_name = '';
+  if ($paragraph->hasField('field_race_day_runner') && !$paragraph->get('field_race_day_runner')->isEmpty()) {
+    $runner = $paragraph->get('field_race_day_runner')->entity;
+    if ($runner) {
+      $runner_name = $runner->getDisplayName();
+    }
+  }
+
+  return [
+    '#theme' => 'race_day_leg_schedule_modal',
+    '#paragraph_id' => $paragraph->id(),
+    '#update_url' => $update_url,
+    '#can_edit' => $can_edit,
+    '#rows' => $rows,
+    '#leg_name' => $leg_name,
+    '#runner_name' => $runner_name,
+    // Drupal's OpenDialogCommand always plain-texts the dialog title
+    // (PlainTextOutput::renderFromHtml() — a hardcoded, unconditional
+    // security measure, not something a render array can opt out of), so
+    // this can only ever be the one plain line. leg-schedule-modal.js
+    // rebuilds the titlebar with the leg name/runner sub-lines client-side
+    // once the dialog chrome actually exists, using the two data attributes
+    // race-day-leg-schedule-modal.html.twig puts on the modal content
+    // itself (#leg_name/#runner_name above).
+    '#title' => t('Leg @number Schedule', ['@number' => $leg_number !== '' ? $leg_number : '?']),
+  ];
 }
 
 /**
@@ -1480,6 +1851,18 @@ function race_day_theme(): array {
       'template' => 'field--field-runner-legs',
       'path' => \Drupal::service('extension.list.module')->getPath('race_day') . '/templates/field',
     ],
+    'race_day_leg_schedule_modal' => [
+      'variables' => [
+        'paragraph_id' => NULL,
+        'update_url' => NULL,
+        'can_edit' => FALSE,
+        'rows' => [],
+        'leg_name' => '',
+        'runner_name' => '',
+      ],
+      'template' => 'race-day-leg-schedule-modal',
+      'path' => \Drupal::service('extension.list.module')->getPath('race_day') . '/templates/modal',
+    ],
     'views_view_field__race_admin__status' => [
       'base hook' => 'views_view_field',
       'template' => 'views-view-field--race-admin--status',
@@ -1559,6 +1942,15 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
   // useful — and so only attached — for members who can act on the table).
   $variables['#attached']['library'][] = 'race_day/runner_legs_display';
 
+  // The Schedule column's modal is openable by any viewer of this table
+  // (the GroupPageAccessCheck that already gates the page covers it — see
+  // race_day.leg_schedule_modal); only editable within by a Race Day
+  // Coordinator, which LegScheduleController checks per-request.
+  $variables['#attached']['library'][] = 'race_day/leg_schedule_modal';
+  // Wider than a single-column layout needs, to comfortably fit the
+  // Expected/Actual two-column table plus each row's edit controls.
+  $schedule_dialog_options = \Drupal\Component\Serialization\Json::encode(['width' => 560]);
+
   $current_user = \Drupal::currentUser();
   $membership = $group->getMember($current_user);
 
@@ -1618,6 +2010,10 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
     $leg_start = _race_day_leg_assignment_moment($paragraph, 'field_actual_start', 'field_expected_start');
     $leg_finish = _race_day_leg_assignment_moment($paragraph, 'field_actual_finish', 'field_expected_finish');
     $leg_time = _race_day_leg_assignment_time($paragraph);
+    $schedule_modal_url = \Drupal\Core\Url::fromRoute('race_day.leg_schedule_modal', [
+      'group' => $group->id(),
+      'paragraph' => $paragraph->id(),
+    ])->toString();
 
     $runner_name = '';
     $runner_id = NULL;
@@ -1653,6 +2049,8 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
       'leg_start'          => $leg_start,
       'leg_finish'         => $leg_finish,
       'leg_time'           => $leg_time,
+      'schedule_modal_url' => $schedule_modal_url,
+      'schedule_dialog_options' => $schedule_dialog_options,
       'runner'             => $runner_name,
       'runner_id'          => $runner_id,
       'has_runner'         => $has_runner,

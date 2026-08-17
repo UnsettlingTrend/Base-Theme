@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.race_day_leg_assignment.field_actual_finish
     - field.field.paragraph.race_day_leg_assignment.field_actual_start
+    - field.field.paragraph.race_day_leg_assignment.field_actual_time
     - field.field.paragraph.race_day_leg_assignment.field_expected_finish
     - field.field.paragraph.race_day_leg_assignment.field_expected_start
     - field.field.paragraph.race_day_leg_assignment.field_expected_time
@@ -54,6 +55,13 @@ content:
       features:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
+    third_party_settings: {  }
+  field_actual_time:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
     third_party_settings: {  }
   field_expected_finish:
     type: paragraphs
