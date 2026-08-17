@@ -17,6 +17,16 @@
   white-space: nowrap;
 }
 
+/* Applied by runner-assignment.js's lockTable() for the duration of any
+   assign/remove request — pointer-events: none blocks clicking anywhere in
+   the table (select dropdowns, remove buttons, the schedule-modal trigger
+   links, everything), not just the specific row that triggered the call. */
+.runner-assignments--locked {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: progress;
+}
+
 .leg-schedule-trigger {
   color: inherit;
   text-decoration: none;
@@ -36,6 +46,18 @@
   margin-left: 0.4em;
   color: #666;
   font-size: 0.9em;
+}
+
+/* Populated by runner-assignment.js when an assign/remove request fails or
+   gets rejected — see field--field-runner-legs.html.twig's doc comment. */
+.runner-assignment-error {
+  color: #c62828;
+  font-size: 0.85em;
+}
+
+.runner-assignment-error:not([hidden]) {
+  display: block;
+  margin-bottom: 0.25em;
 }
 
 /* leg_start/leg_finish/leg_time are each typed 'actual' or 'expected' in

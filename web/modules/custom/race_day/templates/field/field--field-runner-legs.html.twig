@@ -10,6 +10,12 @@
  * css/runner-legs-table.css) to stack. data-label attributes below are
  * that layout's hook — it turns each <td> into a label:value block below
  * the css/runner-legs-table.css breakpoint, reading them via ::before.
+ *
+ * .runner-assignment-error: hidden by default, populated by
+ * runner-assignment.js when an assign/remove request fails or gets
+ * rejected (e.g. the "leg already assigned" race) — surfaces it right next
+ * to the control the user just used, instead of relying on a global
+ * messages-region notice the user may not notice or may have scrolled past.
  */
 #}
 <div{{ attributes.setAttribute('id', 'runner-assignments-' ~ group_id) }}>
@@ -68,6 +74,7 @@
             {% endif %}
           </td>
           <td data-label="Runner">
+            <span class="runner-assignment-error" data-paragraph-id="{{ row.paragraph_id }}" hidden></span>
             {% if row.has_runner %}
               {{ row.runner }}
               {% if row.can_remove %}

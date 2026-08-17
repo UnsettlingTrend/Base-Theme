@@ -104,7 +104,12 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  /* leg-schedule-modal.js's expandActionsColumn() hides this row's
+     Expected/Actual cells and gives this form their space (colspan 3) —
+     right-aligning made sense confined to the narrow actions column alone,
+     but would now just bunch everything at the far right of a much wider
+     row instead of using the freed-up space. */
+  justify-content: flex-start;
   gap: 0.4em;
   padding: 0.4em 0;
 }
@@ -113,9 +118,18 @@
   max-width: 140px;
 }
 
+.leg-schedule-edit-buttons {
+  /* Pushes itself (and Cancel alongside Save within it) to the far right of
+     the now-wide edit form, absorbing the flex row's leftover space instead
+     of sitting right next to the input. */
+  margin-left: auto;
+  display: inline-flex;
+  gap: 0.4em;
+}
+
 .leg-schedule-error {
   color: #c62828;
   font-size: 0.8125em;
   flex: 1 0 100%;
-  text-align: right;
+  text-align: left;
 }

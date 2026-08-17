@@ -23,6 +23,7 @@
             var editRow = editBtn.closest('.leg-schedule-row');
             editRow.querySelector('.leg-schedule-edit-form').hidden = false;
             editRow.querySelector('.leg-schedule-actual-actions').hidden = true;
+            expandActionsColumn(editRow);
             return;
           }
 
@@ -32,6 +33,7 @@
             cancelRow.querySelector('.leg-schedule-edit-form').hidden = true;
             cancelRow.querySelector('.leg-schedule-actual-actions').hidden = false;
             cancelRow.querySelector('.leg-schedule-error').textContent = '';
+            collapseActionsColumn(cancelRow);
             return;
           }
 
@@ -91,6 +93,46 @@
       });
     },
   };
+
+  /**
+   * While editing, hides the row's Expected/Actual cells and has the
+   * actions cell (now holding the edit form) span all three columns —
+   * otherwise the input + Save/Cancel are squeezed into just the actions
+   * column's own width, which is what was forcing the whole table (and so
+   * the modal) wider than it needs to be on narrow/mobile viewports.
+   */
+  function expandActionsColumn(row) {
+    var expected = row.querySelector('.leg-schedule-row__expected');
+    var actual = row.querySelector('.leg-schedule-row__actual');
+    var actions = row.querySelector('.leg-schedule-row__actions');
+    if (expected) {
+      expected.hidden = true;
+    }
+    if (actual) {
+      actual.hidden = true;
+    }
+    if (actions) {
+      actions.colSpan = 3;
+    }
+  }
+
+  /**
+   * Reverses expandActionsColumn() on cancel.
+   */
+  function collapseActionsColumn(row) {
+    var expected = row.querySelector('.leg-schedule-row__expected');
+    var actual = row.querySelector('.leg-schedule-row__actual');
+    var actions = row.querySelector('.leg-schedule-row__actions');
+    if (expected) {
+      expected.hidden = false;
+    }
+    if (actual) {
+      actual.hidden = false;
+    }
+    if (actions) {
+      actions.colSpan = 1;
+    }
+  }
 
   /**
    * POSTs a save or reset request for one row and applies the ReplaceCommands
