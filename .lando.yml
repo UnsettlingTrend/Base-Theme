@@ -43,6 +43,8 @@ services:
       - mkdir -p /root/.config/pip && echo "[global]\nbreak-system-packages = true" > /root/.config/pip/pip.conf
       - echo "source /opt/venv/bin/activate" >> /root/.bashrc
       - pip install robin_stocks pyotp
+      # Platform.sh/Upsun CLI, used by lando/sync_with_prod.sh (`lando sync-with-prod`).
+      - curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash
     overrides:
       environment:
         DRUSH_OPTIONS_URI: "https://cf.lndo.site"
@@ -130,3 +132,8 @@ tooling:
     service: appserver
     description: Pull production database and sync media files.
     cmd: bash /app/lando/pull_prod.sh
+  sync-with-prod:
+    service: appserver
+    user: root
+    description: Wipe local DB/files and replace with a fresh copy from main.
+    cmd: bash /app/lando/sync_with_prod.sh
