@@ -1,0 +1,17 @@
+uuid: 953e5c89-8bc1-49e9-8f5f-d276ec586441
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: header_image
+label: 'Header Image (1200x440)'
+effects:
+  5be7add3-868f-4394-9143-730fdcb3bbb2:
+    uuid: 5be7add3-868f-4394-9143-730fdcb3bbb2
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1200
+      height: 440
+      crop_type: focal_point

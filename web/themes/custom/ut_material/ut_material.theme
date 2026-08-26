@@ -115,6 +115,39 @@ function ut_material_preprocess_region(array &$variables): void {
 }
 
 /**
+ * Implements hook_preprocess_HOOK() for page--front.html.twig.
+ *
+ * Exposes the front page's field_image, run through the header_image image
+ * style, as header_image_url/header_image_alt — page--front.html.twig
+ * previously rendered the field's original, un-styled file directly.
+ */
+function ut_material_preprocess_page__front(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+  if (!$node instanceof \Drupal\node\NodeInterface || $node->get('field_image')->isEmpty()) {
+    return;
+  }
+
+  $media = $node->get('field_image')->entity;
+  if (!$media instanceof \Drupal\media\MediaInterface || $media->get('field_media_image')->isEmpty()) {
+    return;
+  }
+
+  $image_item = $media->get('field_media_image')->first();
+  $file = $image_item->entity;
+  if (!$file instanceof \Drupal\file\FileInterface) {
+    return;
+  }
+
+  $style = \Drupal\image\Entity\ImageStyle::load('header_image');
+  if (!$style) {
+    return;
+  }
+
+  $variables['header_image_url'] = $style->buildUrl($file->getFileUri());
+  $variables['header_image_alt'] = $image_item->alt;
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function ut_material_preprocess_html(array &$variables): void {
