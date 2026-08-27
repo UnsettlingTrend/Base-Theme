@@ -35,17 +35,12 @@ class AssignRunnerController extends ControllerBase {
 
     $current_user = $this->currentUser();
     $membership = $group->getMember($current_user);
+    // A Race Day Coordinator manages assignments on every team, whether or
+    // not they're a member of this particular one.
+    $is_captain_or_admin = _race_day_can_manage_team_assignments($group, $current_user);
 
-    if (!$membership) {
+    if (!$membership && !$is_captain_or_admin) {
       return new JsonResponse(['error' => 'Access denied.'], 403);
-    }
-
-    $is_captain_or_admin = FALSE;
-    foreach ($membership->getRoles() as $role) {
-      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
-        $is_captain_or_admin = TRUE;
-        break;
-      }
     }
 
     // Regular members may only assign themselves.
@@ -80,8 +75,19 @@ class AssignRunnerController extends ControllerBase {
       return $response;
     }
 
+    // Only field_race_day_runner changes here — field_actual_start,
+    // field_actual_finish, and field_actual_time are deliberately left
+    // untouched. A leg can already have real Actual data recorded (entered
+    // via the schedule modal — LegScheduleController::update()) before it
+    // ever has a runner, or carried over from whoever held the slot before;
+    // either way, assigning someone to it must never clear that.
     $paragraph->set('field_race_day_runner', $target_user);
     $paragraph->save();
+
+    // A new runner changes who's actually "out" on the course right now —
+    // same re-check a time edit or pace change triggers
+    // (LegScheduleController::update(), race_day_group_relationship_update()).
+    _race_day_maybe_update_running_status($group);
 
     return $this->reRenderTable($group);
   }
@@ -96,17 +102,12 @@ class AssignRunnerController extends ControllerBase {
 
     $current_user = $this->currentUser();
     $membership = $group->getMember($current_user);
+    // A Race Day Coordinator manages assignments on every team, whether or
+    // not they're a member of this particular one.
+    $is_captain_or_admin = _race_day_can_manage_team_assignments($group, $current_user);
 
-    if (!$membership) {
+    if (!$membership && !$is_captain_or_admin) {
       return new JsonResponse(['error' => 'Access denied.'], 403);
-    }
-
-    $is_captain_or_admin = FALSE;
-    foreach ($membership->getRoles() as $role) {
-      if (in_array($role->id(), ['race_team-admin', 'race_team-team_captain'])) {
-        $is_captain_or_admin = TRUE;
-        break;
-      }
     }
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
@@ -127,8 +128,20 @@ class AssignRunnerController extends ControllerBase {
       }
     }
 
+    // Only field_race_day_runner is cleared — field_actual_start,
+    // field_actual_finish, and field_actual_time are deliberately left as
+    // recorded. Removing a runner from a leg (e.g. a scheduling mistake,
+    // or freeing the slot for someone else) must never lose real race-day
+    // times just because the slot is temporarily — or permanently —
+    // unassigned.
     $paragraph->set('field_race_day_runner', NULL);
     $paragraph->save();
+
+    // Removing a runner can leave nobody "out" on this leg, or — if this
+    // was the currently-running leg — reopen the question of which leg is
+    // actually current now. Same re-check assign() above and a time/pace
+    // edit both trigger.
+    _race_day_maybe_update_running_status($group);
 
     return $this->reRenderTable($group);
   }

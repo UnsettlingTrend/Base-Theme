@@ -1,0 +1,110 @@
+.race-day-live-map {
+  height: calc(100vh - 260px);
+  min-height: 500px;
+  width: 100%;
+}
+
+.race-day-live-map-no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b6b6b;
+}
+
+.race-day-marker {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  background-color: #757575;
+  overflow: hidden;
+}
+
+.race-day-marker--person {
+  border-radius: 50%;
+}
+
+.race-day-marker--team {
+  border-radius: 8px;
+}
+
+.race-day-marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.race-day-marker--estimated {
+  border-style: dashed;
+  border-color: #333;
+  opacity: 0.85;
+}
+
+.race-day-marker--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+/* Positioned top-right (map's own options.position), buttons laid out in a
+   row rather than Leaflet's default leaflet-bar stack. leaflet-bar is kept
+   on the container for its box-shadow/rounding, but its "a" rule
+   (leaflet.css: width/height: 26px, line-height: 26px — sized for a single
+   icon glyph like the zoom control's +/-) has to be overridden with equal
+   or higher specificity everywhere below, or it clips these buttons' text
+   down to nothing. */
+.race-day-team-toggle {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button,
+.leaflet-touch .leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button {
+  display: block;
+  width: auto;
+  height: auto;
+  min-width: 84px;
+  padding: 8px 12px;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: none;
+  border-right: 1px solid #ccc;
+}
+
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button:last-child {
+  border-radius: 0 4px 4px 0;
+  border-right: none;
+}
+
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button:hover {
+  background: #f4f4f4;
+}
+
+/* Selected state reads as "pressed"/disabled — greyed out rather than a
+   color highlight. Needs the same full selector weight as the base button
+   rule above (a bare .is-active class alone loses that specificity fight
+   and silently renders as nothing). */
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button.is-active,
+.leaflet-bar.race-day-team-toggle a.race-day-team-toggle__button.is-active:hover {
+  background: #ddd;
+  color: #666;
+  cursor: default;
+}

@@ -20,6 +20,7 @@ use Drupal\race_day\Entity\Race;
 use Drupal\race_day\Entity\RaceLeg;
 use Drupal\Component\Utility\Html;
 use Drupal\group\Entity\GroupInterface;
+use Drupal\user\UserInterface;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 use Drupal\webform\WebformSubmissionInterface;
@@ -327,6 +328,31 @@ function race_day_preprocess_views_view(array &$variables): void {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_view() for group.
+ *
+ * Adds a "View Live Race Map" button at the top of a race_team group's
+ * canonical page, linking to the dedicated live GPS map
+ * (TeamLiveMapController) — no extra access check needed here since it's
+ * gated by the same _race_day_group_page_access requirement as the group
+ * page itself (see race_day.routing.yml / RouteSubscriber): anyone who can
+ * see the team can see its live map.
+ */
+function race_day_group_view(array &$build, GroupInterface $entity, EntityViewDisplayInterface $display, string $view_mode): void {
+  if ($entity->bundle() !== 'race_team' || $view_mode !== 'full') {
+    return;
+  }
+
+  $build['live_map_button'] = [
+    '#type' => 'link',
+    '#title' => t('View Live Race Map'),
+    '#url' => \Drupal\Core\Url::fromRoute('race_day.team_live_map', ['group' => $entity->id()]),
+    '#attributes' => ['class' => ['button', 'race-team-live-map-button']],
+    '#attached' => ['library' => ['race_day/team_live_map_button']],
+    '#weight' => -1000,
+  ];
+}
+
+/**
  * Implements hook_ENTITY_TYPE_insert() for webform_submission.
  *
  * If a new submission is created already approved, add the user to the team.
@@ -389,6 +415,12 @@ function _race_day_sync_team_membership(EntityInterface $submission, ?string $ol
 
   if ($was_approved && !$is_approved) {
     // Clear any leg slot assignments (field_runner_legs paragraphs) first.
+    // Only field_race_day_runner is cleared here — same as
+    // AssignRunnerController::remove() — field_actual_start,
+    // field_actual_finish, and field_actual_time are deliberately left as
+    // recorded, so real race-day times survive even if the runner's team
+    // request later gets un-approved.
+    $cleared_any = FALSE;
     foreach ($group->get('field_runner_legs')->referencedEntities() as $paragraph) {
       if ($paragraph->bundle() !== 'race_day_leg_assignment') {
         continue;
@@ -396,7 +428,16 @@ function _race_day_sync_team_membership(EntityInterface $submission, ?string $ol
       if ((int) $paragraph->get('field_race_day_runner')->target_id === (int) $uid) {
         $paragraph->set('field_race_day_runner', NULL);
         $paragraph->save();
+        $cleared_any = TRUE;
       }
+    }
+    // Freeing up a slot (or several) can change which leg is actually
+    // "out" right now — same re-check AssignRunnerController's assign()/
+    // remove() and a time/pace edit all trigger. Once after the loop
+    // rather than per-paragraph, since it re-derives from the team's whole
+    // current schedule regardless of how many legs this member held.
+    if ($cleared_any) {
+      _race_day_maybe_update_running_status($group);
     }
     // Then remove from the group.
     if ($group->getMember($account)) {
@@ -796,8 +837,21 @@ function _race_day_team_assignments(GroupInterface $group): array {
  * Leg 1's expected start is the race's own date/time
  * (_race_day_race_date_time_parts()). Every other leg's expected start is
  * the previous leg's expected finish, and every leg's expected finish is
- * its own expected start plus its expected time
- * (_race_day_calculate_expected_time()).
+ * its own expected time (_race_day_calculate_expected_time(), refreshed
+ * every call — see race_day_paragraph_presave(), which recomputes
+ * field_expected_time on every save regardless of this function) added to
+ * a start point.
+ *
+ * field_expected_start itself is always the theoretical chain value above
+ * — "what we expected" stays visible even once a leg is under way — but
+ * that start point is only what field_expected_finish gets computed FROM
+ * when the leg hasn't actually started yet. Once it has
+ * (field_actual_start is set), the finish estimate — and so every
+ * subsequent leg's chained expected start/finish, since $next_start
+ * carries it forward — is projected from that real start instead, so a
+ * runner who left early or late has their own and every later leg's
+ * projected finish shift to match reality rather than staying pinned to
+ * the original plan.
  *
  * If a leg's expected time isn't available (no runner assigned, no leg
  * distance yet, no parseable pace, etc.), the chain breaks there: that leg
@@ -828,7 +882,12 @@ function _race_day_recalculate_team_expected_schedule(GroupInterface $group): vo
 
     $start_parts = $next_start;
     $expected_time_ms = $start_parts !== NULL ? _race_day_calculate_expected_time($assignment) : NULL;
-    $finish_parts = $expected_time_ms !== NULL ? _race_day_add_ms_to_parts($start_parts, $expected_time_ms) : NULL;
+
+    $actual_start_parts = _race_day_actual_start_parts($assignment);
+    $finish_basis = $actual_start_parts ?? $start_parts;
+    $finish_parts = $expected_time_ms !== NULL && $finish_basis !== NULL
+      ? _race_day_add_ms_to_parts($finish_basis, $expected_time_ms)
+      : NULL;
 
     $needs_save = _race_day_set_leg_moment($assignment, 'field_expected_start', $start_parts);
     $needs_save = _race_day_set_leg_moment($assignment, 'field_expected_finish', $finish_parts) || $needs_save;
@@ -844,6 +903,25 @@ function _race_day_recalculate_team_expected_schedule(GroupInterface $group): vo
     // Once broken, every subsequent leg gets NULL parts, wiping both fields.
     $next_start = $finish_parts;
   }
+}
+
+/**
+ * Returns a leg assignment's field_actual_start as {date, time_ms} parts —
+ * the same shape _race_day_recalculate_team_expected_schedule() threads
+ * through its whole chain — or NULL if it has none set.
+ */
+function _race_day_actual_start_parts(ParagraphInterface $assignment): ?array {
+  if (!$assignment->hasField('field_actual_start') || $assignment->get('field_actual_start')->isEmpty()) {
+    return NULL;
+  }
+  $moment = $assignment->get('field_actual_start')->entity;
+  if (!$moment || $moment->get('field_precise_date')->isEmpty() || $moment->get('field_precise_time')->isEmpty()) {
+    return NULL;
+  }
+  return [
+    'date' => $moment->get('field_precise_date')->value,
+    'time_ms' => (int) $moment->get('field_precise_time')->value,
+  ];
 }
 
 /**
@@ -1197,61 +1275,148 @@ function _race_day_sync_actual_time_from_endpoints(ParagraphInterface $assignmen
 }
 
 /**
+ * Finds the SAME team's assignment for the leg immediately before
+ * $assignment's own (leg_number - 1), if any.
+ *
+ * @return \Drupal\paragraphs\ParagraphInterface|null
+ *   NULL if $assignment is leg 1 (nothing precedes it), or if it has no
+ *   leg/team context to look up from.
+ */
+function _race_day_previous_leg_assignment(ParagraphInterface $assignment): ?ParagraphInterface {
+  if (!$assignment->hasField('field_race_day_leg') || $assignment->get('field_race_day_leg')->isEmpty()) {
+    return NULL;
+  }
+  $leg = $assignment->get('field_race_day_leg')->entity;
+  if (!$leg instanceof RaceLeg) {
+    return NULL;
+  }
+  $leg_number = (int) $leg->get('leg_number')->value;
+  if ($leg_number <= 1) {
+    return NULL;
+  }
+
+  $group = $assignment->getParentEntity();
+  if (!$group instanceof GroupInterface) {
+    return NULL;
+  }
+
+  return _race_day_team_assignments($group)[$leg_number - 1] ?? NULL;
+}
+
+/**
+ * Enforces that actual times get entered in race order: a leg's Actual
+ * Start can't be recorded until the leg before it (if any) already has an
+ * Actual Finish — its runner can't really have started until the previous
+ * runner handed off. Leg 1 has nothing before it, so it's always allowed,
+ * as is a leg race/team context can't otherwise resolve (nothing to check
+ * against).
+ *
+ * @return string|null
+ *   NULL if OK to proceed, else a user-facing error message.
+ */
+function _race_day_require_previous_leg_finished(ParagraphInterface $assignment): ?string {
+  $previous = _race_day_previous_leg_assignment($assignment);
+  if (!$previous || !$previous->get('field_actual_finish')->isEmpty()) {
+    return NULL;
+  }
+
+  $previous_leg = $previous->hasField('field_race_day_leg') && !$previous->get('field_race_day_leg')->isEmpty()
+    ? $previous->get('field_race_day_leg')->entity : NULL;
+  $label = $previous_leg ? $previous_leg->label() : 'The previous leg';
+  return $label . ' needs an Actual Finish recorded before this leg can start.';
+}
+
+/**
  * Sets a leg assignment's actual start time-of-day, from the schedule modal.
  *
- * Keeps field_actual_time in sync if an actual finish is already known.
+ * Requires the previous leg (if any) to already have an Actual Finish —
+ * see _race_day_require_previous_leg_finished(). Keeps field_actual_time
+ * in sync if an actual finish is already known (shouldn't normally happen
+ * given that requirement — a leg with no actual start yet also has no
+ * actual finish — but harmless if a coordinator ever hand-enters an out-
+ * of-order finish some other way).
+ *
+ * @return string|null
+ *   NULL on success, or a user-facing error message explaining why the
+ *   edit was rejected.
  */
-function _race_day_apply_actual_start(ParagraphInterface $assignment, int $time_of_day_ms): bool {
+function _race_day_apply_actual_start(ParagraphInterface $assignment, int $time_of_day_ms): ?string {
+  $order_error = _race_day_require_previous_leg_finished($assignment);
+  if ($order_error !== NULL) {
+    return $order_error;
+  }
+
   $date = _race_day_leg_moment_date_for_field($assignment, 'field_actual_start');
   if ($date === NULL) {
-    return FALSE;
+    return 'No date to anchor this time to yet — set an expected schedule first.';
   }
   _race_day_set_leg_moment($assignment, 'field_actual_start', ['date' => $date, 'time_ms' => $time_of_day_ms]);
   _race_day_sync_actual_time_from_endpoints($assignment);
   $assignment->setNewRevision(FALSE);
   $assignment->save();
-  return TRUE;
+  return NULL;
 }
 
 /**
  * Sets a leg assignment's actual finish time-of-day, from the schedule modal.
  *
- * Keeps field_actual_time in sync if an actual start is already known.
+ * Requires this same leg's Actual Start to already be set — the "Actual
+ * End" of a leg's run isn't meaningful before its start is on record, and
+ * every later leg's own Actual Start requirement
+ * (_race_day_require_previous_leg_finished()) depends on this leg's finish
+ * only ever appearing once its start already has.
+ *
+ * Keeps field_actual_time in sync (Actual Finish minus Actual Start).
+ *
+ * @return string|null
+ *   NULL on success, or a user-facing error message.
  */
-function _race_day_apply_actual_finish(ParagraphInterface $assignment, int $time_of_day_ms): bool {
+function _race_day_apply_actual_finish(ParagraphInterface $assignment, int $time_of_day_ms): ?string {
+  if ($assignment->get('field_actual_start')->isEmpty()) {
+    return 'Enter an Actual Start before an Actual Finish.';
+  }
+
   $date = _race_day_leg_moment_date_for_field($assignment, 'field_actual_finish');
   if ($date === NULL) {
-    return FALSE;
+    return 'No date to anchor this time to yet — set an expected schedule first.';
   }
   _race_day_set_leg_moment($assignment, 'field_actual_finish', ['date' => $date, 'time_ms' => $time_of_day_ms]);
   _race_day_sync_actual_time_from_endpoints($assignment);
   $assignment->setNewRevision(FALSE);
   $assignment->save();
-  return TRUE;
+  return NULL;
 }
 
 /**
  * Sets a leg assignment's actual elapsed time, from the schedule modal.
  *
- * If an actual start is already known, derives the actual finish as
- * start + duration, per the schedule modal's documented behavior.
+ * Requires this same leg's Actual Start to already be set — same
+ * reasoning as _race_day_apply_actual_finish(), since entering a duration
+ * is just the other way of specifying the Actual Finish (derived below as
+ * start + duration).
+ *
+ * @return string|null
+ *   NULL on success, or a user-facing error message.
  */
-function _race_day_apply_actual_time(ParagraphInterface $assignment, int $duration_ms): void {
+function _race_day_apply_actual_time(ParagraphInterface $assignment, int $duration_ms): ?string {
+  if ($assignment->get('field_actual_start')->isEmpty()) {
+    return 'Enter an Actual Start before an Actual Time.';
+  }
+
   $assignment->set('field_actual_time', $duration_ms);
 
-  if (!$assignment->get('field_actual_start')->isEmpty()) {
-    $start_moment = $assignment->get('field_actual_start')->get(0)->entity;
-    if ($start_moment && !$start_moment->get('field_precise_date')->isEmpty() && !$start_moment->get('field_precise_time')->isEmpty()) {
-      $start_parts = [
-        'date' => $start_moment->get('field_precise_date')->value,
-        'time_ms' => (int) $start_moment->get('field_precise_time')->value,
-      ];
-      _race_day_set_leg_moment($assignment, 'field_actual_finish', _race_day_add_ms_to_parts($start_parts, $duration_ms));
-    }
+  $start_moment = $assignment->get('field_actual_start')->entity;
+  if ($start_moment && !$start_moment->get('field_precise_date')->isEmpty() && !$start_moment->get('field_precise_time')->isEmpty()) {
+    $start_parts = [
+      'date' => $start_moment->get('field_precise_date')->value,
+      'time_ms' => (int) $start_moment->get('field_precise_time')->value,
+    ];
+    _race_day_set_leg_moment($assignment, 'field_actual_finish', _race_day_add_ms_to_parts($start_parts, $duration_ms));
   }
 
   $assignment->setNewRevision(FALSE);
   $assignment->save();
+  return NULL;
 }
 
 /**
@@ -1538,6 +1703,32 @@ function _race_day_is_team_captain_or_admin(GroupInterface $group, AccountInterf
     }
   }
   return FALSE;
+}
+
+/**
+ * Whether $account can manage $group's runner assignments — assign or
+ * remove any team member to/from any leg on the Runner Assignments table,
+ * not just themselves.
+ *
+ * True for the team's own captain/admin group role
+ * (_race_day_is_team_captain_or_admin()) — the pre-existing behavior — or
+ * for a Race Day Coordinator, via the same 'manage race day groups'
+ * permission that already lets them edit/delete race_team groups
+ * regardless of membership, so they don't have to be a member of a team at
+ * all to run its assignments.
+ *
+ * Deliberately its own function rather than folding the permission check
+ * into _race_day_is_team_captain_or_admin() itself — that one is also used
+ * to gate Team Requests review visibility (race_day_views_pre_render()),
+ * which is a separate authorization question with its own dedicated
+ * permissions ('review all/own race team requests') that a Race Day
+ * Coordinator isn't automatically granted here.
+ */
+function _race_day_can_manage_team_assignments(GroupInterface $group, AccountInterface $account): bool {
+  if ($account->hasPermission('manage race day groups')) {
+    return TRUE;
+  }
+  return _race_day_is_team_captain_or_admin($group, $account);
 }
 
 /**
@@ -1955,26 +2146,25 @@ function _race_day_preprocess_field_runner_legs(array &$variables): void {
   $membership = $group->getMember($current_user);
 
   $is_member = (bool) $membership;
-  $is_captain_or_admin = FALSE;
+  // A Race Day Coordinator manages assignments on every team, whether or
+  // not they're a member of this particular one — see
+  // _race_day_can_manage_team_assignments().
+  $is_captain_or_admin = _race_day_can_manage_team_assignments($group, $current_user);
   $members = [];
 
-  if ($membership) {
-    $is_captain_or_admin = _race_day_is_team_captain_or_admin($group, $current_user);
-
-    if ($is_captain_or_admin) {
-      foreach ($group->getMembers() as $group_membership) {
-        $member = $group_membership->getUser();
-        $members[$member->id()] = $member->getDisplayName();
-      }
-      asort($members);
+  if ($is_captain_or_admin) {
+    foreach ($group->getMembers() as $group_membership) {
+      $member = $group_membership->getUser();
+      $members[$member->id()] = $member->getDisplayName();
     }
+    asort($members);
   }
 
   $assign_url = '';
   $csrf_token = '';
   $remove_url = '';
   $remove_csrf_token = '';
-  if ($is_member) {
+  if ($is_member || $is_captain_or_admin) {
     $assign_url = \Drupal\Core\Url::fromRoute('race_day.assign_runner', ['group' => $group->id()])->toString();
     $csrf_token = \Drupal::csrfToken()->get('assign-runner-' . $group->id());
     $remove_url = \Drupal\Core\Url::fromRoute('race_day.remove_runner', ['group' => $group->id()])->toString();
@@ -2846,4 +3036,290 @@ function _race_day_waiver_post_submit(array &$form, FormStateInterface $form_sta
     return;
   }
   $form_state->setRedirectUrl(\Drupal\Core\Url::fromUserInput($destination));
+}
+
+/**
+ * Returns a race_team's current leg assignment, or NULL if no leg is running.
+ *
+ * "Current" is defined the same way the Running-status cascade itself is
+ * (_race_day_update_running_status_for_team() /
+ * _race_day_cascade_running_status()): whichever of the team's leg
+ * assignments has field_race_day_leg_status = 'running'. At most one
+ * assignment should ever hold that status at a time, so the first match
+ * wins.
+ */
+function _race_day_current_running_assignment_for_team(GroupInterface $group): ?ParagraphInterface {
+  foreach (_race_day_team_assignments($group) as $assignment) {
+    if ($assignment->hasField('field_race_day_leg_status')
+      && $assignment->get('field_race_day_leg_status')->value === 'running') {
+      return $assignment;
+    }
+  }
+  return NULL;
+}
+
+/**
+ * Returns a race_team's current runner, or NULL if no leg is running.
+ *
+ * See _race_day_current_running_assignment_for_team() re: what "current"
+ * means. Returns NULL if no leg is currently running, or the running leg
+ * has no runner assigned.
+ */
+function _race_day_current_runner_for_team(GroupInterface $group): ?UserInterface {
+  $assignment = _race_day_current_running_assignment_for_team($group);
+  if (!$assignment || $assignment->get('field_race_day_runner')->isEmpty()) {
+    return NULL;
+  }
+  $runner = $assignment->get('field_race_day_runner')->entity;
+  return $runner instanceof UserInterface ? $runner : NULL;
+}
+
+/**
+ * Returns a leg assignment's expected finish, formatted "g:i A" — plus a
+ * " Tomorrow" or shorthand-date suffix (_race_day_relative_day_suffix())
+ * when it's far enough out that the bare time alone would be ambiguous —
+ * or NULL.
+ *
+ * Deliberately field_expected_finish specifically, not the actual-preferred
+ * resolution _race_day_leg_assignment_moment() uses elsewhere — this is
+ * used for the live map's "Expected Leg/Total Finish" marker text, which by
+ * definition is only ever shown for a leg that's currently in progress (or,
+ * for the team total, a later leg that hasn't started yet), so it never has
+ * an actual finish to prefer anyway.
+ */
+function _race_day_expected_finish_display(ParagraphInterface $assignment): ?string {
+  if (!$assignment->hasField('field_expected_finish') || $assignment->get('field_expected_finish')->isEmpty()) {
+    return NULL;
+  }
+  $moment = $assignment->get('field_expected_finish')->get(0)->entity;
+  $formatted = $moment ? _race_day_format_precise_datetime($moment) : '';
+  if ($formatted === '') {
+    return NULL;
+  }
+  return $formatted . _race_day_relative_day_suffix($moment);
+}
+
+/**
+ * Returns a day-relative suffix for a moment further than 23h59m from now —
+ * " Tomorrow" if it falls within the following 24-hour window, or " M j"
+ * (e.g. " Aug 29") beyond that — or '' if it's within 23h59m (bare time is
+ * unambiguous). Long relay legs can run well past midnight or even into a
+ * second day, so a lone "2:17 PM" on its own can't be trusted to mean
+ * today.
+ *
+ * Compares real elapsed milliseconds (via the same synthetic-but-real-diff
+ * epoch _race_day_leg_assignment_window() uses to detect the current leg,
+ * which correctly spans midnight since it's anchored to each moment's own
+ * calendar date) rather than calendar-date equality, so it's the actual
+ * duration until the moment that's being bucketed here, not just "is it
+ * tomorrow's date" — a moment 30 hours out reads "Tomorrow" the same as one
+ * 25 hours out, since both are within one 24-hour step past the threshold.
+ */
+function _race_day_relative_day_suffix(ParagraphInterface $moment): string {
+  $moment_ms = _race_day_moment_epoch_ms($moment);
+  if ($moment_ms === NULL) {
+    return '';
+  }
+
+  $diff_ms = $moment_ms - _race_day_now_epoch_ms();
+  $day_ms = 24 * 3600 * 1000;
+  if ($diff_ms < $day_ms) {
+    return '';
+  }
+  if ($diff_ms < 2 * $day_ms) {
+    return ' Tomorrow';
+  }
+
+  $date = $moment->get('field_precise_date')->value;
+  return ' ' . (new \DateTime($date))->format('M j');
+}
+
+/**
+ * Returns a race_team's expected finish overall — the expected finish of
+ * its last leg (highest leg_number) — formatted "g:i A", or NULL.
+ */
+function _race_day_expected_total_finish_display(GroupInterface $group): ?string {
+  $assignments = _race_day_team_assignments($group);
+  if (!$assignments) {
+    return NULL;
+  }
+  return _race_day_expected_finish_display(end($assignments));
+}
+
+/**
+ * Estimates a currently-running assignment's runner's position along their
+ * leg's route, for the live map's marker fallback when they haven't
+ * reported a GPS location yet.
+ *
+ * Projects distance covered from elapsed time (now minus the leg's actual,
+ * or absent that expected, start — same resolution
+ * _race_day_leg_assignment_window() uses) at the runner's own expected
+ * pace, as a fraction of the leg's total distance, then walks that
+ * fraction of the way along the leg's decoded route polyline. Clamped to
+ * the route's start/end if the runner is estimated to be early or overdue.
+ *
+ * Returns NULL if any of what that needs is missing — no leg/runner on the
+ * assignment, no route polyline, no leg distance, no start moment, or no
+ * parseable pace on the runner's membership — since there's nothing
+ * reasonable to estimate from.
+ *
+ * @return array{lat: float, lng: float}|null
+ */
+function _race_day_estimate_runner_position(GroupInterface $group, ParagraphInterface $assignment): ?array {
+  if ($assignment->get('field_race_day_leg')->isEmpty() || $assignment->get('field_race_day_runner')->isEmpty()) {
+    return NULL;
+  }
+
+  $leg = $assignment->get('field_race_day_leg')->entity;
+  if (!$leg instanceof RaceLeg) {
+    return NULL;
+  }
+
+  $polyline = $leg->getPolyline();
+  if (empty($polyline)) {
+    return NULL;
+  }
+
+  $distance = $leg->getDistance();
+  if ($distance === NULL || !is_numeric($distance) || (float) $distance <= 0) {
+    return NULL;
+  }
+
+  $start_moment = _race_day_resolve_leg_assignment_moment($assignment, 'field_actual_start', 'field_expected_start')['moment'];
+  $start_ms = $start_moment ? _race_day_moment_epoch_ms($start_moment) : NULL;
+  if ($start_ms === NULL) {
+    return NULL;
+  }
+
+  $uid = (int) $assignment->get('field_race_day_runner')->target_id;
+  $pace = _race_day_get_member_pace((int) $group->id(), $uid);
+  $pace_minutes = $pace !== NULL ? _race_day_parse_pace_minutes($pace) : NULL;
+  if ($pace_minutes === NULL || $pace_minutes <= 0) {
+    return NULL;
+  }
+
+  $elapsed_ms = max(0, _race_day_now_epoch_ms() - $start_ms);
+  $distance_covered = ($elapsed_ms / 60000) / $pace_minutes;
+  $fraction = min(1.0, $distance_covered / (float) $distance);
+
+  $points = _race_day_decode_polyline($polyline);
+  return _race_day_point_at_fraction($points, $fraction);
+}
+
+/**
+ * Decodes a Google-encoded polyline string into an array of [lat, lng]
+ * pairs. Same algorithm as team-live-map.js's/race-day-leg-map.js's own
+ * decodePolyline() — this copy runs server-side, for
+ * _race_day_estimate_runner_position().
+ *
+ * @return array<int, array{0: float, 1: float}>
+ */
+function _race_day_decode_polyline(string $encoded): array {
+  $points = [];
+  $index = 0;
+  $len = strlen($encoded);
+  $lat = 0;
+  $lng = 0;
+
+  while ($index < $len) {
+    $shift = 0;
+    $result = 0;
+    do {
+      $b = ord($encoded[$index++]) - 63;
+      $result |= ($b & 0x1f) << $shift;
+      $shift += 5;
+    } while ($b >= 0x20 && $index < $len);
+    $lat += ($result & 1) ? ~($result >> 1) : ($result >> 1);
+
+    if ($index >= $len) {
+      break;
+    }
+
+    $shift = 0;
+    $result = 0;
+    do {
+      $b = ord($encoded[$index++]) - 63;
+      $result |= ($b & 0x1f) << $shift;
+      $shift += 5;
+    } while ($b >= 0x20 && $index < $len);
+    $lng += ($result & 1) ? ~($result >> 1) : ($result >> 1);
+
+    $points[] = [$lat / 1e5, $lng / 1e5];
+  }
+
+  return $points;
+}
+
+/**
+ * Returns the point at $fraction (0..1) of the way along $points' total
+ * path length, interpolating between whichever two points straddle that
+ * position. Distance along the path is measured with
+ * _race_day_haversine_meters() between consecutive points — the unit
+ * doesn't matter beyond that, since only the ratio of each segment to the
+ * total length is used here, not an absolute distance.
+ *
+ * @param array<int, array{0: float, 1: float}> $points
+ *   [lat, lng] pairs, in path order (as returned by
+ *   _race_day_decode_polyline()).
+ *
+ * @return array{lat: float, lng: float}|null
+ *   NULL if $points is empty.
+ */
+function _race_day_point_at_fraction(array $points, float $fraction): ?array {
+  $count = count($points);
+  if ($count === 0) {
+    return NULL;
+  }
+  if ($count === 1 || $fraction <= 0) {
+    return ['lat' => $points[0][0], 'lng' => $points[0][1]];
+  }
+  if ($fraction >= 1) {
+    return ['lat' => $points[$count - 1][0], 'lng' => $points[$count - 1][1]];
+  }
+
+  $segment_lengths = [];
+  $total_length = 0.0;
+  for ($i = 1; $i < $count; $i++) {
+    $length = _race_day_haversine_meters($points[$i - 1], $points[$i]);
+    $segment_lengths[] = $length;
+    $total_length += $length;
+  }
+  if ($total_length <= 0) {
+    return ['lat' => $points[0][0], 'lng' => $points[0][1]];
+  }
+
+  $target = $fraction * $total_length;
+  $covered = 0.0;
+  $segment_count = count($segment_lengths);
+  for ($i = 0; $i < $segment_count; $i++) {
+    $segment_length = $segment_lengths[$i];
+    if ($i === $segment_count - 1 || $covered + $segment_length >= $target) {
+      $segment_fraction = $segment_length > 0 ? ($target - $covered) / $segment_length : 0;
+      $segment_fraction = max(0.0, min(1.0, $segment_fraction));
+      $from = $points[$i];
+      $to = $points[$i + 1];
+      return [
+        'lat' => $from[0] + ($to[0] - $from[0]) * $segment_fraction,
+        'lng' => $from[1] + ($to[1] - $from[1]) * $segment_fraction,
+      ];
+    }
+    $covered += $segment_length;
+  }
+
+  return ['lat' => $points[$count - 1][0], 'lng' => $points[$count - 1][1]];
+}
+
+/**
+ * Haversine distance between two [lat, lng] points, in meters.
+ */
+function _race_day_haversine_meters(array $a, array $b): float {
+  $earth_radius_m = 6371000.0;
+  $lat1 = deg2rad($a[0]);
+  $lat2 = deg2rad($b[0]);
+  $delta_lat = deg2rad($b[0] - $a[0]);
+  $delta_lng = deg2rad($b[1] - $a[1]);
+
+  $h = sin($delta_lat / 2) ** 2 + cos($lat1) * cos($lat2) * sin($delta_lng / 2) ** 2;
+  $c = 2 * atan2(sqrt($h), sqrt(max(0.0, 1 - $h)));
+  return $earth_radius_m * $c;
 }

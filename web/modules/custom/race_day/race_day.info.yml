@@ -12,6 +12,7 @@ dependencies:
   - entity_reference_revisions:entity_reference_revisions
   - paragraphs:paragraphs
   - strava_api:strava_api
+  - ut_tracking:ut_tracking
   - drupal:path
   - pathauto:pathauto
   - token:token

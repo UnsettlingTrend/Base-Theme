@@ -23,6 +23,14 @@ services:
     tags:
       - { name: event_subscriber }
 
+  race_day.team_live_map_breadcrumb:
+    class: Drupal\race_day\Breadcrumb\TeamLiveMapBreadcrumbBuilder
+    tags:
+      # Higher than easy_breadcrumb's 1003 (easy_breadcrumb.services.yml) so
+      # this wins on race_day.team_live_map specifically — applies() there
+      # is scoped to that one route, so it has no effect anywhere else.
+      - { name: breadcrumb_builder, priority: 1010 }
+
   race_day.drush_commands:
     class: Drupal\race_day\Drush\Commands\RaceDayCommands
     arguments:

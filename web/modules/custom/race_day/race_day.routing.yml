@@ -245,6 +245,15 @@ race_day.update_member_pace:
   options:
     _format: json
 
+race_day.team_live_map:
+  path: '/race-day/group/{group}/live-map'
+  defaults:
+    _controller: '\Drupal\race_day\Controller\TeamLiveMapController::page'
+    _title_callback: '\Drupal\race_day\Controller\TeamLiveMapController::title'
+  requirements:
+    _race_day_group_page_access: 'TRUE'
+    group: \d+
+
 race_day.leg_schedule_modal:
   path: '/race-day/group/{group}/leg-assignment/{paragraph}/schedule'
   defaults:

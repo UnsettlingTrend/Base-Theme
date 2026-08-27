@@ -78,8 +78,9 @@ class LegScheduleController extends ControllerBase {
           if ($ms === NULL) {
             return new JsonResponse(['error' => 'Enter a valid time.'], 400);
           }
-          if (!_race_day_apply_actual_start($paragraph, $ms)) {
-            return new JsonResponse(['error' => 'No date to anchor this time to yet — set an expected schedule first.'], 400);
+          $error = _race_day_apply_actual_start($paragraph, $ms);
+          if ($error !== NULL) {
+            return new JsonResponse(['error' => $error], 400);
           }
           break;
 
@@ -88,8 +89,9 @@ class LegScheduleController extends ControllerBase {
           if ($ms === NULL) {
             return new JsonResponse(['error' => 'Enter a valid time.'], 400);
           }
-          if (!_race_day_apply_actual_finish($paragraph, $ms)) {
-            return new JsonResponse(['error' => 'No date to anchor this time to yet — set an expected schedule first.'], 400);
+          $error = _race_day_apply_actual_finish($paragraph, $ms);
+          if ($error !== NULL) {
+            return new JsonResponse(['error' => $error], 400);
           }
           break;
 
@@ -98,7 +100,10 @@ class LegScheduleController extends ControllerBase {
           if ($ms === NULL) {
             return new JsonResponse(['error' => 'Enter a valid duration, e.g. 1:15:30.'], 400);
           }
-          _race_day_apply_actual_time($paragraph, $ms);
+          $error = _race_day_apply_actual_time($paragraph, $ms);
+          if ($error !== NULL) {
+            return new JsonResponse(['error' => $error], 400);
+          }
           break;
 
         default:

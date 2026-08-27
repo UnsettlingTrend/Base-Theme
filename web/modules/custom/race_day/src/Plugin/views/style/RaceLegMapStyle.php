@@ -71,29 +71,11 @@ class RaceLegMapStyle extends StylePluginBase {
     foreach ($this->view->result as $row) {
       /** @var \Drupal\race_day\Entity\RaceLeg|null $entity */
       $entity = $row->_entity ?? NULL;
-      if (!$entity || !$entity->hasField('route')) {
+      if (!$entity) {
         continue;
       }
 
-      $route_field = $entity->get('route');
-      if ($route_field->isEmpty()) {
-        continue;
-      }
-
-      /** @var \Drupal\paragraphs\Entity\Paragraph|null $paragraph */
-      $paragraph = $route_field->entity;
-      if (!$paragraph) {
-        continue;
-      }
-
-      $polyline = '';
-      if ($paragraph->hasField('field_strava_polyline') && !$paragraph->get('field_strava_polyline')->isEmpty()) {
-        $polyline = (string) $paragraph->get('field_strava_polyline')->value;
-      }
-      elseif ($paragraph->hasField('field_strava_summary_polyline') && !$paragraph->get('field_strava_summary_polyline')->isEmpty()) {
-        $polyline = (string) $paragraph->get('field_strava_summary_polyline')->value;
-      }
-
+      $polyline = $entity->getPolyline();
       if (empty($polyline)) {
         continue;
       }

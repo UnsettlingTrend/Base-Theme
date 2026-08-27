@@ -87,3 +87,29 @@ race_leg_map:
     - core/drupal
     - core/once
     - leaflet/leaflet
+
+team_live_map_button:
+  # No "version: VERSION" — this module declares no version of its own, so
+  # that keyword falls back to a static string (core's version) that never
+  # changes between deploys, meaning browsers cache this file indefinitely
+  # across code updates. Omitting it instead lets Drupal use its own
+  # automatic cache-busting query string, which changes on every cache
+  # rebuild — worth doing here since this is actively-iterated new code;
+  # the rest of this file's libraries keep the existing "VERSION" convention.
+  css:
+    component:
+      css/team-live-map-button.css: {}
+
+team_live_map:
+  css:
+    component:
+      css/team-live-map.css: {}
+  js:
+    js/team-live-map.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+    - core/drupalSettings
+    - leaflet/leaflet
+    - leaflet/leaflet.fullscreen
+    - leaflet_markercluster/leaflet-markercluster

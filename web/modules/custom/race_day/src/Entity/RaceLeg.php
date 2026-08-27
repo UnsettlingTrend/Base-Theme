@@ -222,5 +222,27 @@ class RaceLeg extends ContentEntityBase implements EntityChangedInterface {
     return $value !== NULL ? (string) $value : NULL;
   }
 
+  /**
+   * Returns this leg's route polyline, from its route paragraph.
+   *
+   * Prefers Strava's own detailed polyline (field_strava_polyline), falling
+   * back to its coarser summary polyline (field_strava_summary_polyline)
+   * when that's all that's available — same resolution every consumer of
+   * this data uses (RaceLegMapStyle, TeamLiveMapController).
+   */
+  public function getPolyline(): ?string {
+    $paragraph = $this->get('route')->entity;
+    if (!$paragraph) {
+      return NULL;
+    }
+    if ($paragraph->hasField('field_strava_polyline') && !$paragraph->get('field_strava_polyline')->isEmpty()) {
+      return (string) $paragraph->get('field_strava_polyline')->value;
+    }
+    if ($paragraph->hasField('field_strava_summary_polyline') && !$paragraph->get('field_strava_summary_polyline')->isEmpty()) {
+      return (string) $paragraph->get('field_strava_summary_polyline')->value;
+    }
+    return NULL;
+  }
+
 }
 
