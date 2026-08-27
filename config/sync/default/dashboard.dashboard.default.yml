@@ -1,0 +1,36 @@
+uuid: d51e1808-e39a-4174-a75d-08f7bc12400c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.groups
+  module:
+    - layout_builder
+    - views
+id: default
+label: Default
+description: ''
+layout:
+  -
+    layout_id: layout_twocol_section
+    layout_settings:
+      label: ''
+      context_mapping: {  }
+      column_widths: 67-33
+    components:
+      02927cde-7f55-49c6-82f0-3c3c1514d305:
+        uuid: 02927cde-7f55-49c6-82f0-3c3c1514d305
+        region: second
+        configuration:
+          id: 'views_block:groups-block_1'
+          label: 'Your Groups'
+          label_display: visible
+          provider: views
+          context_mapping: {  }
+          views_label: 'Your Groups'
+          items_per_page: null
+          exposed: {  }
+        weight: 0
+        additional: {  }
+    third_party_settings: {  }
+weight: 0

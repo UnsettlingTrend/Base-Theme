@@ -60,6 +60,7 @@
         "drupal/core-composer-scaffold": "^11.0",
         "drupal/core-project-message": "^11.0",
         "drupal/core-recommended": "^11.0",
+        "drupal/dashboard": "^2.2",
         "drupal/devel": "^5.5",
         "drupal/devel_debug_log": "^2.0",
         "drupal/devel_entity_updates": "^5.0@RC",
