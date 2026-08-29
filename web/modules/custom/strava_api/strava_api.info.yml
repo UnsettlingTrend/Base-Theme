@@ -1,9 +1,0 @@
-name: 'Strava API'
-type: module
-description: 'Provides a "Route" paragraph type that embeds Strava route maps via the Strava API.'
-package: 'Paragraphs'
-core_version_requirement: ^11
-configure: strava_api.settings
-dependencies:
-  - drupal:field
-  - paragraphs:paragraphs

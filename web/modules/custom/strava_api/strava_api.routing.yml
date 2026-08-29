@@ -1,7 +1,0 @@
-strava_api.settings:
-  path: '/admin/config/services/strava-api'
-  defaults:
-    _form: '\Drupal\strava_api\Form\StravaSettingsForm'
-    _title: 'Strava API Settings'
-  requirements:
-    _permission: 'administer strava_api'

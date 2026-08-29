@@ -1,5 +1,0 @@
-ut_utilities.user.areas_of_interest:
-  title: 'Areas of Interest'
-  route_name: ut_utilities.user.areas_of_interest
-  base_route: entity.user.canonical
-  weight: 2

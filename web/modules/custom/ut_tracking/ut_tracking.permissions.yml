@@ -1,8 +1,0 @@
-'administer ut_tracking':
-  title: 'Administer GPS tracking'
-  description: 'View and delete all GPS location reports.'
-  restrict access: true
-
-'report own gps location':
-  title: 'Report own GPS location'
-  description: 'Allows the authenticated account (typically a dedicated mobile-app account) to POST GPS location reports for itself via the API. Does not grant access to view or delete any reports, including its own.'

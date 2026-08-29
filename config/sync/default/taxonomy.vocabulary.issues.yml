@@ -1,9 +1,0 @@
-uuid: fccf4fc4-9653-41fb-879f-37db9241d7d3
-langcode: en
-status: true
-dependencies: {  }
-name: Issues
-vid: issues
-description: 'Related terms for the Issue content type.'
-weight: 0
-new_revision: false

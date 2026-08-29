@@ -1,4 +1,0 @@
-administer strava_api:
-  title: 'Administer Strava API'
-  description: 'Configure Strava API credentials and module settings.'
-  restrict access: true

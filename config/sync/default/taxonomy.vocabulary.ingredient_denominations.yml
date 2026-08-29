@@ -1,9 +1,0 @@
-uuid: cc54942e-aa47-4623-8b79-be89f537ddb8
-langcode: en
-status: true
-dependencies: {  }
-name: 'Ingredient Denominations'
-vid: ingredient_denominations
-description: null
-weight: 0
-new_revision: false

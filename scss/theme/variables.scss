@@ -1,0 +1,159 @@
+@use 'sass:color';
+
+// Colors.
+
+// Neutral starter palette. Override these in a site theme or a
+// scss/theme/variables.scss of your own.
+$color-primary-base: #1a73e8;
+$color-primary-alt: #5b8def;
+$color-secondary-base: #5f6368;
+$color-secondary-alt: #9aa0a6;
+$color-accent-base: $color-secondary-base;
+$color-bg-body: #fff;
+$theme-primary: $color-primary-base;
+$theme-secondary: $color-secondary-base;
+$theme-background: $color-bg-body;
+$theme-background-gray: #b9b9b9;
+$color-text-base: #000;
+$color-text-base-light: #a7a6a6;
+$color-text: color.adjust($color-text-base, $lightness: 26%); // #424242
+$color-heading: color.adjust($color-text-base, $lightness: 13%); // #212121
+
+// The Header area
+$color-header-background: #f1f3f4;
+$color-header-menu-font: #202124;
+$color-header-sitename: #202124;
+
+// Fonts & typography.
+
+$font-family-base: 'Roboto', sans-serif;
+$font-family-additional: 'Montserrat', sans-serif;
+$font-family-text: $font-family-base;
+$font-family-heading: $font-family-additional;
+$font-selection-background: $theme-primary;
+
+// Default values, inherited from base.
+
+/*
+// Colors.
+
+$color-bg-highlighted: darken($color-bg-body, 12);
+$color-bg-hover: rgba(#000, 0.04);
+$color-border: darken($color-bg-body, 20);
+
+$color-link: darken($theme-secondary, 10);
+$color-text-secondary: rgba($color-text-base, .60);
+$color-text-disabled: rgba($color-text-base, .38);
+
+$color-text-light-base: #FFF;
+$color-text-light: $color-text-light-base;
+
+$color-on-primary: $color-text-light;
+$color-on-secondary: $color-text-light;
+
+$color-text-placeholer: rgba($color-text-base, .6);
+
+// Fonts & typography.
+
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+*/
+
+$font-size-h1: 3rem;
+$line-height-h1: 3.4rem;
+$font-weight-h1: 300;
+
+$font-size-h2: 2rem;
+$line-height-h2: 2.3rem;
+$font-weight-h2: 300;
+
+$font-size-h3: 1.7rem;
+$line-height-h3: 1.9rem;
+$font-weight-h3: 400;
+
+$font-size-h4: 1.5rem;
+$line-height-h4: 1.6rem;
+$font-weight-h4: 400;
+
+$font-size-h5: 1.3rem;
+$line-height-h5: 1.4rem;
+$font-weight-h5: 400;
+
+$font-size-h6: 1.15rem;
+$line-height-h6: 1.2rem;
+$font-weight-h6: 500;
+
+/*
+
+$font-size-st1: 1rem;
+$line-height-st1: 1.75rem;
+$font-weight-st1: 400;
+
+$font-size-st2: .875rem;
+$line-height-st2: 1.375rem;
+$font-weight-st2: 500;
+
+// Body.
+$font-size-text: 1rem;
+$line-height-text: 1.5rem;
+$font-weight-text: 400;
+
+$font-size-text-small: .875rem;
+$line-height-text-small: 1.25rem;
+$font-weight-text-small: 400;
+*/
+
+$font-size-caption: .95rem;
+$line-height-caption: 1.25rem;
+$font-weight-caption: 400;
+
+/*
+$font-size-button: .875rem;
+$line-height-button: 2.25rem;
+$font-weight-button: 500;
+
+$font-size-overline: .75rem;
+$line-height-overline: 2rem;
+$font-weight-overline: 500;
+
+// Spacing.
+
+$spacing: 8px;
+$gutter: $spacing * 2;
+
+// Breakpoints (Bootstrap 3 flavour).
+
+$ss: 360px;
+$ms: 480px;
+$xs: 576px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1520px;
+*/
+
+// Grid.
+// Use variables below for altering Flexbox Grid settings.
+// Requires custom implementation of grid library (grid.scss).
+
+/*
+// Flexbox Grid http://flexboxgrid.com/
+// used as Flexbox Grid Sass https://github.com/hugeinc/flexboxgrid-sass.
+
+// Master namespace.
+$flexboxgrid-grid-columns: 12;
+$flexboxgrid-gutter-width: $gutter;
+$flexboxgrid-outer-margin: $gutter;
+$flexboxgrid-breakpoints:
+  sm $sm auto,
+  md $md auto,
+  lg $lg $lg;
+$flexboxgrid-max-width: $lg;
+
+// 8.0.5 namespace.
+$grid-columns: $flexboxgrid-grid-columns;
+$gutter-width: $flexboxgrid-gutter-width;
+$outer-margin: $flexboxgrid-outer-margin;
+$breakpoints: $flexboxgrid-breakpoints;
+*/

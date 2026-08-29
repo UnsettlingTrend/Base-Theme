@@ -1,5 +1,0 @@
-ut_tracking.user_retention:
-  title: 'Tracking'
-  route_name: ut_tracking.user_retention
-  base_route: entity.user.canonical
-  weight: 15

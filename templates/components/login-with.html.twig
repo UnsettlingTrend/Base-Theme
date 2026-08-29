@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Theme override for the Social Auth "Sign in with..." links.
+ *
+ * Renders each network as a full button (icon + label) styled to match
+ * ut_base, instead of social_auth's default bare icon link.
+ *
+ * Available variables:
+ * - networks: An array of social network plugin instances.
+ * - destination: (optional) A destination path to redirect to after login.
+ *
+ * @see \Drupal\social_auth\Plugin\Block\SocialAuthLoginBlock
+ */
+#}
+{% set module = 'social-auth' %}
+
+{% for id, network in networks %}
+  {% if destination %}
+    {% set options = {'query': {'destination': destination}} %}
+  {% else %}
+    {% set options = {} %}
+  {% endif %}
+  <a class="{{ module }} auth-link" href="{{ network.getRedirectUrl(options).toString }}">
+    <img class="{{ module }} auth-icon" src="{{ network.getProviderLogoPath }}" alt="" aria-hidden="true">
+    <span class="{{ module }} auth-label">{{ 'Continue with @social_network_name'|t({'@social_network_name': network.getSocialNetwork}) }}</span>
+  </a>
+{% endfor %}

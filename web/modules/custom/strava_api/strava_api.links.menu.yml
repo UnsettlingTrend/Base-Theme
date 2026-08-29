@@ -1,6 +1,0 @@
-strava_api.settings:
-  title: 'Strava API Settings'
-  description: 'Configure Strava OAuth credentials and API settings.'
-  route_name: strava_api.settings
-  parent: system.admin_config_services
-  weight: 10

@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - race_day
-id: race.teaser
-label: Teaser
-targetEntityType: race
-cache: true

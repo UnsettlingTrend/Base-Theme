@@ -1,5 +1,0 @@
-robinhood_order.add:
-  title: 'Add Robinhood Order'
-  route_name: entity.robinhood_order.add_form
-  appears_on:
-    - entity.robinhood_order.collection

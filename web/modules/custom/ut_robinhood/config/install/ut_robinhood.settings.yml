@@ -1,7 +1,0 @@
-cron_interval: 3600
-order_states:
-  filled: filled
-update_existing: true
-import_limit: 0
-bridge_script_path: ''
-pickle_dir: ''

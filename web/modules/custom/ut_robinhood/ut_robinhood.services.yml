@@ -1,9 +1,0 @@
-services:
-  ut_robinhood.order_importer:
-    class: Drupal\ut_robinhood\Service\RobinhoodOrderImporter
-    arguments:
-      - '@entity_type.manager'
-      - '@config.factory'
-      - '@logger.factory'
-      - '@database'
-      - '@datetime.time'
