@@ -14,9 +14,13 @@
 function ut_base_form_user_login_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, string $form_id): void {
   // Embed the Social Auth Login block above the local account fieldset so its
   // position is tied to the form rather than the block region sort order.
+  // Resolved against the active theme (not hardcoded to 'ut_base') so a
+  // subtheme placing its own blocks under its own machine name — the normal
+  // way to use this theme — still finds them; this hook runs for subthemes
+  // too since it's defined on the base theme.
   $block = \Drupal::entityTypeManager()
     ->getStorage('block')
-    ->load('ut_base_socialauthlogin');
+    ->load(\Drupal::theme()->getActiveTheme()->getName() . '_socialauthlogin');
 
   $form['sso_message'] = [
     '#type' => 'html_tag',
@@ -103,15 +107,21 @@ function ut_base_form_user_login_form_alter(array &$form, \Drupal\Core\Form\Form
  * shown only once the title bar has scrolled fully out of view. Same
  * approach material_base itself uses for the logo elsewhere
  * (material_base.theme's own hook_preprocess_region()).
+ *
+ * The block IDs are resolved against the active theme rather than hardcoded
+ * to 'ut_base_*' — this hook fires for subthemes too (it's defined on the
+ * base theme), and a subtheme places its own copies of these blocks under
+ * its own machine name, not ut_base's.
  */
 function ut_base_preprocess_region(array &$variables): void {
   if ($variables['elements']['#region'] !== 'navbar') {
     return;
   }
-  $variables['branding_block'] = $variables['elements']['ut_base_branding'] ?? NULL;
-  $variables['menu_block'] = $variables['elements']['ut_base_main_menu'] ?? NULL;
+  $theme = \Drupal::theme()->getActiveTheme()->getName();
+  $variables['branding_block'] = $variables['elements']["{$theme}_branding"] ?? NULL;
+  $variables['menu_block'] = $variables['elements']["{$theme}_main_menu"] ?? NULL;
   $variables['site_logo_url'] = \Drupal::service('file_url_generator')->generateString(theme_get_setting('logo.url'));
-  $variables['account_menu_block'] = $variables['elements']['ut_base_account_menu'] ?? NULL;
+  $variables['account_menu_block'] = $variables['elements']["{$theme}_account_menu"] ?? NULL;
 }
 
 /**

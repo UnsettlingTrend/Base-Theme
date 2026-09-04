@@ -33,7 +33,10 @@
 
       // ----------------------- Begin Code for Main Nav Menu ------------------
 
-      const navBlocks = once('menu-init', '#block-ut-material-main-menu', context);
+      // Matched by ID suffix rather than a hardcoded theme-name prefix so
+      // this keeps working for any subtheme placing its own copy of this
+      // block under its own machine name.
+      const navBlocks = once('menu-init', '[id$="-main-menu"]', context);
 
       navBlocks.forEach((navBlock) => {
         const navMenu = navBlock.querySelector('.navbar-menu');

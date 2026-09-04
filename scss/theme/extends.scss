@@ -9,13 +9,16 @@
   color: $color-heading;
 }
 
-#block-ut-material-page-title {
+// Matched by ID suffix rather than a hardcoded theme-name prefix (e.g.
+// '#block-ut-base-page-title') so this rule keeps working for any subtheme
+// placing its own copy of this block under its own machine name.
+[id$="-page-title"] {
   h1.page-title {
     margin-bottom: .5rem;
   }
 }
 
-#block-ut-material-subtitle {
+[id$="-subtitle"] {
   div.field_subtitle {
     font-style: italic;
     color: $color-text-base-light;
