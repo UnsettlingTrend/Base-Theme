@@ -1,5 +1,11 @@
 @use '@material/typography';
-@import 'variables';
+// Not importing 'variables' here — both of this theme's entry points
+// (theme.scss, mdc.scss) already import theme/variables before this
+// partial, and legacy @import doesn't deduplicate: a subtheme reusing this
+// file via a relative-path import (rather than ut_base's own entry point)
+// would otherwise re-pull ut_base's own theme/variables.scss here and
+// silently overwrite the subtheme's colors for everything compiled after
+// this point.
 
 // Sitewide text-selection highlight, in place of the browser default blue.
 ::selection {
